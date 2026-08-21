@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solutions &amp; Services | Global Soft Systems</title>
+<meta name="description" content="GSS combines strategic guidance, practical technology solutions, and accountable delivery to turn complex priorities into measurable results.">
+
+<script>
+(function () {
+  try {
+    var stored = localStorage.getItem('gss-theme');
+    var theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {}
+  document.documentElement.classList.add('theme-pending');
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:wght@600;700;800&amp;display=swap">
+
+<link rel="stylesheet" href="css/styles.css">
+<style>
+  /* Placeholder gradient for sections whose photo pair hasn't been
+     generated yet (see assets/img/README.txt). Swap for a real
+     .theme-bg block the moment talent-light.webp / talent-dark.webp exist. */
+  .theme-bg--pending {
+    position: absolute; inset: 0;
+    background: linear-gradient(160deg, var(--bg) 0%, var(--bg-elevated) 100%);
+    transition: background var(--theme-fade);
+  }
+  .theme-bg--pending::after {
+    content: 'Image pending — see assets/img/README.txt';
+    position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+    font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px;
+    color: var(--text-muted); opacity: 0.6; letter-spacing: 0.04em;
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar" aria-label="Primary">
+  <a href="index.html" class="navbar__logo">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13 1L24 7.5V18.5L13 25L2 18.5V7.5L13 1Z" stroke="var(--navy-900)" stroke-width="1.6"/>
+      <path d="M13 1V13L24 7.5" stroke="var(--gold-500)" stroke-width="1.6"/>
+      <path d="M13 13L2 7.5" stroke="var(--navy-900)" stroke-width="1.6"/>
+    </svg>
+    GSS
+  </a>
+
+  <button class="navbar__toggle" type="button" aria-expanded="false" aria-controls="primary-menu" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="navbar__menu" id="primary-menu">
+    <ul class="navbar__links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="solutions.html">Solutions &amp; Services</a></li>
+      <li><a href="#">Career</a></li>
+      <li><a href="#">Partner Program</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <div class="navbar__right">
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8L6 18M18 6l1.8-1.8" stroke-linecap="round"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" stroke-linejoin="round"/></svg>
+      </button>
+      <a href="index.html#lets-talk" class="btn">Talk to Us →</a>
+    </div>
+  </div>
+</nav>
+<div class="navbar__scrim" hidden></div>
+
+<!-- 1. Business-led technology consulting (tech-light / tech-dark: ready) -->
+<section class="section-hero">
+  <div class="theme-bg">
+    <img class="theme-bg__img theme-bg__img--light" src="assets/img/tech-light.webp"
+         srcset="assets/img/tech-light-mobile.webp 960w, assets/img/tech-light.webp 2400w" sizes="100vw"
+         loading="eager" alt="Sweeping curved white architectural forms with glowing gold light trails, daytime">
+    <img class="theme-bg__img theme-bg__img--dark" src="assets/img/tech-dark.webp"
+         srcset="assets/img/tech-dark-mobile.webp 960w, assets/img/tech-dark.webp 2400w" sizes="100vw"
+         loading="eager" alt="Same architectural forms at night under a starfield, glowing gold and blue light trails">
+  </div>
+  <div class="section-hero__content">
+    <div class="section-hero__eyebrow">Business-Led Technology Consulting</div>
+    <h2>Technology Should Move Your Business Forward.</h2>
+    <p>When it doesn't, GSS helps identify what is holding you back and delivers the right combination of strategy, technology, talent and execution to move forward confidently.</p>
+    <a href="index.html#lets-talk" class="btn">Let's Talk →</a>
+  </div>
+</section>
+
+<!-- 2. From Business Challenge to Technology Outcome (datacenter-light ready; dark simulated until datacenter-dark.webp is added) -->
+<section class="section-hero">
+  <div class="theme-bg theme-bg--simulated-dark">
+    <img class="theme-bg__img theme-bg__img--light" src="assets/img/datacenter-light.webp"
+         srcset="assets/img/datacenter-light-mobile.webp 960w, assets/img/datacenter-light.webp 2400w" sizes="100vw"
+         loading="lazy" alt="Bright symmetrical data center corridor with glowing amber server racks">
+  </div>
+  <div class="section-hero__content">
+    <div class="section-hero__eyebrow">Business-Led Technology Solutions</div>
+    <h2>From Business Challenge to Technology Outcome.</h2>
+    <p>GSS combines strategic guidance, practical technology solutions, and accountable delivery to turn complex priorities into measurable results.</p>
+    <a href="#" class="btn">Explore Our Solutions →</a>
+  </div>
+</section>
+
+<!-- 3. Talent at Scale (no images generated yet — placeholder gradient) -->
+<section class="section-hero">
+  <div class="theme-bg--pending"></div>
+  <div class="section-hero__content">
+    <div class="section-hero__eyebrow">Scalable Staffing Services</div>
+    <h2>Talent at Scale. On Your Terms.</h2>
+    <p>Backed by an established in-house workforce and a trusted supplier ecosystem, GSS delivers qualified talent quickly, flexibly, and at scale.</p>
+    <a href="#" class="btn">Build Your Team →</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__col">
+      <div class="footer__brand">GSS</div>
+      <p class="footer__tag">Technology, strategy, and expertise for businesses ready to grow.</p>
+    </div>
+    <div class="footer__col">
+      <h4>Explore</h4>
+      <a href="about.html">About Us</a>
+      <a href="solutions.html">Services</a>
+      <a href="index.html#clients">Clientele</a>
+      <a href="#">Blog</a>
+    </div>
+    <div class="footer__col">
+      <h4>Company</h4>
+      <a href="#">Careers</a>
+      <a href="#">Contact</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms</a>
+    </div>
+    <div class="footer__col">
+      <h4>Contact</h4>
+      <span>info@globalsoftsystems.com</span>
+      <span>Global Soft Systems</span>
+      <span>Overland Park, Kansas</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/theme.js" defer></script>
+</body>
+</html>
