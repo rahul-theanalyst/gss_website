@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Soft Systems | 25+ Years of Trust. Built for What's Next.</title>
+<meta name="description" content="GSS combines proven experience, certified diversity, business-led technology consulting and specialized talent to help organizations move forward with confidence.">
+
+<!-- Inline, render-blocking: sets the theme BEFORE first paint so there is
+     no flash of the wrong theme (light flashing before switching to dark
+     for a returning dark-mode visitor, etc). Keep this tiny and inline. -->
+<script>
+(function () {
+  try {
+    var stored = localStorage.getItem('gss-theme');
+    var theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {}
+  document.documentElement.classList.add('theme-pending');
+})();
+</script>
+
+<link rel="stylesheet" href="css/styles.css">
+
+<!-- Preload the hero images for the theme most likely to be shown, and
+     fetch the alternate at low priority so toggling is instant. Because
+     both compressed hero variants are under ~100KB each, this cost is
+     small even if we fetch both. -->
+<link rel="preload" as="image" href="assets/img/hero-light.webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/hero-dark.webp" fetchpriority="low">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="navbar__logo">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13 1L24 7.5V18.5L13 25L2 18.5V7.5L13 1Z" stroke="var(--navy-900)" stroke-width="1.6"/>
+      <path d="M13 1V13L24 7.5" stroke="var(--gold-500)" stroke-width="1.6"/>
+      <path d="M13 13L2 7.5" stroke="var(--navy-900)" stroke-width="1.6"/>
+    </svg>
+    GSS
+  </a>
+  <ul class="navbar__links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="solutions.html">Solutions &amp; Services</a></li>
+    <li><a href="#">Career</a></li>
+    <li><a href="#">Clientele</a></li>
+    <li><a href="#">Partner Program</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <div class="navbar__right">
+    <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8L6 18M18 6l1.8-1.8" stroke-linecap="round"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" stroke-linejoin="round"/></svg>
+    </button>
+    <a href="#lets-talk" class="btn">Talk to Us →</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="theme-bg">
+    <img class="theme-bg__img theme-bg__img--light" src="assets/img/hero-light.webp"
+         srcset="assets/img/hero-light-mobile.webp 960w, assets/img/hero-light.webp 2400w"
+         sizes="100vw" fetchpriority="high" alt="City skyline reflected in still water at daybreak, seen from a glass rooftop terrace">
+    <img class="theme-bg__img theme-bg__img--dark" src="assets/img/hero-dark.webp"
+         srcset="assets/img/hero-dark-mobile.webp 960w, assets/img/hero-dark.webp 2400w"
+         sizes="100vw" fetchpriority="low" alt="Same city skyline at night, towers lit gold, reflected in still water">
+  </div>
+  <div class="hero__content">
+    <div class="hero__eyebrow">Business-led technology consulting</div>
+    <h1>25+ Years of Trust.<br>Built for What's Next.</h1>
+    <p>GSS combines proven experience, certified diversity, business-led technology consulting and specialized talent to help organizations move forward with confidence.</p>
+    <a href="solutions.html" class="btn">Explore GSS →</a>
+  </div>
+  <div class="stat-row">
+    <div class="stat-chip"><div class="num">25+ Years</div><div class="label">Established Experience</div></div>
+    <div class="stat-chip"><div class="num">MWBE</div><div class="label">Certified</div></div>
+    <div class="stat-chip"><div class="num">Trusted Partnership</div><div class="label">Future-Ready Results</div></div>
+    <div class="stat-chip"><div class="num">Inc. 500</div><div class="label">Recognized</div></div>
+    <div class="stat-chip"><div class="num">Technology + Talent</div><div class="label">Accountable Delivery</div></div>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <div class="section-title-kicker">How GSS Works</div>
+    <h2 class="centered">We begin with your business — not a predetermined solution.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step__num">01</div>
+        <h3>Listen &amp; Understand</h3>
+        <p>We understand your environment, challenge and desired outcome.</p>
+      </div>
+      <div class="step">
+        <div class="step__num">02</div>
+        <h3>Define the Right Path</h3>
+        <p>We translate needs into clear requirements and practical options.</p>
+      </div>
+      <div class="step">
+        <div class="step__num">03</div>
+        <h3>Deliver with Accountability</h3>
+        <p>We align strategy, technology, delivery and talent around results.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-block" id="lets-talk">
+  <div class="section-title-kicker">Get Started</div>
+  <h2>You don't need to know the answer before speaking with us.</h2>
+  <p>Tell us what is happening in your business, what is holding you back, or what you want to accomplish next. We'll begin by listening.</p>
+  <a href="#" class="btn">Let's Talk →</a>
+  <div class="fineprint">Initial conversations are complimentary and focused on understanding your needs.</div>
+</section>
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__col">
+      <div class="footer__brand">GSS</div>
+      <p class="footer__tag">Technology, strategy, and expertise for businesses ready to grow.</p>
+    </div>
+    <div class="footer__col">
+      <h4>Explore</h4>
+      <a href="about.html">About Us</a>
+      <a href="solutions.html">Services</a>
+      <a href="#">Clientele</a>
+      <a href="#">Blog</a>
+    </div>
+    <div class="footer__col">
+      <h4>Company</h4>
+      <a href="#">Careers</a>
+      <a href="#">Contact</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms</a>
+    </div>
+    <div class="footer__col">
+      <h4>Contact</h4>
+      <span>info@globalsoftsystems.com</span>
+      <span>Global Soft Systems</span>
+      <span>Overland Park, Kansas</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/theme.js" defer></script>
+</body>
+</html>
