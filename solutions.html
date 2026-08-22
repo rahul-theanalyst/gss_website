@@ -51,11 +51,26 @@
     GSS
   </a>
 
-  <button class="navbar__toggle" type="button" aria-expanded="false" aria-controls="primary-menu" aria-label="Open menu">
-    <span></span><span></span><span></span>
-  </button>
+  <!-- Mobile slot. Empty by default (0-width, invisible) — theme.js
+       physically moves the single #theme-toggle button in here at mobile
+       widths so it's reachable without opening the hamburger, and moves
+       it back into .navbar__menu at desktop widths. There is only ever
+       ONE toggle element on the page; see placeToggle() in theme.js. -->
+  <div class="navbar__mobile-actions">
+    <button class="navbar__toggle" type="button" aria-expanded="false" aria-controls="primary-menu" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 
   <div class="navbar__menu" id="primary-menu">
+    <!-- Explicit in-panel close button, shown only while the mobile menu
+         is open (see .navbar__close in styles.css). The hamburger itself
+         already morphs into an X and still closes the menu on a second
+         tap, but this gives an unambiguous, always-visible close target
+         inside the panel too. -->
+    <button class="navbar__close" type="button" aria-label="Close menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
     <ul class="navbar__links">
       <li><a href="index.html">Home</a></li>
       <li><a href="about.html">About Us</a></li>
@@ -64,11 +79,13 @@
       <li><a href="#">Partner Program</a></li>
       <li><a href="#">Contact</a></li>
     </ul>
+    <!-- The single theme toggle: far right of the nav links, ahead of
+         the CTA button, at desktop widths. -->
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8L6 18M18 6l1.8-1.8" stroke-linecap="round"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" stroke-linejoin="round"/></svg>
+    </button>
     <div class="navbar__right">
-      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark theme">
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8L6 18M18 6l1.8-1.8" stroke-linecap="round"/></svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" stroke-linejoin="round"/></svg>
-      </button>
       <a href="index.html#lets-talk" class="btn">Talk to Us →</a>
     </div>
   </div>
@@ -119,31 +136,28 @@
   </div>
 </section>
 
-<footer class="footer">
-  <div class="container footer__grid">
-    <div class="footer__col">
-      <div class="footer__brand">GSS</div>
-      <p class="footer__tag">Technology, strategy, and expertise for businesses ready to grow.</p>
-    </div>
-    <div class="footer__col">
-      <h4>Explore</h4>
-      <a href="about.html">About Us</a>
-      <a href="solutions.html">Services</a>
-      <a href="index.html#clients">Clientele</a>
-      <a href="#">Blog</a>
-    </div>
-    <div class="footer__col">
-      <h4>Company</h4>
-      <a href="#">Careers</a>
-      <a href="#">Contact</a>
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms</a>
-    </div>
-    <div class="footer__col">
-      <h4>Contact</h4>
-      <span>info@globalsoftsystems.com</span>
-      <span>Global Soft Systems</span>
-      <span>Overland Park, Kansas</span>
+<footer class="footer-dark">
+  <div class="container footer-dark__row">
+    <div class="footer-dark__copy">&copy; <span id="footer-year">2026</span> GSS</div>
+    <nav class="footer-dark__legal" aria-label="Legal">
+      <a href="#">Disclaimer</a>
+      <a href="#">Privacy</a>
+      <a href="#">Modern Slavery Statement</a>
+    </nav>
+    <!-- TODO: point these at GSS's real profile URLs once available. -->
+    <div class="footer-dark__socials" aria-label="GSS on social media">
+      <a href="#" class="footer-dark__social" aria-label="GSS on Facebook">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 9H15V6.5h-1.5c-1.93 0-3.5 1.57-3.5 3.5v1.5H8V14h2v7h2.5v-7h1.8l.3-2.5h-2.1V10c0-.6.4-1 1-1Z"/></svg>
+      </a>
+      <a href="#" class="footer-dark__social" aria-label="GSS on Instagram">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 3h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8Zm4 3.5A4.5 4.5 0 1 1 7.5 13 4.5 4.5 0 0 1 12 8.5Zm0 2A2.5 2.5 0 1 0 14.5 13 2.5 2.5 0 0 0 12 10.5ZM17 6.8a.9.9 0 1 1-.9.9.9.9 0 0 1 .9-.9Z"/></svg>
+      </a>
+      <a href="#" class="footer-dark__social" aria-label="GSS on LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 7.03a1.96 1.96 0 1 0 0-3.92 1.96 1.96 0 0 0 0 3.92ZM20.44 20h-3.37v-5.6c0-1.34-.02-3.06-1.87-3.06-1.87 0-2.16 1.46-2.16 2.96V20H9.67V8.5h3.24v1.57h.05c.45-.86 1.56-1.77 3.21-1.77 3.43 0 4.06 2.26 4.06 5.2V20Z"/></svg>
+      </a>
+      <a href="#" class="footer-dark__social" aria-label="GSS on YouTube">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.8 8.001a2.752 2.752 0 0 0-1.94-1.948C18.088 5.5 12 5.5 12 5.5s-6.088 0-7.86.553A2.752 2.752 0 0 0 2.2 8.001 28.6 28.6 0 0 0 1.65 12a28.6 28.6 0 0 0 .55 4c.204.995.997 1.782 1.94 1.948C5.912 18.5 12 18.5 12 18.5s6.088 0 7.86-.552a2.752 2.752 0 0 0 1.94-1.948A28.6 28.6 0 0 0 22.35 12a28.6 28.6 0 0 0-.55-3.999ZM10 15V9l5.196 3L10 15Z"/></svg>
+      </a>
     </div>
   </div>
 </footer>

@@ -73,6 +73,7 @@
     var navToggle = document.querySelector('.navbar__toggle');
     var navMenu = document.querySelector('.navbar__menu');
     var navScrim = document.querySelector('.navbar__scrim');
+    var navClose = document.querySelector('.navbar__close');
     if (navToggle && navMenu) {
       var openNav = function () {
         navMenu.classList.add('is-open');
@@ -103,6 +104,12 @@
       if (navScrim) {
         navScrim.addEventListener('click', function () { closeNav(); });
       }
+      // Explicit close button rendered inside the open panel itself —
+      // always visible the moment the menu opens, independent of the
+      // hamburger button's own position/visibility.
+      if (navClose) {
+        navClose.addEventListener('click', function () { closeNav(); });
+      }
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && navMenu.classList.contains('is-open')) closeNav();
       });
@@ -115,5 +122,41 @@
         }
       });
     }
+
+    // Single-toggle repositioning, gated on .navbar__mobile-actions
+    // existing (see the HTML). There is only ONE theme-toggle button on
+    // the page; on desktop it lives inside .navbar__menu, after the nav
+    // links and before the CTA. On mobile it needs to be reachable
+    // without opening the hamburger panel — but .navbar__menu is
+    // `position: fixed` with a `transform` while closed, and a
+    // `transform` on an ancestor makes it the containing block for any
+    // `position: fixed` descendant, so a fixed-position toggle nested
+    // inside it would just get dragged off-canvas too. CSS alone can't
+    // relocate it, so instead we physically move the same node between
+    // two DOM slots as the breakpoint crosses. insertBefore/appendChild
+    // relocate an existing node in place and keep its listeners intact —
+    // this never clones or duplicates it.
+    var mobileActionsSlot = document.querySelector('.navbar__mobile-actions');
+    var themeToggleBtn = document.querySelector('.theme-toggle');
+    if (mobileActionsSlot && themeToggleBtn && navMenu) {
+      var navLinksList = navMenu.querySelector('.navbar__links');
+      var mobileMq = window.matchMedia('(max-width: 860px)');
+      var placeToggle = function (isMobile) {
+        if (isMobile) {
+          if (themeToggleBtn.parentElement !== mobileActionsSlot) {
+            mobileActionsSlot.insertBefore(themeToggleBtn, mobileActionsSlot.firstChild);
+          }
+        } else if (themeToggleBtn.parentElement !== navMenu) {
+          navMenu.insertBefore(themeToggleBtn, navLinksList.nextSibling);
+        }
+      };
+      placeToggle(mobileMq.matches);
+      mobileMq.addEventListener('change', function (e) { placeToggle(e.matches); });
+    }
+
+    // Footer copyright year — one place to keep correct instead of a
+    // hardcoded year in every page's markup.
+    var footerYear = document.getElementById('footer-year');
+    if (footerYear) footerYear.textContent = new Date().getFullYear();
   });
 })();
