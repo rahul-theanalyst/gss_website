@@ -27,9 +27,10 @@
   --navy-700: #142c52;
   --gold-500: #d9a441;
   --gold-400: #e6b862;
-  /* Deep brand purple used only by the footer band — fixed regardless of
-     the light/dark toggle, same as the rest of the footer. */
-  --footer-purple: #1d0458;
+  /* Brand navy used for the footer band — fixed regardless of the
+     light/dark toggle, same as the rest of the footer. Reuses --navy-900
+     rather than an unrelated color so the footer stays on-palette. */
+  --footer-bg: var(--navy-900);
 
   /* Light theme (default) */
   --bg: #f4f6f8;
@@ -940,13 +941,13 @@ body.nav-open {
 }
 
 /* ---------------- Footer ----------------
-   Single-row utility footer: a fixed deep-purple brand band regardless
-   of the site's light/dark toggle — copyright left, legal links
-   centered, social icons right, all vertically centered in one line on
-   desktop. Wraps to a stacked, centered layout on small screens rather
-   than truncating or overlapping. */
+   Single-row utility footer: a fixed navy brand band regardless of the
+   site's light/dark toggle — copyright left, legal links centered,
+   social icons right, all vertically centered in one line on desktop.
+   Wraps to a stacked, centered layout on small screens rather than
+   truncating or overlapping. */
 .footer-dark {
-  background: var(--footer-purple);
+  background: var(--footer-bg);
   color: #ffffff;
   font-family: var(--font-sans);
 }
@@ -993,7 +994,7 @@ body.nav-open {
 .footer-dark__social svg { width: 16px; height: 16px; }
 .footer-dark__social:hover {
   background: #ffffff;
-  color: var(--footer-purple);
+  color: var(--footer-bg);
   border-color: #ffffff;
   transform: translateY(-2px);
 }
