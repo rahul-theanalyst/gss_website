@@ -38,22 +38,6 @@
     });
     applyTheme(currentTheme()); // sync aria state on load
 
-    // Follow OS theme changes live, but only if the visitor hasn't
-    // explicitly chosen a theme on this site before.
-    var hasStoredChoice = false;
-    try { hasStoredChoice = !!localStorage.getItem(STORAGE_KEY + '-explicit'); } catch (e) {}
-    if (!hasStoredChoice && window.matchMedia) {
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
-        applyTheme(e.matches ? 'dark' : 'light');
-      });
-    }
-    // Mark explicit choice whenever the user actually clicks the toggle.
-    toggles.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        try { localStorage.setItem(STORAGE_KEY + '-explicit', '1'); } catch (e) {}
-      });
-    });
-
     // Navbar: solid background once scrolled past the hero image so text
     // under it stays readable everywhere, not just over the photo.
     var navbar = document.querySelector('.navbar');

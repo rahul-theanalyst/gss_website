@@ -700,10 +700,45 @@ body.nav-open {
 }
 
 /* Arrows crowd the copy at narrow widths — autoplay still cycles the
-   carousel without them. */
+   carousel without them. Slide content also switches from vertically
+   centered to top-aligned: on a short/narrow phone the combined height
+   of eyebrow + heading + paragraph + button (+ stat-row/cards on some
+   slides) can exceed the viewport, and centering an overflowing flex
+   item pushes it out equally top AND bottom — which, on the very first
+   slide, meant the eyebrow/heading crept up behind the fixed navbar
+   while the last stat chips got clipped at the bottom. Top-aligning
+   with a fixed navbar-clearance offset means any leftover overflow can
+   only ever spill off the bottom, never behind the nav. */
 @media (max-width: 640px) {
   .hero-carousel__arrow {
     display: none;
+  }
+  .hero-slide {
+    justify-content: flex-start;
+    padding-top: 84px;
+    padding-bottom: 56px;
+  }
+  .hero__content {
+    padding: 16px 20px 20px;
+  }
+  .hero__eyebrow {
+    margin-bottom: 10px;
+  }
+  .hero h1 {
+    font-size: clamp(26px, 8vw, 34px);
+    margin-bottom: 14px;
+  }
+  .hero p {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+  .stat-row {
+    margin-top: 20px;
+    gap: 10px;
+  }
+  .hero-service-row {
+    margin-bottom: 20px;
+    gap: 10px;
   }
 }
 
@@ -1098,6 +1133,17 @@ body.nav-open {
   }
   .navbar {
     padding: 12px 16px;
+  }
+  .hero-slide {
+    padding-top: 76px;
+    padding-bottom: 48px;
+  }
+  .hero h1 {
+    font-size: clamp(24px, 8vw, 30px);
+  }
+  .hero p {
+    font-size: 14px;
+    margin-bottom: 16px;
   }
   .stat-chip {
     min-width: 130px;
