@@ -479,7 +479,7 @@ body.nav-open {
   margin: 0 0 34px;
 }
 
-/* Stat chips over the hero */
+/* Stat chips over the hero — only the first (original) slide uses these. */
 .stat-row {
   position: relative;
   z-index: 2;
@@ -523,6 +523,189 @@ body.nav-open {
   font-size: 11px;
   color: var(--text-muted);
   margin-top: 4px;
+}
+
+/* ---------------- Hero carousel ----------------
+   Slides are absolutely positioned and crossfaded via opacity — no
+   translateX track — so it works at any viewport without needing to
+   measure widths in JS. hero-carousel.js just toggles `.is-active` and
+   loops the index in both directions, so it plays forever. */
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.9s ease,
+    visibility 0s linear 0.9s;
+  /* Reserves room below the centered content for the dots + scroll-hint,
+     which are pinned to the bottom of the whole hero (not per-slide), so
+     the tallest slide (the service-card row) never grows into them. */
+  padding-bottom: clamp(90px, 16vh, 150px);
+}
+.hero-slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.9s ease;
+}
+.hero__content--wide {
+  max-width: 1100px;
+}
+
+.hero-service-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin: 0 0 34px;
+}
+.hero-service-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  min-width: 210px;
+  flex: 1 1 210px;
+  max-width: 260px;
+  text-align: left;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(6px);
+  transition:
+    background-color var(--theme-fade),
+    border-color var(--theme-fade);
+}
+.hero-service-card__icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  color: var(--accent);
+}
+.hero-service-card__icon svg {
+  width: 100%;
+  height: 100%;
+}
+.hero-service-card__title {
+  display: block;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--text);
+}
+.hero-service-card__desc {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.hero-carousel__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition:
+    background-color var(--theme-fade),
+    border-color var(--theme-fade),
+    transform 0.2s ease;
+}
+.hero-carousel__arrow:hover {
+  transform: translateY(-50%) scale(1.06);
+}
+.hero-carousel__arrow--prev {
+  left: 24px;
+}
+.hero-carousel__arrow--next {
+  right: 24px;
+}
+.hero-carousel__arrow svg {
+  width: 20px;
+  height: 20px;
+}
+
+.hero-carousel__dots {
+  position: absolute;
+  bottom: 88px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  gap: 10px;
+}
+.hero-carousel__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: var(--text);
+  opacity: 0.28;
+  cursor: pointer;
+  transition:
+    background-color var(--theme-fade),
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+.hero-carousel__dot.is-active {
+  background: var(--accent);
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.hero-carousel__scroll-hint {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  color: var(--text);
+  opacity: 0.7;
+  animation: hero-bounce 2.2s ease-in-out infinite;
+}
+.hero-carousel__scroll-hint svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+@keyframes hero-bounce {
+  0%,
+  100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, 8px);
+  }
+}
+
+/* Arrows crowd the copy at narrow widths — dots + autoplay still give
+   full control of the carousel without them. */
+@media (max-width: 640px) {
+  .hero-carousel__arrow {
+    display: none;
+  }
+  .hero-carousel__dots {
+    bottom: 72px;
+  }
 }
 
 /* ---------------- Generic section with full-bleed theme-swapped bg ---------------- */
@@ -717,6 +900,12 @@ body.nav-open {
   .logo-marquee__track {
     animation: none;
   }
+  .hero-carousel__scroll-hint {
+    animation: none;
+  }
+  .hero-slide {
+    transition: none;
+  }
 }
 
 @media (max-width: 860px) {
@@ -865,6 +1054,11 @@ body.nav-open {
     gap: 28px;
   }
   .stat-chip {
+    min-width: 130px;
+    flex: 1 1 130px;
+    padding: 14px 16px;
+  }
+  .hero-service-card {
     min-width: 130px;
     flex: 1 1 130px;
     padding: 14px 16px;

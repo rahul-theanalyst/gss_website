@@ -31,9 +31,10 @@
 <link rel="stylesheet" href="css/styles.css">
 
 <!-- Preload the hero images for the theme most likely to be shown, and
-     fetch the alternate at low priority so toggling is instant. Because
-     both compressed hero variants are under ~100KB each, this cost is
-     small even if we fetch both. -->
+     fetch the alternate at low priority so toggling is instant. This is
+     the first carousel slide (the one painted at first load / LCP); the
+     other slides fetch normally in the background once the carousel
+     script attaches. -->
 <link rel="preload" as="image" href="assets/img/hero-light.webp" fetchpriority="high">
 <link rel="preload" as="image" href="assets/img/hero-dark.webp" fetchpriority="low">
 </head>
@@ -73,31 +74,129 @@
 </nav>
 <div class="navbar__scrim" hidden></div>
 
-<header class="hero">
-  <div class="theme-bg">
-    <img class="theme-bg__img theme-bg__img--light" src="assets/img/hero-light.webp"
-         srcset="assets/img/hero-light-mobile.webp 960w, assets/img/hero-light.webp 2400w"
-         sizes="100vw" fetchpriority="high" alt="City skyline reflected in still water at daybreak, seen from a glass rooftop terrace">
-    <img class="theme-bg__img theme-bg__img--dark" src="assets/img/hero-dark.webp"
-         srcset="assets/img/hero-dark-mobile.webp 960w, assets/img/hero-dark.webp 2400w"
-         sizes="100vw" fetchpriority="low" alt="Same city skyline at night, towers lit gold, reflected in still water">
+<header class="hero hero-carousel" id="hero-carousel" aria-roledescription="carousel" aria-label="GSS highlights">
+
+  <div class="hero-slide is-active" data-slide-index="0" aria-hidden="false">
+    <div class="theme-bg">
+      <img class="theme-bg__img theme-bg__img--light" src="assets/img/hero-light.webp"
+           srcset="assets/img/hero-light-mobile.webp 960w, assets/img/hero-light.webp 2400w"
+           sizes="100vw" fetchpriority="high" alt="City skyline reflected in still water at daybreak, seen from a glass rooftop terrace">
+      <img class="theme-bg__img theme-bg__img--dark" src="assets/img/hero-dark.webp"
+           srcset="assets/img/hero-dark-mobile.webp 960w, assets/img/hero-dark.webp 2400w"
+           sizes="100vw" fetchpriority="low" alt="Same city skyline at night, towers lit gold, reflected in still water">
+    </div>
+    <div class="hero__content">
+      <div class="hero__eyebrow">Business-led technology consulting</div>
+      <h1>25+ Years of Trust.<br>Built for What's Next.</h1>
+      <p>GSS combines proven experience, certified diversity, business-led technology consulting and specialized talent to help organizations move forward with confidence.</p>
+      <a href="solutions.html" class="btn">Explore GSS →</a>
+    </div>
+    <div class="stat-row">
+      <div class="stat-chip"><div class="num">25+ Years</div><div class="label">Established Experience</div></div>
+      <div class="stat-chip"><div class="num">MWBE</div><div class="label">Certified</div></div>
+      <div class="stat-chip"><div class="num">Trusted Partnership</div><div class="label">Future-Ready Results</div></div>
+      <div class="stat-chip"><div class="num">Inc. 500</div><div class="label">Recognized</div></div>
+      <div class="stat-chip"><div class="num">Technology + Talent</div><div class="label">Accountable Delivery</div></div>
+    </div>
   </div>
-  <div class="hero__content">
-    <div class="hero__eyebrow">Business-led technology consulting</div>
-    <h1>25+ Years of Trust.<br>Built for What's Next.</h1>
-    <p>GSS combines proven experience, certified diversity, business-led technology consulting and specialized talent to help organizations move forward with confidence.</p>
-    <a href="solutions.html" class="btn">Explore GSS →</a>
+
+  <div class="hero-slide" data-slide-index="1" aria-hidden="true">
+    <div class="theme-bg theme-bg--simulated-dark">
+      <img class="theme-bg__img theme-bg__img--light" src="assets/img/hero-light2.webp" loading="lazy" fetchpriority="low"
+           alt="Stylised aerial view of a futuristic technology campus with glowing connected pathways at sunrise">
+    </div>
+    <div class="hero__content">
+      <div class="hero__eyebrow">Business-led technology consulting</div>
+      <h1>Technology Should Move<br>Your Business Forward.</h1>
+      <p>When it doesn't, GSS helps identify what is holding you back and delivers the right combination of strategy, technology, talent and execution to move forward confidently.</p>
+      <a href="#lets-talk" class="btn">Let's Talk →</a>
+    </div>
   </div>
-  <div class="stat-row">
-    <div class="stat-chip"><div class="num">25+ Years</div><div class="label">Established Experience</div></div>
-    <div class="stat-chip"><div class="num">MWBE</div><div class="label">Certified</div></div>
-    <div class="stat-chip"><div class="num">Trusted Partnership</div><div class="label">Future-Ready Results</div></div>
-    <div class="stat-chip"><div class="num">Inc. 500</div><div class="label">Recognized</div></div>
-    <div class="stat-chip"><div class="num">Technology + Talent</div><div class="label">Accountable Delivery</div></div>
+
+  <div class="hero-slide" data-slide-index="2" aria-hidden="true">
+    <div class="theme-bg theme-bg--simulated-dark">
+      <img class="theme-bg__img theme-bg__img--light" src="assets/img/hero-light1.webp" loading="lazy" fetchpriority="low"
+           alt="Bright, glowing rows of server racks in a modern data center corridor">
+    </div>
+    <div class="hero__content">
+      <div class="hero__eyebrow">Business-led technology solutions</div>
+      <h1>From Business Challenge<br>to Technology Outcome.</h1>
+      <p>GSS combines strategic guidance, practical technology solutions, and accountable delivery to turn complex priorities into measurable results.</p>
+      <a href="solutions.html" class="btn">Explore Our Solutions →</a>
+    </div>
   </div>
+
+  <div class="hero-slide" data-slide-index="3" aria-hidden="true">
+    <div class="theme-bg theme-bg--simulated-dark">
+      <img class="theme-bg__img theme-bg__img--light" src="assets/img/hero-light3.webp" loading="lazy" fetchpriority="low"
+           alt="Blurred modern office interior with colleagues meeting behind glass-walled rooms">
+    </div>
+    <div class="hero__content hero__content--wide">
+      <div class="hero__eyebrow">Scalable staffing services</div>
+      <h1>Talent at Scale.<br>On Your Terms.</h1>
+      <p>Backed by an established in-house workforce and a trusted supplier ecosystem, GSS delivers qualified talent quickly, flexibly, and at scale.</p>
+      <div class="hero-service-row">
+        <div class="hero-service-card">
+          <span class="hero-service-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.5" width="18" height="12" rx="2"/><path d="M8 7.5V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1.5"/><circle cx="12" cy="13.5" r="2"/><path d="M12 13.5v-.01"/></svg>
+          </span>
+          <span>
+            <span class="hero-service-card__title">Contract Talent</span>
+            <span class="hero-service-card__desc">Flexible expertise</span>
+          </span>
+        </div>
+        <div class="hero-service-card">
+          <span class="hero-service-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6.5" r="2.4"/><circle cx="17" cy="6.5" r="2.4"/><path d="M3.5 18.5c0-2.8 1.7-4.7 3.5-4.7s3.5 1.9 3.5 4.7M13.5 18.5c0-2.8 1.7-4.7 3.5-4.7s3.5 1.9 3.5 4.7"/></svg>
+          </span>
+          <span>
+            <span class="hero-service-card__title">Project Staffing</span>
+            <span class="hero-service-card__desc">Client-managed teams</span>
+          </span>
+        </div>
+        <div class="hero-service-card">
+          <span class="hero-service-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.7 5.3 3.7 8.5s-1.3 6.2-3.7 8.5c-2.4-2.3-3.7-5.3-3.7-8.5s1.3-6.2 3.7-8.5Z"/></svg>
+          </span>
+          <span>
+            <span class="hero-service-card__title">Remote / Offshore</span>
+            <span class="hero-service-card__desc">Custom-built teams</span>
+          </span>
+        </div>
+        <div class="hero-service-card">
+          <span class="hero-service-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c0-3.6 3.1-6.5 7-6.5s7 2.9 7 6.5"/><path d="M9.2 16.8l1.9 1.9 3.4-3.6"/></svg>
+          </span>
+          <span>
+            <span class="hero-service-card__title">W2 / Fulltime</span>
+            <span class="hero-service-card__desc">Direct placements</span>
+          </span>
+        </div>
+      </div>
+      <a href="#lets-talk" class="btn">Build Your Team →</a>
+    </div>
+  </div>
+
+  <button class="hero-carousel__arrow hero-carousel__arrow--prev" type="button" aria-label="Previous slide">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <button class="hero-carousel__arrow hero-carousel__arrow--next" type="button" aria-label="Next slide">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+  </button>
+
+  <div class="hero-carousel__dots" role="tablist" aria-label="Choose slide">
+    <button class="hero-carousel__dot is-active" type="button" role="tab" aria-selected="true" data-slide-index="0" aria-label="Slide 1"></button>
+    <button class="hero-carousel__dot" type="button" role="tab" aria-selected="false" data-slide-index="1" aria-label="Slide 2"></button>
+    <button class="hero-carousel__dot" type="button" role="tab" aria-selected="false" data-slide-index="2" aria-label="Slide 3"></button>
+    <button class="hero-carousel__dot" type="button" role="tab" aria-selected="false" data-slide-index="3" aria-label="Slide 4"></button>
+  </div>
+
+  <a href="#how-gss-works" class="hero-carousel__scroll-hint" aria-label="Scroll to content">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+  </a>
 </header>
 
-<section class="section">
+<section class="section" id="how-gss-works">
   <div class="container">
     <div class="section-title-kicker">How GSS Works</div>
     <h2 class="centered">We begin with your business — not a predetermined solution.</h2>
@@ -354,5 +453,6 @@
 </footer>
 
 <script src="js/theme.js" defer></script>
+<script src="js/hero-carousel.js" defer></script>
 </body>
 </html>
