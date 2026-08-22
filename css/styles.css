@@ -181,14 +181,19 @@ button:focus-visible {
 .navbar__logo {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-weight: bold;
-  font-size: 20px;
-  color: var(--text);
   flex-shrink: 0;
 }
-.navbar__logo .mark {
-  color: var(--accent);
+.navbar__logo-img {
+  height: 44px;
+  width: auto;
+  display: block;
+  /* The logo's wordmark/tagline are navy — near-invisible on the dark
+     theme's near-black background — so it's flipped to a plain white
+     silhouette instead of trying to preserve its navy/blue/gold colors. */
+  transition: filter var(--theme-fade);
+}
+[data-theme="dark"] .navbar__logo-img {
+  filter: brightness(0) invert(1);
 }
 
 /* Groups the link list and the right-hand actions so both can be
@@ -568,10 +573,10 @@ body.nav-open {
   transition:
     opacity 0.9s ease,
     visibility 0s linear 0.9s;
-  /* Reserves room below the centered content for the dots + scroll-hint,
-     which are pinned to the bottom of the whole hero (not per-slide), so
-     the tallest slide (the service-card row) never grows into them. */
-  padding-bottom: clamp(90px, 16vh, 150px);
+  /* Reserves room below the centered content for the scroll-hint, which
+     is pinned to the bottom of the whole hero (not per-slide), so the
+     tallest slide (the service-card row) never grows into it. */
+  padding-bottom: clamp(70px, 12vh, 120px);
 }
 .hero-slide.is-active {
   opacity: 1;
@@ -668,35 +673,6 @@ body.nav-open {
   height: 20px;
 }
 
-.hero-carousel__dots {
-  position: absolute;
-  bottom: 88px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 4;
-  display: flex;
-  gap: 10px;
-}
-.hero-carousel__dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  border: none;
-  padding: 0;
-  background: var(--text);
-  opacity: 0.28;
-  cursor: pointer;
-  transition:
-    background-color var(--theme-fade),
-    opacity 0.3s ease,
-    transform 0.3s ease;
-}
-.hero-carousel__dot.is-active {
-  background: var(--accent);
-  opacity: 1;
-  transform: scale(1.2);
-}
-
 .hero-carousel__scroll-hint {
   position: absolute;
   bottom: 28px;
@@ -722,14 +698,11 @@ body.nav-open {
   }
 }
 
-/* Arrows crowd the copy at narrow widths — dots + autoplay still give
-   full control of the carousel without them. */
+/* Arrows crowd the copy at narrow widths — autoplay still cycles the
+   carousel without them. */
 @media (max-width: 640px) {
   .hero-carousel__arrow {
     display: none;
-  }
-  .hero-carousel__dots {
-    bottom: 72px;
   }
 }
 
@@ -1043,6 +1016,9 @@ body.nav-open {
 @media (max-width: 860px) {
   .navbar {
     padding: 14px 20px;
+  }
+  .navbar__logo-img {
+    height: 34px;
   }
   .navbar__toggle {
     display: flex;
