@@ -700,26 +700,23 @@ body.nav-open {
 }
 
 /* Arrows crowd the copy at narrow widths — autoplay still cycles the
-   carousel without them. Slide content also switches from vertically
-   centered to top-aligned: on a short/narrow phone the combined height
-   of eyebrow + heading + paragraph + button (+ stat-row/cards on some
-   slides) can exceed the viewport, and centering an overflowing flex
-   item pushes it out equally top AND bottom — which, on the very first
-   slide, meant the eyebrow/heading crept up behind the fixed navbar
-   while the last stat chips got clipped at the bottom. Top-aligning
-   with a fixed navbar-clearance offset means any leftover overflow can
-   only ever spill off the bottom, never behind the nav. */
+   carousel without them. Slide content stays vertically centered (like
+   desktop) rather than top-aligned: centering distributes any leftover
+   space evenly above/below, so the shorter slides (2 and 3, which have
+   no stat-row/cards) don't end up top-jammed with a huge empty gap
+   underneath. What actually matters is making sure the *tallest* slide
+   (slide 1, with the stat-row) is compact enough to fit within the
+   viewport on its own — if it fits, centering can never push it up
+   behind the fixed navbar in the first place. */
 @media (max-width: 640px) {
   .hero-carousel__arrow {
     display: none;
   }
   .hero-slide {
-    justify-content: flex-start;
-    padding-top: 84px;
-    padding-bottom: 56px;
+    padding-bottom: clamp(48px, 10vh, 80px);
   }
   .hero__content {
-    padding: 16px 20px 20px;
+    padding: 16px 20px 16px;
   }
   .hero__eyebrow {
     margin-bottom: 10px;
@@ -730,15 +727,24 @@ body.nav-open {
   }
   .hero p {
     font-size: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
   }
   .stat-row {
-    margin-top: 20px;
-    gap: 10px;
+    margin-top: 16px;
+    gap: 8px;
+  }
+  .stat-chip {
+    padding: 12px 14px;
+  }
+  .stat-chip .num {
+    font-size: 13px;
+  }
+  .stat-chip .label {
+    font-size: 10px;
   }
   .hero-service-row {
-    margin-bottom: 20px;
-    gap: 10px;
+    margin-bottom: 18px;
+    gap: 8px;
   }
 }
 
@@ -1039,13 +1045,20 @@ body.nav-open {
     grid-template-columns: 1fr;
     justify-items: center;
     text-align: center;
-    padding: 28px 24px;
-    gap: 16px;
+    padding: 36px 24px;
+    gap: 22px;
   }
   .footer-dark__copy,
   .footer-dark__legal,
   .footer-dark__socials { justify-self: center; }
-  .footer-dark__legal { gap: 18px; row-gap: 10px; }
+  /* Stacked one-per-line rather than wrapped inline — at narrow widths
+     wrapping put "Modern Slavery Statement" hard against the next row
+     with barely any separation, reading as one congested block. */
+  .footer-dark__legal {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
 }
 
 /* ---------------- Responsive: tablet / mobile navbar ---------------- */
@@ -1135,8 +1148,7 @@ body.nav-open {
     padding: 12px 16px;
   }
   .hero-slide {
-    padding-top: 76px;
-    padding-bottom: 48px;
+    padding-bottom: 40px;
   }
   .hero h1 {
     font-size: clamp(24px, 8vw, 30px);
@@ -1148,12 +1160,12 @@ body.nav-open {
   .stat-chip {
     min-width: 130px;
     flex: 1 1 130px;
-    padding: 14px 16px;
+    padding: 10px 12px;
   }
   .hero-service-card {
     min-width: 130px;
     flex: 1 1 130px;
-    padding: 14px 16px;
+    padding: 12px 14px;
   }
   .section {
     padding: 64px 0;
