@@ -1,460 +1,412 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Global Soft Systems | 25+ Years of Trust. Built for What's Next.</title>
-<meta name="description" content="GSS combines proven experience, certified diversity, business-led technology consulting and specialized talent to help organizations move forward with confidence.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GSS — Business-Led Technology Consulting &amp; Specialized Talent</title>
+<meta name="description" content="Global Soft Systems (GSS) combines 25+ years of proven experience, certified diversity, business-led technology consulting and specialized talent to help organizations move forward with confidence.">
+<meta name="theme-color" content="#0F2247">
 
-<!-- Inline, render-blocking: sets the theme BEFORE first paint so there is
-     no flash of the wrong theme (light flashing before switching to dark
-     for a returning dark-mode visitor, etc). Keep this tiny and inline. -->
-<script>
-(function () {
-  try {
-    var stored = localStorage.getItem('gss-theme');
-    var theme = stored || 'light';
-    document.documentElement.setAttribute('data-theme', theme);
-  } catch (e) {}
-  document.documentElement.classList.add('theme-pending');
-})();
-</script>
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="GSS — Business-Led Technology Consulting &amp; Specialized Talent">
+<meta property="og:description" content="Global Soft Systems (GSS) combines 25+ years of proven experience, certified diversity, business-led technology consulting and specialized talent to help organizations move forward with confidence.">
+<meta property="og:image" content="images/hero-skyline-1200.webp">
+<meta property="og:site_name" content="Global Soft Systems">
+<meta name="twitter:card" content="summary_large_image">
 
-<!-- Playfair Display (headlines) + Inter (body/UI). preconnect first so the
-     font files start fetching as early as possible; the stylesheet itself
-     is tiny and non-render-blocking-critical but still loads before our
-     own CSS so headings never flash in Georgia before swapping to Playfair. -->
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+
+<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:wght@600;700;800&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap">
 
-<link rel="stylesheet" href="css/styles.css">
+<!-- Above-the-fold hero art: preload the first two slides, never lazy-load any -->
+<link rel="preload" as="image" href="images/hero-skyline-1672.webp" imagesrcset="images/hero-skyline-800.webp 800w, images/hero-skyline-1200.webp 1200w, images/hero-skyline-1672.webp 1672w" imagesizes="100vw" fetchpriority="high">
+<link rel="preload" as="image" href="images/hero-datahall-1672.webp" imagesrcset="images/hero-datahall-800.webp 800w, images/hero-datahall-1200.webp 1200w, images/hero-datahall-1672.webp 1672w" imagesizes="100vw">
 
-<!-- Preload the hero images for the theme most likely to be shown, and
-     fetch the alternate at low priority so toggling is instant. This is
-     the first carousel slide (the one painted at first load / LCP); the
-     other slides fetch normally in the background once the carousel
-     script attaches. -->
-<link rel="preload" as="image" href="assets/img/hero-light.webp" fetchpriority="high">
-<link rel="preload" as="image" href="assets/img/hero-dark.webp" fetchpriority="low">
+<link rel="stylesheet" href="style.css">
+
+<!-- Flag JS support so scroll-reveal never hides content when scripting is off -->
+<script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 
-<nav class="navbar" aria-label="Primary">
-  <a href="index.html" class="navbar__logo">
-    <img src="assets/img/gss_logo.webp" alt="GSS — Results Driven | Delivery Focused" class="navbar__logo-img">
-  </a>
+<a class="skip-link" href="#main">Skip to main content</a>
 
-  <!-- Mobile slot. Empty by default (0-width, invisible) — theme.js
-       physically moves the single #theme-toggle button in here at mobile
-       widths so it's reachable without opening the hamburger, and moves
-       it back into .navbar__menu at desktop widths. There is only ever
-       ONE toggle element on the page; see placeToggle() in theme.js. -->
-  <div class="navbar__mobile-actions">
-    <button class="navbar__toggle" type="button" aria-expanded="false" aria-controls="primary-menu" aria-label="Open menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <g id="ico-base" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></g>
+  </defs>
 
-  <div class="navbar__menu" id="primary-menu">
-    <!-- Explicit in-panel close button, shown only while the mobile menu
-         is open (see .navbar__close in styles.css). The hamburger itself
-         already morphs into an X and still closes the menu on a second
-         tap, but this gives an unambiguous, always-visible close target
-         inside the panel too. -->
-    <button class="navbar__close" type="button" aria-label="Close menu">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
-    </button>
-    <ul class="navbar__links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About Us</a></li>
-      <li><a href="solutions.html">Solutions &amp; Services</a></li>
-      <li><a href="#">Career</a></li>
-      <li><a href="#">Partner Program</a></li>
-      <li><a href="#">Contact</a></li>
-    </ul>
-    <!-- The single theme toggle: far right of the nav links, ahead of
-         the CTA button, at desktop widths. -->
-    <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark theme">
-      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8L6 18M18 6l1.8-1.8" stroke-linecap="round"/></svg>
-      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" stroke-linejoin="round"/></svg>
-    </button>
-    <div class="navbar__right">
-      <a href="#lets-talk" class="btn">Talk to Us →</a>
-    </div>
-  </div>
-</nav>
-<div class="navbar__scrim" hidden></div>
+  <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6.8V12l3.6 2.1"/></g></symbol>
 
-<header class="hero hero-carousel" id="hero-carousel" aria-roledescription="carousel" aria-label="GSS highlights">
+  <symbol id="i-users" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.4" cy="8.4" r="3.2"/><path d="M3.2 19.4a6.2 6.2 0 0 1 12.4 0"/><path d="M16.4 5.7a3 3 0 0 1 0 5.5"/><path d="M17.6 14.4a5.3 5.3 0 0 1 3.2 5"/></g></symbol>
 
-  <div class="hero-slide is-active" data-slide-index="0" aria-hidden="false">
-    <div class="theme-bg">
-      <img class="theme-bg__img theme-bg__img--light" src="assets/img/hero-light.webp"
-           srcset="assets/img/hero-light-mobile.webp 960w, assets/img/hero-light.webp 2400w"
-           sizes="100vw" fetchpriority="high" alt="City skyline reflected in still water at daybreak, seen from a glass rooftop terrace">
-      <img class="theme-bg__img theme-bg__img--dark" src="assets/img/hero-dark.webp"
-           srcset="assets/img/hero-dark-mobile.webp 960w, assets/img/hero-dark.webp 2400w"
-           sizes="100vw" fetchpriority="low" alt="Same city skyline at night, towers lit gold, reflected in still water">
-    </div>
-    <div class="hero__content">
-      <div class="hero__eyebrow">Business-led technology consulting</div>
-      <h1>25+ Years of Trust.<br>Built for What's Next.</h1>
-      <p>GSS combines proven experience, certified diversity, business-led technology consulting and specialized talent to help organizations move forward with confidence.</p>
-      <a href="solutions.html" class="btn">Explore GSS →</a>
-    </div>
-    <div class="stat-row">
-      <div class="stat-chip"><div class="num">25+ Years</div><div class="label">Established Experience</div></div>
-      <div class="stat-chip"><div class="num">MWBE</div><div class="label">Certified</div></div>
-      <div class="stat-chip"><div class="num">Trusted Partnership</div><div class="label">Future-Ready Results</div></div>
-      <div class="stat-chip"><div class="num">Inc. 500</div><div class="label">Recognized</div></div>
-      <div class="stat-chip"><div class="num">Technology + Talent</div><div class="label">Accountable Delivery</div></div>
-    </div>
-  </div>
+  <symbol id="i-handshake" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></g></symbol>
 
-  <div class="hero-slide" data-slide-index="1" aria-hidden="true">
-    <div class="theme-bg theme-bg--simulated-dark">
-      <img class="theme-bg__img theme-bg__img--light" src="assets/img/hero-light2.webp" loading="lazy" fetchpriority="low"
-           alt="Stylised aerial view of a futuristic technology campus with glowing connected pathways at sunrise">
-    </div>
-    <div class="hero__content">
-      <div class="hero__eyebrow">Business-led technology consulting</div>
-      <h1>Technology Should Move<br>Your Business Forward.</h1>
-      <p>When it doesn't, GSS helps identify what is holding you back and delivers the right combination of strategy, technology, talent and execution to move forward confidently.</p>
-      <a href="#lets-talk" class="btn">Let's Talk →</a>
-    </div>
-  </div>
+  <symbol id="i-chart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 19.5v-4.8M10.3 19.5V9.2M15.7 19.5v-7.4M21 19.5V5.4"/></g></symbol>
 
-  <div class="hero-slide" data-slide-index="2" aria-hidden="true">
-    <div class="theme-bg theme-bg--simulated-dark">
-      <img class="theme-bg__img theme-bg__img--light" src="assets/img/hero-light1.webp" loading="lazy" fetchpriority="low"
-           alt="Bright, glowing rows of server racks in a modern data center corridor">
-    </div>
-    <div class="hero__content">
-      <div class="hero__eyebrow">Business-led technology solutions</div>
-      <h1>From Business Challenge<br>to Technology Outcome.</h1>
-      <p>GSS combines strategic guidance, practical technology solutions, and accountable delivery to turn complex priorities into measurable results.</p>
-      <a href="solutions.html" class="btn">Explore Our Solutions →</a>
-    </div>
-  </div>
+  <symbol id="i-user-circle" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.4 18.7a6.4 6.4 0 0 1 11.2 0"/></g></symbol>
 
-  <div class="hero-slide" data-slide-index="3" aria-hidden="true">
-    <div class="theme-bg theme-bg--simulated-dark">
-      <img class="theme-bg__img theme-bg__img--light" src="assets/img/hero-light3.webp" loading="lazy" fetchpriority="low"
-           alt="Blurred modern office interior with colleagues meeting behind glass-walled rooms">
-    </div>
-    <div class="hero__content hero__content--wide">
-      <div class="hero__eyebrow">Scalable staffing services</div>
-      <h1>Talent at Scale.<br>On Your Terms.</h1>
-      <p>Backed by an established in-house workforce and a trusted supplier ecosystem, GSS delivers qualified talent quickly, flexibly, and at scale.</p>
-      <div class="hero-service-row">
-        <div class="hero-service-card">
-          <span class="hero-service-card__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.5" width="18" height="12" rx="2"/><path d="M8 7.5V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1.5"/><circle cx="12" cy="13.5" r="2"/><path d="M12 13.5v-.01"/></svg>
-          </span>
-          <span>
-            <span class="hero-service-card__title">Contract Talent</span>
-            <span class="hero-service-card__desc">Flexible expertise</span>
-          </span>
-        </div>
-        <div class="hero-service-card">
-          <span class="hero-service-card__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6.5" r="2.4"/><circle cx="17" cy="6.5" r="2.4"/><path d="M3.5 18.5c0-2.8 1.7-4.7 3.5-4.7s3.5 1.9 3.5 4.7M13.5 18.5c0-2.8 1.7-4.7 3.5-4.7s3.5 1.9 3.5 4.7"/></svg>
-          </span>
-          <span>
-            <span class="hero-service-card__title">Project Staffing</span>
-            <span class="hero-service-card__desc">Client-managed teams</span>
-          </span>
-        </div>
-        <div class="hero-service-card">
-          <span class="hero-service-card__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.7 5.3 3.7 8.5s-1.3 6.2-3.7 8.5c-2.4-2.3-3.7-5.3-3.7-8.5s1.3-6.2 3.7-8.5Z"/></svg>
-          </span>
-          <span>
-            <span class="hero-service-card__title">Remote / Offshore</span>
-            <span class="hero-service-card__desc">Custom-built teams</span>
-          </span>
-        </div>
-        <div class="hero-service-card">
-          <span class="hero-service-card__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c0-3.6 3.1-6.5 7-6.5s7 2.9 7 6.5"/><path d="M9.2 16.8l1.9 1.9 3.4-3.6"/></svg>
-          </span>
-          <span>
-            <span class="hero-service-card__title">W2 / Fulltime</span>
-            <span class="hero-service-card__desc">Direct placements</span>
-          </span>
+  <symbol id="i-briefcase-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12.6 18.5H4.1a1.6 1.6 0 0 1-1.6-1.6V9.1a1.6 1.6 0 0 1 1.6-1.6h11.4a1.6 1.6 0 0 1 1.6 1.6v1.6"/><path d="M6.9 7.5V6a1.6 1.6 0 0 1 1.6-1.6h2.6A1.6 1.6 0 0 1 12.7 6v1.5"/><circle cx="17.6" cy="16" r="4.4"/><path d="M17.6 13.9V16l1.5.9"/></g></symbol>
+
+  <symbol id="i-org" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.4"/><circle cx="6" cy="19" r="2.4"/><circle cx="18" cy="19" r="2.4"/><path d="M12 7.4v3.3M6 16.6V14h12v2.6M12 10.7V14"/></g></symbol>
+
+  <symbol id="i-globe" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3.3 12h17.4"/><path d="M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"/></g></symbol>
+
+  <symbol id="i-user-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.4" cy="8" r="3.4"/><path d="M3.1 19.6a6.3 6.3 0 0 1 12.6 0"/><path d="m16.6 11.7 2 2 3.4-3.6"/></g></symbol>
+
+  <symbol id="i-award" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5.2"/><path d="m8.7 13.5-1.4 6.4 4.7-2.5 4.7 2.5-1.4-6.4"/></g></symbol>
+
+  <symbol id="i-compass" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15.6 8.4-2.1 5.1-5.1 2.1 2.1-5.1z"/></g></symbol>
+
+  <symbol id="i-layers" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 4.6-9 4.6-9-4.6z"/><path d="m3 12.4 9 4.6 9-4.6"/><path d="m3 16.9 9 4.6 9-4.6"/></g></symbol>
+
+  <symbol id="i-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4.6 6.1v5.6c0 4.5 3.1 7.8 7.4 9.2 4.3-1.4 7.4-4.7 7.4-9.2V6.1z"/><path d="m9.1 12 2.2 2.2 4.1-4.4"/></g></symbol>
+
+  <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h14.5"/><path d="m13.4 6.6 5.4 5.4-5.4 5.4"/></g></symbol>
+
+  <symbol id="i-chevron" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 9 7 7 7-7"/></g></symbol>
+
+  <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.6v2.2M12 19.2v2.2M21.4 12h-2.2M4.8 12H2.6M18.6 5.4l-1.6 1.6M7 17l-1.6 1.6M18.6 18.6 17 17M7 7 5.4 5.4"/></g></symbol>
+
+  <symbol id="i-moon" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5a8.6 8.6 0 1 0 10.7 10.7z"/></g></symbol>
+
+  <symbol id="i-quote" viewBox="0 0 40 30"><g fill="currentColor"><path d="M0 30V16.6C0 7.4 4.9 1.4 14.3 0l1.3 4.4c-5 1.4-7.6 4.4-7.7 8.9h6.7V30zm23.4 0V16.6C23.4 7.4 28.3 1.4 37.7 0L39 4.4c-5 1.4-7.6 4.4-7.7 8.9H38V30z"/></g></symbol>
+</svg>
+
+<header class="site-header" id="siteHeader">
+  <div class="container header-inner">
+
+    <a class="logo" href="index.html" aria-label="GSS — Global Soft Systems, home">
+      <img class="logo-img logo-img--light" src="images/gss_logo.png" alt="GSS — Global Soft Systems: Results Driven | Delivery Focused" width="190" height="76">
+      <img class="logo-img logo-img--dark" src="images/gss_logo_dark.png" alt="" aria-hidden="true" width="190" height="76">
+    </a>
+
+        <nav class="nav-desktop" aria-label="Primary">
+          <ul>
+            <li><a href="index.html" class="is-current" aria-current="page">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="solutions.html">Solutions &amp; Services</a></li>
+            <li><a href="partner.html">Partner Program</a></li>
+            <li><a href="career.html">Careers</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </nav>
+
+    <div class="header-actions">
+      <button class="icon-btn" id="themeToggle" type="button" aria-label="Switch to dark theme" aria-pressed="false">
+        <svg class="ico ico-light" aria-hidden="true"><use href="#i-sun"/></svg>
+        <svg class="ico ico-dark" aria-hidden="true"><use href="#i-moon"/></svg>
+      </button>
+      <div class="social-menu" id="socialMenu">
+        <button class="social-btn" id="socialToggle" type="button" aria-label="Connect with GSS on social media" title="Connect with GSS" aria-haspopup="true" aria-expanded="false" aria-controls="socialDropdown">
+          <svg class="social-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.2" r="2.4"/><circle cx="5.8" cy="12" r="2.4"/><circle cx="18" cy="18.8" r="2.4"/><path d="m8 10.9 7.5-4.5M8 13.1l7.5 4.5"/></svg>
+          <span class="social-btn-label">Connect</span>
+          <svg class="ico social-caret" aria-hidden="true"><use href="#i-chevron"/></svg>
+        </button>
+        <div class="social-dropdown" id="socialDropdown" role="menu" aria-label="Connect with GSS" hidden>
+          <a class="social-item" role="menuitem" href="https://www.facebook.com/" target="_blank" rel="noopener"><span class="social-item-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H17V3.6c-.3 0-1.3-.13-2.5-.13-2.47 0-4.16 1.5-4.16 4.27v2.16H7.6V13h2.74v8z"/></svg></span><span>Facebook</span></a>
+          <a class="social-item" role="menuitem" href="https://www.linkedin.com/" target="_blank" rel="noopener"><span class="social-item-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5A1.94 1.94 0 1 1 3.06 5a1.94 1.94 0 0 1 3.88 0zM3.3 8.48h3.28V21H3.3zm5.5 0h3.15v1.71h.05c.44-.83 1.5-1.71 3.1-1.71 3.32 0 3.93 2.18 3.93 5.02V21h-3.28v-5.55c0-1.32-.02-3.02-1.84-3.02-1.84 0-2.12 1.44-2.12 2.93V21H8.8z"/></svg></span><span>LinkedIn</span></a>
+          <a class="social-item" role="menuitem" href="https://www.instagram.com/" target="_blank" rel="noopener"><span class="social-item-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.21 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.5.01-4.74.07-.9.04-1.38.19-1.7.32-.43.16-.74.36-1.06.68-.32.32-.52.63-.68 1.06-.13.32-.28.8-.32 1.7C3.21 8.5 3.2 8.85 3.2 12s.01 3.5.07 4.74c.04.9.19 1.38.32 1.7.16.43.36.74.68 1.06.32.32.63.52 1.06.68.32.13.8.28 1.7.32 1.24.06 1.59.07 4.74.07s3.5-.01 4.74-.07c.9-.04 1.38-.19 1.7-.32.43-.16.74-.36 1.06-.68.32-.32.52-.63.68-1.06.13-.32.28-.8.32-1.7.06-1.24.07-1.59.07-4.74s-.01-3.5-.07-4.74c-.04-.9-.19-1.38-.32-1.7-.16-.43-.36-.74-.68-1.06-.32-.32-.63-.52-1.06-.68-.32-.13-.8-.28-1.7-.32C15.5 4.01 15.15 4 12 4zm0 3.06A4.94 4.94 0 1 1 12 16.94 4.94 4.94 0 0 1 12 7.06zm0 1.8a3.14 3.14 0 1 0 0 6.28 3.14 3.14 0 0 0 0-6.28zm5.02-.9a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0z"/></svg></span><span>Instagram</span></a>
+          <a class="social-item" role="menuitem" href="https://www.youtube.com/" target="_blank" rel="noopener"><span class="social-item-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12z"/></svg></span><span>YouTube</span></a>
         </div>
       </div>
-      <a href="#lets-talk" class="btn">Build Your Team →</a>
+      <a class="btn btn-primary btn-sm" href="contact.html">Talk to Us <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <button class="hamburger" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
-
-  <button class="hero-carousel__arrow hero-carousel__arrow--prev" type="button" aria-label="Previous slide">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-  </button>
-  <button class="hero-carousel__arrow hero-carousel__arrow--next" type="button" aria-label="Next slide">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
-  </button>
-
-  <a href="#how-gss-works" class="hero-carousel__scroll-hint" aria-label="Scroll to content">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-  </a>
 </header>
 
-<section class="section" id="how-gss-works">
-  <div class="container">
-    <div class="section-title-kicker">How GSS Works</div>
-    <h2 class="centered">We begin with your business — not a predetermined solution.</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step__num">01</div>
-        <h3>Listen &amp; Understand</h3>
-        <p>We understand your environment, challenge and desired outcome.</p>
-      </div>
-      <div class="step">
-        <div class="step__num">02</div>
-        <h3>Define the Right Path</h3>
-        <p>We translate needs into clear requirements and practical options.</p>
-      </div>
-      <div class="step">
-        <div class="step__num">03</div>
-        <h3>Deliver with Accountability</h3>
-        <p>We align strategy, technology, delivery and talent around results.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section clients-section" id="clients">
-  <div class="container">
-    <div class="section-title-kicker">Clientele</div>
-    <h2 class="centered">Trusted by organizations across industries.</h2>
-  </div>
-  <div class="logo-marquee" role="group" aria-label="Client logos">
-    <div class="logo-marquee__track">
-      <div class="logo-marquee__group">
-        <span class="logo-wordmark">ConocoPhillips</span>
-        <span class="logo-wordmark">Chevron</span>
-        <span class="logo-wordmark">Verizon</span>
-        <span class="logo-wordmark">AT&amp;T</span>
-        <span class="logo-wordmark">T-Mobile</span>
-        <span class="logo-wordmark">Cox</span>
-        <span class="logo-wordmark">Amdocs</span>
-        <span class="logo-wordmark">RightsLogic</span>
-        <span class="logo-wordmark">Accenture</span>
-        <span class="logo-wordmark">Mekko Graphics</span>
-        <span class="logo-wordmark">GCOM</span>
-        <span class="logo-wordmark">Microsoft</span>
-        <span class="logo-wordmark">Autodesk</span>
-        <span class="logo-wordmark">United Technologies</span>
-        <span class="logo-wordmark">Lockheed Martin</span>
-        <span class="logo-wordmark">Electrolux</span>
-        <span class="logo-wordmark">3M</span>
-        <span class="logo-wordmark">Xerox</span>
-        <span class="logo-wordmark">Dell</span>
-        <span class="logo-wordmark">IBM</span>
-        <span class="logo-wordmark">HP</span>
-        <span class="logo-wordmark">Capgemini</span>
-        <span class="logo-wordmark">Avaya</span>
-        <span class="logo-wordmark">TJX</span>
-        <span class="logo-wordmark">J.Crew</span>
-        <span class="logo-wordmark">Nestl&eacute;</span>
-        <span class="logo-wordmark">Goodyear</span>
-        <span class="logo-wordmark">Sears</span>
-        <span class="logo-wordmark">priceline.com</span>
-        <span class="logo-wordmark">LTD Commodities</span>
-        <span class="logo-wordmark">Polo Ralph Lauren</span>
-        <span class="logo-wordmark">Limited Brands</span>
-        <span class="logo-wordmark">W.W. Grainger</span>
-        <span class="logo-wordmark">Nike</span>
-        <span class="logo-wordmark">Cushman &amp; Wakefield</span>
-        <span class="logo-wordmark">Est&eacute;e Lauder</span>
-        <span class="logo-wordmark">Ryder</span>
-        <span class="logo-wordmark">Cabot</span>
-        <span class="logo-wordmark">Rockwell Automation</span>
-        <span class="logo-wordmark">BASF</span>
-        <span class="logo-wordmark">Sanofi</span>
-        <span class="logo-wordmark">Merck</span>
-        <span class="logo-wordmark">Abbott</span>
-        <span class="logo-wordmark">Cardinal Health</span>
-        <span class="logo-wordmark">PAR Pharmaceutical</span>
-        <span class="logo-wordmark">Novartis</span>
-        <span class="logo-wordmark">Prudential</span>
-        <span class="logo-wordmark">MAPFRE Insurance</span>
-        <span class="logo-wordmark">Allstate</span>
-        <span class="logo-wordmark">NYC Dept. of Technology &amp; Telecommunications</span>
-        <span class="logo-wordmark">Mass.gov</span>
-        <span class="logo-wordmark">NYC Courts</span>
-        <span class="logo-wordmark">NYC Dept. of Health and Mental Hygiene</span>
-        <span class="logo-wordmark">NYC Human Resources Administration</span>
-        <span class="logo-wordmark">Genworth</span>
-        <span class="logo-wordmark">HSBC</span>
-        <span class="logo-wordmark">AllianceBernstein</span>
-        <span class="logo-wordmark">DTCC</span>
-        <span class="logo-wordmark">MassMutual</span>
-        <span class="logo-wordmark">Citizens Bank</span>
-        <span class="logo-wordmark">The Hartford</span>
-        <span class="logo-wordmark">Wellington Management</span>
-        <span class="logo-wordmark">JPMorgan Chase</span>
-        <span class="logo-wordmark">TD Bank</span>
-        <span class="logo-wordmark">Goldman Sachs</span>
-        <span class="logo-wordmark">Fidelity</span>
-        <span class="logo-wordmark">Bank of America</span>
-        <span class="logo-wordmark">Flagstar Bank</span>
-        <span class="logo-wordmark">Citi</span>
-        <span class="logo-wordmark">Blackstone</span>
-        <span class="logo-wordmark">Wells Fargo</span>
-        <span class="logo-wordmark">Credit Suisse</span>
-        <span class="logo-wordmark">Deutsche Bank</span>
-        <span class="logo-wordmark">Vanguard</span>
-        <span class="logo-wordmark">MetLife</span>
-        <span class="logo-wordmark">Guardian</span>
-        <span class="logo-wordmark">Sentry</span>
-        <span class="logo-wordmark">Blue Cross Blue Shield</span>
-        <span class="logo-wordmark">Institute of International Education</span>
-        <span class="logo-wordmark">Sterling</span>
-        <span class="logo-wordmark">Gartner</span>
-        <span class="logo-wordmark">Ernst &amp; Young</span>
-        <span class="logo-wordmark">GARP</span>
-        <span class="logo-wordmark">Deloitte</span>
-        <span class="logo-wordmark">PRGX</span>
-        <span class="logo-wordmark">Avanade</span>
-        <span class="logo-wordmark">Razorfish</span>
-        <span class="logo-wordmark">Honda</span>
-        <span class="logo-wordmark">Hyundai</span>
-        <span class="logo-wordmark">University of Phoenix</span>
-      </div>
-      <div class="logo-marquee__group" aria-hidden="true">
-        <span class="logo-wordmark">ConocoPhillips</span>
-        <span class="logo-wordmark">Chevron</span>
-        <span class="logo-wordmark">Verizon</span>
-        <span class="logo-wordmark">AT&amp;T</span>
-        <span class="logo-wordmark">T-Mobile</span>
-        <span class="logo-wordmark">Cox</span>
-        <span class="logo-wordmark">Amdocs</span>
-        <span class="logo-wordmark">RightsLogic</span>
-        <span class="logo-wordmark">Accenture</span>
-        <span class="logo-wordmark">Mekko Graphics</span>
-        <span class="logo-wordmark">GCOM</span>
-        <span class="logo-wordmark">Microsoft</span>
-        <span class="logo-wordmark">Autodesk</span>
-        <span class="logo-wordmark">United Technologies</span>
-        <span class="logo-wordmark">Lockheed Martin</span>
-        <span class="logo-wordmark">Electrolux</span>
-        <span class="logo-wordmark">3M</span>
-        <span class="logo-wordmark">Xerox</span>
-        <span class="logo-wordmark">Dell</span>
-        <span class="logo-wordmark">IBM</span>
-        <span class="logo-wordmark">HP</span>
-        <span class="logo-wordmark">Capgemini</span>
-        <span class="logo-wordmark">Avaya</span>
-        <span class="logo-wordmark">TJX</span>
-        <span class="logo-wordmark">J.Crew</span>
-        <span class="logo-wordmark">Nestl&eacute;</span>
-        <span class="logo-wordmark">Goodyear</span>
-        <span class="logo-wordmark">Sears</span>
-        <span class="logo-wordmark">priceline.com</span>
-        <span class="logo-wordmark">LTD Commodities</span>
-        <span class="logo-wordmark">Polo Ralph Lauren</span>
-        <span class="logo-wordmark">Limited Brands</span>
-        <span class="logo-wordmark">W.W. Grainger</span>
-        <span class="logo-wordmark">Nike</span>
-        <span class="logo-wordmark">Cushman &amp; Wakefield</span>
-        <span class="logo-wordmark">Est&eacute;e Lauder</span>
-        <span class="logo-wordmark">Ryder</span>
-        <span class="logo-wordmark">Cabot</span>
-        <span class="logo-wordmark">Rockwell Automation</span>
-        <span class="logo-wordmark">BASF</span>
-        <span class="logo-wordmark">Sanofi</span>
-        <span class="logo-wordmark">Merck</span>
-        <span class="logo-wordmark">Abbott</span>
-        <span class="logo-wordmark">Cardinal Health</span>
-        <span class="logo-wordmark">PAR Pharmaceutical</span>
-        <span class="logo-wordmark">Novartis</span>
-        <span class="logo-wordmark">Prudential</span>
-        <span class="logo-wordmark">MAPFRE Insurance</span>
-        <span class="logo-wordmark">Allstate</span>
-        <span class="logo-wordmark">NYC Dept. of Technology &amp; Telecommunications</span>
-        <span class="logo-wordmark">Mass.gov</span>
-        <span class="logo-wordmark">NYC Courts</span>
-        <span class="logo-wordmark">NYC Dept. of Health and Mental Hygiene</span>
-        <span class="logo-wordmark">NYC Human Resources Administration</span>
-        <span class="logo-wordmark">Genworth</span>
-        <span class="logo-wordmark">HSBC</span>
-        <span class="logo-wordmark">AllianceBernstein</span>
-        <span class="logo-wordmark">DTCC</span>
-        <span class="logo-wordmark">MassMutual</span>
-        <span class="logo-wordmark">Citizens Bank</span>
-        <span class="logo-wordmark">The Hartford</span>
-        <span class="logo-wordmark">Wellington Management</span>
-        <span class="logo-wordmark">JPMorgan Chase</span>
-        <span class="logo-wordmark">TD Bank</span>
-        <span class="logo-wordmark">Goldman Sachs</span>
-        <span class="logo-wordmark">Fidelity</span>
-        <span class="logo-wordmark">Bank of America</span>
-        <span class="logo-wordmark">Flagstar Bank</span>
-        <span class="logo-wordmark">Citi</span>
-        <span class="logo-wordmark">Blackstone</span>
-        <span class="logo-wordmark">Wells Fargo</span>
-        <span class="logo-wordmark">Credit Suisse</span>
-        <span class="logo-wordmark">Deutsche Bank</span>
-        <span class="logo-wordmark">Vanguard</span>
-        <span class="logo-wordmark">MetLife</span>
-        <span class="logo-wordmark">Guardian</span>
-        <span class="logo-wordmark">Sentry</span>
-        <span class="logo-wordmark">Blue Cross Blue Shield</span>
-        <span class="logo-wordmark">Institute of International Education</span>
-        <span class="logo-wordmark">Sterling</span>
-        <span class="logo-wordmark">Gartner</span>
-        <span class="logo-wordmark">Ernst &amp; Young</span>
-        <span class="logo-wordmark">GARP</span>
-        <span class="logo-wordmark">Deloitte</span>
-        <span class="logo-wordmark">PRGX</span>
-        <span class="logo-wordmark">Avanade</span>
-        <span class="logo-wordmark">Razorfish</span>
-        <span class="logo-wordmark">Honda</span>
-        <span class="logo-wordmark">Hyundai</span>
-        <span class="logo-wordmark">University of Phoenix</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="cta-block" id="lets-talk">
-  <div class="section-title-kicker">Get Started</div>
-  <h2>You don't need to know the answer before speaking with us.</h2>
-  <p>Tell us what is happening in your business, what is holding you back, or what you want to accomplish next. We'll begin by listening.</p>
-  <a href="#" class="btn">Let's Talk →</a>
-  <div class="fineprint">Initial conversations are complimentary and focused on understanding your needs.</div>
-</section>
-
-<footer class="footer-dark">
-  <div class="container footer-dark__row">
-    <div class="footer-dark__copy">&copy; <span id="footer-year">2026</span> GSS</div>
-    <nav class="footer-dark__legal" aria-label="Legal">
-      <a href="#">Disclaimer</a>
-      <a href="#">Privacy</a>
-      <a href="#">Modern Slavery Statement</a>
+<!-- Mobile overlay menu -->
+<div class="mobile-nav" id="mobileNav" hidden>
+    <nav aria-label="Mobile">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="solutions.html">Solutions &amp; Services</a></li>
+        <li><a href="partner.html">Partner Program</a></li>
+        <li><a href="career.html">Careers</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
     </nav>
-    <!-- TODO: point these at GSS's real profile URLs once available. -->
-    <div class="footer-dark__socials" aria-label="GSS on social media">
-      <a href="#" class="footer-dark__social" aria-label="GSS on Facebook">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 9H15V6.5h-1.5c-1.93 0-3.5 1.57-3.5 3.5v1.5H8V14h2v7h2.5v-7h1.8l.3-2.5h-2.1V10c0-.6.4-1 1-1Z"/></svg>
-      </a>
-      <a href="#" class="footer-dark__social" aria-label="GSS on Instagram">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 3h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8Zm4 3.5A4.5 4.5 0 1 1 7.5 13 4.5 4.5 0 0 1 12 8.5Zm0 2A2.5 2.5 0 1 0 14.5 13 2.5 2.5 0 0 0 12 10.5ZM17 6.8a.9.9 0 1 1-.9.9.9.9 0 0 1 .9-.9Z"/></svg>
-      </a>
-      <a href="#" class="footer-dark__social" aria-label="GSS on LinkedIn">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 7.03a1.96 1.96 0 1 0 0-3.92 1.96 1.96 0 0 0 0 3.92ZM20.44 20h-3.37v-5.6c0-1.34-.02-3.06-1.87-3.06-1.87 0-2.16 1.46-2.16 2.96V20H9.67V8.5h3.24v1.57h.05c.45-.86 1.56-1.77 3.21-1.77 3.43 0 4.06 2.26 4.06 5.2V20Z"/></svg>
-      </a>
-      <a href="#" class="footer-dark__social" aria-label="GSS on YouTube">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.8 8.001a2.752 2.752 0 0 0-1.94-1.948C18.088 5.5 12 5.5 12 5.5s-6.088 0-7.86.553A2.752 2.752 0 0 0 2.2 8.001 28.6 28.6 0 0 0 1.65 12a28.6 28.6 0 0 0 .55 4c.204.995.997 1.782 1.94 1.948C5.912 18.5 12 18.5 12 18.5s6.088 0 7.86-.552a2.752 2.752 0 0 0 1.94-1.948A28.6 28.6 0 0 0 22.35 12a28.6 28.6 0 0 0-.55-3.999ZM10 15V9l5.196 3L10 15Z"/></svg>
-      </a>
+  <div class="mobile-connect" id="mobileConnect">
+    <button class="mobile-connect-toggle" id="mobileConnectToggle" type="button" aria-expanded="true" aria-controls="mobileConnectPanel">Connect With Us <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></button>
+    <div class="mobile-connect-wrap">
+      <ul class="mobile-connect-panel" id="mobileConnectPanel">
+        <li><a class="mobile-social" href="https://www.facebook.com/" target="_blank" rel="noopener"><span class="mobile-social-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H17V3.6c-.3 0-1.3-.13-2.5-.13-2.47 0-4.16 1.5-4.16 4.27v2.16H7.6V13h2.74v8z"/></svg></span><span>Facebook</span></a></li>
+        <li><a class="mobile-social" href="https://www.linkedin.com/" target="_blank" rel="noopener"><span class="mobile-social-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5A1.94 1.94 0 1 1 3.06 5a1.94 1.94 0 0 1 3.88 0zM3.3 8.48h3.28V21H3.3zm5.5 0h3.15v1.71h.05c.44-.83 1.5-1.71 3.1-1.71 3.32 0 3.93 2.18 3.93 5.02V21h-3.28v-5.55c0-1.32-.02-3.02-1.84-3.02-1.84 0-2.12 1.44-2.12 2.93V21H8.8z"/></svg></span><span>LinkedIn</span></a></li>
+        <li><a class="mobile-social" href="https://www.instagram.com/" target="_blank" rel="noopener"><span class="mobile-social-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.21 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.5.01-4.74.07-.9.04-1.38.19-1.7.32-.43.16-.74.36-1.06.68-.32.32-.52.63-.68 1.06-.13.32-.28.8-.32 1.7C3.21 8.5 3.2 8.85 3.2 12s.01 3.5.07 4.74c.04.9.19 1.38.32 1.7.16.43.36.74.68 1.06.32.32.63.52 1.06.68.32.13.8.28 1.7.32 1.24.06 1.59.07 4.74.07s3.5-.01 4.74-.07c.9-.04 1.38-.19 1.7-.32.43-.16.74-.36 1.06-.68.32-.32.52-.63.68-1.06.13-.32.28-.8.32-1.7.06-1.24.07-1.59.07-4.74s-.01-3.5-.07-4.74c-.04-.9-.19-1.38-.32-1.7-.16-.43-.36-.74-.68-1.06-.32-.32-.63-.52-1.06-.68-.32-.13-.8-.28-1.7-.32C15.5 4.01 15.15 4 12 4zm0 3.06A4.94 4.94 0 1 1 12 16.94 4.94 4.94 0 0 1 12 7.06zm0 1.8a3.14 3.14 0 1 0 0 6.28 3.14 3.14 0 0 0 0-6.28zm5.02-.9a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0z"/></svg></span><span>Instagram</span></a></li>
+        <li><a class="mobile-social" href="https://www.youtube.com/" target="_blank" rel="noopener"><span class="mobile-social-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12z"/></svg></span><span>YouTube</span></a></li>
+      </ul>
     </div>
+  </div>
+
+  <div class="mobile-nav-foot">
+    <a class="btn btn-primary" href="contact.html">Talk to Us <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <button class="icon-btn" id="themeToggleMobile" type="button" aria-label="Switch to dark theme" aria-pressed="false">
+      <svg class="ico ico-light" aria-hidden="true"><use href="#i-sun"/></svg>
+      <svg class="ico ico-dark" aria-hidden="true"><use href="#i-moon"/></svg>
+    </button>
+  </div>
+</div>
+
+<main id="main">
+<span id="top"></span>
+
+<section class="hero" id="hero" role="region" aria-label="Hero highlights" aria-roledescription="carousel">
+
+  <div class="hero-viewport" id="heroViewport">
+
+    <!-- ---------- SLIDE 1 ---------- -->
+    <article class="hero-slide is-active" data-slide="0" aria-roledescription="slide" aria-label="Slide 1 of 4: 25+ Years of Trust">
+      <div class="hero-media">
+        <img src="images/hero-skyline-1672.webp"
+             srcset="images/hero-skyline-560.webp 560w, images/hero-skyline-800.webp 800w, images/hero-skyline-1200.webp 1200w, images/hero-skyline-1672.webp 1672w"
+             sizes="100vw" fetchpriority="high" alt="Waterfront city skyline of glass towers mirrored in still blue water, seen from an open terrace" decoding="async">
+        <span class="hero-tint tint-3" aria-hidden="true"></span>
+      </div>
+      <div class="container hero-content">
+        <h1 class="hero-title">25+ Years of Trust.<br>Built for What&rsquo;s Next.</h1>
+        <p class="hero-sub">GSS combines proven experience, certified diversity, business-led technology consulting and specialized talent to help organizations move forward with confidence.</p>
+        <ul class="cred-row cols-5">
+          <li class="cred-card is-stacked"><span class="cred-ico"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg></span><span class="cred-txt"><strong>25+ Years</strong><small>Established experience</small></span></li>
+          <li class="cred-card is-stacked"><span class="cred-ico"><svg class="ico" aria-hidden="true"><use href="#i-award"/></svg></span><span class="cred-txt"><strong>MWBE</strong><small>Certified</small></span></li>
+          <li class="cred-card is-stacked"><span class="cred-ico"><svg class="ico" aria-hidden="true"><use href="#i-handshake"/></svg></span><span class="cred-txt"><strong>Trusted Partnership</strong><small>Future-ready results</small></span></li>
+          <li class="cred-card is-stacked"><span class="cred-ico"><svg class="ico" aria-hidden="true"><use href="#i-chart"/></svg></span><span class="cred-txt"><strong>Inc. 5000</strong><small>Recognized</small></span></li>
+          <li class="cred-card is-stacked"><span class="cred-ico"><svg class="ico" aria-hidden="true"><use href="#i-user-circle"/></svg></span><span class="cred-txt"><strong>Technology + Talent</strong><small>Accountable delivery</small></span></li>
+        </ul>
+        <p class="hero-tagline">Proven experience. Certified diversity. Modern delivery. One accountable GSS partnership.</p>
+        <p class="hero-cta"><a class="btn btn-primary" href="about.html">Explore GSS <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+      </div>
+    </article>
+
+    <!-- ---------- SLIDE 2 ---------- -->
+    <article class="hero-slide" data-slide="2" aria-roledescription="slide" aria-label="Slide 2 of 4: Technology Should Move Your Business Forward" aria-hidden="true">
+      <div class="hero-media">
+        <img src="images/hero-horizon-1672.webp"
+             srcset="images/hero-horizon-560.webp 560w, images/hero-horizon-800.webp 800w, images/hero-horizon-1200.webp 1200w, images/hero-horizon-1672.webp 1672w"
+             sizes="100vw" alt="Abstract futuristic architectural render of pale curved terraces with fine gold light trails running toward the horizon" decoding="async">
+        <span class="hero-tint tint-4" aria-hidden="true"></span>
+      </div>
+      <div class="container hero-content">
+        <p class="eyebrow"><span class="rule" aria-hidden="true"></span>Business-Led Technology Consulting<span class="rule" aria-hidden="true"></span></p>
+        <h2 class="hero-title">Technology Should Move<br>Your Business Forward.</h2>
+        <p class="hero-sub">When it doesn&rsquo;t, GSS helps identify what is holding you back and delivers the right combination of strategy, technology, talent and execution to move forward confidently.</p>
+        <p class="hero-cta"><a class="btn btn-primary" href="contact.html" tabindex="-1">Let&rsquo;s Talk <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+      </div>
+    </article>
+
+    <!-- ---------- SLIDE 3 ---------- -->
+    <article class="hero-slide" data-slide="1" aria-roledescription="slide" aria-label="Slide 3 of 4: From Business Challenge to Technology Outcome" aria-hidden="true">
+      <div class="hero-media">
+        <img src="images/hero-datahall-1672.webp"
+             srcset="images/hero-datahall-560.webp 560w, images/hero-datahall-800.webp 800w, images/hero-datahall-1200.webp 1200w, images/hero-datahall-1672.webp 1672w"
+             sizes="100vw" alt="Bright white data-hall corridor lined with server cabinets glowing with warm gold indicator light" decoding="async">
+        <span class="hero-tint tint-1" aria-hidden="true"></span>
+      </div>
+      <div class="container hero-content">
+        <p class="eyebrow"><span class="rule" aria-hidden="true"></span>Business-Led Technology Solutions<span class="rule" aria-hidden="true"></span></p>
+        <h2 class="hero-title">From Business Challenge<br>to Technology Outcome.</h2>
+        <p class="hero-sub">GSS combines strategic guidance, practical technology solutions and accountable delivery to turn complex priorities into measurable results.</p>
+        <p class="hero-cta"><a class="btn btn-primary" href="solutions.html" tabindex="-1">Explore Our Solutions <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+      </div>
+    </article>
+    
+
+    <!-- ---------- SLIDE 4 ---------- -->
+    <article class="hero-slide" data-slide="2" aria-roledescription="slide" aria-label="Slide 4 of 4: Talent at Scale, On Your Terms" aria-hidden="true">
+      <div class="hero-media">
+        <img src="images/hero-office-1672.webp"
+             srcset="images/hero-office-560.webp 560w, images/hero-office-800.webp 800w, images/hero-office-1200.webp 1200w, images/hero-office-1672.webp 1672w"
+             sizes="100vw" alt="Softly blurred modern glass-walled office interior with small teams working" decoding="async">
+        <span class="hero-tint tint-2" aria-hidden="true"></span>
+      </div>
+      <div class="container hero-content">
+        <p class="eyebrow"><span class="rule" aria-hidden="true"></span>Scalable Staffing Services<span class="rule" aria-hidden="true"></span></p>
+        <h2 class="hero-title">Talent at Scale.<br>On Your Terms.</h2>
+        <p class="hero-sub">Backed by an established in-house workforce and a trusted supplier ecosystem, GSS delivers qualified talent quickly, flexibly and at scale.</p>
+        <ul class="cred-row cols-4">
+          <li class="cred-card"><span class="cred-ico"><svg class="ico" aria-hidden="true"><use href="#i-briefcase-clock"/></svg></span><span class="cred-txt"><strong>Contract Talent</strong><small>Flexible expertise</small></span></li>
+          <li class="cred-card"><span class="cred-ico"><svg class="ico" aria-hidden="true"><use href="#i-org"/></svg></span><span class="cred-txt"><strong>Project Staffing</strong><small>Client-managed teams</small></span></li>
+          <li class="cred-card"><span class="cred-ico"><svg class="ico" aria-hidden="true"><use href="#i-globe"/></svg></span><span class="cred-txt"><strong>Remote / Offshore</strong><small>Custom-built teams</small></span></li>
+          <li class="cred-card"><span class="cred-ico"><svg class="ico" aria-hidden="true"><use href="#i-user-check"/></svg></span><span class="cred-txt"><strong>W2 / Fulltime</strong><small>Direct placements</small></span></li>
+        </ul>
+        <p class="hero-cta"><a class="btn btn-primary" href="solutions.html" tabindex="-1">Build Your Team <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+      </div>
+    </article>
+
+  </div>
+
+  <!-- shared hero chrome -->
+  <div class="hero-chrome">
+    <div class="hero-dots" id="heroDots" role="tablist" aria-label="Choose a hero slide">
+      <button type="button" role="tab" class="dot is-active" data-goto="0" aria-selected="true" aria-label="Show slide 1 of 4: 25+ Years of Trust"></button>
+      <button type="button" role="tab" class="dot" data-goto="1" aria-selected="false" aria-label="Show slide 2 of 4: From Business Challenge to Technology Outcome"></button>
+      <button type="button" role="tab" class="dot" data-goto="2" aria-selected="false" aria-label="Show slide 3 of 4: Talent at Scale, On Your Terms"></button>
+      <button type="button" role="tab" class="dot" data-goto="3" aria-selected="false" aria-label="Show slide 4 of 4: Technology Should Move Your Business Forward"></button>
+    </div>
+    <a class="scroll-cue" href="#about" aria-label="Scroll to how GSS works">
+      <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>
+    </a>
+  </div>
+
+  <p class="sr-only" aria-live="polite" id="heroLive"></p>
+</section>
+
+<section class="section section-about" id="about">
+  <div class="container">
+    <p class="eyebrow eyebrow-navy reveal"><span class="rule" aria-hidden="true"></span>How GSS Works<span class="rule" aria-hidden="true"></span></p>
+    <h2 class="section-title reveal">We begin with your business&mdash;not a predetermined solution.</h2>
+
+    <ol class="process">
+      <li class="step reveal">
+        <span class="step-node"><span>01</span></span>
+        <h3 class="step-title">Listen &amp; Understand</h3>
+        <p class="step-copy">We understand your environment, challenge and desired outcome before anything is proposed.</p>
+      </li>
+      <li class="step reveal">
+        <span class="step-node"><span>02</span></span>
+        <h3 class="step-title">Define the Right Path</h3>
+        <p class="step-copy">We translate needs into clear requirements and practical, honestly-costed options.</p>
+      </li>
+      <li class="step reveal">
+        <span class="step-node"><span>03</span></span>
+        <h3 class="step-title">Deliver with Accountability</h3>
+        <p class="step-copy">We align strategy, technology, delivery and talent around results you can measure.</p>
+      </li>
+    </ol>
+
+    <div class="divider-gold reveal" aria-hidden="true"></div>
+    <p class="closing-line reveal">One relationship. The right capabilities. Accountable delivery.</p>
+  </div>
+</section>
+
+<section class="section section-clientele" id="clientele">
+  <div class="container">
+    <p class="eyebrow eyebrow-navy reveal"><span class="rule" aria-hidden="true"></span>Clientele<span class="rule" aria-hidden="true"></span></p>
+    <h2 class="section-title reveal">Trusted across industries.</h2>
+    <p class="section-lede reveal">Public sector, financial services, healthcare, logistics and energy &mdash; organizations that measure a partner by what gets delivered.</p>
+
+    <div class="client-marquee reveal" role="region" aria-label="Selected clients">
+      <div class="client-marquee-track">
+        <ul class="client-row">
+          <li class="client-item"><span class="logo-plate"><span class="lp-mark" aria-hidden="true"></span>Northbay</span></li>
+          <li class="client-item"><span class="logo-plate"><span class="lp-mark lp-sq" aria-hidden="true"></span>Meridian Group</span></li>
+          <li class="client-item"><span class="logo-plate"><span class="lp-mark lp-tri" aria-hidden="true"></span>Atlasgrid</span></li>
+          <li class="client-item"><span class="logo-plate"><span class="lp-mark lp-dia" aria-hidden="true"></span>Vertexa</span></li>
+          <li class="client-item"><span class="logo-plate"><span class="lp-mark lp-sq" aria-hidden="true"></span>Kellner &amp; Roe</span></li>
+          <li class="client-item"><span class="logo-plate"><span class="lp-mark lp-tri" aria-hidden="true"></span>Pacificore</span></li>
+          <li class="client-item"><span class="logo-plate"><span class="lp-mark" aria-hidden="true"></span>Summitline</span></li>
+        </ul>
+        <ul class="client-row" aria-hidden="true">
+          <li class="client-item"><span class="logo-plate"><span class="lp-mark" aria-hidden="true"></span>Northbay</span></li>
+          <li class="client-item"><span class="logo-plate"><span class="lp-mark lp-sq" aria-hidden="true"></span>Meridian Group</span></li>
+          <li class="client-item"><span class="logo-plate"><span class="lp-mark lp-tri" aria-hidden="true"></span>Atlasgrid</span></li>
+          <li class="client-item"><span class="logo-plate"><span class="lp-mark lp-dia" aria-hidden="true"></span>Vertexa</span></li>
+          <li class="client-item"><span class="logo-plate"><span class="lp-mark lp-sq" aria-hidden="true"></span>Kellner &amp; Roe</span></li>
+          <li class="client-item"><span class="logo-plate"><span class="lp-mark lp-tri" aria-hidden="true"></span>Pacificore</span></li>
+          <li class="client-item"><span class="logo-plate"><span class="lp-mark" aria-hidden="true"></span>Summitline</span></li>
+        </ul>
+        <ul class="client-row" aria-hidden="true">
+          <li class="client-item"><span class="logo-plate"><span class="lp-mark" aria-hidden="true"></span>Northbay</span></li>
+          <li class="client-item"><span class="logo-plate"><span class="lp-mark lp-sq" aria-hidden="true"></span>Meridian Group</span></li>
+          <li class="client-item"><span class="logo-plate"><span class="lp-mark lp-tri" aria-hidden="true"></span>Atlasgrid</span></li>
+          <li class="client-item"><span class="logo-plate"><span class="lp-mark lp-dia" aria-hidden="true"></span>Vertexa</span></li>
+          <li class="client-item"><span class="logo-plate"><span class="lp-mark lp-sq" aria-hidden="true"></span>Kellner &amp; Roe</span></li>
+          <li class="client-item"><span class="logo-plate"><span class="lp-mark lp-tri" aria-hidden="true"></span>Pacificore</span></li>
+          <li class="client-item"><span class="logo-plate"><span class="lp-mark" aria-hidden="true"></span>Summitline</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="clientele-stat reveal">
+      <span class="stat-ico"><svg class="ico" aria-hidden="true"><use href="#i-globe"/></svg></span>
+      <strong class="stat-num">500+</strong>
+      <span class="stat-label">Clients Served</span>
+    </div>
+    <p class="logo-note reveal">Client marks shown are representative placeholders pending brand approval.</p>
+  </div>
+</section>
+
+<section class="section section-insights" id="blog">
+  <div class="container">
+    <p class="eyebrow eyebrow-navy reveal"><span class="rule" aria-hidden="true"></span>Insights<span class="rule" aria-hidden="true"></span></p>
+    <h2 class="section-title reveal">Notes from the people doing the work.</h2>
+    <p class="section-lede reveal">Short, practical writing on business-led technology &mdash; delivery lessons, points of view and the occasional contrarian take.</p>
+
+    <ul class="insights-grid reveal">
+      <li>
+        <a class="post-card" href="blog.html" aria-label="Read: Why our first recommendation is usually the smallest one">
+          <span class="post-meta">
+            <span class="post-cat">Delivery</span>
+            <span class="post-date">August 2026 &middot; 6 min</span>
+          </span>
+          <h3 class="post-card-title">Why our first recommendation is usually the smallest one</h3>
+          <p class="post-excerpt">Clients often arrive expecting a platform. More often the fix is a process change and two weeks of work.</p>
+          <span class="post-more">Read <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </a>
+      </li>
+      <li>
+        <a class="post-card" href="blog.html" aria-label="Read: The questions we ask before writing a line of code">
+          <span class="post-meta">
+            <span class="post-cat">Consulting</span>
+            <span class="post-date">July 2026 &middot; 5 min</span>
+          </span>
+          <h3 class="post-card-title">The questions we ask before writing a line of code</h3>
+          <p class="post-excerpt">A short checklist we run on every brief, and what each answer changes about the plan.</p>
+          <span class="post-more">Read <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </a>
+      </li>
+      <li>
+        <a class="post-card" href="blog.html" aria-label="Read: Legacy systems are not the problem, the seams are">
+          <span class="post-meta">
+            <span class="post-cat">Modernization</span>
+            <span class="post-date">March 2026 &middot; 5 min</span>
+          </span>
+          <h3 class="post-card-title">Legacy systems aren&rsquo;t the problem. The seams are.</h3>
+          <p class="post-excerpt">Most modernization budgets are spent at the integration points. A case for mapping them first.</p>
+          <span class="post-more">Read <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </a>
+      </li>
+    </ul>
+
+    <p class="center-cta reveal"><a class="btn btn-outline" href="blog.html">Visit the blog <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-bar">
+    <p class="footer-copy">&copy; <span id="year">2026</span> GSS</p>
+    <a class="footer-feature" href="blog.html">Insights</a>
+
+    <nav class="footer-links" aria-label="Legal">
+      <a href="contact.html">Disclaimer</a>
+      <a href="contact.html">Privacy</a>
+    </nav>
+
+    <ul class="footer-social">
+      <li><a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="GSS on Facebook">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H17V3.6c-.3 0-1.3-.13-2.5-.13-2.47 0-4.16 1.5-4.16 4.27v2.16H7.6V13h2.74v8z"/></svg>
+      </a></li>
+      <li><a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="GSS on Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.21 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.5.01-4.74.07-.9.04-1.38.19-1.7.32-.43.16-.74.36-1.06.68-.32.32-.52.63-.68 1.06-.13.32-.28.8-.32 1.7C3.21 8.5 3.2 8.85 3.2 12s.01 3.5.07 4.74c.04.9.19 1.38.32 1.7.16.43.36.74.68 1.06.32.32.63.52 1.06.68.32.13.8.28 1.7.32 1.24.06 1.59.07 4.74.07s3.5-.01 4.74-.07c.9-.04 1.38-.19 1.7-.32.43-.16.74-.36 1.06-.68.32-.32.52-.63.68-1.06.13-.32.28-.8.32-1.7.06-1.24.07-1.59.07-4.74s-.01-3.5-.07-4.74c-.04-.9-.19-1.38-.32-1.7-.16-.43-.36-.74-.68-1.06-.32-.32-.63-.52-1.06-.68-.32-.13-.8-.28-1.7-.32C15.5 4.01 15.15 4 12 4zm0 3.06A4.94 4.94 0 1 1 12 16.94 4.94 4.94 0 0 1 12 7.06zm0 1.8a3.14 3.14 0 1 0 0 6.28 3.14 3.14 0 0 0 0-6.28zm5.02-.9a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0z"/></svg>
+      </a></li>
+      <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="GSS on LinkedIn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5A1.94 1.94 0 1 1 3.06 5a1.94 1.94 0 0 1 3.88 0zM3.3 8.48h3.28V21H3.3zm5.5 0h3.15v1.71h.05c.44-.83 1.5-1.71 3.1-1.71 3.32 0 3.93 2.18 3.93 5.02V21h-3.28v-5.55c0-1.32-.02-3.02-1.84-3.02-1.84 0-2.12 1.44-2.12 2.93V21H8.8z"/></svg>
+      </a></li>
+      <li><a href="https://www.youtube.com/" target="_blank" rel="noopener" aria-label="GSS on YouTube">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12z"/></svg>
+      </a></li>
+    </ul>
   </div>
 </footer>
 
-<script src="js/theme.js" defer></script>
-<script src="js/hero-carousel.js" defer></script>
+<script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About Us — GSS</title>
+    <meta
+      name="description"
+      content="Global Soft Systems: 25+ years of business-led technology consulting, certified diversity and accountable delivery."
+    />
+    <meta name="theme-color" content="#0F2247" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="About Us — GSS" />
+    <meta
+      property="og:description"
+      content="Global Soft Systems: 25+ years of business-led technology consulting, certified diversity and accountable delivery."
+    />
+    <meta property="og:image" content="images/hero-skyline-1200.webp" />
+    <meta property="og:site_name" content="Global Soft Systems" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Flag JS support so scroll-reveal never hides content when scripting is off -->
+    <script>
+      document.documentElement.classList.add("js");
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <svg
+      class="sprite"
+      aria-hidden="true"
+      focusable="false"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <symbol id="i-arrow" viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M4 12h14.5" />
+          <path d="m13.4 6.6 5.4 5.4-5.4 5.4" />
+        </g>
+      </symbol>
+
+      <symbol id="i-chevron" viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="m5 9 7 7 7-7" />
+        </g>
+      </symbol>
+
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+        >
+          <circle cx="12" cy="12" r="4" />
+          <path
+            d="M12 2.6v2.2M12 19.2v2.2M21.4 12h-2.2M4.8 12H2.6M18.6 5.4l-1.6 1.6M7 17l-1.6 1.6M18.6 18.6 17 17M7 7 5.4 5.4"
+          />
+        </g>
+      </symbol>
+
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5a8.6 8.6 0 1 0 10.7 10.7z" />
+        </g>
+      </symbol>
+
+      <symbol id="i-globe" viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="12" r="9" />
+          <path d="M3.3 12h17.4" />
+          <path d="M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18" />
+        </g>
+      </symbol>
+    </svg>
+
+    <header class="site-header" id="siteHeader">
+      <div class="container header-inner">
+        <a
+          class="logo"
+          href="index.html"
+          aria-label="GSS — Global Soft Systems, home"
+        >
+          <img
+            class="logo-img logo-img--light"
+            src="images/gss_logo.png"
+            alt="GSS — Global Soft Systems: Results Driven | Delivery Focused"
+            width="190"
+            height="76"
+          />
+          <img
+            class="logo-img logo-img--dark"
+            src="images/gss_logo_dark.png"
+            alt=""
+            aria-hidden="true"
+            width="190"
+            height="76"
+          />
+        </a>
+
+            <nav class="nav-desktop" aria-label="Primary">
+              <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html" class="is-current" aria-current="page">About Us</a></li>
+                <li><a href="solutions.html">Solutions &amp; Services</a></li>
+                <li><a href="partner.html">Partner Program</a></li>
+                <li><a href="career.html">Careers</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+              </ul>
+            </nav>
+
+        <div class="header-actions">
+          <button
+            class="icon-btn"
+            id="themeToggle"
+            type="button"
+            aria-label="Switch to dark theme"
+            aria-pressed="false"
+          >
+            <svg class="ico ico-light" aria-hidden="true">
+              <use href="#i-sun" />
+            </svg>
+            <svg class="ico ico-dark" aria-hidden="true">
+              <use href="#i-moon" />
+            </svg>
+          </button>
+          <div class="social-menu" id="socialMenu">
+            <button class="social-btn" id="socialToggle" type="button" aria-label="Connect with GSS on social media" title="Connect with GSS" aria-haspopup="true" aria-expanded="false" aria-controls="socialDropdown">
+              <svg class="social-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.2" r="2.4"/><circle cx="5.8" cy="12" r="2.4"/><circle cx="18" cy="18.8" r="2.4"/><path d="m8 10.9 7.5-4.5M8 13.1l7.5 4.5"/></svg>
+              <span class="social-btn-label">Connect</span>
+              <svg class="ico social-caret" aria-hidden="true"><use href="#i-chevron"/></svg>
+            </button>
+            <div class="social-dropdown" id="socialDropdown" role="menu" aria-label="Connect with GSS" hidden>
+              <a class="social-item" role="menuitem" href="https://www.facebook.com/" target="_blank" rel="noopener"><span class="social-item-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H17V3.6c-.3 0-1.3-.13-2.5-.13-2.47 0-4.16 1.5-4.16 4.27v2.16H7.6V13h2.74v8z"/></svg></span><span>Facebook</span></a>
+              <a class="social-item" role="menuitem" href="https://www.linkedin.com/" target="_blank" rel="noopener"><span class="social-item-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5A1.94 1.94 0 1 1 3.06 5a1.94 1.94 0 0 1 3.88 0zM3.3 8.48h3.28V21H3.3zm5.5 0h3.15v1.71h.05c.44-.83 1.5-1.71 3.1-1.71 3.32 0 3.93 2.18 3.93 5.02V21h-3.28v-5.55c0-1.32-.02-3.02-1.84-3.02-1.84 0-2.12 1.44-2.12 2.93V21H8.8z"/></svg></span><span>LinkedIn</span></a>
+              <a class="social-item" role="menuitem" href="https://www.instagram.com/" target="_blank" rel="noopener"><span class="social-item-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.21 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.5.01-4.74.07-.9.04-1.38.19-1.7.32-.43.16-.74.36-1.06.68-.32.32-.52.63-.68 1.06-.13.32-.28.8-.32 1.7C3.21 8.5 3.2 8.85 3.2 12s.01 3.5.07 4.74c.04.9.19 1.38.32 1.7.16.43.36.74.68 1.06.32.32.63.52 1.06.68.32.13.8.28 1.7.32 1.24.06 1.59.07 4.74.07s3.5-.01 4.74-.07c.9-.04 1.38-.19 1.7-.32.43-.16.74-.36 1.06-.68.32-.32.52-.63.68-1.06.13-.32.28-.8.32-1.7.06-1.24.07-1.59.07-4.74s-.01-3.5-.07-4.74c-.04-.9-.19-1.38-.32-1.7-.16-.43-.36-.74-.68-1.06-.32-.32-.63-.52-1.06-.68-.32-.13-.8-.28-1.7-.32C15.5 4.01 15.15 4 12 4zm0 3.06A4.94 4.94 0 1 1 12 16.94 4.94 4.94 0 0 1 12 7.06zm0 1.8a3.14 3.14 0 1 0 0 6.28 3.14 3.14 0 0 0 0-6.28zm5.02-.9a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0z"/></svg></span><span>Instagram</span></a>
+              <a class="social-item" role="menuitem" href="https://www.youtube.com/" target="_blank" rel="noopener"><span class="social-item-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12z"/></svg></span><span>YouTube</span></a>
+            </div>
+          </div>
+          <a class="btn btn-primary btn-sm" href="contact.html"
+            >Talk to Us
+            <svg class="ico" aria-hidden="true"><use href="#i-arrow" /></svg
+          ></a>
+          <button
+            class="hamburger"
+            id="menuToggle"
+            type="button"
+            aria-label="Open menu"
+            aria-expanded="false"
+            aria-controls="mobileNav"
+          >
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile overlay menu -->
+    <div class="mobile-nav" id="mobileNav" hidden>
+        <nav aria-label="Mobile">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="solutions.html">Solutions &amp; Services</a></li>
+            <li><a href="partner.html">Partner Program</a></li>
+            <li><a href="career.html">Careers</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </nav>
+      <div class="mobile-connect" id="mobileConnect">
+        <button class="mobile-connect-toggle" id="mobileConnectToggle" type="button" aria-expanded="true" aria-controls="mobileConnectPanel">Connect With Us <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></button>
+        <div class="mobile-connect-wrap">
+          <ul class="mobile-connect-panel" id="mobileConnectPanel">
+            <li><a class="mobile-social" href="https://www.facebook.com/" target="_blank" rel="noopener"><span class="mobile-social-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H17V3.6c-.3 0-1.3-.13-2.5-.13-2.47 0-4.16 1.5-4.16 4.27v2.16H7.6V13h2.74v8z"/></svg></span><span>Facebook</span></a></li>
+            <li><a class="mobile-social" href="https://www.linkedin.com/" target="_blank" rel="noopener"><span class="mobile-social-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5A1.94 1.94 0 1 1 3.06 5a1.94 1.94 0 0 1 3.88 0zM3.3 8.48h3.28V21H3.3zm5.5 0h3.15v1.71h.05c.44-.83 1.5-1.71 3.1-1.71 3.32 0 3.93 2.18 3.93 5.02V21h-3.28v-5.55c0-1.32-.02-3.02-1.84-3.02-1.84 0-2.12 1.44-2.12 2.93V21H8.8z"/></svg></span><span>LinkedIn</span></a></li>
+            <li><a class="mobile-social" href="https://www.instagram.com/" target="_blank" rel="noopener"><span class="mobile-social-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.21 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.5.01-4.74.07-.9.04-1.38.19-1.7.32-.43.16-.74.36-1.06.68-.32.32-.52.63-.68 1.06-.13.32-.28.8-.32 1.7C3.21 8.5 3.2 8.85 3.2 12s.01 3.5.07 4.74c.04.9.19 1.38.32 1.7.16.43.36.74.68 1.06.32.32.63.52 1.06.68.32.13.8.28 1.7.32 1.24.06 1.59.07 4.74.07s3.5-.01 4.74-.07c.9-.04 1.38-.19 1.7-.32.43-.16.74-.36 1.06-.68.32-.32.52-.63.68-1.06.13-.32.28-.8.32-1.7.06-1.24.07-1.59.07-4.74s-.01-3.5-.07-4.74c-.04-.9-.19-1.38-.32-1.7-.16-.43-.36-.74-.68-1.06-.32-.32-.63-.52-1.06-.68-.32-.13-.8-.28-1.7-.32C15.5 4.01 15.15 4 12 4zm0 3.06A4.94 4.94 0 1 1 12 16.94 4.94 4.94 0 0 1 12 7.06zm0 1.8a3.14 3.14 0 1 0 0 6.28 3.14 3.14 0 0 0 0-6.28zm5.02-.9a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0z"/></svg></span><span>Instagram</span></a></li>
+            <li><a class="mobile-social" href="https://www.youtube.com/" target="_blank" rel="noopener"><span class="mobile-social-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12z"/></svg></span><span>YouTube</span></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mobile-nav-foot">
+        <a class="btn btn-primary" href="contact.html"
+          >Talk to Us
+          <svg class="ico" aria-hidden="true"><use href="#i-arrow" /></svg
+        ></a>
+        <button
+          class="icon-btn"
+          id="themeToggleMobile"
+          type="button"
+          aria-label="Switch to dark theme"
+          aria-pressed="false"
+        >
+          <svg class="ico ico-light" aria-hidden="true">
+            <use href="#i-sun" />
+          </svg>
+          <svg class="ico ico-dark" aria-hidden="true">
+            <use href="#i-moon" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <main id="main">
+      <section class="page-hero">
+        <span class="sunburst sunburst-left" aria-hidden="true"></span>
+        <span class="sunburst sunburst-right" aria-hidden="true"></span>
+        <div class="container">
+          <p class="eyebrow eyebrow-navy">
+            <span class="rule" aria-hidden="true"></span>About Us<span
+              class="rule"
+              aria-hidden="true"
+            ></span>
+          </p>
+          <h1 class="page-title">
+            25+ Years of Trust. Built for What&rsquo;s Next.
+          </h1>
+          <p class="page-lede">
+            GSS combines proven experience, certified diversity, business-led
+            technology consulting and specialized talent to help organizations
+            move forward with confidence.
+          </p>
+        </div>
+      </section>
+
+      <section class="page-body">
+        <div class="container">
+          <div class="page-intro">
+            <p class="reveal">
+              We are a technology consulting and specialized-talent firm that
+              has spent more than two decades doing one thing consistently:
+              understanding a client&rsquo;s business before proposing a
+              solution to it.
+            </p>
+            <p class="reveal">
+              That order matters. It is why our recommendations tend to be
+              smaller than clients expect, why our engagements tend to last
+              longer than a single project, and why so much of our work arrives
+              through referral rather than procurement.
+            </p>
+            <div class="divider-gold reveal" aria-hidden="true"></div>
+            <p class="closing-line reveal">
+              One relationship. The right capabilities. Accountable delivery.
+            </p>
+            <p class="center-cta reveal">
+              <a class="btn btn-primary" href="contact.html"
+                >Talk to Us
+                <svg class="ico" aria-hidden="true"><use href="#i-arrow" /></svg
+              ></a>
+            </p>
+            <p class="reveal" style="text-align: center">
+              <span class="page-stub reveal"
+                >Full page content in progress</span
+              >
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-bar">
+        <p class="footer-copy">&copy; <span id="year">2026</span> GSS</p>
+        <a class="footer-feature" href="blog.html">Insights</a>
+
+        <nav class="footer-links" aria-label="Legal">
+          <a href="contact.html">Disclaimer</a>
+          <a href="contact.html">Privacy</a>
+        </nav>
+
+        <ul class="footer-social">
+          <li>
+            <a
+              href="https://www.facebook.com/"
+              target="_blank"
+              rel="noopener"
+              aria-label="GSS on Facebook"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H17V3.6c-.3 0-1.3-.13-2.5-.13-2.47 0-4.16 1.5-4.16 4.27v2.16H7.6V13h2.74v8z"
+                />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.instagram.com/"
+              target="_blank"
+              rel="noopener"
+              aria-label="GSS on Instagram"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.21 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.5.01-4.74.07-.9.04-1.38.19-1.7.32-.43.16-.74.36-1.06.68-.32.32-.52.63-.68 1.06-.13.32-.28.8-.32 1.7C3.21 8.5 3.2 8.85 3.2 12s.01 3.5.07 4.74c.04.9.19 1.38.32 1.7.16.43.36.74.68 1.06.32.32.63.52 1.06.68.32.13.8.28 1.7.32 1.24.06 1.59.07 4.74.07s3.5-.01 4.74-.07c.9-.04 1.38-.19 1.7-.32.43-.16.74-.36 1.06-.68.32-.32.52-.63.68-1.06.13-.32.28-.8.32-1.7.06-1.24.07-1.59.07-4.74s-.01-3.5-.07-4.74c-.04-.9-.19-1.38-.32-1.7-.16-.43-.36-.74-.68-1.06-.32-.32-.63-.52-1.06-.68-.32-.13-.8-.28-1.7-.32C15.5 4.01 15.15 4 12 4zm0 3.06A4.94 4.94 0 1 1 12 16.94 4.94 4.94 0 0 1 12 7.06zm0 1.8a3.14 3.14 0 1 0 0 6.28 3.14 3.14 0 0 0 0-6.28zm5.02-.9a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0z"
+                />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.linkedin.com/"
+              target="_blank"
+              rel="noopener"
+              aria-label="GSS on LinkedIn"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M6.94 5A1.94 1.94 0 1 1 3.06 5a1.94 1.94 0 0 1 3.88 0zM3.3 8.48h3.28V21H3.3zm5.5 0h3.15v1.71h.05c.44-.83 1.5-1.71 3.1-1.71 3.32 0 3.93 2.18 3.93 5.02V21h-3.28v-5.55c0-1.32-.02-3.02-1.84-3.02-1.84 0-2.12 1.44-2.12 2.93V21H8.8z"
+                />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.youtube.com/"
+              target="_blank"
+              rel="noopener"
+              aria-label="GSS on YouTube"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12z"
+                />
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
