@@ -188,7 +188,7 @@ html[data-theme="dark"] .skip-link { background: var(--gold); color: #0B1424; }
 .section-about     { background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg-sky) 100%); }
 .section-solutions { background: var(--bg); }
 .section-staffing  { background: var(--bg-soft); overflow: hidden; }
-.section-clientele { background: var(--bg); }
+.section-clientele { background: var(--bg); padding-bottom: clamp(30px, 3.2vw, 48px); }
 .section-testimonial { background: var(--bg-sky); }
 .section-panels    { background: var(--bg); padding-block: clamp(56px, 6vw, 96px); }
 .section-final     { background: linear-gradient(180deg, var(--bg-sky) 0%, var(--bg-soft) 100%); overflow: hidden; }
@@ -1195,7 +1195,7 @@ html[data-theme="dark"] .hero-slide[data-slide="3"] { --hero-dim: .48; }
 
 
 /* ── 16. FINAL CTA & SUNBURSTS ───────────────────────────── */
-.section-final { padding-block: clamp(88px, 11vw, 170px); }
+.section-final { padding-top: clamp(40px, 4.5vw, 68px); padding-bottom: clamp(40px, 4.5vw, 64px); }
 .section-final .container { text-align: center; position: relative; z-index: 1; }
 .final-title {
   font-family: var(--serif); font-weight: 500;
@@ -1234,6 +1234,19 @@ html[data-theme="dark"] .hero-slide[data-slide="3"] { --hero-dim: .48; }
   -webkit-mask-image: radial-gradient(circle at 100% 100%, #000 12%, rgba(0,0,0,.55) 52%, transparent 86%);
   mask-image: radial-gradient(circle at 100% 100%, #000 12%, rgba(0,0,0,.55) 52%, transparent 86%);
 }
+
+/* section-final entrance: rays fan out from the corners as the section reveals */
+html.js .section-final .sunburst.reveal {
+  opacity: 0;
+  transform: scale(.5);
+  transition: opacity 1.1s var(--ease), transform 1.2s var(--ease);
+}
+html.js .section-final .sunburst-left.reveal  { transform-origin: 0% 100%; }
+html.js .section-final .sunburst-right.reveal { transform-origin: 100% 100%; }
+html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1); }
+
+/* tighten the gap above the CTA in this section */
+.section-final .center-cta { margin-top: clamp(20px, 2.5vw, 32px); }
 
 
 /* ── 16b. INNER PAGE HEADER (about, solutions, career, …) ── */
