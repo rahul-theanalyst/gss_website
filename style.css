@@ -1319,282 +1319,396 @@ html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1
 }
 
 
-/* ── 16c. ABOUT PAGE — STICKY PHOTO BACKGROUND ───────────── */
-/* One real photo pinned behind the whole page (position: fixed, so it
-   never scrolls — content scrolls transparently over it), swapped for a
-   genuine light/dark pair rather than a filtered fake, same display-swap
-   technique as .logo-img. Scoped to body.has-photo-bg so no other inner
-   page is affected. */
-.about-bg {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-}
-.about-bg__img {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: 50% 28%;
-  /* dim the photograph itself rather than piling on an opaque veil, same
-     approach the hero carousel uses so navy/white text keeps its contrast
-     without flattening the image to a solid wash */
-  filter: brightness(.8) saturate(1.02) contrast(1.02);
-}
-.about-bg__img--dark { display: none; filter: brightness(.9) saturate(.92); }
-html[data-theme="dark"] .about-bg__img--light { display: none; }
-html[data-theme="dark"] .about-bg__img--dark { display: block; }
-/* permanent veil over the hero band so the title/lede read reliably the
-   instant the page loads — reuses the same veil tokens the hero photos
-   use, just as a top-to-bottom wash instead of a per-slide vignette, so
-   no new colors are introduced. */
-.about-bg::after {
-  content: "";
-  position: absolute; inset: 0;
-  /* a light, even wash across the whole fixed photo — just enough to keep
-     text legible everywhere without hiding the scene */
-  background: var(--veil-wash);
-}
+/* ══════════ 16c. ABOUT PAGE — PREMIUM REDESIGN ══════════════
+   A paced, editorial About page: cinematic photographic hero, alternating
+   split sections, a large philosophy pause, premium service cards, an
+   editorial timeline, a proof strip, an oversized "25+" moment and a
+   photographic closing CTA. Palette unchanged — deep navy, warm cream,
+   white, restrained gold. Dark photographic sections use literal white /
+   navy so they stay correct in either site theme; light sections use the
+   theme tokens so they follow light/dark. */
 
-/* The fixed photo now shows across the ENTIRE page, not just the hero band.
-   Hero is fully transparent; the long-form body and the footer sit on
-   translucent frosted panels so the scene reads through them as a soft
-   blur while dense paragraphs/cards stay readable. (A fixed element with
-   the default z-index:auto otherwise paints above non-positioned siblings
-   regardless of source order, so the relative z-index also fixes stacking
-   for the content + footer.) */
-/* hero sits directly on the photo now (both themes), so it gets a soft
-   dark scrim + light text — the same read-over-photo treatment the
-   homepage hero carousel uses */
-body.has-photo-bg .page-hero {
-  background: linear-gradient(180deg, rgba(9,17,33,.30) 0%, rgba(9,17,33,.44) 100%);
+/* shared building blocks ------------------------------------------------ */
+.ab-eyebrow {
+  display: flex; align-items: center; gap: 14px;
+  font-size: .72rem; font-weight: 600;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: var(--muted-2);
+  margin-bottom: clamp(18px, 2vw, 26px);
 }
-body.has-photo-bg .page-hero .page-title { color: #fff; }
-body.has-photo-bg .page-hero .page-lede { color: rgba(255,255,255,.84); }
-body.has-photo-bg .page-hero .eyebrow-navy { color: rgba(255,255,255,.78); }
-body.has-photo-bg .page-hero .eyebrow-navy .rule { background: rgba(255,255,255,.5); opacity: 1; }
-body.has-photo-bg .page-body {
-  background: color-mix(in srgb, var(--bg) 56%, transparent);
-  -webkit-backdrop-filter: blur(9px);
-  backdrop-filter: blur(9px);
-  position: relative; z-index: 1;
-}
-body.has-photo-bg .site-footer {
-  position: relative; z-index: 1;
-  background: color-mix(in srgb, #0F2247 86%, transparent);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-}
-html[data-theme="dark"] body.has-photo-bg .site-footer {
-  background: color-mix(in srgb, #0B1526 86%, transparent);
-}
+.ab-eyebrow__rule { height: 1px; width: clamp(28px, 4vw, 52px); background: var(--gold); flex: 0 0 auto; }
+.ab-eyebrow--onDark { color: rgba(255,255,255,.8); }
 
-/* No backdrop-filter support → fall back to a more opaque panel so text
-   never sits on a bare photo */
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  body.has-photo-bg .page-body { background: color-mix(in srgb, var(--bg) 88%, transparent); }
-  body.has-photo-bg .site-footer { background: #0F2247; }
-  html[data-theme="dark"] body.has-photo-bg .site-footer { background: #0B1526; }
+.ab-h2 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(2rem, 4.6vw, 3.9rem);   /* ~48–64px on desktop */
+  line-height: 1.08; letter-spacing: -.018em;
+  color: var(--navy); text-wrap: balance;
+  max-width: 16ch;
 }
+.ab-h2--wide { max-width: 24ch; }
 
-
-/* ── 16d. ABOUT PAGE — EDITORIAL LAYOUT ──────────────────── */
-/* Inspired by long-form agency "about" pages: an oversized left-aligned
-   opener, two-column sticky-label sections reading over the fixed photo, a
-   hairline-ruled credentials list, and a big display-number band before the
-   closing CTA. Palette unchanged — navy ink, gold accents, gold rays. */
-
-/* every inner-page section stacks above the fixed photo layer */
-body.has-photo-bg #main > section { position: relative; z-index: 1; }
-
-/* --- opener --- */
-.about-hero { text-align: left; }
-.about-hero .container { max-width: 1180px; }
-.about-hero .eyebrow { justify-content: flex-start; }
-.about-hero .page-title {
-  margin-inline: 0;
-  max-width: 15ch;
-  font-size: clamp(2.4rem, 6.2vw, 4.5rem);
-  text-wrap: balance;
-}
-.about-hero .page-lede { margin-inline: 0; max-width: 48ch; }
-.about-hero .sunburst { opacity: .5; }
-body.has-photo-bg .about-hero { --ray: rgba(216,169,78,.18); }
-
-/* --- two-column editorial rows --- */
-.about-body .container { max-width: 1180px; }
-.edito-row {
-  display: grid;
-  grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
-  gap: clamp(22px, 5vw, 76px);
-  padding-block: clamp(40px, 6vw, 84px);
-  border-top: 1px solid var(--hairline);
-}
-.edito-row:first-child { border-top: 0; padding-top: 0; }
-.edito-aside { align-self: start; }
-@media (min-width: 921px) {
-  .edito-aside { position: sticky; top: calc(var(--header-h) + 26px); }
-}
-.edito-num {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  font-family: var(--serif);
-  font-size: clamp(1.35rem, 1.9vw, 1.7rem);
-  color: var(--gold);
-  margin-bottom: 18px;
-  font-variant-numeric: lining-nums;
-}
-.edito-num::after {
-  content: "";
-  height: 1px; flex: 1;
-  background: color-mix(in srgb, var(--gold) 45%, transparent);
-}
-.edito-aside .eyebrow { justify-content: flex-start; margin-bottom: 14px; }
-.edito-head {
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: clamp(1.5rem, 2.7vw, 2.2rem);
-  line-height: 1.16;
-  letter-spacing: -.01em;
-  color: var(--navy);
-  max-width: 18ch;
-  text-wrap: balance;
-}
-.edito-body > p {
+.ab-body {
   color: var(--muted);
-  font-size: clamp(1rem, 1.15vw, 1.12rem);
-  line-height: 1.78;
-  max-width: 62ch;
-}
-.edito-body > p + p { margin-top: 18px; }
-.edito-body .edito-lead {
-  color: var(--navy);
-  font-size: clamp(1.05rem, 1.35vw, 1.22rem);
-  line-height: 1.6;
-  margin-bottom: clamp(22px, 3vw, 34px);
-  max-width: 52ch;
-}
-.edito-kicker {
-  margin-top: clamp(24px, 3.2vw, 40px);
-  font-family: var(--serif);
-  font-size: clamp(1.08rem, 1.7vw, 1.4rem);
-  line-height: 1.4;
-  color: var(--navy);
-}
-
-/* --- "what we do" list --- */
-.do-list { counter-reset: do; margin-top: 4px; }
-.do-list li {
-  display: grid;
-  grid-template-columns: 2.4rem minmax(0, 1fr);
-  column-gap: clamp(14px, 2vw, 24px);
-  row-gap: 8px;
-  padding-block: clamp(20px, 2.8vw, 30px);
-  border-top: 1px solid var(--hairline);
-}
-.do-list li::before {
-  counter-increment: do;
-  content: counter(do, decimal-leading-zero);
-  grid-row: 1 / span 2;
-  font-family: var(--serif);
-  font-size: .95rem;
-  color: var(--gold);
-  padding-top: .15em;
-  font-variant-numeric: lining-nums;
-}
-.do-k {
-  align-self: center;
-  font-family: var(--sans);
-  font-weight: 700;
-  font-size: .84rem;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--navy);
-}
-.do-list li p {
-  color: var(--muted);
-  font-size: .98rem;
-  line-height: 1.72;
+  font-size: clamp(1rem, 1.15vw, 1.15rem);   /* 16–18px */
+  line-height: 1.75; text-wrap: pretty;
   max-width: 54ch;
 }
+.ab-body + .ab-body { margin-top: clamp(14px, 1.4vw, 20px); }
+.ab-body--accent {
+  color: var(--navy);
+  font-family: var(--serif);
+  font-size: clamp(1.15rem, 1.7vw, 1.5rem);
+  line-height: 1.4;
+}
 
-/* --- credentials list --- */
-.rec-list { margin-top: clamp(26px, 3.6vw, 44px); }
-.rec-list li {
+.about-page #main { overflow-x: clip; }
+
+/* ── HERO ────────────────────────────────────────────────── */
+.ab-hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding-top: calc(var(--header-h) + 40px);
+  padding-bottom: clamp(64px, 11vh, 132px);
+  overflow: hidden;
+  background: #0B1B33;
+  isolation: isolate;
+}
+.ab-hero__media { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
+.ab-hero__img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 42%;
+  transform: scale(1.14);
+  will-change: transform;
+}
+.ab-hero::after {           /* navy legibility overlay */
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(9,18,36,.44) 0%, rgba(9,18,36,.30) 42%, rgba(9,18,36,.78) 100%),
+    linear-gradient(90deg, rgba(9,18,36,.55) 0%, rgba(9,18,36,.12) 60%, transparent 100%);
+}
+.ab-hero__inner { position: relative; width: 100%; }
+.ab-hero__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(2.7rem, 7.4vw, 6rem);   /* 72–96px on desktop */
+  line-height: 1.03; letter-spacing: -.022em;
+  color: #fff;
+  margin: clamp(14px, 2vw, 24px) 0 clamp(20px, 2.6vw, 34px);
+}
+.ab-hero__title span { display: block; }
+.ab-hero__lede {
+  color: rgba(255,255,255,.86);
+  font-size: clamp(1.02rem, 1.35vw, 1.22rem);
+  line-height: 1.62; max-width: 46ch;
+}
+.ab-hero__cue {
+  position: absolute; left: 50%; bottom: clamp(20px, 4vh, 40px);
+  width: 22px; height: 34px; margin-left: -11px;
+  border: 1px solid rgba(255,255,255,.4); border-radius: 12px;
+}
+.ab-hero__cue::before {
+  content: ""; position: absolute; left: 50%; top: 7px; width: 3px; height: 7px;
+  margin-left: -1.5px; border-radius: 2px; background: rgba(255,255,255,.75);
+  animation: ab-cue 1.9s var(--ease) infinite;
+}
+@keyframes ab-cue { 0%,100% { transform: translateY(0); opacity: 0; } 40% { opacity: 1; } 70% { transform: translateY(9px); opacity: 0; } }
+
+/* hero load reveal — staggered lines rise + fade in */
+html.js .hero-rise { opacity: 0; transform: translateY(26px); }
+html.js .ab-hero.is-ready .hero-rise {
+  opacity: 1; transform: none;
+  transition: opacity .9s var(--ease), transform .9s var(--ease);
+  transition-delay: calc(var(--ri, 0) * 120ms + 120ms);
+}
+html.js #main > section.ab-hero { animation: none; opacity: 1; }
+
+/* ── ALTERNATING SPLIT SECTIONS ──────────────────────────── */
+.ab-split { background: var(--bg); padding-block: clamp(64px, 10vw, 150px); position: relative; }
+.ab-split--reverse { background: var(--bg-cream); }
+html[data-theme="dark"] .ab-split--reverse { background: var(--bg-soft); }
+.ab-split__grid {
   display: grid;
-  grid-template-columns: minmax(110px, 200px) minmax(0, 1fr);
-  gap: 8px clamp(20px, 3vw, 34px);
-  align-items: baseline;
-  padding-block: clamp(14px, 1.9vw, 20px);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(30px, 6vw, 92px);
+}
+.ab-split--reverse .ab-split__media { order: -1; }
+.ab-split__text { max-width: 30rem; }
+.ab-split__text .ab-h2 { margin-bottom: clamp(20px, 2.6vw, 32px); }
+.ab-split__media {
+  position: relative; overflow: hidden;
+  border-radius: 2px;
+  aspect-ratio: 4 / 3.1;
+  box-shadow: var(--sh-lg);
+}
+.ab-split__media img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 1.1s var(--ease);
+  will-change: transform;
+}
+.ab-split__media:hover img { transform: scale(1.045); }
+html.js .ab-split__media.reveal img { transform: scale(1.12); }
+html.js .ab-split__media.reveal.is-in img { transform: scale(1); }
+
+/* ── PHILOSOPHY STATEMENT ────────────────────────────────── */
+.ab-statement {
+  background: linear-gradient(180deg, #0C1D3A 0%, #0A182F 100%);
+  padding-block: clamp(90px, 15vw, 210px);
+  position: relative; overflow: hidden;
+}
+.ab-statement__eyebrow {
+  display: flex; align-items: center; gap: 14px;
+  font-size: .72rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+  color: rgba(255,255,255,.62); margin-bottom: clamp(24px, 3vw, 40px);
+}
+.ab-statement__eyebrow .ab-eyebrow__rule { background: var(--gold); }
+.ab-statement__text {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.9rem, 5.2vw, 4.4rem);
+  line-height: 1.14; letter-spacing: -.02em;
+  color: #fff; max-width: 20ch;
+}
+.ab-statement__text span { display: block; color: var(--gold-2); }
+
+/* ── SERVICE CARDS ───────────────────────────────────────── */
+.ab-services { background: var(--bg); padding-block: clamp(64px, 10vw, 150px); }
+.ab-services__head { max-width: 40rem; margin-bottom: clamp(38px, 5vw, 68px); }
+.ab-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 1.6vw, 24px);
+}
+.ab-card {
+  display: flex; flex-direction: column;
+  padding: clamp(24px, 2.6vw, 40px);
+  min-height: clamp(280px, 30vw, 380px);
+  border: 1px solid var(--hairline);
+  border-radius: 3px;
+  background: var(--card);
+  text-decoration: none;
+  transition: transform .5s var(--ease), box-shadow .5s var(--ease), border-color .5s var(--ease);
+}
+.ab-card__num {
+  font-family: var(--serif); font-size: clamp(1.9rem, 2.4vw, 2.6rem);
+  color: var(--gold); line-height: 1;
+  font-variant-numeric: lining-nums;
+  transition: transform .5s var(--ease);
+}
+.ab-card__cat {
+  margin-top: clamp(20px, 2.4vw, 32px);
+  font-size: .72rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--muted-2);
+}
+.ab-card__title {
+  margin-top: 12px;
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.15rem, 1.5vw, 1.4rem); line-height: 1.28;
+  color: var(--navy);
+}
+.ab-card__desc {
+  margin-top: 12px; color: var(--muted);
+  font-size: .95rem; line-height: 1.6;
+}
+.ab-card__arrow {
+  margin-top: auto; padding-top: 24px;
+  color: var(--navy);
+}
+.ab-card__arrow .ico { width: 22px; height: 22px; transition: transform .45s var(--ease); }
+.ab-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--sh-lg);
+  border-color: color-mix(in srgb, var(--gold) 50%, transparent);
+}
+.ab-card:hover .ab-card__num { transform: translateY(-3px); }
+.ab-card:hover .ab-card__arrow { color: var(--gold); }
+.ab-card:hover .ab-card__arrow .ico { transform: translateX(8px); }
+.ab-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.ab-services__foot {
+  margin-top: clamp(34px, 4vw, 56px);
+  font-family: var(--serif); font-size: clamp(1.1rem, 1.7vw, 1.45rem);
+  color: var(--navy); text-align: center;
+}
+
+/* ── EDITORIAL TIMELINE ──────────────────────────────────── */
+.ab-timeline { background: var(--bg-cream); padding-block: clamp(64px, 10vw, 150px); }
+html[data-theme="dark"] .ab-timeline { background: var(--bg-soft); }
+.ab-timeline__head { max-width: 44rem; margin-bottom: clamp(40px, 5vw, 72px); }
+.ab-timeline__head .ab-h2 { margin-bottom: clamp(18px, 2vw, 26px); }
+.ab-miles {
+  display: grid; gap: 0;
   border-top: 1px solid var(--hairline);
 }
-.rec-list li:last-child { border-bottom: 1px solid var(--hairline); }
-.rec-k {
-  font-family: var(--serif);
-  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+.ab-mile {
+  display: grid;
+  grid-template-columns: minmax(150px, 260px) minmax(0, 1fr);
+  gap: 10px clamp(24px, 5vw, 72px);
+  align-items: baseline;
+  padding-block: clamp(24px, 3.4vw, 42px);
+  border-bottom: 1px solid var(--hairline);
+}
+.ab-mile__yr {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.2rem, 1.9vw, 1.65rem);
   color: var(--navy);
-  font-variant-numeric: lining-nums;
+  position: relative; padding-left: 26px;
 }
-.rec-v { color: var(--muted); font-size: .95rem; line-height: 1.6; }
+.ab-mile__yr::before {
+  content: ""; position: absolute; left: 0; top: .55em;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--gold);
+}
+.ab-mile__txt {
+  color: var(--muted);
+  font-size: clamp(1rem, 1.15vw, 1.12rem); line-height: 1.7;
+  max-width: 52ch;
+}
 
-/* --- big display-number band --- */
-.about-stat {
-  position: relative;
-  overflow: hidden;
+/* ── PROOF STRIP ─────────────────────────────────────────── */
+.ab-proof { background: var(--bg); padding-block: clamp(40px, 5vw, 72px); border-top: 1px solid var(--hairline); }
+.ab-proof__grid {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(20px, 3vw, 40px);
   text-align: center;
-  padding-block: clamp(66px, 10vw, 140px);
-  border-block: 1px solid color-mix(in srgb, var(--gold) 26%, transparent);
-  background: linear-gradient(180deg, rgba(9,17,33,.36) 0%, rgba(9,17,33,.52) 100%);
-  --ray: rgba(216,169,78,.24);
 }
-.about-stat .container { position: relative; z-index: 1; }
-.about-stat .sunburst { width: min(62vw, 660px); height: min(62vw, 660px); opacity: .55; }
-.stat-big {
-  font-family: var(--serif);
-  font-weight: 500;
-  line-height: 1;
-  color: #fff;
-  font-size: clamp(4.5rem, 17vw, 12rem);
-  letter-spacing: -.02em;
-  font-variant-numeric: lining-nums;
+.ab-proof__item { display: flex; flex-direction: column; gap: 8px; }
+.ab-proof__k {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(2.2rem, 4vw, 3.4rem); line-height: 1;
+  color: var(--navy); font-variant-numeric: lining-nums;
 }
-.stat-big span { color: var(--gold); font-size: .38em; vertical-align: .72em; margin-left: .06em; }
-.stat-cap {
-  margin: clamp(14px, 2vw, 24px) auto 0;
-  max-width: 42ch;
+.ab-proof__v {
+  font-size: .8rem; letter-spacing: .06em;
+  color: var(--muted-2); line-height: 1.5;
+}
+
+/* ── 25+ CINEMATIC MOMENT ────────────────────────────────── */
+.ab-25 {
+  position: relative;
+  min-height: 88svh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  padding-block: clamp(80px, 14vw, 180px);
+  overflow: hidden;
+  background: #0A1830;
+  isolation: isolate;
+}
+.ab-25__media { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
+.ab-25__media img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; transform: scale(1.16); will-change: transform;
+}
+.ab-25::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: radial-gradient(ellipse 70% 70% at 50% 45%, rgba(9,18,36,.62), rgba(8,16,30,.9));
+}
+.ab-25__num {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(6rem, 22vw, 15rem);   /* up to ~240px */
+  line-height: .9; letter-spacing: -.03em;
+  color: #fff; font-variant-numeric: lining-nums;
+  display: inline-flex; align-items: flex-start;
+}
+.ab-25__plus { color: var(--gold); font-size: .34em; margin-top: .18em; }
+.ab-25__cap {
+  margin: clamp(20px, 3vw, 36px) auto 0; max-width: 40ch;
+  color: rgba(255,255,255,.8);
+  font-size: clamp(1rem, 1.2vw, 1.1rem); line-height: 1.62;
+}
+
+/* ── CLOSING CTA ─────────────────────────────────────────── */
+.ab-cta {
+  position: relative;
+  padding-block: clamp(96px, 16vw, 220px);
+  text-align: center; overflow: hidden;
+  background: #0A1830; isolation: isolate;
+}
+.ab-cta__media { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
+.ab-cta__media img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 40%;
+  transform: scale(1.14); will-change: transform;
+}
+.ab-cta::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(9,18,36,.82) 0%, rgba(9,18,36,.7) 50%, rgba(9,18,36,.88) 100%);
+}
+.ab-cta__inner { position: relative; }
+.ab-cta__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(2rem, 5vw, 4rem); line-height: 1.12; letter-spacing: -.02em;
+  color: #fff; max-width: 20ch; margin-inline: auto;
+  text-wrap: balance;
+}
+.ab-cta__sub {
+  margin: clamp(20px, 2.6vw, 32px) auto 0; max-width: 52ch;
   color: rgba(255,255,255,.82);
-  font-size: clamp(.98rem, 1.2vw, 1.08rem);
-  line-height: 1.6;
-  text-wrap: pretty;
+  font-size: clamp(1rem, 1.2vw, 1.12rem); line-height: 1.66;
 }
-html.js .about-stat .sunburst.reveal {
-  opacity: 0;
-  transform: scale(.5);
-  transition: opacity 1.1s var(--ease), transform 1.2s var(--ease);
+.ab-cta__act { margin-top: clamp(28px, 3.6vw, 44px); }
+.ab-cta .btn-primary,
+.ab-25 .btn-primary { background: var(--gold); color: #0B1424; box-shadow: 0 10px 40px rgba(0,0,0,.35); }
+.ab-cta .btn-primary .ico,
+.ab-25 .btn-primary .ico { color: #0B1424; }
+.ab-cta .btn-primary:hover,
+.ab-25 .btn-primary:hover { background: #E9C275; }
+.ab-cta__note {
+  margin-top: clamp(18px, 2vw, 26px);
+  font-size: .82rem; color: rgba(255,255,255,.55);
 }
-html.js .about-stat .sunburst-left.reveal  { transform-origin: 0% 100%; }
-html.js .about-stat .sunburst-right.reveal { transform-origin: 100% 100%; }
-html.js .about-stat .sunburst.reveal.is-in { opacity: .55; transform: scale(1); }
 
-/* --- closing CTA reads over the photo, matching the opener --- */
-body.has-photo-bg .section-final {
-  background: linear-gradient(180deg, rgba(9,17,33,.44) 0%, rgba(9,17,33,.58) 100%);
-  --ray: rgba(216,169,78,.2);
+/* ── HEADER OVER DARK PHOTOGRAPHIC SECTIONS ──────────────── */
+.site-header.hdr-on-media {
+  background: linear-gradient(180deg, rgba(9,17,33,.5), rgba(9,17,33,0));
+  border-bottom-color: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none; backdrop-filter: none;
 }
-body.has-photo-bg .section-final .final-title { color: #fff; }
-body.has-photo-bg .section-final .final-sub { color: rgba(255,255,255,.84); }
-body.has-photo-bg .section-final .final-note { color: rgba(255,255,255,.6); }
+.hdr-on-media .nav-desktop a { color: #fff; opacity: .82; }
+.hdr-on-media .nav-desktop a:hover,
+.hdr-on-media .nav-desktop a.is-current { opacity: 1; }
+.hdr-on-media .logo-img--light { display: none; }
+.hdr-on-media .logo-img--dark { display: block; }
+.hdr-on-media .hamburger span { background: #fff; }
+.hdr-on-media .icon-btn,
+.hdr-on-media .social-btn {
+  color: #fff;
+  background: rgba(255,255,255,.09);
+  border-color: rgba(255,255,255,.26);
+}
+.hdr-on-media .social-btn .social-caret { color: rgba(255,255,255,.7); }
+.hdr-on-media .btn-primary.btn-sm { background: #fff; color: #0B1424; }
+.hdr-on-media .btn-primary.btn-sm .ico { color: #0B1424; }
 
-/* --- responsive --- */
-@media (max-width: 920px) {
-  .edito-row { grid-template-columns: minmax(0, 1fr); gap: clamp(16px, 4vw, 26px); }
-  .edito-aside { position: static; }
-  .edito-head { max-width: none; }
+/* ── SCROLL-REVEAL FALLBACK FOR THE HERO WHEN JS IS OFF ──── */
+html:not(.js) .hero-rise { opacity: 1; transform: none; }
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .ab-split__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 6vw, 40px); }
+  .ab-split--reverse .ab-split__media { order: 0; }
+  .ab-split__text { max-width: none; }
+  .ab-split__media { aspect-ratio: 16 / 10; }
+  .ab-cards { grid-template-columns: minmax(0, 1fr); }
+  .ab-card { min-height: 0; }
+  .ab-proof__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(24px, 6vw, 36px) 20px; }
 }
-@media (max-width: 540px) {
-  .rec-list li { grid-template-columns: minmax(0, 1fr); gap: 3px; padding-block: 14px; }
-  .do-list li { grid-template-columns: 1.8rem minmax(0, 1fr); }
+@media (max-width: 560px) {
+  .ab-hero { min-height: 92svh; }
+  .ab-mile { grid-template-columns: minmax(0, 1fr); gap: 6px; padding-block: 22px; }
+  .ab-mile__txt { max-width: none; }
+  .ab-25 { min-height: 78svh; }
+}
+
+/* ── REDUCED MOTION ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ab-hero__img, .ab-25__media img, .ab-cta__media img { transform: scale(1.05) !important; }
+  .ab-hero__cue::before { animation: none; }
+  html.js .hero-rise { opacity: 1; transform: none; }
+  .ab-split__media:hover img,
+  html.js .ab-split__media.reveal img { transform: none; }
+  .ab-card:hover { transform: none; }
 }
 
 
@@ -1703,12 +1817,14 @@ html.js #main { animation: page-in-fade .7s var(--ease) both; }
 /* the hero already carries this exact motion on its own slides, so only the
    remaining sections need the staggered rise (longhands so the per-section
    animation-delay below isn't reset by the shorthand) */
-html.js #main > section:not(.hero) {
+html.js #main > section:not(.hero):not(.ab-hero) {
   animation-name: page-in-rise;
   animation-duration: .72s;
   animation-timing-function: var(--ease);
   animation-fill-mode: both;
 }
+/* the About hero runs its own staggered load reveal (§16c) */
+html.js #main > section.ab-hero { animation: none; opacity: 1; transform: none; }
 html.js #main > section:nth-of-type(1) { animation-delay: .05s; }
 html.js #main > section:nth-of-type(2) { animation-delay: .13s; }
 html.js #main > section:nth-of-type(3) { animation-delay: .21s; }
