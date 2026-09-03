@@ -1298,6 +1298,12 @@ html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1
 .page-intro p + p { margin-top: 20px; }
 .page-intro .divider-gold { margin-block: clamp(38px, 4.5vw, 58px) clamp(28px, 3vw, 38px); }
 
+/* About page stacks several eyebrow → heading → prose blocks; give the prose
+   a consistent gap under its heading, and lift the summary line off the
+   timeline that precedes it */
+.page-body .section-title + .page-intro { margin-top: clamp(20px, 2.4vw, 32px); }
+.page-body .process + .closing-line { margin-top: clamp(30px, 3.6vw, 46px); }
+
 /* small "in progress" marker — remove once a page has its real content */
 .page-stub {
   display: inline-flex; align-items: center; gap: 10px;
@@ -1345,24 +1351,251 @@ html[data-theme="dark"] .about-bg__img--dark { display: block; }
 .about-bg::after {
   content: "";
   position: absolute; inset: 0;
-  background: linear-gradient(180deg, var(--veil-wash) 0%, var(--veil-core) 55%, var(--veil-core) 100%);
+  /* a light, even wash across the whole fixed photo — just enough to keep
+     text legible everywhere without hiding the scene */
+  background: var(--veil-wash);
 }
 
-/* Let the fixed photo show fully through the hero band, but seat the
-   long-form body content on a near-opaque panel in the page's normal
-   background color — full standard contrast for dense paragraphs/cards,
-   while a sliver of translucency + blur keeps it visibly blended with the
-   photo rather than a hard-edged box (a fixed element with the default
-   z-index:auto otherwise paints above non-positioned siblings regardless
-   of source order, so this also fixes stacking for the content + footer). */
-body.has-photo-bg .page-hero { background: transparent; }
+/* The fixed photo now shows across the ENTIRE page, not just the hero band.
+   Hero is fully transparent; the long-form body and the footer sit on
+   translucent frosted panels so the scene reads through them as a soft
+   blur while dense paragraphs/cards stay readable. (A fixed element with
+   the default z-index:auto otherwise paints above non-positioned siblings
+   regardless of source order, so the relative z-index also fixes stacking
+   for the content + footer.) */
+/* hero sits directly on the photo now (both themes), so it gets a soft
+   dark scrim + light text — the same read-over-photo treatment the
+   homepage hero carousel uses */
+body.has-photo-bg .page-hero {
+  background: linear-gradient(180deg, rgba(9,17,33,.30) 0%, rgba(9,17,33,.44) 100%);
+}
+body.has-photo-bg .page-hero .page-title { color: #fff; }
+body.has-photo-bg .page-hero .page-lede { color: rgba(255,255,255,.84); }
+body.has-photo-bg .page-hero .eyebrow-navy { color: rgba(255,255,255,.78); }
+body.has-photo-bg .page-hero .eyebrow-navy .rule { background: rgba(255,255,255,.5); opacity: 1; }
 body.has-photo-bg .page-body {
-  background: color-mix(in srgb, var(--bg) 90%, transparent);
-  -webkit-backdrop-filter: blur(3px);
-  backdrop-filter: blur(3px);
+  background: color-mix(in srgb, var(--bg) 56%, transparent);
+  -webkit-backdrop-filter: blur(9px);
+  backdrop-filter: blur(9px);
   position: relative; z-index: 1;
 }
-body.has-photo-bg .site-footer { position: relative; z-index: 1; }
+body.has-photo-bg .site-footer {
+  position: relative; z-index: 1;
+  background: color-mix(in srgb, #0F2247 86%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+html[data-theme="dark"] body.has-photo-bg .site-footer {
+  background: color-mix(in srgb, #0B1526 86%, transparent);
+}
+
+/* No backdrop-filter support → fall back to a more opaque panel so text
+   never sits on a bare photo */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  body.has-photo-bg .page-body { background: color-mix(in srgb, var(--bg) 88%, transparent); }
+  body.has-photo-bg .site-footer { background: #0F2247; }
+  html[data-theme="dark"] body.has-photo-bg .site-footer { background: #0B1526; }
+}
+
+
+/* ── 16d. ABOUT PAGE — EDITORIAL LAYOUT ──────────────────── */
+/* Inspired by long-form agency "about" pages: an oversized left-aligned
+   opener, two-column sticky-label sections reading over the fixed photo, a
+   hairline-ruled credentials list, and a big display-number band before the
+   closing CTA. Palette unchanged — navy ink, gold accents, gold rays. */
+
+/* every inner-page section stacks above the fixed photo layer */
+body.has-photo-bg #main > section { position: relative; z-index: 1; }
+
+/* --- opener --- */
+.about-hero { text-align: left; }
+.about-hero .container { max-width: 1180px; }
+.about-hero .eyebrow { justify-content: flex-start; }
+.about-hero .page-title {
+  margin-inline: 0;
+  max-width: 15ch;
+  font-size: clamp(2.4rem, 6.2vw, 4.5rem);
+  text-wrap: balance;
+}
+.about-hero .page-lede { margin-inline: 0; max-width: 48ch; }
+.about-hero .sunburst { opacity: .5; }
+body.has-photo-bg .about-hero { --ray: rgba(216,169,78,.18); }
+
+/* --- two-column editorial rows --- */
+.about-body .container { max-width: 1180px; }
+.edito-row {
+  display: grid;
+  grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+  gap: clamp(22px, 5vw, 76px);
+  padding-block: clamp(40px, 6vw, 84px);
+  border-top: 1px solid var(--hairline);
+}
+.edito-row:first-child { border-top: 0; padding-top: 0; }
+.edito-aside { align-self: start; }
+@media (min-width: 921px) {
+  .edito-aside { position: sticky; top: calc(var(--header-h) + 26px); }
+}
+.edito-num {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--serif);
+  font-size: clamp(1.35rem, 1.9vw, 1.7rem);
+  color: var(--gold);
+  margin-bottom: 18px;
+  font-variant-numeric: lining-nums;
+}
+.edito-num::after {
+  content: "";
+  height: 1px; flex: 1;
+  background: color-mix(in srgb, var(--gold) 45%, transparent);
+}
+.edito-aside .eyebrow { justify-content: flex-start; margin-bottom: 14px; }
+.edito-head {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 2.7vw, 2.2rem);
+  line-height: 1.16;
+  letter-spacing: -.01em;
+  color: var(--navy);
+  max-width: 18ch;
+  text-wrap: balance;
+}
+.edito-body > p {
+  color: var(--muted);
+  font-size: clamp(1rem, 1.15vw, 1.12rem);
+  line-height: 1.78;
+  max-width: 62ch;
+}
+.edito-body > p + p { margin-top: 18px; }
+.edito-body .edito-lead {
+  color: var(--navy);
+  font-size: clamp(1.05rem, 1.35vw, 1.22rem);
+  line-height: 1.6;
+  margin-bottom: clamp(22px, 3vw, 34px);
+  max-width: 52ch;
+}
+.edito-kicker {
+  margin-top: clamp(24px, 3.2vw, 40px);
+  font-family: var(--serif);
+  font-size: clamp(1.08rem, 1.7vw, 1.4rem);
+  line-height: 1.4;
+  color: var(--navy);
+}
+
+/* --- "what we do" list --- */
+.do-list { counter-reset: do; margin-top: 4px; }
+.do-list li {
+  display: grid;
+  grid-template-columns: 2.4rem minmax(0, 1fr);
+  column-gap: clamp(14px, 2vw, 24px);
+  row-gap: 8px;
+  padding-block: clamp(20px, 2.8vw, 30px);
+  border-top: 1px solid var(--hairline);
+}
+.do-list li::before {
+  counter-increment: do;
+  content: counter(do, decimal-leading-zero);
+  grid-row: 1 / span 2;
+  font-family: var(--serif);
+  font-size: .95rem;
+  color: var(--gold);
+  padding-top: .15em;
+  font-variant-numeric: lining-nums;
+}
+.do-k {
+  align-self: center;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: .84rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+.do-list li p {
+  color: var(--muted);
+  font-size: .98rem;
+  line-height: 1.72;
+  max-width: 54ch;
+}
+
+/* --- credentials list --- */
+.rec-list { margin-top: clamp(26px, 3.6vw, 44px); }
+.rec-list li {
+  display: grid;
+  grid-template-columns: minmax(110px, 200px) minmax(0, 1fr);
+  gap: 8px clamp(20px, 3vw, 34px);
+  align-items: baseline;
+  padding-block: clamp(14px, 1.9vw, 20px);
+  border-top: 1px solid var(--hairline);
+}
+.rec-list li:last-child { border-bottom: 1px solid var(--hairline); }
+.rec-k {
+  font-family: var(--serif);
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  color: var(--navy);
+  font-variant-numeric: lining-nums;
+}
+.rec-v { color: var(--muted); font-size: .95rem; line-height: 1.6; }
+
+/* --- big display-number band --- */
+.about-stat {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding-block: clamp(66px, 10vw, 140px);
+  border-block: 1px solid color-mix(in srgb, var(--gold) 26%, transparent);
+  background: linear-gradient(180deg, rgba(9,17,33,.36) 0%, rgba(9,17,33,.52) 100%);
+  --ray: rgba(216,169,78,.24);
+}
+.about-stat .container { position: relative; z-index: 1; }
+.about-stat .sunburst { width: min(62vw, 660px); height: min(62vw, 660px); opacity: .55; }
+.stat-big {
+  font-family: var(--serif);
+  font-weight: 500;
+  line-height: 1;
+  color: #fff;
+  font-size: clamp(4.5rem, 17vw, 12rem);
+  letter-spacing: -.02em;
+  font-variant-numeric: lining-nums;
+}
+.stat-big span { color: var(--gold); font-size: .38em; vertical-align: .72em; margin-left: .06em; }
+.stat-cap {
+  margin: clamp(14px, 2vw, 24px) auto 0;
+  max-width: 42ch;
+  color: rgba(255,255,255,.82);
+  font-size: clamp(.98rem, 1.2vw, 1.08rem);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+html.js .about-stat .sunburst.reveal {
+  opacity: 0;
+  transform: scale(.5);
+  transition: opacity 1.1s var(--ease), transform 1.2s var(--ease);
+}
+html.js .about-stat .sunburst-left.reveal  { transform-origin: 0% 100%; }
+html.js .about-stat .sunburst-right.reveal { transform-origin: 100% 100%; }
+html.js .about-stat .sunburst.reveal.is-in { opacity: .55; transform: scale(1); }
+
+/* --- closing CTA reads over the photo, matching the opener --- */
+body.has-photo-bg .section-final {
+  background: linear-gradient(180deg, rgba(9,17,33,.44) 0%, rgba(9,17,33,.58) 100%);
+  --ray: rgba(216,169,78,.2);
+}
+body.has-photo-bg .section-final .final-title { color: #fff; }
+body.has-photo-bg .section-final .final-sub { color: rgba(255,255,255,.84); }
+body.has-photo-bg .section-final .final-note { color: rgba(255,255,255,.6); }
+
+/* --- responsive --- */
+@media (max-width: 920px) {
+  .edito-row { grid-template-columns: minmax(0, 1fr); gap: clamp(16px, 4vw, 26px); }
+  .edito-aside { position: static; }
+  .edito-head { max-width: none; }
+}
+@media (max-width: 540px) {
+  .rec-list li { grid-template-columns: minmax(0, 1fr); gap: 3px; padding-block: 14px; }
+  .do-list li { grid-template-columns: 1.8rem minmax(0, 1fr); }
+}
 
 
 /* ── 17. FOOTER ──────────────────────────────────────────── */
