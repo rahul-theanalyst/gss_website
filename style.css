@@ -1313,6 +1313,58 @@ html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1
 }
 
 
+/* ── 16c. ABOUT PAGE — STICKY PHOTO BACKGROUND ───────────── */
+/* One real photo pinned behind the whole page (position: fixed, so it
+   never scrolls — content scrolls transparently over it), swapped for a
+   genuine light/dark pair rather than a filtered fake, same display-swap
+   technique as .logo-img. Scoped to body.has-photo-bg so no other inner
+   page is affected. */
+.about-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.about-bg__img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: 50% 28%;
+  /* dim the photograph itself rather than piling on an opaque veil, same
+     approach the hero carousel uses so navy/white text keeps its contrast
+     without flattening the image to a solid wash */
+  filter: brightness(.8) saturate(1.02) contrast(1.02);
+}
+.about-bg__img--dark { display: none; filter: brightness(.9) saturate(.92); }
+html[data-theme="dark"] .about-bg__img--light { display: none; }
+html[data-theme="dark"] .about-bg__img--dark { display: block; }
+/* permanent veil over the hero band so the title/lede read reliably the
+   instant the page loads — reuses the same veil tokens the hero photos
+   use, just as a top-to-bottom wash instead of a per-slide vignette, so
+   no new colors are introduced. */
+.about-bg::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, var(--veil-wash) 0%, var(--veil-core) 55%, var(--veil-core) 100%);
+}
+
+/* Let the fixed photo show fully through the hero band, but seat the
+   long-form body content on a near-opaque panel in the page's normal
+   background color — full standard contrast for dense paragraphs/cards,
+   while a sliver of translucency + blur keeps it visibly blended with the
+   photo rather than a hard-edged box (a fixed element with the default
+   z-index:auto otherwise paints above non-positioned siblings regardless
+   of source order, so this also fixes stacking for the content + footer). */
+body.has-photo-bg .page-hero { background: transparent; }
+body.has-photo-bg .page-body {
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  position: relative; z-index: 1;
+}
+body.has-photo-bg .site-footer { position: relative; z-index: 1; }
+
+
 /* ── 17. FOOTER ──────────────────────────────────────────── */
 /* the footer is a dark band in both themes — a deliberate full-stop under the page */
 .site-footer {
@@ -1321,6 +1373,41 @@ html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1
   padding-block: clamp(14px, 1.9vw, 20px);
 }
 html[data-theme="dark"] .site-footer { background: #0B1526; }
+
+/* Insights callout — sits above the utility bar, same dark band, a hairline
+   apart. Deliberately just a label + one line + a CTA, so it stays a quiet
+   footer feature rather than turning the footer into a promo section. */
+.footer-insights {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+  gap: 12px 24px;
+  padding-bottom: clamp(14px, 1.9vw, 20px);
+  margin-bottom: clamp(14px, 1.9vw, 20px);
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+.footer-insights-text {
+  display: flex; align-items: baseline; flex-wrap: wrap;
+  gap: 4px 10px;
+  max-width: 640px;
+}
+.footer-insights-label {
+  font-size: .8rem; font-weight: 700; color: #fff; flex: 0 0 auto;
+}
+.footer-insights-desc {
+  font-size: .8rem; line-height: 1.55; color: rgba(255,255,255,.58);
+}
+.footer-insights-cta {
+  display: inline-flex; align-items: center; gap: 9px; flex: 0 0 auto;
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255,255,255,.35);
+  font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  color: #fff; white-space: nowrap;
+  transition: background-color .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease);
+}
+.footer-insights-cta .ico { width: 1em; height: 1em; color: var(--gold-2); transition: transform .25s var(--ease), color .2s var(--ease); }
+.footer-insights-cta:hover { background: var(--gold-2); border-color: var(--gold-2); color: #0F2247; }
+.footer-insights-cta:hover .ico { transform: translateX(3px); color: #0F2247; }
+
 .footer-bar {
   display: flex; align-items: center; flex-wrap: wrap;
   gap: 10px 26px;
@@ -1496,6 +1583,8 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   .attrib figcaption { text-align: center; }
   .footer-bar { gap: 9px 18px; }
   .footer-social { margin-left: 0; }
+  .footer-insights { flex-direction: column; align-items: flex-start; }
+  .footer-insights-cta { width: auto; }
 }
 
 /* ≤380px — smallest phones */

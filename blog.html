@@ -209,20 +209,6 @@
           >Talk to Us
           <svg class="ico" aria-hidden="true"><use href="#i-arrow" /></svg
         ></a>
-        <button
-          class="icon-btn"
-          id="themeToggleMobile"
-          type="button"
-          aria-label="Switch to dark theme"
-          aria-pressed="false"
-        >
-          <svg class="ico ico-light" aria-hidden="true">
-            <use href="#i-sun" />
-          </svg>
-          <svg class="ico ico-dark" aria-hidden="true">
-            <use href="#i-moon" />
-          </svg>
-        </button>
       </div>
     </div>
 
@@ -441,9 +427,14 @@
     </main>
 
     <footer class="site-footer">
-      <div class="container footer-bar">
+      <div class="container">
+    <div class="footer-insights">
+      <p class="footer-insights-text"><span class="footer-insights-label">Insights</span><span class="footer-insights-desc">Explore our latest perspectives, technology insights, and ideas shaping the digital world.</span></p>
+      <a class="footer-insights-cta" href="blog.html">Explore Insights <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+
+    <div class="footer-bar">
         <p class="footer-copy">&copy; <span id="year">2026</span> GSS</p>
-        <a class="footer-feature" href="blog.html">Insights</a>
 
         <nav class="footer-links" aria-label="Legal">
           <a href="contact.html">Disclaimer</a>
@@ -509,6 +500,7 @@
           </li>
         </ul>
       </div>
+  </div>
     </footer>
 
     <script src="script.js"></script>
