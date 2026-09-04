@@ -1372,7 +1372,7 @@ html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1
   font-family: var(--serif); font-weight: 500;
   font-size: clamp(2rem, 4.6vw, 3.9rem);   /* ~48–64px on desktop */
   line-height: 1.08; letter-spacing: -.018em;
-  color: var(--navy); text-wrap: balance;
+  color: var(--white); text-wrap: balance;
   max-width: 16ch;
 }
 .ab-h2--wide { max-width: 24ch; }
@@ -1385,7 +1385,7 @@ html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1
 }
 .ab-body + .ab-body { margin-top: clamp(14px, 1.4vw, 20px); }
 .ab-body--accent {
-  color: var(--navy);
+  color: var(--white);
   font-family: var(--serif);
   font-size: clamp(1.15rem, 1.7vw, 1.5rem);
   line-height: 1.4;
@@ -1520,7 +1520,15 @@ html.js #main > section.ab-hero { animation: none; opacity: 1; }
    contrast, so they keep the .ab-card layout but pick up a translucent
    glass finish instead of the opaque site .card token. */
 .ab-services { padding-block: clamp(48px, 6.5vw, 92px); }
-.ab-services__head { max-width: 40rem; margin-bottom: clamp(26px, 3.2vw, 42px); }
+.ab-services__head {
+  max-width: 40rem;
+  margin-bottom: clamp(26px, 3.2vw, 42px);
+}
+
+.ab-services__head .ab-h2 {
+  color: #FFFFFF !important;
+  opacity: 1 !important;
+}
 .ab-cards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1655,9 +1663,27 @@ html.js #main > section.ab-hero { animation: none; opacity: 1; }
 }
 .ab-25__num {
   font-family: var(--serif); font-weight: 500;
-  font-size: clamp(6rem, 22vw, 15rem);   /* up to ~240px */
+  font-size: clamp(6rem, 22vw, 15rem);
   line-height: .9; letter-spacing: -.03em;
-  color: #fff; font-variant-numeric: lining-nums;
+
+  background: linear-gradient(
+    115deg,
+    #8A6518 0%,
+    #C89B2C 18%,
+    #FFE58A 38%,
+    #FFF3B0 50%,
+    #D4AF37 65%,
+    #A87516 82%,
+    #F5D76E 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow:
+    0 0 8px rgba(255, 215, 80, 0.4),
+    0 0 24px rgba(212, 175, 55, 0.3);
+
+  font-variant-numeric: lining-nums;
   display: inline-flex; align-items: flex-start;
 }
 .ab-25__plus { color: var(--gold); font-size: .34em; margin-top: .18em; }
@@ -2025,3 +2051,4 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   html.js .reveal { opacity: 1 !important; transform: none !important; }
   body { background: #fff; }
 }
+
