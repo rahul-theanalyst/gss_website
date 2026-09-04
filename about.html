@@ -33,8 +33,9 @@
 
     <link rel="stylesheet" href="style.css" />
 
-    <!-- Preload the sticky page background for the theme most likely to be
-         shown (it's the LCP element) — same pattern as the homepage hero. -->
+    <!-- The hero image is the LCP element — preload it. The <html> tag
+         defaults to data-theme="light" before the theme script runs, so the
+         light photo is the one actually needed for first paint. -->
     <link rel="preload" as="image" href="images/about-bg-light-1264.webp" imagesrcset="images/about-bg-light-560.webp 560w, images/about-bg-light-900.webp 900w, images/about-bg-light-1264.webp 1264w" imagesizes="100vw" fetchpriority="high" />
 
     <!-- Flag JS support so scroll-reveal never hides content when scripting is off -->
@@ -42,25 +43,8 @@
       document.documentElement.classList.add("js");
     </script>
   </head>
-  <body class="has-photo-bg">
+  <body class="about-page">
     <a class="skip-link" href="#main">Skip to main content</a>
-
-    <!-- Single fixed full-page background — one continuous scene behind the
-         whole page (position: fixed, so it never scrolls), swapped between a
-         genuine light-theme and dark-theme photo of the GSS office as the
-         site theme changes. Content scrolls normally on top of it. -->
-    <div class="about-bg" aria-hidden="true">
-      <img class="about-bg__img about-bg__img--light"
-           src="images/about-bg-light-1264.webp"
-           srcset="images/about-bg-light-560.webp 560w, images/about-bg-light-900.webp 900w, images/about-bg-light-1264.webp 1264w"
-           sizes="100vw" loading="eager" fetchpriority="high"
-           alt="The GSS office building at dusk under a clear blue sky" />
-      <img class="about-bg__img about-bg__img--dark"
-           src="images/about-bg-dark-1264.webp"
-           srcset="images/about-bg-dark-560.webp 560w, images/about-bg-dark-900.webp 900w, images/about-bg-dark-1264.webp 1264w"
-           sizes="100vw" loading="eager" fetchpriority="low"
-           alt="" />
-    </div>
 
     <svg
       class="sprite"
@@ -264,188 +248,247 @@
     </div>
 
     <main id="main">
-      <section class="page-hero">
-        <span class="sunburst sunburst-left" aria-hidden="true"></span>
-        <span class="sunburst sunburst-right" aria-hidden="true"></span>
-        <div class="container">
-          <p class="eyebrow eyebrow-navy">
-            <span class="rule" aria-hidden="true"></span>About Us<span
-              class="rule"
-              aria-hidden="true"
-            ></span>
+
+      <!-- ══════════ HERO ══════════ -->
+      <!-- Background is pinned to the viewport (position: fixed) for as long as
+           the hero occupies scroll space, so the About Us content scrolls up
+           over one continuous photo instead of the photo scrolling with it.
+           Genuine light/dark photo swap (not a filter) — same technique as
+           the header logo — driven by the site's existing theme system. -->
+      <section class="ab-hero" id="top" data-header="dark">
+        <div class="ab-hero__media" aria-hidden="true">
+          <img class="ab-hero__img ab-hero__img--light"
+               src="images/about-bg-light-1264.webp"
+               srcset="images/about-bg-light-560.webp 560w, images/about-bg-light-900.webp 900w, images/about-bg-light-1264.webp 1264w"
+               sizes="100vw" fetchpriority="high"
+               alt="The GSS office building at dusk under a clear sky" />
+          <img class="ab-hero__img ab-hero__img--dark"
+               src="images/about-bg-dark-1264.webp"
+               srcset="images/about-bg-dark-560.webp 560w, images/about-bg-dark-900.webp 900w, images/about-bg-dark-1264.webp 1264w"
+               sizes="100vw" fetchpriority="high" alt="" />
+          <span class="ab-hero__veil" aria-hidden="true"></span>
+        </div>
+        <div class="ab-hero__inner container">
+          <p class="ab-eyebrow ab-eyebrow--onDark hero-rise" style="--ri:0">
+            <span class="ab-eyebrow__rule" aria-hidden="true"></span>About Us
           </p>
-          <h1 class="page-title">
-            25+ Years of Trust. Built for What&rsquo;s Next.
+          <h1 class="ab-hero__title">
+            <span class="hero-rise" style="--ri:1">25+ years of solving</span>
+            <span class="hero-rise" style="--ri:2">what comes next.</span>
           </h1>
-          <p class="page-lede">
-            GSS combines proven experience, certified diversity, business-led
-            technology consulting and specialized talent to help organizations
-            move forward with confidence.
+          <p class="ab-hero__lede hero-rise" style="--ri:3">
+            A technology and business solutions company that starts every
+            engagement the same way &mdash; by understanding the business first.
           </p>
         </div>
+        <span class="ab-hero__cue hero-rise" style="--ri:4" aria-hidden="true"></span>
       </section>
 
-      <section class="page-body">
-        <div class="container">
-
-          <!-- Who we are -->
-          <div class="page-intro">
-            <p class="reveal">
-              Global Soft Systems (GSS) is a technology consulting and
-              specialized-talent firm that has spent more than two decades
-              doing one thing consistently: understanding a client&rsquo;s
-              business before proposing a solution to it.
+      <!-- ══════════ 01 · WHO WE ARE ══════════ -->
+      <!-- No section image of its own — the single pinned About Us photo
+           (set in the hero, above) keeps showing through; this section just
+           adds a translucent glass card so the text stays readable over it. -->
+      <section class="ab-split" id="who">
+        <div class="container ab-split__grid">
+          <div class="ab-split__text ab-glass reveal">
+            <p class="ab-eyebrow ab-eyebrow--onDark">
+              <span class="ab-eyebrow__rule" aria-hidden="true"></span>01 &mdash; Who We Are
             </p>
-            <p class="reveal">
-              That order matters. It is why our recommendations tend to be
-              smaller than clients expect, why our engagements tend to last
-              longer than a single project, and why so much of our work
-              arrives through referral rather than procurement.
+            <h2 class="ab-h2">A little about who we are.</h2>
+            <p class="ab-body">
+              Before you decide whether to work with a company, you want to know
+              something simple: who they are and how they work.
+            </p>
+            <p class="ab-body">
+              GSS is a technology and business solutions company built around one
+              idea &mdash; understand the need first, then find the right way to
+              solve it. Sometimes that means technology, sometimes people, often
+              both.
+            </p>
+            <p class="ab-body ab-body--accent">
+              It always starts with a conversation.
             </p>
           </div>
+        </div>
+      </section>
 
-          <div class="divider-gold reveal" aria-hidden="true"></div>
+      <!-- ══════════ PHILOSOPHY STATEMENT ══════════ -->
+      <section class="ab-statement">
+        <div class="container">
+          <div class="ab-glass ab-statement__card reveal">
+            <p class="ab-statement__eyebrow">
+              <span class="ab-eyebrow__rule" aria-hidden="true"></span>Our Philosophy
+            </p>
+            <p class="ab-statement__text">
+              Technology doesn&rsquo;t start with technology.
+              <span>It starts with understanding.</span>
+            </p>
+          </div>
+        </div>
+      </section>
 
-          <!-- What we do -->
-          <p class="eyebrow eyebrow-navy reveal">
-            <span class="rule" aria-hidden="true"></span>What We Do<span
-              class="rule"
-              aria-hidden="true"
-            ></span>
-          </p>
-          <h2 class="section-title reveal">
-            Three ways we help you move forward.
-          </h2>
-          <ol class="process">
-            <li class="step reveal">
-              <span class="step-node"><span>01</span></span>
-              <h3 class="step-title">Technology Consulting</h3>
-              <p class="step-copy">
-                Business-led guidance that turns a complex priority into a
-                practical, honestly-costed plan before a single line of work
-                begins.
-              </p>
-            </li>
-            <li class="step reveal">
-              <span class="step-node"><span>02</span></span>
-              <h3 class="step-title">Specialized Talent</h3>
-              <p class="step-copy">
-                Contract, project and full-time placements drawn from an
-                established in-house workforce and a trusted supplier
-                ecosystem.
-              </p>
-            </li>
-            <li class="step reveal">
-              <span class="step-node"><span>03</span></span>
-              <h3 class="step-title">Managed Delivery</h3>
-              <p class="step-copy">
-                One accountable team that carries a solution from plan to
-                production, so results stay measurable long after kickoff.
-              </p>
-            </li>
-          </ol>
+      <!-- ══════════ 02 · HOW WE WORK ══════════ -->
+      <section class="ab-split ab-split--reverse" id="how">
+        <div class="container ab-split__grid">
+          <div class="ab-split__text ab-glass reveal">
+            <p class="ab-eyebrow ab-eyebrow--onDark">
+              <span class="ab-eyebrow__rule" aria-hidden="true"></span>02 &mdash; How We Work
+            </p>
+            <h2 class="ab-h2">We start with the business, not a product.</h2>
+            <p class="ab-body">
+              We ask questions until the challenge is clear &mdash; what is
+              working, what isn&rsquo;t, and what the business is trying to
+              accomplish.
+            </p>
+            <p class="ab-body">
+              Then we talk through practical options: what might work, what it
+              would take, where the risks are, and what impact you can expect.
+            </p>
+            <p class="ab-body ab-body--accent">
+              No predetermined answer. No unnecessary disruption. No technology
+              for technology&rsquo;s sake.
+            </p>
+          </div>
+        </div>
+      </section>
 
-          <div class="divider-gold reveal" aria-hidden="true"></div>
-
-          <!-- Our approach / values -->
-          <p class="eyebrow eyebrow-navy reveal">
-            <span class="rule" aria-hidden="true"></span>Our Approach<span
-              class="rule"
-              aria-hidden="true"
-            ></span>
-          </p>
-          <h2 class="section-title reveal">What guides how we work.</h2>
-          <ul class="cred-row cols-4 reveal">
-            <li class="cred-card is-stacked">
-              <span class="cred-ico"
-                ><svg class="ico" aria-hidden="true"><use href="#i-compass" /></svg
-              ></span>
-              <span class="cred-txt"
-                ><strong>Business First</strong><small>Not a predetermined solution</small></span
-              >
-            </li>
-            <li class="cred-card is-stacked">
-              <span class="cred-ico"
-                ><svg class="ico" aria-hidden="true"><use href="#i-layers" /></svg
-              ></span>
-              <span class="cred-txt"
-                ><strong>Full-Spectrum Capability</strong><small>Strategy through delivery</small></span
-              >
-            </li>
-            <li class="cred-card is-stacked">
-              <span class="cred-ico"
-                ><svg class="ico" aria-hidden="true"><use href="#i-shield" /></svg
-              ></span>
-              <span class="cred-txt"
-                ><strong>Accountable Delivery</strong><small>Results you can measure</small></span
-              >
-            </li>
-            <li class="cred-card is-stacked">
-              <span class="cred-ico"
-                ><svg class="ico" aria-hidden="true"><use href="#i-handshake" /></svg
-              ></span>
-              <span class="cred-txt"
-                ><strong>Long-Term Partnership</strong><small>One relationship, over time</small></span
-              >
-            </li>
-          </ul>
-
-          <div class="divider-gold reveal" aria-hidden="true"></div>
-
-          <!-- Company strengths -->
-          <p class="eyebrow eyebrow-navy reveal">
-            <span class="rule" aria-hidden="true"></span>Why GSS<span
-              class="rule"
-              aria-hidden="true"
-            ></span>
-          </p>
-          <ul class="cred-row cols-4 reveal">
-            <li class="cred-card is-stacked">
-              <span class="cred-ico"
-                ><svg class="ico" aria-hidden="true"><use href="#i-clock" /></svg
-              ></span>
-              <span class="cred-txt"
-                ><strong>25+ Years</strong><small>Established experience</small></span
-              >
-            </li>
-            <li class="cred-card is-stacked">
-              <span class="cred-ico"
-                ><svg class="ico" aria-hidden="true"><use href="#i-award" /></svg
-              ></span>
-              <span class="cred-txt"
-                ><strong>MWBE</strong><small>Certified</small></span
-              >
-            </li>
-            <li class="cred-card is-stacked">
-              <span class="cred-ico"
-                ><svg class="ico" aria-hidden="true"><use href="#i-chart" /></svg
-              ></span>
-              <span class="cred-txt"
-                ><strong>Inc. 5000</strong><small>Recognized</small></span
-              >
-            </li>
-            <li class="cred-card is-stacked">
-              <span class="cred-ico"
-                ><svg class="ico" aria-hidden="true"><use href="#i-user-circle" /></svg
-              ></span>
-              <span class="cred-txt"
-                ><strong>Technology + Talent</strong><small>Accountable delivery</small></span
-              >
-            </li>
-          </ul>
-
-          <div class="divider-gold reveal" aria-hidden="true"></div>
-          <p class="closing-line reveal">
-            One relationship. The right capabilities. Accountable delivery.
-          </p>
-          <p class="center-cta reveal">
-            <a class="btn btn-primary" href="contact.html"
-              >Talk to Us
-              <svg class="ico" aria-hidden="true"><use href="#i-arrow" /></svg
-            ></a>
+      <!-- ══════════ 03 · WHAT WE DO ══════════ -->
+      <section class="ab-services" id="what">
+        <div class="container">
+          <header class="ab-services__head ab-glass reveal">
+            <p class="ab-eyebrow ab-eyebrow--onDark">
+              <span class="ab-eyebrow__rule" aria-hidden="true"></span>03 &mdash; What We Do
+            </p>
+            <h2 class="ab-h2 ab-h2--wide">Three ways we help you move forward.</h2>
+          </header>
+          <div class="ab-cards">
+            <a class="ab-card reveal" href="solutions.html">
+              <span class="ab-card__num" aria-hidden="true">01</span>
+              <span class="ab-card__cat">Technology Consulting</span>
+              <span class="ab-card__title">A complex priority, turned into a practical, honestly-costed plan.</span>
+              <span class="ab-card__desc">Business-led guidance before a single line of work begins.</span>
+              <span class="ab-card__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow" /></svg></span>
+            </a>
+            <a class="ab-card reveal" href="solutions.html">
+              <span class="ab-card__num" aria-hidden="true">02</span>
+              <span class="ab-card__cat">Specialized Talent</span>
+              <span class="ab-card__title">The right people, contract, project or permanent.</span>
+              <span class="ab-card__desc">Drawn from an established workforce and a trusted supplier network.</span>
+              <span class="ab-card__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow" /></svg></span>
+            </a>
+            <a class="ab-card reveal" href="solutions.html">
+              <span class="ab-card__num" aria-hidden="true">03</span>
+              <span class="ab-card__cat">Managed Delivery</span>
+              <span class="ab-card__title">One accountable team, from plan to production.</span>
+              <span class="ab-card__desc">So results hold up long after kickoff.</span>
+              <span class="ab-card__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow" /></svg></span>
+            </a>
+          </div>
+          <p class="ab-services__foot reveal">
+            One relationship. The right capabilities. Delivery you can measure.
           </p>
         </div>
       </section>
+
+      <!-- ══════════ 04 · THE COMPANY — TIMELINE ══════════ -->
+      <section class="ab-timeline" id="company">
+        <div class="container">
+        <div class="ab-glass reveal">
+          <header class="ab-timeline__head">
+            <p class="ab-eyebrow ab-eyebrow--onDark">
+              <span class="ab-eyebrow__rule" aria-hidden="true"></span>04 &mdash; The Company
+            </p>
+            <h2 class="ab-h2">Where we come from.</h2>
+            <p class="ab-body">
+              A U.S.-based technology and business solutions company, independently
+              owned, with more than 25 years behind it &mdash; and the same
+              starting question it began with.
+            </p>
+          </header>
+          <ol class="ab-miles">
+            <li class="ab-mile">
+              <span class="ab-mile__yr">The beginning</span>
+              <span class="ab-mile__txt">GSS starts on one principle: understand the business before recommending the technology.</span>
+            </li>
+            <li class="ab-mile">
+              <span class="ab-mile__yr">Building</span>
+              <span class="ab-mile__txt">Technology consulting and specialized talent are brought together under one accountable model.</span>
+            </li>
+            <li class="ab-mile">
+              <span class="ab-mile__yr">Recognized</span>
+              <span class="ab-mile__txt">MBE certification and Inc.&nbsp;5000 recognition affirm sustained, independent growth.</span>
+            </li>
+            <li class="ab-mile">
+              <span class="ab-mile__yr">Today</span>
+              <span class="ab-mile__txt">25+ years on &mdash; still beginning every engagement by listening.</span>
+            </li>
+          </ol>
+        </div>
+        </div>
+      </section>
+
+      <!-- ══════════ PROOF STRIP ══════════ -->
+      <section class="ab-proof" aria-label="Credentials">
+        <div class="container ab-proof__grid">
+          <div class="ab-proof__item ab-glass reveal">
+            <span class="ab-proof__k">25+</span>
+            <span class="ab-proof__v">Years of experience</span>
+          </div>
+          <div class="ab-proof__item ab-glass reveal">
+            <span class="ab-proof__k">MBE</span>
+            <span class="ab-proof__v">Certified business</span>
+          </div>
+          <div class="ab-proof__item ab-glass reveal">
+            <span class="ab-proof__k">Inc. 5000</span>
+            <span class="ab-proof__v">Recognized for growth</span>
+          </div>
+          <div class="ab-proof__item ab-glass reveal">
+            <span class="ab-proof__k">U.S.</span>
+            <span class="ab-proof__v">Based &amp; independently owned</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════ 25+ CINEMATIC ══════════ -->
+      <!-- Own background photo removed — the pinned About Us photo already
+           shows through here; the radial-gradient overlay below still gives
+           the giant number the contrast it needs. -->
+      <section class="ab-25" aria-label="More than twenty-five years">
+        <div class="container ab-25__inner">
+          <p class="ab-25__num">
+            <span class="js-count" data-count-to="25">25</span><span class="ab-25__plus" aria-hidden="true">+</span>
+          </p>
+          <p class="ab-25__cap reveal">
+            Years of business-led consulting and accountable delivery &mdash;
+            still built one conversation at a time.
+          </p>
+        </div>
+      </section>
+
+      <!-- ══════════ CTA ══════════ -->
+      <!-- Own background photo removed — same reason as the 25+ section
+           above; only the theme-aware photo pinned in the hero is used for
+           the whole page now. -->
+      <section class="ab-cta" id="lets-talk">
+        <div class="container ab-cta__inner">
+          <h2 class="ab-cta__title reveal">
+            After 25 years, we still start the same way &mdash; by listening.
+          </h2>
+          <p class="ab-cta__sub reveal">
+            Tell us what is happening in your business, what is holding you back,
+            or what you want to accomplish next. We&rsquo;ll begin there.
+          </p>
+          <p class="ab-cta__act reveal">
+            <a class="btn btn-primary btn-lg" href="contact.html">Start a Conversation
+              <svg class="ico" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+          </p>
+          <p class="ab-cta__note reveal">
+            Initial conversations are complimentary and focused on understanding
+            your needs.
+          </p>
+        </div>
+      </section>
+
     </main>
 
     <footer class="site-footer">

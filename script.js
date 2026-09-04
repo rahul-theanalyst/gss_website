@@ -67,14 +67,112 @@
     if (!header) return;
     var ticking = false;
 
+    // sections that sit behind a transparent, light-on-dark header
+    var darkSections = $$('[data-header="dark"]');
+
     function update() {
-      header.classList.toggle('is-stuck', window.scrollY > 24);
+      var onDark = false;
+      if (darkSections.length) {
+        var probe = header.offsetHeight * 0.5;
+        onDark = darkSections.some(function (s) {
+          var r = s.getBoundingClientRect();
+          return r.top <= probe && r.bottom >= probe;
+        });
+      }
+      header.classList.toggle('hdr-on-media', onDark);
+      header.classList.toggle('is-stuck', window.scrollY > 24 && !onDark);
       ticking = false;
     }
     window.addEventListener('scroll', function () {
       if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
     }, { passive: true });
+    window.addEventListener('resize', function () {
+      if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+    }, { passive: true });
     update();
+  }());
+
+
+  /* ── 03b. ABOUT — HERO LOAD REVEAL ─────────────────────── */
+  (function heroReveal() {
+    var hero = $('.ab-hero');
+    if (!hero) return;
+    if (reduceMotion) { hero.classList.add('is-ready'); return; }
+    // next frame so the initial (hidden) state is painted first
+    window.requestAnimationFrame(function () {
+      window.requestAnimationFrame(function () { hero.classList.add('is-ready'); });
+    });
+  }());
+
+
+  /* ── 03c. ABOUT — IMAGE PARALLAX ───────────────────────── */
+  (function parallax() {
+    var imgs = $$('.js-parallax');
+    if (!imgs.length || reduceMotion) return;
+
+    var ticking = false;
+
+    function frame() {
+      ticking = false;
+      var vh = window.innerHeight;
+      imgs.forEach(function (img) {
+        var host = img.parentElement;
+        if (!host) return;
+        var r = host.getBoundingClientRect();
+        if (r.bottom < -240 || r.top > vh + 240) return;
+        var speed = parseFloat(img.getAttribute('data-speed')) || 0.05;
+        var mid = r.top + r.height / 2;
+        var prog = (mid - vh / 2) / (vh / 2 + r.height / 2);   // ~ -1 … 1
+        var shift = -(prog * speed * r.height);
+        img.style.transform = 'translate3d(0,' + shift.toFixed(1) + 'px,0) scale(1.14)';
+      });
+    }
+    function onScroll() {
+      if (!ticking) { ticking = true; window.requestAnimationFrame(frame); }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    frame();
+
+    motionQuery.addEventListener('change', function (e) {
+      if (e.matches) {
+        imgs.forEach(function (img) { img.style.transform = ''; });
+        window.removeEventListener('scroll', onScroll);
+      }
+    });
+  }());
+
+
+  /* ── 03d. ABOUT — "25+" COUNT-UP ───────────────────────── */
+  (function countUp() {
+    var el = $('.js-count');
+    if (!el) return;
+    var target = parseInt(el.getAttribute('data-count-to'), 10) || 25;
+
+    if (reduceMotion || !('IntersectionObserver' in window)) { el.textContent = String(target); return; }
+
+    var started = false;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting || started) return;
+        started = true;
+        io.disconnect();
+        var dur = 1500, t0 = null;
+        function step(ts) {
+          if (document.hidden) { el.textContent = String(target); return; }
+          if (t0 === null) t0 = ts;
+          var p = Math.min(1, (ts - t0) / dur);
+          var eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = String(Math.round(eased * target));
+          if (p < 1) window.requestAnimationFrame(step);
+        }
+        el.textContent = '0';
+        window.requestAnimationFrame(step);
+        // hard backstop — never leave the number mid-count
+        window.setTimeout(function () { el.textContent = String(target); }, dur + 600);
+      });
+    }, { threshold: 0.5 });
+    io.observe(el);
   }());
 
 
