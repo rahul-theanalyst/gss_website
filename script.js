@@ -159,6 +159,7 @@
         io.disconnect();
         var dur = 1500, t0 = null;
         function step(ts) {
+          if (document.hidden) { el.textContent = String(target); return; }
           if (t0 === null) t0 = ts;
           var p = Math.min(1, (ts - t0) / dur);
           var eased = 1 - Math.pow(1 - p, 3);
@@ -167,6 +168,8 @@
         }
         el.textContent = '0';
         window.requestAnimationFrame(step);
+        // hard backstop — never leave the number mid-count
+        window.setTimeout(function () { el.textContent = String(target); }, dur + 600);
       });
     }, { threshold: 0.5 });
     io.observe(el);
