@@ -21,10 +21,13 @@
   var motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   var reduceMotion = motionQuery.matches;
 
+  /* Theme preference is kept in sessionStorage, not localStorage, so every
+     fresh visit starts on the default (light) theme; a toggle only persists
+     for the current browsing session (and across page navigation within it). */
   function store(key, value) {
     try {
-      if (value === undefined) return window.localStorage.getItem(key);
-      window.localStorage.setItem(key, value);
+      if (value === undefined) return window.sessionStorage.getItem(key);
+      window.sessionStorage.setItem(key, value);
     } catch (e) { /* storage blocked — degrade silently */ }
     return null;
   }
@@ -34,6 +37,9 @@
   (function theme() {
     var root = document.documentElement;
     var toggles = [$('#themeToggle'), $('#themeToggleMobile')].filter(Boolean);
+
+    // drop any legacy persistent preference so returning visitors also start light
+    try { window.localStorage.removeItem('gss-theme'); } catch (e) { /* ignore */ }
 
     var saved = store('gss-theme');
     if (saved === 'dark' || saved === 'light') root.setAttribute('data-theme', saved);
