@@ -226,14 +226,13 @@ html[data-theme="dark"] .skip-link { background: var(--gold); color: #0B1424; }
 .step-node,
 .panel h2,
 .sol-card h3,
-.ab-hero__title,
-.ab-h2,
-.ab-statement__text,
-.ab-cta__title,
-.ab-25__num,
-.ab-proof__k,
-.ab-mile__yr,
-.ab-services__foot {
+.abx-display,
+.abx-h2,
+.abx-pov__lead,
+.abx-pov__tail,
+.abx-cta__title,
+.abx-flow__label,
+.abx-approach__row li {
   font-variant-numeric: lining-nums;
   -webkit-font-feature-settings: "lnum" 1;
   font-feature-settings: "lnum" 1;
@@ -412,27 +411,6 @@ html[data-theme="dark"] .face-left { fill: #8AA5C2; }
   box-shadow: 0 1px 24px rgba(15,34,71,.07);
 }
 html[data-theme="dark"] .site-header.is-stuck { box-shadow: 0 1px 24px rgba(0,0,0,.5); }
-
-/* Transparent-over-photo state (.hdr-on-media, defined further down) paints
-   its dark legibility gradient through this pseudo-element instead of a
-   plain background on .site-header itself. The header's own box is exactly
-   var(--header-h) tall, and a semi-transparent gradient that ends exactly
-   at that edge gets rasterized as its own compositor layer — on top of the
-   pinned hero photo, which is a SEPARATE fixed layer at the same screen
-   position, that produces a faint seam right at the boundary (confirmed by
-   hiding the header: the line came with it, not from the hero photo).
-   Extending the gradient well past the header's visible box, fully faded to
-   transparent long before its own layer edge, removes the seam entirely. */
-.site-header::before {
-  content: "";
-  position: absolute; left: 0; right: 0; top: 0;
-  height: calc(100% + 80px);
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity .28s var(--ease);
-  background: linear-gradient(180deg, rgba(9,17,33,.82) 0%, rgba(9,17,33,.36) 60%, rgba(9,17,33,0) 100%);
-}
 
 .header-inner {
   display: flex; align-items: center; gap: clamp(14px, 1.6vw, 26px);
@@ -1348,395 +1326,318 @@ html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1
 }
 
 
-/* ══════════ 16c. ABOUT PAGE — PREMIUM REDESIGN ══════════════
-   A paced, editorial About page: cinematic photographic hero, alternating
-   split sections, a large philosophy pause, premium service cards, an
-   editorial timeline, a proof strip, an oversized "25+" moment and a
-   photographic closing CTA. Palette unchanged — deep navy, warm cream,
-   white, restrained gold. Dark photographic sections use literal white /
-   navy so they stay correct in either site theme; light sections use the
-   theme tokens so they follow light/dark. */
+/* ══════════ 16c. ABOUT PAGE ══════════════════════════════════
+   Editorial About page — an opening split with a bleeding photo, a
+   dark "point of view" pause, a reversed split, a horizontal process
+   flow, a company band with a certification logo wall, and a dark
+   closing CTA. Palette unchanged (navy / cream / white / gold). Light
+   sections follow the theme tokens; dark bands use literal navy so
+   they read the same in either theme. Scoped to .about-page / .abx-*. */
 
-/* shared building blocks ------------------------------------------------ */
-.ab-eyebrow {
-  display: flex; align-items: center; gap: 14px;
-  font-size: .72rem; font-weight: 600;
-  letter-spacing: .22em; text-transform: uppercase;
-  color: var(--muted-2);
-  margin-bottom: clamp(14px, 1.6vw, 20px);
+:root { --gutter: clamp(20px, 5.2vw, 88px); }
+
+/* shared -------------------------------------------------------- */
+.abx-eyebrow {
+  font-size: .72rem; font-weight: 700;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 clamp(16px, 2vw, 24px);
 }
-.ab-eyebrow__rule { height: 1px; width: clamp(28px, 4vw, 52px); background: var(--gold); flex: 0 0 auto; }
-.ab-eyebrow--onDark { color: rgba(255,255,255,.8); }
+.abx-eyebrow--onDark { color: var(--gold-2); }
 
-.ab-h2 {
+.abx-display {
   font-family: var(--serif); font-weight: 500;
-  font-size: clamp(2rem, 4.6vw, 3.9rem);   /* ~48–64px on desktop */
+  font-size: clamp(2.1rem, 4.4vw, 3.5rem);
   line-height: 1.08; letter-spacing: -.018em;
-  color: var(--white); text-wrap: balance;
-  max-width: 16ch;
-}
-.ab-h2--wide { max-width: 24ch; }
-
-.ab-body {
-  color: var(--muted);
-  font-size: clamp(1rem, 1.15vw, 1.15rem);   /* 16–18px */
-  line-height: 1.75; text-wrap: pretty;
-  max-width: 54ch;
-}
-.ab-body + .ab-body { margin-top: clamp(14px, 1.4vw, 20px); }
-.ab-body--accent {
-  color: var(--white);
-  font-family: var(--serif);
-  font-size: clamp(1.15rem, 1.7vw, 1.5rem);
-  line-height: 1.4;
-}
-
-.about-page #main { overflow-x: clip; }
-
-/* ── SINGLE PAGE-WIDE PHOTO ──────────────────────────────────
-   Every section below is transparent on purpose: the pinned photo set
-   in the hero (.ab-hero__media, position:fixed) is the only background
-   image for the whole page. Sections that need text contrast over it
-   wrap their content in .ab-glass — a translucent, blurred card — rather
-   than sitting on a solid site-background color. */
-.ab-glass {
-  background: linear-gradient(155deg, rgba(9,17,33,.62), rgba(7,14,28,.5));
-  -webkit-backdrop-filter: blur(18px) saturate(1.35);
-  backdrop-filter: blur(18px) saturate(1.35);
-  border: 1px solid rgba(255,255,255,.14);
-  border-radius: clamp(14px, 1.6vw, 22px);
-  box-shadow: 0 24px 60px rgba(4,9,20,.35);
-  padding: clamp(26px, 3.6vw, 48px);
-}
-
-/* ── HERO ────────────────────────────────────────────────── */
-.ab-hero {
-  position: relative;
-  min-height: 100svh;
-  display: flex; flex-direction: column; justify-content: flex-end;
-  padding-top: calc(var(--header-h) + 32px);
-  padding-bottom: clamp(48px, 8vh, 96px);
-  background: #0B1B33;
-  /* No overflow:hidden / isolation:isolate here — .ab-hero__media is
-     position:fixed and needs to keep painting behind the sections that
-     follow (pinned to the viewport) instead of being clipped to this
-     section's own box. It still sits at z-index:-2, so normal in-flow
-     content — including every later section — paints in front of it. */
-}
-.ab-hero__media {
-  position: fixed; inset: 0;
-  z-index: -2;
-  overflow: hidden;
-}
-.ab-hero__img {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover; object-position: 50% 48%;
-}
-.ab-hero__img--light { display: block; }
-.ab-hero__img--dark { display: none; }
-html[data-theme="dark"] .ab-hero__img--light { display: none; }
-html[data-theme="dark"] .ab-hero__img--dark { display: block; }
-.ab-hero__veil {           /* navy legibility overlay, pinned with the photo */
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(180deg, rgba(9,18,36,.52) 0%, rgba(9,18,36,.34) 42%, rgba(9,18,36,.86) 100%),
-    linear-gradient(90deg, rgba(9,18,36,.58) 0%, rgba(9,18,36,.14) 60%, transparent 100%);
-}
-.ab-hero__inner { position: relative; width: 100%; }
-.ab-hero__title {
-  font-family: var(--serif); font-weight: 500;
-  font-size: clamp(2.7rem, 7.4vw, 6rem);   /* 72–96px on desktop */
-  line-height: 1.03; letter-spacing: -.022em;
-  color: #fff;
-  margin: clamp(14px, 2vw, 24px) 0 clamp(20px, 2.6vw, 34px);
-}
-.ab-hero__title span { display: block; }
-.ab-hero__lede {
-  color: rgba(255,255,255,.86);
-  font-size: clamp(1.02rem, 1.35vw, 1.22rem);
-  line-height: 1.62; max-width: 46ch;
-}
-.ab-hero__cue {
-  position: absolute; left: 50%; bottom: clamp(20px, 4vh, 40px);
-  width: 22px; height: 34px; margin-left: -11px;
-  border: 1px solid rgba(255,255,255,.4); border-radius: 12px;
-}
-.ab-hero__cue::before {
-  content: ""; position: absolute; left: 50%; top: 7px; width: 3px; height: 7px;
-  margin-left: -1.5px; border-radius: 2px; background: rgba(255,255,255,.75);
-  animation: ab-cue 1.9s var(--ease) infinite;
-}
-@keyframes ab-cue { 0%,100% { transform: translateY(0); opacity: 0; } 40% { opacity: 1; } 70% { transform: translateY(9px); opacity: 0; } }
-
-/* hero load reveal — staggered lines rise + fade in */
-html.js .hero-rise { opacity: 0; transform: translateY(26px); }
-html.js .ab-hero.is-ready .hero-rise {
-  opacity: 1; transform: none;
-  transition: opacity .9s var(--ease), transform .9s var(--ease);
-  transition-delay: calc(var(--ri, 0) * 120ms + 120ms);
-}
-html.js #main > section.ab-hero { animation: none; opacity: 1; }
-
-/* ── ALTERNATING SPLIT SECTIONS ──────────────────────────── */
-/* Transparent on purpose — see the "SINGLE PAGE-WIDE PHOTO" note above.
-   No more image column, so the grid is a single centered card. */
-.ab-split { padding-block: clamp(56px, 8vw, 108px); position: relative; }
-.ab-split__grid { display: flex; justify-content: center; }
-.ab-split__text { max-width: 36rem; }
-.ab-split__text .ab-h2 { margin-bottom: clamp(14px, 1.8vw, 22px); }
-/* on-photo text colors — this card sits directly on the pinned hero photo,
-   not the light site background, so the default navy/muted tokens used
-   elsewhere for .ab-h2/.ab-body would be unreadable here */
-.ab-split .ab-h2 { color: #fff; }
-.ab-split .ab-body { color: rgba(255,255,255,.82); }
-.ab-split .ab-body--accent { color: var(--gold-2); }
-
-/* ── PHILOSOPHY STATEMENT ────────────────────────────────── */
-/* Transparent — see the "SINGLE PAGE-WIDE PHOTO" note above; the text sits
-   in its own .ab-glass card (added via .ab-statement__card in the HTML). */
-.ab-statement {
-  padding-block: clamp(56px, 8vw, 108px);
-  position: relative;
-}
-.ab-statement__card { max-width: 40rem; }
-.ab-statement__eyebrow {
-  display: flex; align-items: center; gap: 14px;
-  font-size: .72rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
-  color: rgba(255,255,255,.62); margin-bottom: clamp(16px, 2vw, 26px);
-}
-.ab-statement__eyebrow .ab-eyebrow__rule { background: var(--gold); }
-.ab-statement__text {
-  font-family: var(--serif); font-weight: 500;
-  font-size: clamp(1.9rem, 5.2vw, 4.4rem);
-  line-height: 1.14; letter-spacing: -.02em;
-  color: #fff; max-width: 20ch;
-}
-.ab-statement__text span { display: block; color: var(--gold-2); }
-
-/* ── SERVICE CARDS ───────────────────────────────────────── */
-/* Section is transparent — see the "SINGLE PAGE-WIDE PHOTO" note above.
-   The cards themselves are exactly where an overlay card is needed for
-   contrast, so they keep the .ab-card layout but pick up a translucent
-   glass finish instead of the opaque site .card token. */
-.ab-services { padding-block: clamp(48px, 6.5vw, 92px); }
-.ab-services__head {
-  max-width: 40rem;
-  margin-bottom: clamp(26px, 3.2vw, 42px);
-}
-
-.ab-services__head .ab-h2 {
-  color: #FFFFFF !important;
-  opacity: 1 !important;
-}
-.ab-cards {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(16px, 1.6vw, 24px);
-}
-.ab-card {
-  display: flex; flex-direction: column;
-  padding: clamp(22px, 2.4vw, 34px);
-  min-height: clamp(230px, 21vw, 300px);
-  border: 1px solid rgba(255,255,255,.14);
-  border-radius: 14px;
-  background: linear-gradient(155deg, rgba(9,17,33,.6), rgba(7,14,28,.46));
-  -webkit-backdrop-filter: blur(16px) saturate(1.3);
-  backdrop-filter: blur(16px) saturate(1.3);
-  box-shadow: 0 18px 46px rgba(4,9,20,.3);
-  text-decoration: none;
-  transition: transform .5s var(--ease), box-shadow .5s var(--ease), border-color .5s var(--ease);
-}
-.ab-card__num {
-  font-family: var(--serif); font-size: clamp(2.4rem, 3.2vw, 3.4rem);
-  color: var(--gold); line-height: 1;
-  font-variant-numeric: lining-nums;
-  transition: transform .5s var(--ease);
-}
-.ab-card__cat {
-  margin-top: clamp(14px, 1.8vw, 22px);
-  font-size: .72rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
-  color: rgba(255,255,255,.6);
-}
-.ab-card__title {
-  margin-top: 10px;
-  font-family: var(--serif); font-weight: 500;
-  font-size: clamp(1.15rem, 1.5vw, 1.4rem); line-height: 1.28;
-  color: #fff;
-}
-.ab-card__desc {
-  margin-top: 10px; color: rgba(255,255,255,.72);
-  font-size: .95rem; line-height: 1.6;
-}
-.ab-card__arrow {
-  margin-top: auto; padding-top: 18px;
-  color: #fff;
-}
-.ab-card__arrow .ico { width: 22px; height: 22px; transition: transform .45s var(--ease); }
-.ab-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 26px 60px rgba(4,9,20,.4);
-  border-color: color-mix(in srgb, var(--gold) 50%, transparent);
-}
-.ab-card:hover .ab-card__num { transform: translateY(-3px); }
-.ab-card:hover .ab-card__arrow { color: var(--gold); }
-.ab-card:hover .ab-card__arrow .ico { transform: translateX(8px); }
-.ab-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
-.ab-services__foot {
-  margin-top: clamp(24px, 3vw, 40px);
-  font-family: var(--serif); font-size: clamp(1.1rem, 1.7vw, 1.45rem);
-  color: #fff; text-align: center;
-}
-
-/* ── EDITORIAL TIMELINE ──────────────────────────────────── */
-/* Section transparent — see the "SINGLE PAGE-WIDE PHOTO" note above; the
-   whole block sits inside one .ab-glass card (in the HTML) instead. */
-.ab-timeline { padding-block: clamp(48px, 6.5vw, 92px); }
-.ab-timeline .ab-glass { max-width: 62rem; margin-inline: auto; }
-.ab-timeline__head { max-width: 44rem; margin-bottom: clamp(24px, 3.2vw, 42px); }
-.ab-timeline__head .ab-h2 { margin-bottom: clamp(14px, 1.6vw, 20px); }
-.ab-timeline .ab-h2 { color: #fff; }
-.ab-timeline .ab-body { color: rgba(255,255,255,.78); }
-.ab-timeline .ab-eyebrow { color: rgba(255,255,255,.62); }
-.ab-miles {
-  display: grid; gap: 0;
-  border-top: 1px solid rgba(255,255,255,.18);
-}
-.ab-mile {
-  display: grid;
-  grid-template-columns: minmax(150px, 260px) minmax(0, 1fr);
-  gap: 10px clamp(24px, 5vw, 72px);
-  align-items: baseline;
-  padding-block: clamp(18px, 2.4vw, 30px);
-  border-bottom: 1px solid rgba(255,255,255,.18);
-}
-.ab-mile__yr {
-  font-family: var(--serif); font-weight: 500;
-  font-size: clamp(1.2rem, 1.9vw, 1.65rem);
-  color: #fff;
-  position: relative; padding-left: 26px;
-}
-.ab-mile__yr::before {
-  content: ""; position: absolute; left: 0; top: .55em;
-  width: 9px; height: 9px; border-radius: 50%;
-  background: var(--gold);
-}
-.ab-mile__txt {
-  color: rgba(255,255,255,.78);
-  font-size: clamp(1rem, 1.15vw, 1.12rem); line-height: 1.7;
-  max-width: 52ch;
-}
-
-/* ── PROOF STRIP ─────────────────────────────────────────── */
-/* Section transparent — see the "SINGLE PAGE-WIDE PHOTO" note above; each
-   stat is its own small .ab-glass tile instead of sitting on a solid strip. */
-.ab-proof { padding-block: clamp(36px, 4.4vw, 60px); }
-.ab-proof__grid {
-  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(14px, 2vw, 22px);
-  text-align: center;
-}
-.ab-proof__item { display: flex; flex-direction: column; gap: 8px; padding: clamp(18px, 2.2vw, 28px) clamp(12px, 1.6vw, 20px); }
-.ab-proof__k {
-  font-family: var(--serif); font-weight: 500;
-  font-size: clamp(2.2rem, 4vw, 3.4rem); line-height: 1;
-  color: #fff; font-variant-numeric: lining-nums;
-}
-.ab-proof__v {
-  font-size: .8rem; letter-spacing: .06em;
-  color: rgba(255,255,255,.66); line-height: 1.5;
-}
-
-/* ── 25+ CINEMATIC MOMENT ────────────────────────────────── */
-/* No background of its own — see the "SINGLE PAGE-WIDE PHOTO" note above.
-   The radial-gradient overlay below still gives the giant number contrast. */
-.ab-25 {
-  position: relative;
-  min-height: 68svh;
-  display: flex; align-items: center; justify-content: center;
-  text-align: center;
-  padding-block: clamp(56px, 9vw, 118px);
-}
-.ab-25::after {
-  content: ""; position: absolute; inset: 0; z-index: -1;
-  background: radial-gradient(ellipse 70% 70% at 50% 45%, rgba(9,18,36,.62), rgba(8,16,30,.9));
-}
-.ab-25__num {
-  font-family: var(--serif); font-weight: 500;
-  font-size: clamp(6rem, 22vw, 15rem);
-  line-height: .9; letter-spacing: -.03em;
-
-  background: linear-gradient(
-    115deg,
-    #8A6518 0%,
-    #C89B2C 18%,
-    #FFE58A 38%,
-    #FFF3B0 50%,
-    #D4AF37 65%,
-    #A87516 82%,
-    #F5D76E 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow:
-    0 0 8px rgba(255, 215, 80, 0.4),
-    0 0 24px rgba(212, 175, 55, 0.3);
-
-  font-variant-numeric: lining-nums;
-  display: inline-flex; align-items: flex-start;
-}
-.ab-25__plus { color: var(--gold); font-size: .34em; margin-top: .18em; }
-.ab-25__cap {
-  margin: clamp(20px, 3vw, 36px) auto 0; max-width: 40ch;
-  color: rgba(255,255,255,.8);
-  font-size: clamp(1rem, 1.2vw, 1.1rem); line-height: 1.62;
-}
-
-/* ── CLOSING CTA ─────────────────────────────────────────── */
-/* No background of its own — see the "SINGLE PAGE-WIDE PHOTO" note above.
-   The gradient overlay below still gives the closing line contrast. */
-.ab-cta {
-  position: relative;
-  padding-block: clamp(64px, 10vw, 140px);
-  text-align: center;
-}
-.ab-cta::after {
-  content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(180deg, rgba(9,18,36,.82) 0%, rgba(9,18,36,.7) 50%, rgba(9,18,36,.88) 100%);
-}
-.ab-cta__inner { position: relative; }
-.ab-cta__title {
-  font-family: var(--serif); font-weight: 500;
-  font-size: clamp(2rem, 5vw, 4rem); line-height: 1.12; letter-spacing: -.02em;
-  color: #fff; max-width: 20ch; margin-inline: auto;
+  color: var(--navy); margin: 0;
   text-wrap: balance;
 }
-.ab-cta__sub {
-  margin: clamp(20px, 2.6vw, 32px) auto 0; max-width: 52ch;
-  color: rgba(255,255,255,.82);
-  font-size: clamp(1rem, 1.2vw, 1.12rem); line-height: 1.66;
+.abx-h2 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.9rem, 4vw, 3.1rem);
+  line-height: 1.1; letter-spacing: -.018em;
+  color: var(--navy); margin: 0;
+  text-wrap: balance;
 }
-.ab-cta__act { margin-top: clamp(28px, 3.6vw, 44px); }
-.ab-cta .btn-primary,
-.ab-25 .btn-primary { background: var(--gold); color: #0B1424; box-shadow: 0 10px 40px rgba(0,0,0,.35); }
-.ab-cta .btn-primary .ico,
-.ab-25 .btn-primary .ico { color: #0B1424; }
-.ab-cta .btn-primary:hover,
-.ab-25 .btn-primary:hover { background: #E9C275; }
-.ab-cta__note {
-  margin-top: clamp(18px, 2vw, 26px);
-  font-size: .82rem; color: rgba(255,255,255,.55);
+.abx-body {
+  color: var(--muted);
+  font-size: clamp(1rem, 1.1vw, 1.12rem);
+  line-height: 1.72; text-wrap: pretty;
+  margin: 0;
+}
+.abx-body + .abx-body { margin-top: clamp(14px, 1.6vw, 20px); }
+
+/* the fixed header sits over a light section at the top of this
+   page — no photo hero — so it just needs the normal stuck styling */
+.about-page #main { overflow-x: clip; }
+
+/* ── 01 · WHO WE ARE ─────────────────────────────────────── */
+.abx-intro {
+  background: var(--bg);
+  padding-top: calc(var(--header-h) + clamp(6px, 1.4vw, 18px));
+  padding-bottom: clamp(40px, 6vw, 84px);
+}
+.abx-intro__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(320px, 50vw, 780px);
+  align-items: stretch;
+  gap: clamp(28px, 4vw, 64px);
+}
+.abx-intro__text {
+  align-self: center;
+  margin-left: var(--gutter);
+  padding: clamp(6px, 1.4vw, 16px) clamp(20px, 3vw, 44px);
+  border-left: 2px solid var(--gold);
+  max-width: 40rem;
+}
+.abx-intro__text .abx-display { margin-bottom: clamp(20px, 2.6vw, 32px); }
+.abx-lede {
+  color: var(--muted);
+  font-size: clamp(1.02rem, 1.25vw, 1.2rem);
+  line-height: 1.6; max-width: 34ch; margin: 0;
+}
+.abx-lede__accent { color: var(--navy); font-weight: 600; white-space: nowrap; }
+.abx-intro__media {
+  position: relative;
+  margin: 0; overflow: hidden;
+  min-height: clamp(320px, 42vw, 560px);
+}
+.abx-intro__media img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: 100% 42%;
+  display: block;
+}
+/* melt the photo into the section — it fades left toward the copy and
+   softly at the top/bottom so there is no hard rectangle */
+.abx-intro__media::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg,
+      var(--bg) 0%,
+      color-mix(in srgb, var(--bg) 55%, transparent) 16%,
+      transparent 42%),
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--bg) 60%, transparent) 0%,
+      transparent 18%,
+      transparent 82%,
+      color-mix(in srgb, var(--bg) 60%, transparent) 100%);
+}
+.abx-intro__more {
+  margin-top: clamp(34px, 5vw, 64px);
+  padding-top: clamp(26px, 3vw, 40px);
+  border-top: 1px solid var(--hairline);
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: clamp(20px, 4vw, 72px);
+  align-items: start;
+}
+.abx-intro__more p {
+  margin: 0; color: var(--muted);
+  font-size: clamp(.96rem, 1.05vw, 1.06rem); line-height: 1.72;
+}
+.abx-intro__more-tail { color: var(--navy); }
+
+/* ── OUR POINT OF VIEW (dark band) ───────────────────────── */
+.abx-pov {
+  position: relative; overflow: hidden;
+  background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
+  padding-block: clamp(60px, 9vw, 128px);
+}
+.abx-pov__slash {
+  position: absolute; top: -20%; right: 14%;
+  width: 2px; height: 140%;
+  background: linear-gradient(180deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
+  transform: rotate(20deg); transform-origin: top;
+  opacity: .8; pointer-events: none;
+}
+.abx-pov__lead {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.8rem, 4.4vw, 3.4rem);
+  line-height: 1.16; letter-spacing: -.018em;
+  color: #fff; max-width: 22ch; margin: 0;
+}
+.abx-pov__tail {
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: clamp(1.4rem, 3.4vw, 2.6rem);
+  line-height: 1.2; color: var(--gold-2);
+  text-align: right; max-width: 24ch;
+  margin: clamp(16px, 2.4vw, 30px) 0 0 auto;
 }
 
-/* ── HEADER OVER DARK PHOTOGRAPHIC SECTIONS ──────────────── */
+/* ── 01 · HOW WE WORK ────────────────────────────────────── */
+.abx-work { background: var(--bg-cream); padding-bottom: clamp(48px, 7vw, 96px); }
+html[data-theme="dark"] .abx-work { background: var(--bg-soft); }
+.abx-work__grid {
+  display: grid;
+  grid-template-columns: clamp(320px, 46vw, 720px) minmax(0, 1fr);
+  align-items: stretch;
+}
+.abx-work__media {
+  position: relative;
+  margin: 0; overflow: hidden;
+  min-height: clamp(340px, 44vw, 600px);
+}
+.abx-work__media img { width: 100%; height: 100%; object-fit: cover; object-position: 40% 50%; display: block; }
+/* mirror of the intro fade — this photo bleeds from the left, so it
+   melts right toward the copy and softly at the top/bottom */
+.abx-work__media::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  --melt: var(--bg-cream);
+  background:
+    linear-gradient(270deg,
+      var(--melt) 0%,
+      color-mix(in srgb, var(--melt) 55%, transparent) 16%,
+      transparent 42%),
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--melt) 60%, transparent) 0%,
+      transparent 18%,
+      transparent 82%,
+      color-mix(in srgb, var(--melt) 60%, transparent) 100%);
+}
+html[data-theme="dark"] .abx-work__media::after { --melt: var(--bg-soft); }
+.abx-work__text {
+  align-self: center;
+  padding: clamp(40px, 6vw, 90px) var(--gutter) clamp(40px, 6vw, 90px) clamp(24px, 4vw, 64px);
+  max-width: 34rem;
+}
+.abx-work__text .abx-h2 { margin-bottom: clamp(18px, 2.2vw, 28px); }
+.abx-work__foot { margin-top: clamp(34px, 5vw, 64px); text-align: center; }
+.abx-process__lead {
+  max-width: 62ch; margin: 0 auto;
+  color: var(--muted); font-size: clamp(.98rem, 1.1vw, 1.08rem);
+  line-height: 1.75;
+}
+.abx-process__rule {
+  max-width: 52ch; margin: clamp(14px, 2vw, 22px) auto 0;
+  color: var(--navy); font-weight: 600;
+  font-size: clamp(.92rem, 1vw, 1rem); letter-spacing: .01em;
+}
+
+/* horizontal process flow */
+.abx-flow {
+  list-style: none; margin: clamp(38px, 5vw, 64px) 0 0; padding: 34px 0 0;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: clamp(14px, 2vw, 30px);
+  position: relative; text-align: left;
+}
+.abx-flow::before {
+  content: ""; position: absolute; top: 13px;
+  left: 13px; right: calc(25% - 13px);
+  height: 1px; background: var(--gold); opacity: .75;
+}
+.abx-flow__step { position: relative; padding-right: clamp(6px, 1.4vw, 16px); }
+.abx-flow__dot {
+  position: absolute; top: -34px; left: 0;
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 2px solid var(--gold); background: var(--bg-cream);
+}
+html[data-theme="dark"] .abx-flow__dot { background: var(--bg-soft); }
+.abx-flow__step--end .abx-flow__dot { background: var(--navy); border-color: var(--navy); }
+.abx-flow__step--end::after {
+  content: ""; position: absolute; top: -25px; left: 34px;
+  border-top: 5px solid transparent; border-bottom: 5px solid transparent;
+  border-left: 8px solid var(--gold);
+}
+.abx-flow__label {
+  display: block; font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.05rem, 1.4vw, 1.35rem); color: var(--navy);
+}
+.abx-flow__desc {
+  display: block; margin-top: 7px;
+  font-size: .8rem; line-height: 1.5; color: var(--muted); max-width: 22ch;
+}
+
+/* ── 02 · ABOUT THE COMPANY ──────────────────────────────── */
+.abx-company { background: var(--bg-sky); padding-block: clamp(56px, 8vw, 110px); }
+html[data-theme="dark"] .abx-company { background: var(--bg-sky); }
+.abx-company__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 88px);
+  align-items: start;
+}
+.abx-company__text .abx-h2 { margin: clamp(6px, 1vw, 12px) 0 clamp(18px, 2.2vw, 28px); }
+
+/* certification / recognition logo wall — transparent marks sit straight on
+   the tinted section in light mode; dark mode gets a minimal white plate so
+   the black/navy logo artwork stays legible */
+.abx-company__proof {
+  list-style: none; margin: 0; padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(18px, 2.6vw, 34px) clamp(20px, 3vw, 40px);
+  align-items: center;
+}
+.abx-cred {
+  display: flex; align-items: center; justify-content: center;
+  padding: clamp(6px, 1vw, 12px);
+  border-radius: 12px;
+}
+html[data-theme="dark"] .abx-cred {
+  background: #fff;
+  padding: clamp(14px, 2vw, 22px);
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+.abx-cred--wide { grid-column: 1 / -1; }
+.abx-cred img { display: block; width: auto; height: auto; max-width: 100%; }
+.abx-cred:not(.abx-cred--wide) img { max-height: clamp(118px, 14vw, 156px); }
+.abx-cred--wide img { max-height: clamp(60px, 8vw, 88px); }
+
+.abx-approach {
+  margin-top: clamp(40px, 5vw, 72px);
+  padding-top: clamp(26px, 3vw, 40px);
+  border-top: 1px solid var(--hairline);
+}
+.abx-approach__row {
+  list-style: none; margin: clamp(10px, 1.6vw, 18px) 0 0; padding: 0;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 3vw, 40px);
+}
+.abx-approach__row li {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.1rem, 1.7vw, 1.5rem); color: var(--navy);
+  position: relative; padding-left: 22px;
+}
+.abx-approach__row li::before {
+  content: ""; position: absolute; left: 0; top: .5em;
+  width: 8px; height: 8px; border-radius: 50%; background: var(--gold);
+}
+
+/* ── CLOSING CTA (dark band) ─────────────────────────────── */
+.abx-cta {
+  position: relative; overflow: hidden;
+  background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
+  padding-block: clamp(64px, 9vw, 128px);
+}
+.abx-pov__slash--cta { right: 40%; opacity: .6; }
+.abx-cta__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 72px);
+  align-items: center;
+}
+.abx-cta__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.9rem, 4.2vw, 3.4rem);
+  line-height: 1.14; letter-spacing: -.018em;
+  color: #fff; margin: 0; max-width: 20ch; text-wrap: balance;
+}
+.abx-cta__act { display: flex; flex-direction: column; align-items: flex-start; gap: clamp(18px, 2.4vw, 28px); }
+.abx-cta__sub {
+  margin: 0; color: rgba(255,255,255,.72);
+  font-size: clamp(.95rem, 1.05vw, 1.05rem); line-height: 1.6; max-width: 32ch;
+}
+.abx-cta .btn-primary { background: var(--gold); color: #0B1424; box-shadow: 0 12px 40px rgba(0,0,0,.32); }
+.abx-cta .btn-primary .ico { color: #0B1424; }
+.abx-cta .btn-primary:hover { background: #E9C275; }
+
+/* ── HEADER OVER DARK / NAVY SECTIONS ────────────────────── */
 .site-header.hdr-on-media {
-  background: transparent;   /* the gradient is painted by .site-header::before, see above */
+  background: linear-gradient(180deg, rgba(9,17,33,.82) 0%, rgba(9,17,33,.36) 55%, rgba(9,17,33,0) 100%);
   border-bottom-color: transparent;
   box-shadow: none;
   -webkit-backdrop-filter: none; backdrop-filter: none;
 }
-.site-header.hdr-on-media::before { opacity: 1; }
 .hdr-on-media .nav-desktop a { color: #fff; opacity: .9; }
 .hdr-on-media .nav-desktop a:hover,
 .hdr-on-media .nav-desktop a.is-current { opacity: 1; }
@@ -1753,31 +1654,70 @@ html.js #main > section.ab-hero { animation: none; opacity: 1; }
 .hdr-on-media .btn-primary.btn-sm { background: #fff; color: #0B1424; }
 .hdr-on-media .btn-primary.btn-sm .ico { color: #0B1424; }
 
-/* ── SCROLL-REVEAL FALLBACK FOR THE HERO WHEN JS IS OFF ──── */
-html:not(.js) .hero-rise { opacity: 1; transform: none; }
-
 /* ── RESPONSIVE ──────────────────────────────────────────── */
-@media (max-width: 900px) {
-  .ab-split__text { max-width: none; }
-  .ab-cards { grid-template-columns: minmax(0, 1fr); gap: 12px; }
-  .ab-card { min-height: 0; }
-  .ab-proof__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(20px, 5vw, 30px) 20px; }
+@media (max-width: 1000px) {
+  .abx-intro__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 42vw); }
+  .abx-work__grid { grid-template-columns: minmax(0, 42vw) minmax(0, 1fr); }
 }
-@media (max-width: 560px) {
-  .ab-hero { min-height: 90svh; }
-  .ab-mile { grid-template-columns: minmax(0, 1fr); gap: 5px; padding-block: 18px; }
-  .ab-mile__txt { max-width: none; }
-  .ab-25 { min-height: 58svh; }
+@media (max-width: 860px) {
+  .abx-intro__grid,
+  .abx-work__grid { grid-template-columns: minmax(0, 1fr); }
+  .abx-intro__text {
+    margin-left: 0; grid-row: 1;
+    padding-inline: var(--gutter);
+    border-left: 0;
+    box-shadow: inset 3px 0 0 var(--gold);
+  }
+  .abx-intro__media { grid-row: 2; }
+  .abx-intro__media,
+  .abx-work__media { min-height: 0; aspect-ratio: 16 / 10; }
+  .abx-work__media { grid-row: 1; }
+  .abx-work__text { grid-row: 2; align-self: start; padding: clamp(28px, 6vw, 44px) var(--gutter); max-width: none; }
+  /* stacked — the photos now sit between blocks of copy, so the fade
+     runs vertically (into the section top and bottom) instead of sideways */
+  .abx-intro__media::after {
+    background: linear-gradient(180deg,
+      var(--bg) 0%, color-mix(in srgb, var(--bg) 45%, transparent) 12%,
+      transparent 32%, transparent 74%,
+      color-mix(in srgb, var(--bg) 55%, transparent) 96%, var(--bg) 100%);
+  }
+  .abx-work__media::after {
+    background: linear-gradient(180deg,
+      var(--melt) 0%, color-mix(in srgb, var(--melt) 45%, transparent) 12%,
+      transparent 32%, transparent 74%,
+      color-mix(in srgb, var(--melt) 55%, transparent) 96%, var(--melt) 100%);
+  }
+  .abx-intro__more { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .abx-company__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 6vw, 40px); }
+  .abx-approach__row { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .abx-cta__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(22px, 5vw, 32px); }
+  .abx-pov__tail { text-align: left; margin-left: 0; }
+}
+@media (max-width: 620px) {
+  .abx-pov__slash { display: none; }
+  /* process flow goes vertical */
+  .abx-flow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0; padding: 0 0 0 34px;
+  }
+  .abx-flow::before {
+    top: 6px; bottom: 6px; left: 12px; right: auto;
+    width: 1px; height: auto;
+  }
+  .abx-flow__step { padding: 0 0 clamp(20px, 5vw, 30px); }
+  .abx-flow__step:last-child { padding-bottom: 0; }
+  .abx-flow__dot { top: 4px; left: -34px; }
+  .abx-flow__step--end::after { top: 11px; left: 0; }
+  .abx-flow__desc { max-width: none; }
+  .abx-work__foot { text-align: left; }
+  .abx-process__lead, .abx-process__rule { margin-inline: 0; }
+  .abx-company__proof { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* ── REDUCED MOTION ──────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  /* None of the about.html photos carry a transform any more — the hero
-     is a plain pinned background, and the 25+/CTA sections lost their own
-     images entirely — so there's nothing left here to override for them. */
-  .ab-hero__cue::before { animation: none; }
-  html.js .hero-rise { opacity: 1; transform: none; }
-  .ab-card:hover { transform: none; }
+  .abx-intro__media img,
+  .abx-work__media img { transform: none; }
 }
 
 
@@ -1886,14 +1826,12 @@ html.js #main { animation: page-in-fade .7s var(--ease) both; }
 /* the hero already carries this exact motion on its own slides, so only the
    remaining sections need the staggered rise (longhands so the per-section
    animation-delay below isn't reset by the shorthand) */
-html.js #main > section:not(.hero):not(.ab-hero) {
+html.js #main > section:not(.hero) {
   animation-name: page-in-rise;
   animation-duration: .72s;
   animation-timing-function: var(--ease);
   animation-fill-mode: both;
 }
-/* the About hero runs its own staggered load reveal (§16c) */
-html.js #main > section.ab-hero { animation: none; opacity: 1; transform: none; }
 html.js #main > section:nth-of-type(1) { animation-delay: .05s; }
 html.js #main > section:nth-of-type(2) { animation-delay: .13s; }
 html.js #main > section:nth-of-type(3) { animation-delay: .21s; }
@@ -2051,4 +1989,3 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   html.js .reveal { opacity: 1 !important; transform: none !important; }
   body { background: #fff; }
 }
-
