@@ -439,6 +439,152 @@ html[data-theme="dark"] .site-header.is-stuck { box-shadow: 0 1px 24px rgba(0,0,
 .nav-desktop a:hover::after,
 .nav-desktop a.is-current::after { transform: scaleX(1); }
 
+/* ── 07a. SOLUTIONS CARD — shared component ──────────────────────────────
+   One card design, reused in two places: the header's Solutions mega menu
+   (below) and the "How We Help" grid on solutions.html (#how-we-help).
+   Keeping it as a single, self-contained, class-scoped component (rather
+   than one-off styles in each place) is deliberate: it's the block that
+   should map 1:1 onto a repeater / reusable block when this site moves to
+   WordPress (e.g. an ACF repeater + a template part, or an Elementor saved
+   "Solutions Card" widget) — nothing here depends on the static-file
+   structure. ───────────────────────────────────────────────────────── */
+.solutions-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.solutions-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px 28px;
+  border-left: 1px solid var(--hairline);
+  text-align: left;
+  color: inherit;
+}
+.solutions-cards > .solutions-card:first-child { border-left: none; padding-left: 0; }
+
+/* When this card is the header link itself (a.solutions-card inside the
+   mega menu) it also matches ".nav-desktop a", which is more specific than
+   the bare ".solutions-card" rule above and would otherwise collapse it
+   back to an inline, nowrap, block link. Restate what that rule clobbers. */
+.nav-megamenu a.solutions-card {
+  position: static;
+  display: flex;
+  padding: 4px 28px;
+  font-size: inherit;
+  font-weight: 400;
+  white-space: normal;
+  opacity: 1;
+}
+.nav-megamenu a.solutions-card::after { content: none; }
+
+.solutions-card-num {
+  font-family: var(--sans);
+  font-size: .78rem; font-weight: 700;
+  letter-spacing: .08em;
+  color: var(--gold);
+}
+.solutions-card-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.08rem, 1.3vw, 1.28rem);
+  line-height: 1.25;
+  color: var(--navy);
+  transition: color .2s var(--ease);
+}
+.solutions-card-desc {
+  font-family: var(--sans);
+  font-size: .875rem; line-height: 1.55;
+  color: var(--muted);
+}
+.solutions-card-explore {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: auto; padding-top: 6px;
+  font-family: var(--sans);
+  font-size: .72rem; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase;
+  color: var(--navy);
+  width: fit-content;
+}
+.solutions-card-explore .ico { width: 13px; height: 13px; transition: transform .2s var(--ease); }
+
+a.solutions-card:hover .solutions-card-title,
+a.solutions-card:focus-visible .solutions-card-title,
+.solutions-card-explore:hover,
+.solutions-card-explore:focus-visible { color: var(--gold-2); }
+a.solutions-card:hover .solutions-card-explore .ico,
+a.solutions-card:focus-visible .solutions-card-explore .ico,
+.solutions-card-explore:hover .ico,
+.solutions-card-explore:focus-visible .ico { transform: translateX(4px); }
+a.solutions-card:focus-visible,
+.solutions-card-explore:focus-visible {
+  outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px;
+}
+
+/* ≤900px — 4 columns become 2, dividers move to sit between rows */
+@media (max-width: 900px) {
+  .solutions-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 30px; }
+  .solutions-cards > .solutions-card:nth-child(2n+1) { border-left: none; padding-left: 0; }
+  .solutions-cards > .solutions-card:nth-child(n+3) {
+    padding-top: 26px; border-top: 1px solid var(--hairline);
+  }
+}
+/* ≤560px — single column, all dividers become top rules */
+@media (max-width: 560px) {
+  .solutions-cards { grid-template-columns: minmax(0, 1fr); row-gap: 26px; }
+  .solutions-cards > .solutions-card {
+    border-left: none !important; padding-left: 0;
+    padding-top: 24px; border-top: 1px solid var(--hairline);
+  }
+  .solutions-cards > .solutions-card:first-child { padding-top: 0; border-top: none; }
+}
+
+
+/* ── 07b. NAV MEGA MENU (Solutions, hover / focus — desktop only) ────────
+   Below 1024px .nav-desktop is display:none (see RESPONSIVE), which takes
+   this panel out with it; the mobile-subnav accordion further down covers
+   small screens instead. ─────────────────────────────────────────────── */
+.nav-desktop li.has-dropdown { position: relative; }
+
+.nav-desktop li.has-dropdown > a {
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.nav-caret {
+  width: 12px; height: 12px; flex: 0 0 auto;
+  color: var(--muted-2);
+  transition: transform .25s var(--ease), color .2s var(--ease);
+}
+.nav-desktop li.has-dropdown:hover .nav-caret,
+.nav-desktop li.has-dropdown:focus-within .nav-caret { transform: rotate(180deg); color: var(--gold); }
+
+/* small hit-area bridge so the pointer can travel from the link down into the
+   fixed panel without the gap causing it to close */
+.nav-desktop li.has-dropdown::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 14px;
+}
+
+.nav-megamenu {
+  position: fixed;
+  top: var(--header-h); left: 0; right: 0;
+  z-index: 90;
+  background: var(--card);
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  box-shadow: 0 24px 48px rgba(15,34,71,.14);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transform: translateY(-10px);
+  transition: opacity .22s var(--ease), transform .24s var(--ease), visibility .24s var(--ease);
+}
+html[data-theme="dark"] .nav-megamenu { box-shadow: 0 24px 48px rgba(0,0,0,.55); }
+
+.nav-desktop li.has-dropdown:hover .nav-megamenu,
+.nav-desktop li.has-dropdown:focus-within .nav-megamenu {
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transform: translateY(0);
+}
+.nav-megamenu .solutions-cards { padding-block: clamp(28px, 3vw, 44px); }
+
+
 .header-actions { display: flex; align-items: center; gap: 9px; margin-left: auto; }
 
 .hamburger {
@@ -648,6 +794,54 @@ body.nav-open { overflow: hidden; }
 html[data-theme="dark"] .mobile-social-ico { background: rgba(255,255,255,.08); }
 .mobile-social-ico svg { width: 19px; height: 19px; fill: currentColor; }
 .mobile-social > span:last-child { font-size: .98rem; font-weight: 500; }
+
+/* Solutions submenu — collapsible, inside the primary list (mobile only).
+   Same disclosure mechanism as "Connect With Us" above (grid-rows trick,
+   no JS height math); .mobile-subnav is a generic pattern any future nav
+   item with children can reuse. */
+.mobile-nav .mobile-subnav-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  border-bottom: 1px solid var(--hairline);
+}
+.mobile-nav .mobile-subnav-row a {
+  flex: 1 1 auto;
+  border-bottom: none;
+}
+.mobile-subnav-toggle {
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; flex: 0 0 auto;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: transparent;
+}
+.mobile-subnav-toggle .ico {
+  width: 15px; height: 15px; color: var(--navy);
+  transition: transform .25s var(--ease);
+}
+.mobile-subnav-toggle[aria-expanded="true"] .ico { transform: rotate(180deg); }
+
+.mobile-subnav-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .3s var(--ease);
+}
+.mobile-subnav-wrap.is-open { grid-template-rows: 1fr; }
+.mobile-nav .mobile-subnav-panel {
+  overflow: hidden; min-height: 0;
+  display: flex; flex-direction: column;
+  padding-left: 6px;
+}
+.mobile-nav .mobile-subnav-panel a {
+  display: block;
+  padding: 13px 6px;
+  font-family: var(--sans);
+  font-size: .96rem; font-weight: 500;
+  color: var(--muted);
+  border-bottom: 1px solid var(--hairline);
+}
+.mobile-nav .mobile-subnav-panel li:last-child a { border-bottom: none; }
+.mobile-nav .mobile-subnav-panel a:hover,
+.mobile-nav .mobile-subnav-panel a:focus-visible { color: var(--gold-2); }
 
 
 /* ── 09. HERO CAROUSEL ───────────────────────────────────── */

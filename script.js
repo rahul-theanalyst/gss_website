@@ -246,6 +246,23 @@
   }());
 
 
+  /* ── 04d. NAV SUBMENUS (mobile overlay) ──────────────────
+     Generic: any ".mobile-subnav" item (Solutions today, more later)
+     gets a chevron button that expands its ".mobile-subnav-panel". */
+  (function mobileSubnav() {
+    $$('.mobile-subnav').forEach(function (item) {
+      var toggle = $('.mobile-subnav-toggle', item);
+      var wrap   = $('.mobile-subnav-wrap', item);
+      if (!toggle || !wrap) return;
+
+      toggle.addEventListener('click', function () {
+        var open = wrap.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+    });
+  }());
+
+
   /* ── 05. HERO CAROUSEL ─────────────────────────────────── */
   (function heroCarousel() {
     var region = $('#hero');

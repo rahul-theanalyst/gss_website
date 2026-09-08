@@ -53,12 +53,43 @@
 
         <nav class="nav-desktop" aria-label="Primary">
           <ul>
-            <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About Us</a></li>
-            <li><a href="solutions.html">Solutions &amp; Services</a></li>
-            <li><a href="partner.html">Partner Program</a></li>
+            <li class="has-dropdown">
+              <a href="solutions.html" aria-haspopup="true" aria-expanded="false">Solutions <svg class="ico nav-caret" aria-hidden="true"><use href="#i-chevron"/></svg></a>
+              <!-- Solutions mega menu (reusable "solutions-card" component, mirrors the on-page grid in solutions.html) -->
+              <div class="nav-megamenu" role="menu" aria-label="Solutions menu">
+              <div class="container solutions-cards">
+                <a class="solutions-card" role="menuitem" href="solutions.html#business-consulting">
+                  <span class="solutions-card-num">01</span>
+                  <span class="solutions-card-title">Business Consulting</span>
+                  <span class="solutions-card-desc">Understand the challenge first. Then build the right path forward.</span>
+                  <span class="solutions-card-explore">Explore <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+                </a>
+                <a class="solutions-card" role="menuitem" href="solutions.html#data-business-insight">
+                  <span class="solutions-card-num">02</span>
+                  <span class="solutions-card-title">Data &amp; Business Insight</span>
+                  <span class="solutions-card-desc">Turn the information you have into better business decisions.</span>
+                  <span class="solutions-card-explore">Explore <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+                </a>
+                <a class="solutions-card" role="menuitem" href="solutions.html#technology-delivery">
+                  <span class="solutions-card-num">03</span>
+                  <span class="solutions-card-title">Technology &amp; Delivery</span>
+                  <span class="solutions-card-desc">Make the technology your business depends on work better.</span>
+                  <span class="solutions-card-explore">Explore <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+                </a>
+                <a class="solutions-card" role="menuitem" href="solutions.html#focus-area">
+                  <span class="solutions-card-num">04</span>
+                  <span class="solutions-card-title">Our Focus Area</span>
+                  <span class="solutions-card-desc">See where we&rsquo;re bringing added focus to the challenges shaping what comes next.</span>
+                  <span class="solutions-card-explore">Explore <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+                </a>
+              </div>
+              </div>
+            </li>
+            <li><a href="index.html">Global Talent</a></li>
+            <li><a href="partner.html">Alliances</a></li>
             <li><a href="career.html">Careers</a></li>
-            <li><a href="contact.html" class="is-current" aria-current="page">Contact Us</a></li>
+            <li><a href="contact.html" class="is-current" aria-current="page">Let's Connect</a></li>
           </ul>
         </nav>
 
@@ -92,12 +123,25 @@
 <div class="mobile-nav" id="mobileNav" hidden>
     <nav aria-label="Mobile">
       <ul>
-        <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About Us</a></li>
-        <li><a href="solutions.html">Solutions &amp; Services</a></li>
-        <li><a href="partner.html">Partner Program</a></li>
+        <li class="mobile-subnav">
+          <div class="mobile-subnav-row">
+          <a href="solutions.html">Solutions</a>
+          <button class="mobile-subnav-toggle" type="button" aria-expanded="false" aria-controls="mobileSolutionsPanel" aria-label="Toggle Solutions submenu"><svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></button>
+          </div>
+          <div class="mobile-subnav-wrap">
+          <ul class="mobile-subnav-panel" id="mobileSolutionsPanel">
+            <li><a href="solutions.html#business-consulting">Business Consulting</a></li>
+            <li><a href="solutions.html#data-business-insight">Data &amp; Business Insight</a></li>
+            <li><a href="solutions.html#technology-delivery">Technology &amp; Delivery</a></li>
+            <li><a href="solutions.html#focus-area">Our Focus Area</a></li>
+          </ul>
+          </div>
+        </li>
+        <li><a href="index.html">Global Talent</a></li>
+        <li><a href="partner.html">Alliances</a></li>
         <li><a href="career.html">Careers</a></li>
-        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="contact.html" class="is-current" aria-current="page">Let's Connect</a></li>
       </ul>
     </nav>
   <div class="mobile-connect" id="mobileConnect">
