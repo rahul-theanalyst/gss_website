@@ -470,13 +470,17 @@ html[data-theme="dark"] .site-header.is-stuck { box-shadow: 0 1px 24px rgba(0,0,
 .nav-megamenu a.solutions-card {
   position: static;
   display: flex;
-  padding: 4px 28px;
+  padding: 6px 18px;
+  border-radius: 10px;
   font-size: inherit;
   font-weight: 400;
   white-space: normal;
   opacity: 1;
+  transition: background-color .2s var(--ease);
 }
 .nav-megamenu a.solutions-card::after { content: none; }
+.nav-megamenu a.solutions-card:hover,
+.nav-megamenu a.solutions-card:focus-visible { background: var(--bg-soft); }
 
 .solutions-card-num {
   font-family: var(--sans);
@@ -546,10 +550,10 @@ a.solutions-card:focus-visible,
    small screens instead.
 
    Trigger: opening/closing is driven by JS (script.js → navMegaMenu), not
-   bare CSS :hover. The panel is position:fixed right under the header, so
-   there's a real pixel gap between the nav link and the panel's top edge —
-   with plain :hover, the instant the pointer crosses that gap over neither
-   element, hover is lost and the menu shuts before the cursor arrives. JS
+   bare CSS :hover. The panel is position:fixed, centered under the header
+   with a small gap below it — with plain :hover, the instant the pointer
+   crosses that gap over neither element, hover is lost and the menu shuts
+   before the cursor arrives. JS
    adds a short close-delay so the panel survives that transit; CSS only
    reflects the resulting ".is-open" class. :focus-within stays CSS-only
    since keyboard tabbing has no such gap to cross. ───────────────────── */
@@ -568,24 +572,49 @@ a.solutions-card:focus-visible,
 
 .nav-megamenu {
   position: fixed;
-  top: var(--header-h); left: 0; right: 0;
+  top: calc(var(--header-h) + 14px); left: 50%;
   z-index: 90;
+  width: min(860px, 92vw);
   background: var(--card);
-  border-top: 1px solid var(--hairline);
-  border-bottom: 1px solid var(--hairline);
-  box-shadow: 0 24px 48px rgba(15,34,71,.14);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  box-shadow: var(--sh-lg);
   opacity: 0; visibility: hidden; pointer-events: none;
-  transform: translateY(-10px);
-  transition: opacity .22s var(--ease), transform .24s var(--ease), visibility .24s var(--ease);
+  transform-origin: top center;
+  transform: translateX(-50%) translateY(-10px) scale(.97);
+  transition: opacity .22s var(--ease), transform .28s var(--ease), visibility .28s var(--ease);
 }
 html[data-theme="dark"] .nav-megamenu { box-shadow: 0 24px 48px rgba(0,0,0,.55); }
 
 .nav-desktop li.has-dropdown.is-open .nav-megamenu,
 .nav-desktop li.has-dropdown:focus-within .nav-megamenu {
   opacity: 1; visibility: visible; pointer-events: auto;
-  transform: translateY(0);
+  transform: translateX(-50%) translateY(0) scale(1);
 }
-.nav-megamenu .solutions-cards { padding-block: clamp(28px, 3vw, 44px); }
+.nav-megamenu .container {
+  max-width: none; margin-inline: 0; padding-inline: 0;
+}
+.nav-megamenu .nav-megamenu-head {
+  padding: clamp(22px, 2.6vw, 34px) clamp(22px, 2.6vw, 34px) 14px;
+}
+.nav-megamenu-eyebrow {
+  font-family: var(--sans);
+  font-size: .68rem; font-weight: 600;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.nav-megamenu-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.35;
+  color: var(--muted);
+  margin: 0;
+}
+.nav-megamenu .solutions-cards {
+  padding: 6px clamp(22px, 2.6vw, 34px) clamp(22px, 2.6vw, 34px);
+}
 
 
 .header-actions { display: flex; align-items: center; gap: 9px; margin-left: auto; }
