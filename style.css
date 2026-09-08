@@ -543,7 +543,16 @@ a.solutions-card:focus-visible,
 /* ── 07b. NAV MEGA MENU (Solutions, hover / focus — desktop only) ────────
    Below 1024px .nav-desktop is display:none (see RESPONSIVE), which takes
    this panel out with it; the mobile-subnav accordion further down covers
-   small screens instead. ─────────────────────────────────────────────── */
+   small screens instead.
+
+   Trigger: opening/closing is driven by JS (script.js → navMegaMenu), not
+   bare CSS :hover. The panel is position:fixed right under the header, so
+   there's a real pixel gap between the nav link and the panel's top edge —
+   with plain :hover, the instant the pointer crosses that gap over neither
+   element, hover is lost and the menu shuts before the cursor arrives. JS
+   adds a short close-delay so the panel survives that transit; CSS only
+   reflects the resulting ".is-open" class. :focus-within stays CSS-only
+   since keyboard tabbing has no such gap to cross. ───────────────────── */
 .nav-desktop li.has-dropdown { position: relative; }
 
 .nav-desktop li.has-dropdown > a {
@@ -554,14 +563,8 @@ a.solutions-card:focus-visible,
   color: var(--muted-2);
   transition: transform .25s var(--ease), color .2s var(--ease);
 }
-.nav-desktop li.has-dropdown:hover .nav-caret,
+.nav-desktop li.has-dropdown.is-open .nav-caret,
 .nav-desktop li.has-dropdown:focus-within .nav-caret { transform: rotate(180deg); color: var(--gold); }
-
-/* small hit-area bridge so the pointer can travel from the link down into the
-   fixed panel without the gap causing it to close */
-.nav-desktop li.has-dropdown::after {
-  content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 14px;
-}
 
 .nav-megamenu {
   position: fixed;
@@ -577,7 +580,7 @@ a.solutions-card:focus-visible,
 }
 html[data-theme="dark"] .nav-megamenu { box-shadow: 0 24px 48px rgba(0,0,0,.55); }
 
-.nav-desktop li.has-dropdown:hover .nav-megamenu,
+.nav-desktop li.has-dropdown.is-open .nav-megamenu,
 .nav-desktop li.has-dropdown:focus-within .nav-megamenu {
   opacity: 1; visibility: visible; pointer-events: auto;
   transform: translateY(0);

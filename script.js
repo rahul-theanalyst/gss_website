@@ -231,6 +231,71 @@
   }());
 
 
+  /* ── 04b2. NAV MEGA MENU (Solutions, desktop) ────────────
+     Plain CSS :hover breaks here: the panel is position:fixed right under
+     the header, so there's a real pixel gap between the "Solutions" link
+     and the panel's top edge. The instant the pointer crosses that gap —
+     over neither element — :hover is lost and the menu closes before the
+     cursor arrives. Same fix as the Connect dropdown above: open instantly,
+     but close on a short delay so a normal mouse move across the gap
+     doesn't get caught mid-transit. */
+  (function navMegaMenu() {
+    $$('.nav-desktop li.has-dropdown').forEach(function (li) {
+      var link = $(':scope > a', li);
+      var mega = $('.nav-megamenu', li);
+      if (!link || !mega) return;
+
+      var closeTimer = null;
+      var CLOSE_DELAY = 300;
+
+      function open() {
+        window.clearTimeout(closeTimer);
+        li.classList.add('is-open');
+        link.setAttribute('aria-expanded', 'true');
+      }
+
+      function scheduleClose() {
+        window.clearTimeout(closeTimer);
+        closeTimer = window.setTimeout(function () {
+          li.classList.remove('is-open');
+          link.setAttribute('aria-expanded', 'false');
+        }, reduceMotion ? 0 : CLOSE_DELAY);
+      }
+
+      function closeNow() {
+        window.clearTimeout(closeTimer);
+        li.classList.remove('is-open');
+        link.setAttribute('aria-expanded', 'false');
+      }
+
+      // mouseenter/mouseleave on the <li> fire once for the whole subtree
+      // (link + the fixed-positioned mega panel are both descendants), so
+      // this one pair covers hovering either part.
+      li.addEventListener('mouseenter', open);
+      li.addEventListener('mouseleave', scheduleClose);
+
+      // keyboard: open immediately on focus-in, close on focus leaving the
+      // whole item (no gap to cross, so no delay needed); Escape closes
+      // and returns focus to the trigger link.
+      li.addEventListener('focusin', open);
+      li.addEventListener('focusout', function () {
+        window.setTimeout(function () {
+          if (!li.contains(document.activeElement)) closeNow();
+        }, 0);
+      });
+      li.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { closeNow(); link.focus(); }
+      });
+
+      // collapse if the viewport crosses into the mobile range, where this
+      // nav is hidden and the mobile-subnav accordion takes over instead
+      window.matchMedia('(max-width: 1024px)').addEventListener('change', function (e) {
+        if (e.matches) closeNow();
+      });
+    });
+  }());
+
+
   /* ── 04c. "CONNECT WITH US" DISCLOSURE (mobile overlay) ── */
   (function mobileConnect() {
     var box = $('#mobileConnect');
