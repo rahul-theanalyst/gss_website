@@ -2076,6 +2076,12 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   .header-actions { gap: 8px; }
 }
 
+/* ≤1100px — seven nav links: shave the gap so the header bar never overflows */
+@media (max-width: 1100px) {
+  .nav-desktop ul { gap: 9px; }
+  .nav-desktop a { font-size: .8rem; }
+}
+
 /* ≤1024px — nav links collapse into the hamburger; Connect + CTA stay in the bar */
 @media (max-width: 1024px) {
   :root { --header-h: 78px; }
