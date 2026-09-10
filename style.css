@@ -1947,6 +1947,209 @@ html[data-theme="dark"] .abx-cred {
 }
 
 
+/* ══════════ 16d. ALLIANCES / PARTNER PAGE ══════════════════════
+   Reuses page-hero/eyebrow/btn/divider-gold from the shared page
+   header kit; everything below is specific to this page. ────── */
+
+/* dotted accent in the hero's top-right corner */
+.pnr-hero-dots {
+  position: absolute; top: clamp(18px, 4vw, 54px); right: clamp(18px, 4vw, 64px);
+  width: 132px; height: 92px;
+  background-image: radial-gradient(currentColor 1.4px, transparent 1.4px);
+  background-size: 16px 16px;
+  color: var(--line);
+  opacity: .8;
+  pointer-events: none;
+}
+html[data-theme="dark"] .pnr-hero-dots { color: var(--hairline); }
+
+/* ── OUR POSITION (image + text split) ───────────────────── */
+.pnr-position { background: var(--bg); padding-block: clamp(40px, 5vw, 76px); }
+.pnr-position__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(340px, 50vw, 820px);
+  align-items: center;
+  gap: clamp(28px, 4vw, 64px);
+}
+/* the photo bleeds to the right edge and melts into the section on its left
+   and top/bottom rather than sitting in a hard frame — same treatment as the
+   About page's split photos. It stretches to the row so it reads level with
+   the copy beside it rather than as a short band. */
+.pnr-position__media {
+  position: relative;
+  align-self: stretch;
+  margin: 0; overflow: hidden;
+  min-height: clamp(360px, 46vw, 660px);
+}
+.pnr-position__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; display: block; }
+.pnr-position__media::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg,
+      var(--bg) 0%,
+      color-mix(in srgb, var(--bg) 55%, transparent) 16%,
+      transparent 42%),
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--bg) 60%, transparent) 0%,
+      transparent 18%,
+      transparent 82%,
+      color-mix(in srgb, var(--bg) 60%, transparent) 100%);
+}
+.pnr-position__text { align-self: center; margin-left: var(--gutter); max-width: 34rem; }
+.pnr-position__text .abx-h2 { margin-bottom: clamp(18px, 2.2vw, 26px); }
+.pnr-position__text p { margin: 0; color: var(--muted); font-size: clamp(.98rem, 1.1vw, 1.06rem); line-height: 1.72; }
+.pnr-position__text p + p { margin-top: 16px; }
+.pnr-position__line {
+  margin-top: clamp(22px, 3vw, 34px);
+  font-family: var(--sans);
+  font-size: .8rem; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  color: var(--gold-2);
+  line-height: 1.6;
+}
+
+/* ── STRATEGIC PARTNERSHIPS (model cards) ─────────────────── */
+.pnr-models { background: var(--bg-cream); padding-block: clamp(40px, 5vw, 76px); }
+html[data-theme="dark"] .pnr-models { background: var(--bg-soft); }
+.pnr-models__head { text-align: center; max-width: 62ch; margin: 0 auto clamp(28px, 3.4vw, 44px); }
+.pnr-models__head .abx-h2 { text-align: center; margin-inline: auto; }
+.pnr-models__head p { margin: clamp(12px, 1.6vw, 18px) 0 0; color: var(--muted); font-size: clamp(.96rem, 1.05vw, 1.05rem); line-height: 1.65; }
+
+.pnr-model-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(20px, 2.4vw, 32px);
+}
+.pnr-model {
+  background: var(--card);
+  border: 1px solid var(--hairline);
+  border-radius: clamp(14px, 1.6vw, 20px);
+  padding: clamp(26px, 3vw, 40px);
+  display: flex; flex-direction: column;
+}
+.pnr-model--wide { grid-column: 1 / -1; }
+.pnr-model-label {
+  font-family: var(--sans); font-size: .74rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 10px;
+}
+.pnr-model h3 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.2rem, 1.6vw, 1.5rem);
+  line-height: 1.25; color: var(--navy);
+  margin: 0 0 12px;
+}
+.pnr-model > p { margin: 0 0 clamp(18px, 2.2vw, 26px); color: var(--muted); font-size: .93rem; line-height: 1.65; }
+
+.pnr-model-check { list-style: none; margin: 0 0 clamp(18px, 2.2vw, 26px); padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.pnr-model-check li { display: flex; gap: 10px; align-items: flex-start; color: var(--muted); font-size: .89rem; line-height: 1.55; }
+.pnr-model-check .ico { width: 18px; height: 18px; flex: 0 0 auto; margin-top: 1px; color: var(--gold); }
+.pnr-model-check strong { color: var(--navy); font-weight: 700; }
+
+.pnr-model-rule { height: 1px; background: var(--hairline); margin: 0 0 clamp(16px, 2vw, 22px); }
+.pnr-model-line {
+  font-family: var(--sans); font-size: .78rem; font-weight: 700;
+  letter-spacing: .05em; text-transform: uppercase; color: var(--gold-2);
+  margin: 0 0 clamp(16px, 2vw, 22px); line-height: 1.5;
+}
+.pnr-model .btn { align-self: flex-start; }
+.pnr-model-note { margin: 12px 0 0; color: var(--muted-2); font-size: .8rem; line-height: 1.55; }
+
+.pnr-model--wide .pnr-model-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) 1px minmax(0, 1fr);
+  gap: clamp(28px, 3.5vw, 48px);
+  align-items: start;
+}
+.pnr-model--wide .pnr-model-divider { background: var(--hairline); height: 100%; }
+.pnr-model--wide .pnr-model-act { display: flex; flex-direction: column; align-self: center; }
+.pnr-model--wide .pnr-model-line { margin-bottom: clamp(18px, 2.2vw, 26px); }
+
+/* ── HOW WE WORK WITH PARTNERS (light band) ──────────────── */
+.pnr-roster { background: var(--bg-sky); padding-block: clamp(40px, 4.6vw, 68px); text-align: center; }
+.pnr-roster .container { max-width: 62ch; }
+.pnr-roster .abx-h2 { text-align: center; margin-inline: auto; }
+.pnr-roster p { margin: clamp(14px, 1.8vw, 20px) 0 0; color: var(--muted); font-size: clamp(.96rem, 1.05vw, 1.05rem); line-height: 1.7; }
+
+/* ── FINAL CTA (image + dark band) ───────────────────────── */
+.pnr-final { position: relative; overflow: hidden; background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%); padding-block: clamp(44px, 5.2vw, 80px); }
+.pnr-final__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.18fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+.pnr-final__text { grid-column: 1; grid-row: 1; }
+.pnr-final__title { font-family: var(--serif); font-weight: 500; font-size: clamp(1.9rem, 4vw, 3.1rem); line-height: 1.14; letter-spacing: -.018em; color: #fff; margin: 0 0 clamp(24px, 3vw, 36px); max-width: 16ch; text-wrap: balance; }
+
+/* An unclipped wrapper around the photo: the photo itself needs overflow:hidden
+   + clip-path to take its angled cut, which would also swallow the gold line —
+   so the line lives on this frame instead and stays visible in the gap. */
+.pnr-final__frame { grid-column: 2; grid-row: 1; position: relative; }
+.pnr-final__frame::before {
+  content: "";
+  position: absolute; top: -7%; bottom: -7%;
+  /* the cut's midpoint sits at half of 10.6%; back off from it to leave an
+     even band of navy between the line and the photo edge */
+  left: calc(5.3% - 26px);
+  width: 2px;
+  background: linear-gradient(180deg, transparent, var(--gold) 22%, var(--gold) 78%, transparent);
+  transform: rotate(9deg);
+  opacity: .9; pointer-events: none;
+}
+/* the left edge is cut to the same 9° the gold line is rotated to, so the two
+   run parallel — at this 3:2 box, height × tan(9°) is 10.6% of the width. The
+   3:2 ratio is close to the source photo's own, so cover() crops little off
+   the sides. clip-path also clips box-shadow, so this box carries none. */
+.pnr-final__media {
+  position: relative; margin: 0; overflow: hidden;
+  border-radius: clamp(14px, 1.6vw, 20px);
+  aspect-ratio: 3 / 2;
+  clip-path: polygon(10.6% 0, 100% 0, 100% 100%, 0 100%);
+}
+.pnr-final__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* this band is always a dark navy gradient regardless of site theme, so
+   its outline button needs light colors unconditionally */
+.pnr-final__btn { border-color: rgba(255,255,255,.4); color: #fff; }
+
+@media (max-width: 900px) {
+  .pnr-position__grid { grid-template-columns: minmax(0, 1fr); }
+  .pnr-position__text { margin-left: 0; padding-inline: var(--gutter); order: 1; }
+  .pnr-position__media { order: -1; min-height: 0; aspect-ratio: 16 / 10; }
+  /* stacked — the photo now sits above the copy, so the fade runs vertically
+     into the section instead of sideways */
+  .pnr-position__media::after {
+    background: linear-gradient(180deg,
+      var(--bg) 0%, color-mix(in srgb, var(--bg) 45%, transparent) 12%,
+      transparent 32%, transparent 74%,
+      color-mix(in srgb, var(--bg) 55%, transparent) 96%, var(--bg) 100%);
+  }
+  .pnr-model-grid { grid-template-columns: minmax(0, 1fr); }
+  .pnr-model--wide .pnr-model-inner { grid-template-columns: minmax(0, 1fr); }
+  .pnr-model--wide .pnr-model-divider { display: none; }
+  .pnr-final__grid { grid-template-columns: minmax(0, 1fr); }
+  .pnr-final__text, .pnr-final__frame { grid-column: auto; grid-row: auto; }
+  .pnr-final__frame { order: -1; }
+  .pnr-final__frame::before { display: none; }
+  .pnr-final__media { aspect-ratio: 16 / 10; clip-path: none; }
+  .pnr-hero-dots { display: none; }
+}
+
+/* every button on this page fills gold on hover, same recipe as the
+   footer's "Explore Insights" pill — just slowed and eased further so
+   the fill reads as a smooth wash rather than a snap */
+.alliances-page .btn {
+  transition: background-color .45s var(--ease), border-color .45s var(--ease),
+              color .45s var(--ease), box-shadow .45s var(--ease),
+              transform .45s var(--ease);
+}
+.alliances-page .btn .ico { transition: transform .45s var(--ease), color .45s var(--ease); }
+.alliances-page .btn:hover {
+  background: var(--gold-2);
+  border-color: var(--gold-2);
+  color: #0F2247;
+  box-shadow: none;
+}
+.alliances-page .btn:hover .ico { color: #0F2247; }
+html[data-theme="dark"] .alliances-page .btn:hover { background: var(--gold-2); border-color: var(--gold-2); color: #0F2247; }
+html[data-theme="dark"] .alliances-page .btn:hover .ico { color: #0F2247; }
+
+
 /* ── 17. FOOTER ──────────────────────────────────────────── */
 /* the footer is a dark band in both themes — a deliberate full-stop under the page */
 .site-footer {
