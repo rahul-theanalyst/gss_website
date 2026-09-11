@@ -481,6 +481,11 @@ html[data-theme="dark"] .site-header.is-stuck { box-shadow: 0 1px 24px rgba(0,0,
 .nav-megamenu a.solutions-card::after { content: none; }
 .nav-megamenu a.solutions-card:hover,
 .nav-megamenu a.solutions-card:focus-visible { background: var(--bg-soft); }
+/* .solutions-cards > .solutions-card:first-child (used by the on-page grid
+   to drop its divider) is more specific than the rule above and would zero
+   out Business Consulting's left padding, leaving its hover fill flush
+   against the panel edge instead of inset like the other three cards */
+.nav-megamenu a.solutions-card:first-child { padding-left: 18px; border-left: 0; }
 
 .solutions-card-num {
   font-family: var(--sans);
@@ -1466,6 +1471,19 @@ html[data-theme="dark"] .hero-slide[data-slide="3"] { --hero-dim: .48; }
     var(--ray) 0 .17deg, transparent .17deg 4.3deg);
   -webkit-mask-image: radial-gradient(circle at 100% 100%, #000 12%, rgba(0,0,0,.55) 52%, transparent 86%);
   mask-image: radial-gradient(circle at 100% 100%, #000 12%, rgba(0,0,0,.55) 52%, transparent 86%);
+}
+
+/* a barely-there corner texture for the site's literal-navy CTA bands
+   (abx-pov/abx-cta/pnr-final/gt-cta/car-fit/car-promise) — those bands are
+   the same hardcoded navy in both themes, so --ray's light/dark swap would
+   pick the wrong colour there; pin a warm, very low-opacity gold instead,
+   and shrink the shape to suit a shorter band than .section-final's */
+.sunburst--onDark {
+  --ray: rgba(216,169,78,.16);
+  width: min(30vw, 360px); height: min(30vw, 360px);
+  /* deliberately not also dimming `opacity` here — .sunburst's own .85
+     compounds multiplicatively with --ray's alpha, so stacking a second
+     dimmer on top nearly cancels the shape out entirely */
 }
 
 /* section-final entrance: rays fan out from the corners as the section reveals */
@@ -2844,4 +2862,971 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
 @media (prefers-reduced-motion: reduce) {
   .global-talent-page .gt-hero__media img,
   .global-talent-page .gt-cta__media img { transform: none; }
+}
+
+
+/* ══════════ 16f. CAREERS PAGE ═════════════════════════════════
+   Candidate-facing careers page — a split hero on the gutter's gold
+   rule, a dark "right fit" band, a four-column "what to expect" row,
+   a light opportunities board with a search bar and sample listings,
+   a cream "stay connected" band with a profile form, and a dark
+   closing promise. Scoped under .careers-page; every value comes
+   from the existing tokens (navy / cream / sky / gold, Playfair +
+   Inter, .container, .btn, .abx-eyebrow, .reveal). ────────────── */
+
+.careers-page #main { overflow-x: clip; }
+.careers-page .car-nb { display: none; }
+@media (min-width: 861px) { .careers-page .car-nb { display: inline; } }
+
+.careers-page .car-hero__title,
+.careers-page .car-fit__title,
+.careers-page .car-expect__title,
+.careers-page .car-roles__title,
+.careers-page .car-connect__title,
+.careers-page .car-promise__title {
+  font-variant-numeric: lining-nums;
+  -webkit-font-feature-settings: "lnum" 1;
+  font-feature-settings: "lnum" 1;
+}
+
+/* ── 01 · HERO ───────────────────────────────────────────── */
+.careers-page .car-hero {
+  background: var(--bg);
+  padding-top: calc(var(--header-h) + clamp(24px, 5vw, 80px));
+  padding-bottom: clamp(34px, 4vw, 64px);
+  border-bottom: 1px solid var(--hairline);
+}
+.careers-page .car-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(340px, 50vw, 820px);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: center;
+}
+.careers-page .car-hero__text {
+  align-self: center;
+  margin-left: var(--gutter);
+  border-left: 2px solid var(--gold);
+  padding-inline-start: clamp(20px, 2.2vw, 34px);
+  max-width: 34rem;
+}
+.careers-page .car-hero__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.95rem, 3.6vw, 3.3rem);
+  line-height: 1.14; letter-spacing: -.012em;
+  color: var(--navy); margin: 0 0 clamp(18px, 2.4vw, 30px);
+  text-wrap: balance;
+}
+.careers-page .car-hero__lede {
+  color: var(--muted); font-size: clamp(.95rem, 1.05vw, 1.08rem);
+  line-height: 1.7; max-width: 32rem; margin: 0; text-wrap: pretty;
+}
+.careers-page .car-hero__media {
+  position: relative; align-self: stretch;
+  margin: 0; overflow: hidden;
+  min-height: clamp(340px, 42vw, 600px);
+}
+.careers-page .car-hero__media img {
+  width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; display: block;
+}
+.careers-page .car-hero__media::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg,
+      var(--bg) 0%,
+      color-mix(in srgb, var(--bg) 55%, transparent) 16%,
+      transparent 42%),
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--bg) 60%, transparent) 0%,
+      transparent 18%,
+      transparent 82%,
+      color-mix(in srgb, var(--bg) 60%, transparent) 100%);
+}
+
+/* ── 02 · THE RIGHT FIT (dark band) ──────────────────────── */
+.careers-page .car-fit {
+  position: relative; overflow: hidden;
+  background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
+  padding-block: clamp(48px, 6vw, 92px);
+  text-align: center;
+}
+.careers-page .car-fit__slash {
+  position: absolute; top: -20%; right: 9%;
+  width: 2px; height: 140%;
+  background: linear-gradient(180deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
+  transform: rotate(20deg); transform-origin: top;
+  opacity: .8; pointer-events: none;
+}
+.careers-page .car-fit__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.7rem, 3.4vw, 2.9rem);
+  line-height: 1.16; color: #fff;
+  margin: 0 auto; max-width: 18ch; text-wrap: balance;
+}
+.careers-page .car-fit__text {
+  margin: clamp(16px, 2vw, 26px) auto 0;
+  color: rgba(255,255,255,.72);
+  font-size: clamp(.95rem, 1.05vw, 1.05rem);
+  line-height: 1.65; max-width: 54ch;
+}
+
+/* ── 03 · WHAT YOU CAN EXPECT ────────────────────────────── */
+.careers-page .car-expect {
+  background: var(--bg);
+  padding-block: clamp(44px, 5vw, 80px);
+}
+.careers-page .car-expect__head {
+  text-align: center; max-width: 42ch;
+  margin: 0 auto clamp(32px, 4vw, 52px);
+}
+.careers-page .car-expect__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.55rem, 2.9vw, 2.5rem);
+  line-height: 1.16; color: var(--navy);
+  margin: clamp(12px, 1.6vw, 18px) auto 0; max-width: 24ch; text-wrap: balance;
+}
+.careers-page .car-expect__grid {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.careers-page .car-expect__grid li {
+  padding: 2px clamp(16px, 2vw, 28px);
+  border-left: 1px solid var(--hairline);
+}
+.careers-page .car-expect__grid li:first-child { border-left: 0; padding-left: 0; }
+.careers-page .car-expect__label {
+  font-family: var(--sans); font-size: .72rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--gold); margin: 0 0 10px;
+}
+.careers-page .car-expect__copy {
+  margin: 0; color: var(--muted);
+  font-size: clamp(.88rem, .98vw, .95rem); line-height: 1.62;
+}
+
+/* ── 04 · CURRENT OPPORTUNITIES ──────────────────────────── */
+.careers-page .car-roles {
+  position: relative; overflow: hidden;
+  background: var(--bg-sky);
+  padding-block: clamp(44px, 5vw, 82px);
+}
+.careers-page .car-roles__dots {
+  position: absolute; top: clamp(30px, 4vw, 64px); right: clamp(20px, 4vw, 72px);
+  width: clamp(90px, 10vw, 150px); height: clamp(56px, 6vw, 92px);
+  background-image: radial-gradient(currentColor 1.4px, transparent 1.4px);
+  background-size: 16px 16px; color: var(--line);
+  opacity: .85; pointer-events: none;
+}
+html[data-theme="dark"] .careers-page .car-roles__dots { color: var(--hairline); }
+.careers-page .car-roles__head { position: relative; max-width: 46ch; }
+.careers-page .car-roles__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.55rem, 2.9vw, 2.5rem);
+  line-height: 1.16; color: var(--navy);
+  margin: clamp(10px, 1.4vw, 16px) 0 0; text-wrap: balance;
+}
+.careers-page .car-roles__lede {
+  margin: clamp(10px, 1.4vw, 16px) 0 0; color: var(--muted);
+  font-size: clamp(.95rem, 1.05vw, 1.05rem); line-height: 1.6;
+}
+
+/* search bar + shared underline fields */
+.careers-page .car-search {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  gap: clamp(16px, 2vw, 28px);
+  align-items: end;
+  margin-top: clamp(26px, 3.2vw, 44px);
+}
+.careers-page .car-search__btn { align-self: end; }
+
+.careers-page .car-field { display: flex; flex-direction: column; }
+.careers-page .car-field > label {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+.careers-page .car-field input,
+.careers-page .car-field select {
+  width: 100%;
+  padding: 10px 2px;
+  border: 0; border-bottom: 1px solid var(--line);
+  background: transparent;
+  font-family: var(--sans); font-size: .95rem;
+  color: var(--navy);
+  border-radius: 0;
+  transition: border-color .2s var(--ease);
+}
+.careers-page .car-field input::placeholder { color: var(--muted-2); }
+.careers-page .car-field input:focus,
+.careers-page .car-field select:focus { outline: none; border-bottom-color: var(--gold); }
+.careers-page .car-field select {
+  appearance: none; -webkit-appearance: none;
+  color: var(--muted-2); cursor: pointer;
+  padding-right: 24px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238C9BB0' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 9 7 7 7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 0 center; background-size: 15px;
+}
+
+/* jobs list */
+.careers-page .car-jobs {
+  list-style: none; margin: clamp(26px, 3.2vw, 42px) 0 0; padding: 0;
+  border-top: 1px solid var(--line);
+}
+.careers-page .car-job {
+  display: grid;
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.2fr) minmax(0, .9fr) auto;
+  gap: clamp(12px, 2vw, 28px);
+  align-items: center;
+  padding: clamp(15px, 1.7vw, 21px) 0;
+  border-bottom: 1px solid var(--line);
+}
+.careers-page .car-job__title { font-weight: 600; color: var(--navy); font-size: .98rem; }
+.careers-page .car-job__loc,
+.careers-page .car-job__model { color: var(--muted); font-size: .9rem; }
+.careers-page .car-job__cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--sans); font-size: .72rem; font-weight: 700;
+  letter-spacing: .09em; text-transform: uppercase;
+  color: var(--navy); white-space: nowrap;
+  transition: color .2s var(--ease);
+}
+.careers-page .car-job__cta .ico {
+  width: 13px; height: 13px; color: var(--gold);
+  transition: transform .2s var(--ease);
+}
+.careers-page .car-job__cta:hover { color: var(--gold-2); }
+.careers-page .car-job__cta:hover .ico { transform: translateX(3px); }
+
+.careers-page .car-roles__foot {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 14px 24px;
+  margin-top: clamp(18px, 2.2vw, 28px);
+}
+.careers-page .car-roles__note { margin: 0; color: var(--muted-2); font-size: .82rem; }
+
+/* ── 05 · STAY CONNECTED (cream band) ────────────────────── */
+.careers-page .car-connect {
+  background: var(--bg-cream);
+  padding-block: clamp(44px, 5vw, 80px);
+}
+html[data-theme="dark"] .careers-page .car-connect { background: var(--bg-soft); }
+.careers-page .car-connect__grid {
+  display: grid;
+  grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
+  gap: clamp(32px, 5vw, 84px);
+  align-items: start;
+}
+.careers-page .car-connect__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.55rem, 2.8vw, 2.4rem);
+  line-height: 1.16; color: var(--navy);
+  margin: clamp(10px, 1.4vw, 16px) 0 0; max-width: 16ch; text-wrap: balance;
+}
+.careers-page .car-connect__text {
+  margin: clamp(16px, 2vw, 24px) 0 0; color: var(--muted);
+  font-size: clamp(.95rem, 1.05vw, 1.04rem); line-height: 1.7; max-width: 40ch;
+}
+.careers-page .car-form { display: flex; flex-direction: column; gap: clamp(18px, 2.2vw, 26px); }
+.careers-page .car-form__row {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+}
+.careers-page .car-file {
+  display: flex; align-items: center; gap: 14px;
+  border-bottom: 1px solid var(--line); padding: 6px 2px;
+}
+.careers-page .car-file__name {
+  flex: 1; min-width: 0; color: var(--muted-2); font-size: .95rem;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.careers-page .car-file__btn {
+  flex: 0 0 auto; cursor: pointer;
+  padding: 9px 18px; border: 1px solid var(--line); border-radius: var(--radius-pill);
+  font-family: var(--sans); font-size: .72rem; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--navy);
+  transition: border-color .2s var(--ease), background-color .2s var(--ease);
+}
+.careers-page .car-file__btn:hover { border-color: var(--gold); background: rgba(199,154,75,.08); }
+.careers-page .car-file input[type="file"] {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+}
+.careers-page .car-consent {
+  display: flex; gap: 12px; align-items: flex-start;
+  color: var(--muted); font-size: .82rem; line-height: 1.55;
+}
+.careers-page .car-consent input {
+  margin-top: 2px; flex: 0 0 auto;
+  width: 16px; height: 16px; accent-color: var(--gold);
+}
+.careers-page .car-consent a { color: var(--navy); text-decoration: underline; text-underline-offset: 2px; }
+.careers-page .car-form__submit { align-self: flex-start; margin-top: 2px; }
+
+/* ── 06 · THE PROMISE (dark band) ────────────────────────── */
+.careers-page .car-promise {
+  position: relative; overflow: hidden;
+  background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
+  padding-block: clamp(48px, 6vw, 92px);
+}
+.careers-page .car-promise__slash {
+  position: absolute; top: -20%; right: 12%;
+  width: 2px; height: 140%;
+  background: linear-gradient(180deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
+  transform: rotate(20deg); transform-origin: top;
+  opacity: .7; pointer-events: none;
+}
+.careers-page .car-promise__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  line-height: 1.2; color: #fff;
+  margin: 0; max-width: 30ch; text-wrap: balance;
+}
+.careers-page .car-promise__text {
+  margin: clamp(16px, 2vw, 24px) 0 0;
+  color: rgba(255,255,255,.72);
+  font-size: clamp(.92rem, 1vw, 1rem); line-height: 1.6; max-width: 56ch;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 1000px) {
+  .careers-page .car-hero__text { max-width: none; }
+}
+@media (max-width: 900px) {
+  .careers-page .car-hero__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(24px, 6vw, 40px); }
+  .careers-page .car-hero__text {
+    margin-inline: var(--gutter);
+    padding-inline-start: clamp(16px, 4vw, 24px);
+    max-width: none;
+  }
+  .careers-page .car-hero__lede { max-width: 46ch; }
+  .careers-page .car-hero__media { min-height: 0; aspect-ratio: 16 / 10; }
+  .careers-page .car-hero__media::after {
+    background: linear-gradient(180deg,
+      var(--bg) 0%, color-mix(in srgb, var(--bg) 45%, transparent) 12%,
+      transparent 32%, transparent 74%,
+      color-mix(in srgb, var(--bg) 55%, transparent) 96%, var(--bg) 100%);
+  }
+  .careers-page .car-expect__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: clamp(26px, 5vw, 36px); }
+  .careers-page .car-expect__grid li:nth-child(odd) { border-left: 0; padding-left: 0; }
+  .careers-page .car-expect__grid li:nth-child(n+3) {
+    padding-top: clamp(24px, 5vw, 32px);
+    border-top: 1px solid var(--hairline);
+  }
+  .careers-page .car-search { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .careers-page .car-search__btn { grid-column: 1 / -1; justify-self: start; }
+  .careers-page .car-connect__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 6vw, 44px); }
+  .careers-page .car-connect__title { max-width: none; }
+}
+@media (max-width: 700px) {
+  .careers-page .car-job {
+    display: flex; flex-wrap: wrap; align-items: baseline;
+    gap: 4px 14px;
+    position: relative;
+    padding-right: 96px;
+  }
+  .careers-page .car-job__title { flex-basis: 100%; }
+  .careers-page .car-job__cta {
+    position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+  }
+  .careers-page .car-job__cta:hover .ico { transform: none; }
+}
+@media (max-width: 560px) {
+  .careers-page .car-search { grid-template-columns: minmax(0, 1fr); }
+  .careers-page .car-form__row { grid-template-columns: minmax(0, 1fr); }
+  .careers-page .car-roles__foot { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 380px) {
+  .careers-page .car-hero__title { font-size: 1.78rem; }
+  .careers-page .car-fit__title,
+  .careers-page .car-promise__title { font-size: 1.5rem; }
+}
+
+/* ── REDUCED MOTION ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .careers-page .car-hero__media img { transform: none; }
+}
+
+
+/* ══════════ 16g. BUSINESS CONSULTING PAGE ══════════════════════
+   Solutions sub-page reached from the "Explore" link on the
+   Business Consulting card (nav dropdown + on-page grid). A hero on
+   the gutter's gold rule, a dark "no preset answers" band, a five-row
+   alternating list of how the engagement unfolds, a three-column
+   support-model band, and a dark closing CTA. Scoped under
+   .bizcon-page; every value comes from the existing tokens. ────── */
+
+.bizcon-page #main { overflow-x: clip; }
+
+.bizcon-page .bc-hero__title,
+.bizcon-page .bc-fit__title,
+.bizcon-page .bc-ways__title,
+.bizcon-page .bc-row__title,
+.bizcon-page .bc-support__title,
+.bizcon-page .bc-final__title {
+  font-variant-numeric: lining-nums;
+  -webkit-font-feature-settings: "lnum" 1;
+  font-feature-settings: "lnum" 1;
+}
+
+/* ── 01 · HERO ───────────────────────────────────────────── */
+.bizcon-page .bc-hero {
+  background: var(--bg);
+  padding-top: calc(var(--header-h) + clamp(24px, 5vw, 80px));
+  padding-bottom: clamp(34px, 4vw, 64px);
+  border-bottom: 1px solid var(--hairline);
+}
+.bizcon-page .bc-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(340px, 50vw, 820px);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: center;
+}
+.bizcon-page .bc-hero__text {
+  align-self: center;
+  margin-left: var(--gutter);
+  border-left: 2px solid var(--gold);
+  padding-inline-start: clamp(20px, 2.2vw, 34px);
+  max-width: 34rem;
+}
+.bizcon-page .bc-hero__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.9rem, 3.4vw, 3.1rem);
+  line-height: 1.16; letter-spacing: -.012em;
+  color: var(--navy); margin: clamp(12px, 1.6vw, 18px) 0 clamp(18px, 2.4vw, 28px);
+  text-wrap: balance;
+}
+.bizcon-page .bc-hero__lede {
+  color: var(--muted); font-size: clamp(.95rem, 1.05vw, 1.08rem);
+  line-height: 1.7; max-width: 32rem; margin: 0; text-wrap: pretty;
+}
+.bizcon-page .bc-hero__media {
+  position: relative; align-self: stretch;
+  margin: 0; overflow: hidden;
+  min-height: clamp(340px, 42vw, 600px);
+}
+.bizcon-page .bc-hero__media img {
+  width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; display: block;
+}
+.bizcon-page .bc-hero__media::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg,
+      var(--bg) 0%,
+      color-mix(in srgb, var(--bg) 55%, transparent) 16%,
+      transparent 42%),
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--bg) 60%, transparent) 0%,
+      transparent 18%,
+      transparent 82%,
+      color-mix(in srgb, var(--bg) 60%, transparent) 100%);
+}
+
+/* ── 02 · NO PRESET ANSWERS (dark band) ──────────────────── */
+.bizcon-page .bc-fit {
+  position: relative; overflow: hidden;
+  background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
+  padding-block: clamp(48px, 6vw, 92px);
+  text-align: center;
+}
+.bizcon-page .bc-fit__slash {
+  position: absolute; top: -20%; right: 9%;
+  width: 2px; height: 140%;
+  background: linear-gradient(180deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
+  transform: rotate(20deg); transform-origin: top;
+  opacity: .8; pointer-events: none;
+}
+.bizcon-page .bc-fit__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.6rem, 3.2vw, 2.7rem);
+  line-height: 1.2; color: #fff;
+  margin: 0 auto; max-width: 32ch; text-wrap: balance;
+}
+.bizcon-page .bc-fit__text {
+  margin: clamp(16px, 2vw, 26px) auto 0;
+  color: rgba(255,255,255,.72);
+  font-size: clamp(.95rem, 1.05vw, 1.05rem);
+  line-height: 1.65; max-width: 60ch;
+}
+
+/* ── 03 · WHERE WE HELP (intro) ──────────────────────────── */
+.bizcon-page .bc-ways {
+  background: var(--bg);
+  padding-block: clamp(44px, 5.4vw, 84px) clamp(24px, 3vw, 40px);
+  text-align: center;
+}
+.bizcon-page .bc-ways__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.55rem, 2.9vw, 2.5rem);
+  line-height: 1.16; color: var(--navy);
+  margin: clamp(10px, 1.4vw, 16px) auto 0; max-width: 30ch; text-wrap: balance;
+}
+.bizcon-page .bc-ways__lede {
+  margin: clamp(12px, 1.6vw, 18px) auto 0; color: var(--muted);
+  font-size: clamp(.95rem, 1.05vw, 1.05rem); line-height: 1.6; max-width: 54ch;
+}
+
+/* ── 04 · FIVE WAYS (alternating rows) ───────────────────── */
+.bizcon-page .bc-row {
+  position: relative; overflow: hidden;
+  background: var(--bg);
+  padding-block: clamp(40px, 5vw, 72px);
+  border-top: 1px solid var(--hairline);
+}
+.bizcon-page .bc-row--cream { background: var(--bg-cream); }
+html[data-theme="dark"] .bizcon-page .bc-row--cream { background: var(--bg-soft); }
+.bizcon-page .bc-row--sky { background: var(--bg-sky); }
+
+.bizcon-page .bc-row__dots {
+  position: absolute; top: clamp(24px, 3.4vw, 48px); right: clamp(20px, 4vw, 64px);
+  width: clamp(80px, 8vw, 130px); height: clamp(60px, 6vw, 96px);
+  background-image: radial-gradient(currentColor 1.4px, transparent 1.4px);
+  background-size: 16px 16px; color: var(--line);
+  opacity: .8; pointer-events: none;
+}
+html[data-theme="dark"] .bizcon-page .bc-row__dots { color: var(--hairline); }
+
+.bizcon-page .bc-row__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: clamp(28px, 5vw, 64px);
+  align-items: center;
+}
+.bizcon-page .bc-row__aside { max-width: 30rem; }
+.bizcon-page .bc-row__label {
+  font-family: var(--sans); font-size: .74rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--gold); margin: 0 0 10px;
+}
+.bizcon-page .bc-row__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.2rem, 1.9vw, 1.65rem);
+  line-height: 1.25; color: var(--navy); margin: 0 0 12px;
+}
+.bizcon-page .bc-row__text {
+  margin: 0; color: var(--muted);
+  font-size: clamp(.92rem, 1vw, 1rem); line-height: 1.6;
+}
+.bizcon-page .bc-list {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: clamp(13px, 1.6vw, 18px);
+  max-width: 34rem;
+}
+.bizcon-page .bc-list li {
+  position: relative; padding-left: 20px;
+  color: var(--muted); font-size: clamp(.9rem, .98vw, .98rem); line-height: 1.55;
+}
+.bizcon-page .bc-list li::before {
+  content: ""; position: absolute; left: 0; top: .58em;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--gold);
+}
+
+/* ── 05 · SUPPORT THAT FITS THE NEED ─────────────────────── */
+.bizcon-page .bc-support { background: var(--bg); padding-block: clamp(44px, 5.4vw, 84px); }
+.bizcon-page .bc-support__head { text-align: center; max-width: 46ch; margin: 0 auto clamp(30px, 3.8vw, 48px); }
+.bizcon-page .bc-support__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.5rem, 2.7vw, 2.3rem);
+  line-height: 1.2; color: var(--navy);
+  margin: clamp(10px, 1.4vw, 16px) auto 0; max-width: 26ch; text-wrap: balance;
+}
+.bizcon-page .bc-support__grid {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.bizcon-page .bc-support__grid li {
+  padding: 2px clamp(18px, 2.4vw, 32px);
+  border-left: 1px solid var(--hairline);
+  text-align: center;
+}
+.bizcon-page .bc-support__grid li:first-child { border-left: 0; }
+.bizcon-page .bc-support__label {
+  font-family: var(--sans); font-size: .74rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--gold); margin: 0 0 10px;
+}
+.bizcon-page .bc-support__copy {
+  margin: 0; color: var(--muted);
+  font-size: clamp(.9rem, .98vw, .97rem); line-height: 1.6;
+}
+
+/* ── 06 · CTA (dark band) ────────────────────────────────── */
+.bizcon-page .bc-final {
+  position: relative; overflow: hidden;
+  background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
+  padding-block: clamp(48px, 6.4vw, 96px);
+}
+.bizcon-page .bc-final__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(24px, 4vw, 48px);
+  align-items: center;
+}
+.bizcon-page .bc-final__lead { grid-column: 1; grid-row: 1; max-width: 56rem; }
+/* sits in the grid gap, pinned to the lead column's trailing edge, so it
+   tracks the button at any viewport width instead of drifting into it like
+   a percentage-based position would */
+.bizcon-page .bc-final__accent {
+  grid-column: 1; grid-row: 1;
+  justify-self: end; align-self: stretch;
+  width: 2px; margin-inline-end: clamp(2px, .6vw, 10px);
+  background: linear-gradient(180deg, transparent, var(--gold) 22%, var(--gold) 78%, transparent);
+  transform: rotate(9deg);
+  opacity: .75; pointer-events: none;
+}
+.bizcon-page .bc-final__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.5rem, 2.7vw, 2.3rem);
+  line-height: 1.2; color: #fff;
+  margin: clamp(10px, 1.4vw, 16px) 0 clamp(14px, 1.8vw, 20px);
+  max-width: 24ch; text-wrap: balance;
+}
+.bizcon-page .bc-final__text {
+  margin: 0; color: rgba(255,255,255,.72);
+  font-size: clamp(.92rem, 1vw, 1rem); line-height: 1.6; max-width: 58ch;
+}
+.bizcon-page .bc-final__act { grid-column: 2; grid-row: 1; margin: 0; }
+.bizcon-page .bc-final__btn {
+  border-color: rgba(255,255,255,.4); color: #fff;
+  white-space: nowrap;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 1000px) {
+  .bizcon-page .bc-hero__text { max-width: none; }
+}
+@media (max-width: 900px) {
+  .bizcon-page .bc-hero__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(24px, 6vw, 40px); }
+  .bizcon-page .bc-hero__text {
+    margin-inline: var(--gutter);
+    padding-inline-start: clamp(16px, 4vw, 24px);
+    max-width: none;
+  }
+  .bizcon-page .bc-hero__lede { max-width: 46ch; }
+  .bizcon-page .bc-hero__media { min-height: 0; aspect-ratio: 16 / 10; }
+  .bizcon-page .bc-hero__media::after {
+    background: linear-gradient(180deg,
+      var(--bg) 0%, color-mix(in srgb, var(--bg) 45%, transparent) 12%,
+      transparent 32%, transparent 74%,
+      color-mix(in srgb, var(--bg) 55%, transparent) 96%, var(--bg) 100%);
+  }
+  .bizcon-page .bc-row__grid { grid-template-columns: minmax(0, 1fr); }
+  .bizcon-page .bc-row--reverse .bc-row__aside { order: -1; }
+  .bizcon-page .bc-row__aside { max-width: none; }
+  .bizcon-page .bc-list { max-width: none; }
+  .bizcon-page .bc-row__dots { display: none; }
+  .bizcon-page .bc-support__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(24px, 5vw, 32px); }
+  .bizcon-page .bc-support__grid li { border-left: 0; padding: clamp(20px, 4vw, 28px) 0 0; border-top: 1px solid var(--hairline); }
+  .bizcon-page .bc-support__grid li:first-child { border-top: 0; padding-top: 0; }
+  .bizcon-page .bc-final__grid { grid-template-columns: minmax(0, 1fr); }
+  .bizcon-page .bc-final__lead, .bizcon-page .bc-final__act { grid-column: auto; grid-row: auto; }
+  .bizcon-page .bc-final__act { justify-self: start; }
+  .bizcon-page .bc-final__accent { display: none; }
+}
+@media (max-width: 380px) {
+  .bizcon-page .bc-hero__title { font-size: 1.7rem; }
+  .bizcon-page .bc-fit__title,
+  .bizcon-page .bc-final__title { font-size: 1.4rem; }
+}
+
+/* ── REDUCED MOTION ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .bizcon-page .bc-hero__media img { transform: none; }
+}
+
+
+/* ══════════ 16h. LET'S CONNECT PAGE ═════════════════════════════
+   Contact page — a hero on the gutter's gold rule, a cream form
+   band, a light "reach GSS" band with contact details, and a dark
+   "stay connected" band with social links. Scoped under
+   .letsconnect-page; every value comes from the existing tokens. ── */
+
+.letsconnect-page #main { overflow-x: clip; }
+
+.letsconnect-page .lc-hero__title,
+.letsconnect-page .lc-form-section__title,
+.letsconnect-page .lc-reach__title,
+.letsconnect-page .lc-social__title {
+  font-variant-numeric: lining-nums;
+  -webkit-font-feature-settings: "lnum" 1;
+  font-feature-settings: "lnum" 1;
+}
+
+/* ── 01 · HERO ───────────────────────────────────────────── */
+.letsconnect-page .lc-hero {
+  background: var(--bg);
+  padding-top: calc(var(--header-h) + clamp(24px, 5vw, 80px));
+  padding-bottom: clamp(34px, 4vw, 64px);
+  border-bottom: 1px solid var(--hairline);
+}
+.letsconnect-page .lc-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(340px, 50vw, 820px);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: center;
+}
+.letsconnect-page .lc-hero__text {
+  align-self: center;
+  margin-left: var(--gutter);
+  border-left: 2px solid var(--gold);
+  padding-inline-start: clamp(20px, 2.2vw, 34px);
+  max-width: 34rem;
+}
+.letsconnect-page .lc-hero__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.9rem, 3.4vw, 3.1rem);
+  line-height: 1.16; letter-spacing: -.012em;
+  color: var(--navy); margin: clamp(12px, 1.6vw, 18px) 0 clamp(18px, 2.4vw, 28px);
+  text-wrap: balance;
+}
+.letsconnect-page .lc-hero__lede {
+  color: var(--muted); font-size: clamp(.95rem, 1.05vw, 1.08rem);
+  line-height: 1.7; max-width: 32rem; margin: 0; text-wrap: pretty;
+}
+.letsconnect-page .lc-hero__media {
+  position: relative; align-self: stretch;
+  margin: 0; overflow: hidden;
+  min-height: clamp(340px, 42vw, 600px);
+}
+.letsconnect-page .lc-hero__media img {
+  width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; display: block;
+}
+.letsconnect-page .lc-hero__media::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg,
+      var(--bg) 0%,
+      color-mix(in srgb, var(--bg) 55%, transparent) 16%,
+      transparent 42%),
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--bg) 60%, transparent) 0%,
+      transparent 18%,
+      transparent 82%,
+      color-mix(in srgb, var(--bg) 60%, transparent) 100%);
+}
+
+/* ── 02 · FORM ───────────────────────────────────────────── */
+.letsconnect-page .lc-form-section { background: var(--bg-cream); padding-block: clamp(44px, 5.4vw, 84px); }
+html[data-theme="dark"] .letsconnect-page .lc-form-section { background: var(--bg-soft); }
+.letsconnect-page .lc-form-section__grid {
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+  gap: clamp(32px, 5vw, 84px);
+  align-items: start;
+}
+.letsconnect-page .lc-form-section__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.55rem, 2.8vw, 2.4rem);
+  line-height: 1.16; color: var(--navy);
+  margin: clamp(10px, 1.4vw, 16px) 0 0; max-width: 16ch; text-wrap: balance;
+}
+.letsconnect-page .lc-form-section__text {
+  margin: clamp(16px, 2vw, 24px) 0 0; color: var(--muted);
+  font-size: clamp(.95rem, 1.05vw, 1.04rem); line-height: 1.7; max-width: 40ch;
+}
+
+.letsconnect-page .lc-form { display: flex; flex-direction: column; gap: clamp(18px, 2.2vw, 26px); }
+.letsconnect-page .lc-form__row {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+}
+.letsconnect-page .lc-field { display: flex; flex-direction: column; }
+.letsconnect-page .lc-field > label {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+.letsconnect-page .lc-field input,
+.letsconnect-page .lc-field select,
+.letsconnect-page .lc-field textarea {
+  width: 100%;
+  padding: 10px 2px;
+  border: 0; border-bottom: 1px solid var(--line);
+  background: transparent;
+  font-family: var(--sans); font-size: .95rem;
+  color: var(--navy);
+  border-radius: 0; resize: vertical;
+  transition: border-color .2s var(--ease);
+}
+.letsconnect-page .lc-field textarea { min-height: 84px; }
+.letsconnect-page .lc-field input::placeholder,
+.letsconnect-page .lc-field textarea::placeholder { color: var(--muted-2); }
+.letsconnect-page .lc-field input:focus,
+.letsconnect-page .lc-field select:focus,
+.letsconnect-page .lc-field textarea:focus { outline: none; border-bottom-color: var(--gold); }
+.letsconnect-page .lc-field select {
+  appearance: none; -webkit-appearance: none;
+  color: var(--muted-2); cursor: pointer;
+  padding-right: 24px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238C9BB0' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 9 7 7 7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 0 center; background-size: 15px;
+}
+.letsconnect-page .lc-form__act { margin: 4px 0 0; }
+.letsconnect-page .lc-form__fine {
+  margin: -8px 0 0; color: var(--muted-2);
+  font-size: .8rem; line-height: 1.55; max-width: 46ch;
+}
+.letsconnect-page .lc-form__fine a { color: var(--navy); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ── 03 · REACH GSS ──────────────────────────────────────── */
+.letsconnect-page .lc-reach {
+  position: relative; overflow: hidden;
+  background: var(--bg-sky);
+  padding-block: clamp(48px, 6vw, 90px);
+  text-align: center;
+}
+.letsconnect-page .lc-reach__ring {
+  position: absolute; top: -90px;
+  width: 280px; height: 280px;
+  border-radius: 50%; border: 1px solid var(--gold);
+  opacity: .3; pointer-events: none;
+}
+.letsconnect-page .lc-reach__ring--l { left: -90px; }
+.letsconnect-page .lc-reach__ring--r { right: -90px; }
+/* sits at the ring's own 45°-point (center + radius·cos45/sin45), landing
+   inside the visible content area instead of near the clipped section edge */
+.letsconnect-page .lc-reach__ring--l::after {
+  content: ""; position: absolute; left: 238px; top: 238px;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--gold); opacity: .9;
+}
+.letsconnect-page .lc-reach__head { position: relative; max-width: 52ch; margin: 0 auto clamp(30px, 3.6vw, 46px); }
+.letsconnect-page .lc-reach__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.55rem, 2.9vw, 2.5rem);
+  line-height: 1.16; color: var(--navy);
+  margin: clamp(10px, 1.4vw, 16px) 0 0; text-wrap: balance;
+}
+.letsconnect-page .lc-reach__grid {
+  position: relative;
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  text-align: left;
+}
+.letsconnect-page .lc-reach__grid li {
+  padding: 2px clamp(16px, 2vw, 28px);
+  border-left: 1px solid var(--line);
+}
+.letsconnect-page .lc-reach__grid li:first-child { border-left: 0; padding-left: 0; }
+.letsconnect-page .lc-reach__label {
+  font-family: var(--sans); font-size: .72rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--gold); margin: 0 0 10px;
+}
+.letsconnect-page .lc-reach__copy {
+  margin: 0; color: var(--navy);
+  font-size: clamp(.88rem, .98vw, .95rem); line-height: 1.55;
+}
+.letsconnect-page .lc-reach__copy a { color: inherit; text-decoration: none; }
+.letsconnect-page .lc-reach__copy a:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+/* ── 04 · STAY CONNECTED (dark band) ─────────────────────── */
+.letsconnect-page .lc-social {
+  position: relative; overflow: hidden;
+  background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
+  padding-block: clamp(48px, 6.4vw, 96px);
+}
+.letsconnect-page .lc-social__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+}
+.letsconnect-page .lc-social__text { grid-column: 1; grid-row: 1; max-width: 34rem; }
+.letsconnect-page .lc-social__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.5rem, 2.7vw, 2.3rem);
+  line-height: 1.2; color: #fff;
+  margin: clamp(10px, 1.4vw, 16px) 0 clamp(10px, 1.4vw, 14px);
+  max-width: 20ch; text-wrap: balance;
+}
+.letsconnect-page .lc-social__lede {
+  margin: 0; color: rgba(255,255,255,.72);
+  font-size: clamp(.92rem, 1vw, 1rem); line-height: 1.6;
+}
+/* sits in the grid gap, pinned to the text column's trailing edge — same
+   technique as the Alliances/Business Consulting CTAs, so it tracks the
+   icon list at any width instead of drifting into it */
+.letsconnect-page .lc-social__accent {
+  grid-column: 1; grid-row: 1;
+  justify-self: end; align-self: stretch;
+  width: 2px; margin-inline-end: clamp(16px, 2.4vw, 32px);
+  background: linear-gradient(180deg, transparent, var(--gold) 22%, var(--gold) 78%, transparent);
+  transform: rotate(9deg);
+  opacity: .75; pointer-events: none;
+}
+.letsconnect-page .lc-social__list {
+  grid-column: 2; grid-row: 1;
+  display: flex; gap: clamp(18px, 2.4vw, 34px);
+  list-style: none; margin: 0; padding: 0;
+}
+.letsconnect-page .lc-social__list li {
+  display: flex; flex-direction: column; align-items: center;
+  width: clamp(84px, 8vw, 116px);
+}
+.letsconnect-page .lc-social__link {
+  display: grid; place-items: center;
+  width: clamp(46px, 4.6vw, 56px); height: clamp(46px, 4.6vw, 56px);
+  border-radius: 50%; border: 1px solid rgba(255,255,255,.25);
+  color: #fff; margin-bottom: 12px;
+  transition: background-color .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease);
+}
+.letsconnect-page .lc-social__link svg { width: 20px; height: 20px; fill: currentColor; }
+.letsconnect-page .lc-social__link:hover { background: var(--gold-2); border-color: var(--gold-2); color: #0F2247; }
+.letsconnect-page .lc-social__name {
+  margin: 0; color: #fff;
+  font-family: var(--sans); font-size: .7rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; text-align: center;
+}
+.letsconnect-page .lc-social__handle {
+  margin: 4px 0 0; color: rgba(255,255,255,.6);
+  font-size: .74rem; text-align: center; word-break: break-word;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 1000px) {
+  .letsconnect-page .lc-hero__text { max-width: none; }
+}
+@media (max-width: 900px) {
+  .letsconnect-page .lc-hero__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(24px, 6vw, 40px); }
+  .letsconnect-page .lc-hero__text {
+    margin-inline: var(--gutter);
+    padding-inline-start: clamp(16px, 4vw, 24px);
+    max-width: none;
+  }
+  .letsconnect-page .lc-hero__lede { max-width: 46ch; }
+  .letsconnect-page .lc-hero__media { min-height: 0; aspect-ratio: 16 / 10; }
+  .letsconnect-page .lc-hero__media::after {
+    background: linear-gradient(180deg,
+      var(--bg) 0%, color-mix(in srgb, var(--bg) 45%, transparent) 12%,
+      transparent 32%, transparent 74%,
+      color-mix(in srgb, var(--bg) 55%, transparent) 96%, var(--bg) 100%);
+  }
+  .letsconnect-page .lc-form-section__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 6vw, 40px); }
+  .letsconnect-page .lc-form-section__title,
+  .letsconnect-page .lc-form-section__text { max-width: none; }
+  .letsconnect-page .lc-reach__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: clamp(26px, 5vw, 36px); }
+  .letsconnect-page .lc-reach__grid li:nth-child(2n+1) { border-left: 0; padding-left: 0; }
+  .letsconnect-page .lc-reach__grid li:nth-child(n+3) { padding-top: clamp(20px, 4vw, 28px); border-top: 1px solid var(--line); }
+  .letsconnect-page .lc-reach__ring { width: 200px; height: 200px; opacity: .22; }
+  .letsconnect-page .lc-social__grid { grid-template-columns: minmax(0, 1fr); }
+  .letsconnect-page .lc-social__text, .letsconnect-page .lc-social__list { grid-column: auto; grid-row: auto; }
+  .letsconnect-page .lc-social__accent { display: none; }
+  .letsconnect-page .lc-social__list { flex-wrap: wrap; justify-content: flex-start; }
+}
+@media (max-width: 620px) {
+  .letsconnect-page .lc-form__row { grid-template-columns: minmax(0, 1fr); }
+  .letsconnect-page .lc-reach__grid { grid-template-columns: minmax(0, 1fr); }
+  .letsconnect-page .lc-reach__grid li { border-left: 0 !important; padding-left: 0 !important; padding-top: clamp(18px, 4vw, 24px); border-top: 1px solid var(--line); }
+  .letsconnect-page .lc-reach__grid li:first-child { padding-top: 0; border-top: 0; }
+}
+@media (max-width: 380px) {
+  .letsconnect-page .lc-hero__title { font-size: 1.7rem; }
+  .letsconnect-page .lc-social__title { font-size: 1.4rem; }
+}
+
+/* ── REDUCED MOTION ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .letsconnect-page .lc-hero__media img { transform: none; }
 }
