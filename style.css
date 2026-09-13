@@ -1507,8 +1507,8 @@ html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1
   text-align: center;
   border-bottom: 1px solid var(--hairline);
   background: linear-gradient(180deg, var(--bg-sky) 0%, var(--bg-soft) 100%);
-  padding-top: calc(var(--header-h) + clamp(40px, 5.5vw, 82px));
-  padding-bottom: clamp(38px, 4.5vw, 64px);
+  padding-top: calc(var(--header-h) + clamp(26px, 3.6vw, 54px));
+  padding-bottom: clamp(28px, 3.2vw, 44px);
 }
 .page-hero .container { position: relative; z-index: 1; }
 /* the banner is shorter than the closing CTA section, so the rays are scaled
@@ -1537,7 +1537,7 @@ html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1
   text-wrap: pretty;
 }
 
-.page-body { background: var(--bg); padding-block: clamp(42px, 4.6vw, 76px); }
+.page-body { background: var(--bg); padding-block: clamp(30px, 3.4vw, 52px); }
 .page-body .container { max-width: 940px; }
 .page-intro p {
   color: var(--muted);
@@ -1547,7 +1547,7 @@ html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1
   text-wrap: pretty;
 }
 .page-intro p + p { margin-top: 20px; }
-.page-intro .divider-gold { margin-block: clamp(38px, 4.5vw, 58px) clamp(28px, 3vw, 38px); }
+.page-intro .divider-gold { margin-block: clamp(28px, 3.2vw, 40px) clamp(22px, 2.4vw, 30px); }
 
 /* About page stacks several eyebrow → heading → prose blocks; give the prose
    a consistent gap under its heading, and lift the summary line off the
@@ -1591,8 +1591,8 @@ html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1
 
 .abx-display {
   font-family: var(--serif); font-weight: 500;
-  font-size: clamp(2.1rem, 4.4vw, 3.5rem);
-  line-height: 1.08; letter-spacing: -.018em;
+  font-size: clamp(2.3rem, 5vw, 4rem);
+  line-height: 1.07; letter-spacing: -.02em;
   color: var(--navy); margin: 0;
   text-wrap: balance;
 }
@@ -1623,7 +1623,7 @@ html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1
 }
 .abx-intro__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(320px, 50vw, 780px);
+  grid-template-columns: minmax(0, 1fr) var(--fig-hero-w);
   align-items: stretch;
   gap: clamp(28px, 4vw, 64px);
 }
@@ -1632,19 +1632,19 @@ html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1
   margin-left: var(--gutter);
   padding: clamp(6px, 1.4vw, 16px) clamp(20px, 3vw, 44px);
   border-left: 2px solid var(--gold);
-  max-width: 40rem;
+  max-width: 46rem;
 }
 .abx-intro__text .abx-display { margin-bottom: clamp(20px, 2.6vw, 32px); }
 .abx-lede {
   color: var(--muted);
-  font-size: clamp(1.02rem, 1.25vw, 1.2rem);
-  line-height: 1.6; max-width: 34ch; margin: 0;
+  font-size: clamp(1.08rem, 1.4vw, 1.3rem);
+  line-height: 1.6; max-width: 40ch; margin: 0;
 }
 .abx-lede__accent { color: var(--navy); font-weight: 600; white-space: nowrap; }
 .abx-intro__media {
   position: relative;
   margin: 0; overflow: hidden;
-  min-height: clamp(320px, 42vw, 560px);
+  min-height: clamp(214px, 25vw, 344px);
 }
 .abx-intro__media img {
   width: 100%; height: 100%;
@@ -1658,13 +1658,13 @@ html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1
   background:
     linear-gradient(90deg,
       var(--bg) 0%,
-      color-mix(in srgb, var(--bg) 55%, transparent) 16%,
-      transparent 42%),
+      color-mix(in srgb, var(--bg) 50%, transparent) 17%,
+      transparent 44%),
     linear-gradient(180deg,
-      color-mix(in srgb, var(--bg) 60%, transparent) 0%,
-      transparent 18%,
-      transparent 82%,
-      color-mix(in srgb, var(--bg) 60%, transparent) 100%);
+      color-mix(in srgb, var(--bg) 78%, transparent) 0%,
+      transparent 24%,
+      transparent 76%,
+      color-mix(in srgb, var(--bg) 78%, transparent) 100%);
 }
 .abx-intro__more {
   margin-top: clamp(34px, 5vw, 64px);
@@ -1685,10 +1685,13 @@ html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1
 .abx-pov {
   position: relative; overflow: hidden;
   background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
-  padding-block: clamp(60px, 9vw, 128px);
+  padding-block: clamp(18px, 2.3vw, 33px);
 }
+/* the rule sits in the gap between the statement and its italic answer.
+   At the band's old height it crossed the italic line; now that the band
+   is half as tall that overlap reads as a mistake, so it moves clear. */
 .abx-pov__slash {
-  position: absolute; top: -20%; right: 14%;
+  position: absolute; top: -20%; right: 36%;
   width: 2px; height: 140%;
   background: linear-gradient(180deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
   transform: rotate(20deg); transform-origin: top;
@@ -1696,30 +1699,30 @@ html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1
 }
 .abx-pov__lead {
   font-family: var(--serif); font-weight: 500;
-  font-size: clamp(1.8rem, 4.4vw, 3.4rem);
-  line-height: 1.16; letter-spacing: -.018em;
-  color: #fff; max-width: 22ch; margin: 0;
+  font-size: clamp(1.25rem, 2.7vw, 2.05rem);
+  line-height: 1.12; letter-spacing: -.018em;
+  color: #fff; max-width: 26ch; margin: 0;
 }
 .abx-pov__tail {
   font-family: var(--serif); font-style: italic; font-weight: 400;
-  font-size: clamp(1.4rem, 3.4vw, 2.6rem);
-  line-height: 1.2; color: var(--gold-2);
+  font-size: clamp(1rem, 2.05vw, 1.6rem);
+  line-height: 1.18; color: var(--gold-2);
   text-align: right; max-width: 24ch;
-  margin: clamp(16px, 2.4vw, 30px) 0 0 auto;
+  margin: clamp(8px, 1.1vw, 13px) 0 0 auto;
 }
 
 /* ── 01 · HOW WE WORK ────────────────────────────────────── */
-.abx-work { background: var(--bg-cream); padding-bottom: clamp(48px, 7vw, 96px); }
+.abx-work { background: var(--bg-cream); padding-bottom: clamp(16px, 1.6vw, 21px); }
 html[data-theme="dark"] .abx-work { background: var(--bg-soft); }
 .abx-work__grid {
   display: grid;
-  grid-template-columns: clamp(320px, 46vw, 720px) minmax(0, 1fr);
+  grid-template-columns: var(--fig-inset-w) minmax(0, 1fr);
   align-items: stretch;
 }
 .abx-work__media {
   position: relative;
   margin: 0; overflow: hidden;
-  min-height: clamp(340px, 44vw, 600px);
+  min-height: clamp(226px, 26vw, 366px);
 }
 .abx-work__media img { width: 100%; height: 100%; object-fit: cover; object-position: 40% 50%; display: block; }
 /* mirror of the intro fade — this photo bleeds from the left, so it
@@ -1730,69 +1733,74 @@ html[data-theme="dark"] .abx-work { background: var(--bg-soft); }
   background:
     linear-gradient(270deg,
       var(--melt) 0%,
-      color-mix(in srgb, var(--melt) 55%, transparent) 16%,
-      transparent 42%),
+      color-mix(in srgb, var(--melt) 50%, transparent) 17%,
+      transparent 44%),
     linear-gradient(180deg,
-      color-mix(in srgb, var(--melt) 60%, transparent) 0%,
-      transparent 18%,
-      transparent 82%,
-      color-mix(in srgb, var(--melt) 60%, transparent) 100%);
+      color-mix(in srgb, var(--melt) 78%, transparent) 0%,
+      transparent 24%,
+      transparent 76%,
+      color-mix(in srgb, var(--melt) 78%, transparent) 100%);
 }
 html[data-theme="dark"] .abx-work__media::after { --melt: var(--bg-soft); }
 .abx-work__text {
   align-self: center;
-  padding: clamp(40px, 6vw, 90px) var(--gutter) clamp(40px, 6vw, 90px) clamp(24px, 4vw, 64px);
-  max-width: 34rem;
+  padding: clamp(13px, 1.3vw, 18px) var(--gutter) clamp(13px, 1.3vw, 18px) clamp(20px, 2.6vw, 40px);
+  max-width: 43rem;
 }
-.abx-work__text .abx-h2 { margin-bottom: clamp(18px, 2.2vw, 28px); }
-.abx-work__foot { margin-top: clamp(34px, 5vw, 64px); text-align: center; }
+.abx-work__text .abx-h2 {
+  font-size: clamp(1.4rem, 2.4vw, 2.05rem);
+  line-height: 1.13;
+  margin-bottom: clamp(9px, 1.1vw, 13px);
+}
+.abx-work__text .abx-body { font-size: clamp(.9rem, .98vw, .98rem); line-height: 1.6; }
+.abx-work__foot { margin-top: clamp(9px, .9vw, 12px); text-align: center; }
 .abx-process__lead {
-  max-width: 62ch; margin: 0 auto;
-  color: var(--muted); font-size: clamp(.98rem, 1.1vw, 1.08rem);
-  line-height: 1.75;
+  max-width: 88ch; margin: 0 auto;
+  color: var(--muted); font-size: clamp(.9rem, .98vw, .98rem);
+  line-height: 1.6;
 }
 .abx-process__rule {
-  max-width: 52ch; margin: clamp(14px, 2vw, 22px) auto 0;
+  max-width: 104ch; margin: clamp(6px, .75vw, 9px) auto 0;
   color: var(--navy); font-weight: 600;
-  font-size: clamp(.92rem, 1vw, 1rem); letter-spacing: .01em;
+  font-size: clamp(.88rem, .95vw, .95rem); letter-spacing: .01em;
 }
 
 /* horizontal process flow */
 .abx-flow {
-  list-style: none; margin: clamp(38px, 5vw, 64px) 0 0; padding: 34px 0 0;
+  list-style: none; margin: clamp(10px, 1.1vw, 14px) 0 0; padding: 21px 0 0;
   display: grid; grid-template-columns: repeat(4, 1fr);
   gap: clamp(14px, 2vw, 30px);
   position: relative; text-align: left;
 }
 .abx-flow::before {
-  content: ""; position: absolute; top: 13px;
-  left: 13px; right: calc(25% - 13px);
+  content: ""; position: absolute; top: 8px;
+  left: 8px; right: calc(25% - 8px);
   height: 1px; background: var(--gold); opacity: .75;
 }
 .abx-flow__step { position: relative; padding-right: clamp(6px, 1.4vw, 16px); }
 .abx-flow__dot {
-  position: absolute; top: -34px; left: 0;
-  width: 26px; height: 26px; border-radius: 50%;
+  position: absolute; top: -21px; left: 0;
+  width: 16px; height: 16px; border-radius: 50%;
   border: 2px solid var(--gold); background: var(--bg-cream);
 }
 html[data-theme="dark"] .abx-flow__dot { background: var(--bg-soft); }
 .abx-flow__step--end .abx-flow__dot { background: var(--navy); border-color: var(--navy); }
 .abx-flow__step--end::after {
-  content: ""; position: absolute; top: -25px; left: 34px;
-  border-top: 5px solid transparent; border-bottom: 5px solid transparent;
-  border-left: 8px solid var(--gold);
+  content: ""; position: absolute; top: -17px; left: 23px;
+  border-top: 4px solid transparent; border-bottom: 4px solid transparent;
+  border-left: 7px solid var(--gold);
 }
 .abx-flow__label {
   display: block; font-family: var(--serif); font-weight: 500;
-  font-size: clamp(1.05rem, 1.4vw, 1.35rem); color: var(--navy);
+  font-size: clamp(.95rem, 1.12vw, 1.08rem); color: var(--navy);
 }
 .abx-flow__desc {
-  display: block; margin-top: 7px;
-  font-size: .8rem; line-height: 1.5; color: var(--muted); max-width: 22ch;
+  display: block; margin-top: 4px;
+  font-size: .78rem; line-height: 1.45; color: var(--muted); max-width: 32ch;
 }
 
 /* ── 02 · ABOUT THE COMPANY ──────────────────────────────── */
-.abx-company { background: var(--bg-sky); padding-block: clamp(56px, 8vw, 110px); }
+.abx-company { background: var(--bg-sky); padding-block: clamp(40px, 5.2vw, 74px); }
 html[data-theme="dark"] .abx-company { background: var(--bg-sky); }
 .abx-company__grid {
   display: grid;
@@ -1851,8 +1859,10 @@ html[data-theme="dark"] .abx-cred {
 .abx-cta {
   position: relative; overflow: hidden;
   background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
-  padding-block: clamp(64px, 9vw, 128px);
+  padding-block: clamp(18px, 1.9vw, 27px);
 }
+/* the eyebrow's shared 24px drop is tuned for full-height sections */
+.abx-cta .abx-eyebrow { margin-bottom: clamp(8px, 1vw, 13px); }
 .abx-pov__slash--cta { right: 40%; opacity: .6; }
 .abx-cta__grid {
   display: grid;
@@ -1862,15 +1872,17 @@ html[data-theme="dark"] .abx-cred {
 }
 .abx-cta__title {
   font-family: var(--serif); font-weight: 500;
-  font-size: clamp(1.9rem, 4.2vw, 3.4rem);
-  line-height: 1.14; letter-spacing: -.018em;
-  color: #fff; margin: 0; max-width: 20ch; text-wrap: balance;
+  font-size: clamp(1.3rem, 2.2vw, 1.85rem);
+  line-height: 1.16; letter-spacing: -.016em;
+  color: #fff; margin: 0; max-width: 42ch; text-wrap: balance;
 }
-.abx-cta__act { display: flex; flex-direction: column; align-items: flex-start; gap: clamp(18px, 2.4vw, 28px); }
+.abx-cta__act { display: flex; flex-direction: column; align-items: flex-start; gap: clamp(10px, 1.1vw, 15px); }
 .abx-cta__sub {
   margin: 0; color: rgba(255,255,255,.72);
-  font-size: clamp(.95rem, 1.05vw, 1.05rem); line-height: 1.6; max-width: 32ch;
+  font-size: clamp(.88rem, .95vw, .95rem); line-height: 1.55; max-width: 46ch;
 }
+/* .btn-lg is shared site-wide, so the shorter button is scoped to this band */
+.abx-cta .btn-lg { min-height: 46px; padding: 13px 30px; }
 .abx-cta .btn-primary { background: var(--gold); color: #0B1424; box-shadow: 0 12px 40px rgba(0,0,0,.32); }
 .abx-cta .btn-primary .ico { color: #0B1424; }
 .abx-cta .btn-primary:hover { background: #E9C275; }
@@ -1914,7 +1926,7 @@ html[data-theme="dark"] .abx-cred {
   }
   .abx-intro__media { grid-row: 2; }
   .abx-intro__media,
-  .abx-work__media { min-height: 0; aspect-ratio: 16 / 10; }
+  .abx-work__media { min-height: 0; aspect-ratio: 16 / 9; }
   .abx-work__media { grid-row: 1; }
   .abx-work__text { grid-row: 2; align-self: start; padding: clamp(28px, 6vw, 44px) var(--gutter); max-width: none; }
   /* stacked — the photos now sit between blocks of copy, so the fade
@@ -1940,18 +1952,21 @@ html[data-theme="dark"] .abx-cred {
 @media (max-width: 620px) {
   .abx-pov__slash { display: none; }
   /* process flow goes vertical */
+  /* the rail, dot and arrow are re-centred on the smaller 16px dot */
   .abx-flow {
     grid-template-columns: minmax(0, 1fr);
-    gap: 0; padding: 0 0 0 34px;
+    gap: 0; padding: 0 0 0 26px;
   }
   .abx-flow::before {
-    top: 6px; bottom: 6px; left: 12px; right: auto;
+    top: 6px; bottom: 6px; left: 8px; right: auto;
     width: 1px; height: auto;
   }
-  .abx-flow__step { padding: 0 0 clamp(20px, 5vw, 30px); }
+  .abx-flow__step { padding: 0 0 clamp(15px, 3.6vw, 22px); }
   .abx-flow__step:last-child { padding-bottom: 0; }
-  .abx-flow__dot { top: 4px; left: -34px; }
-  .abx-flow__step--end::after { top: 11px; left: 0; }
+  .abx-flow__dot { top: 5px; left: -26px; }
+  /* the arrow marks the end of a left-to-right rail; with the flow running
+     vertically it only collides with the final label, so it steps out */
+  .abx-flow__step--end::after { display: none; }
   .abx-flow__desc { max-width: none; }
   .abx-work__foot { text-align: left; }
   .abx-process__lead, .abx-process__rule { margin-inline: 0; }
@@ -1982,10 +1997,10 @@ html[data-theme="dark"] .abx-cred {
 html[data-theme="dark"] .pnr-hero-dots { color: var(--hairline); }
 
 /* ── OUR POSITION (image + text split) ───────────────────── */
-.pnr-position { background: var(--bg); padding-block: clamp(40px, 5vw, 76px); }
+.pnr-position { background: var(--bg); padding-block: clamp(30px, 3.6vw, 54px); }
 .pnr-position__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(340px, 50vw, 820px);
+  grid-template-columns: minmax(0, 1fr) var(--fig-inset-w);
   align-items: center;
   gap: clamp(28px, 4vw, 64px);
 }
@@ -1997,7 +2012,7 @@ html[data-theme="dark"] .pnr-hero-dots { color: var(--hairline); }
   position: relative;
   align-self: stretch;
   margin: 0; overflow: hidden;
-  min-height: clamp(360px, 46vw, 660px);
+  min-height: clamp(230px, 26vw, 366px);
 }
 .pnr-position__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; display: block; }
 .pnr-position__media::after {
@@ -2005,13 +2020,13 @@ html[data-theme="dark"] .pnr-hero-dots { color: var(--hairline); }
   background:
     linear-gradient(90deg,
       var(--bg) 0%,
-      color-mix(in srgb, var(--bg) 55%, transparent) 16%,
-      transparent 42%),
+      color-mix(in srgb, var(--bg) 50%, transparent) 17%,
+      transparent 44%),
     linear-gradient(180deg,
-      color-mix(in srgb, var(--bg) 60%, transparent) 0%,
-      transparent 18%,
-      transparent 82%,
-      color-mix(in srgb, var(--bg) 60%, transparent) 100%);
+      color-mix(in srgb, var(--bg) 78%, transparent) 0%,
+      transparent 24%,
+      transparent 76%,
+      color-mix(in srgb, var(--bg) 78%, transparent) 100%);
 }
 .pnr-position__text { align-self: center; margin-left: var(--gutter); max-width: 34rem; }
 .pnr-position__text .abx-h2 { margin-bottom: clamp(18px, 2.2vw, 26px); }
@@ -2027,22 +2042,24 @@ html[data-theme="dark"] .pnr-hero-dots { color: var(--hairline); }
 }
 
 /* ── STRATEGIC PARTNERSHIPS (model cards) ─────────────────── */
-.pnr-models { background: var(--bg-cream); padding-block: clamp(40px, 5vw, 76px); }
+.pnr-models { background: var(--bg-cream); padding-block: clamp(20px, 2.2vw, 32px); }
 html[data-theme="dark"] .pnr-models { background: var(--bg-soft); }
-.pnr-models__head { text-align: center; max-width: 62ch; margin: 0 auto clamp(28px, 3.4vw, 44px); }
+.pnr-models__head { text-align: center; max-width: 80ch; margin: 0 auto clamp(16px, 1.9vw, 26px); }
+/* .abx-h2 is shared with the About page, so the smaller size is scoped */
+.pnr-models__head .abx-h2, .pnr-roster .abx-h2 { font-size: clamp(1.35rem, 2.2vw, 1.95rem); line-height: 1.16; }
 .pnr-models__head .abx-h2 { text-align: center; margin-inline: auto; }
-.pnr-models__head p { margin: clamp(12px, 1.6vw, 18px) 0 0; color: var(--muted); font-size: clamp(.96rem, 1.05vw, 1.05rem); line-height: 1.65; }
+.pnr-models__head p { margin: clamp(8px, 1vw, 12px) 0 0; color: var(--muted); font-size: clamp(.9rem, .98vw, .98rem); line-height: 1.6; }
 
 .pnr-model-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(20px, 2.4vw, 32px);
+  gap: clamp(14px, 1.6vw, 22px);
 }
 .pnr-model {
   background: var(--card);
   border: 1px solid var(--hairline);
   border-radius: clamp(14px, 1.6vw, 20px);
-  padding: clamp(26px, 3vw, 40px);
+  padding: clamp(18px, 2vw, 26px);
   display: flex; flex-direction: column;
 }
 .pnr-model--wide { grid-column: 1 / -1; }
@@ -2053,25 +2070,25 @@ html[data-theme="dark"] .pnr-models { background: var(--bg-soft); }
 }
 .pnr-model h3 {
   font-family: var(--serif); font-weight: 500;
-  font-size: clamp(1.2rem, 1.6vw, 1.5rem);
-  line-height: 1.25; color: var(--navy);
-  margin: 0 0 12px;
+  font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+  line-height: 1.22; color: var(--navy);
+  margin: 0 0 8px;
 }
-.pnr-model > p { margin: 0 0 clamp(18px, 2.2vw, 26px); color: var(--muted); font-size: .93rem; line-height: 1.65; }
+.pnr-model > p { margin: 0 0 clamp(11px, 1.3vw, 15px); color: var(--muted); font-size: .91rem; line-height: 1.58; }
 
-.pnr-model-check { list-style: none; margin: 0 0 clamp(18px, 2.2vw, 26px); padding: 0; display: flex; flex-direction: column; gap: 14px; }
-.pnr-model-check li { display: flex; gap: 10px; align-items: flex-start; color: var(--muted); font-size: .89rem; line-height: 1.55; }
+.pnr-model-check { list-style: none; margin: 0 0 clamp(11px, 1.3vw, 15px); padding: 0; display: flex; flex-direction: column; gap: 9px; }
+.pnr-model-check li { display: flex; gap: 10px; align-items: flex-start; color: var(--muted); font-size: .88rem; line-height: 1.5; }
 .pnr-model-check .ico { width: 18px; height: 18px; flex: 0 0 auto; margin-top: 1px; color: var(--gold); }
 .pnr-model-check strong { color: var(--navy); font-weight: 700; }
 
-.pnr-model-rule { height: 1px; background: var(--hairline); margin: 0 0 clamp(16px, 2vw, 22px); }
+.pnr-model-rule { height: 1px; background: var(--hairline); margin: 0 0 clamp(10px, 1.2vw, 14px); }
 .pnr-model-line {
   font-family: var(--sans); font-size: .78rem; font-weight: 700;
   letter-spacing: .05em; text-transform: uppercase; color: var(--gold-2);
-  margin: 0 0 clamp(16px, 2vw, 22px); line-height: 1.5;
+  margin: 0 0 clamp(10px, 1.2vw, 14px); line-height: 1.45;
 }
 .pnr-model .btn { align-self: flex-start; }
-.pnr-model-note { margin: 12px 0 0; color: var(--muted-2); font-size: .8rem; line-height: 1.55; }
+.pnr-model-note { margin: 8px 0 0; color: var(--muted-2); font-size: .79rem; line-height: 1.5; }
 
 .pnr-model--wide .pnr-model-inner {
   display: grid;
@@ -2081,19 +2098,19 @@ html[data-theme="dark"] .pnr-models { background: var(--bg-soft); }
 }
 .pnr-model--wide .pnr-model-divider { background: var(--hairline); height: 100%; }
 .pnr-model--wide .pnr-model-act { display: flex; flex-direction: column; align-self: center; }
-.pnr-model--wide .pnr-model-line { margin-bottom: clamp(18px, 2.2vw, 26px); }
+.pnr-model--wide .pnr-model-line { margin-bottom: clamp(11px, 1.3vw, 15px); }
 
 /* ── HOW WE WORK WITH PARTNERS (light band) ──────────────── */
-.pnr-roster { background: var(--bg-sky); padding-block: clamp(40px, 4.6vw, 68px); text-align: center; }
-.pnr-roster .container { max-width: 62ch; }
+.pnr-roster { background: var(--bg-sky); padding-block: clamp(18px, 2vw, 30px); text-align: center; }
+.pnr-roster .container { max-width: 94ch; }
 .pnr-roster .abx-h2 { text-align: center; margin-inline: auto; }
-.pnr-roster p { margin: clamp(14px, 1.8vw, 20px) 0 0; color: var(--muted); font-size: clamp(.96rem, 1.05vw, 1.05rem); line-height: 1.7; }
+.pnr-roster p { margin: clamp(8px, 1vw, 12px) 0 0; color: var(--muted); font-size: clamp(.9rem, .98vw, .98rem); line-height: 1.6; }
 
 /* ── FINAL CTA (image + dark band) ───────────────────────── */
-.pnr-final { position: relative; overflow: hidden; background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%); padding-block: clamp(44px, 5.2vw, 80px); }
-.pnr-final__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.18fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+.pnr-final { position: relative; overflow: hidden; background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%); padding-block: clamp(16px, 1.8vw, 26px); }
+.pnr-final__grid { display: grid; grid-template-columns: minmax(0, 1fr) var(--fig-band-w); gap: clamp(32px, 5vw, 72px); align-items: center; }
 .pnr-final__text { grid-column: 1; grid-row: 1; }
-.pnr-final__title { font-family: var(--serif); font-weight: 500; font-size: clamp(1.9rem, 4vw, 3.1rem); line-height: 1.14; letter-spacing: -.018em; color: #fff; margin: 0 0 clamp(24px, 3vw, 36px); max-width: 16ch; text-wrap: balance; }
+.pnr-final__title { font-family: var(--serif); font-weight: 500; font-size: clamp(1.3rem, 2.2vw, 1.85rem); line-height: 1.16; letter-spacing: -.016em; color: #fff; margin: 0 0 clamp(10px, 1.2vw, 15px); max-width: 26ch; text-wrap: balance; }
 
 /* An unclipped wrapper around the photo: the photo itself needs overflow:hidden
    + clip-path to take its angled cut, which would also swallow the gold line —
@@ -2102,25 +2119,39 @@ html[data-theme="dark"] .pnr-models { background: var(--bg-soft); }
 .pnr-final__frame::before {
   content: "";
   position: absolute; top: -7%; bottom: -7%;
-  /* the cut's midpoint sits at half of 10.6%; back off from it to leave an
+  /* the cut's midpoint sits at half of 4.95%; back off from it to leave an
      even band of navy between the line and the photo edge */
-  left: calc(5.3% - 26px);
+  left: calc(3.52% - 26px);
   width: 2px;
   background: linear-gradient(180deg, transparent, var(--gold) 22%, var(--gold) 78%, transparent);
   transform: rotate(9deg);
   opacity: .9; pointer-events: none;
 }
 /* the left edge is cut to the same 9° the gold line is rotated to, so the two
-   run parallel — at this 3:2 box, height × tan(9°) is 10.6% of the width. The
-   3:2 ratio is close to the source photo's own, so cover() crops little off
-   the sides. clip-path also clips box-shadow, so this box carries none. */
+   run parallel — height × tan(9°) is 7.04% of the width at this 9:4 box.
+   Recompute this figure whenever the aspect ratio changes or the cut stops
+   matching the line. clip-path also clips box-shadow, so this box carries none. */
+/* the band behind this photo is a navy gradient, so an overlay in a single
+   flat navy always leaves a faint seam. Masking the image itself instead
+   lets the real band show through at every edge — a true dissolve, and it
+   stays correct whatever the gradient is doing at that height. The rounded
+   corner went with it: a card edge and a dissolve cannot both be right. */
 .pnr-final__media {
   position: relative; margin: 0; overflow: hidden;
-  border-radius: clamp(14px, 1.6vw, 20px);
-  aspect-ratio: 3 / 2;
-  clip-path: polygon(10.6% 0, 100% 0, 100% 100%, 0 100%);
+  aspect-ratio: 9 / 4;
+  clip-path: polygon(7.04% 0, 100% 0, 100% 100%, 0 100%);
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent 0%, rgba(0,0,0,.28) 18%, #000 54%, #000 91%, transparent 100%),
+    linear-gradient(180deg, transparent 0%, #000 22%, #000 80%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(90deg, transparent 0%, rgba(0,0,0,.28) 18%, #000 54%, #000 91%, transparent 100%),
+    linear-gradient(180deg, transparent 0%, #000 22%, #000 80%, transparent 100%);
+  mask-composite: intersect;
 }
-.pnr-final__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* the 16:5 crop takes a narrow slice of a 3:2 source, so the focal point
+   moves up to keep faces in frame rather than centring on torsos */
+.pnr-final__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 36%; display: block; }
 /* this band is always a dark navy gradient regardless of site theme, so
    its outline button needs light colors unconditionally */
 .pnr-final__btn { border-color: rgba(255,255,255,.4); color: #fff; }
@@ -2128,7 +2159,7 @@ html[data-theme="dark"] .pnr-models { background: var(--bg-soft); }
 @media (max-width: 900px) {
   .pnr-position__grid { grid-template-columns: minmax(0, 1fr); }
   .pnr-position__text { margin-left: 0; padding-inline: var(--gutter); order: 1; }
-  .pnr-position__media { order: -1; min-height: 0; aspect-ratio: 16 / 10; }
+  .pnr-position__media { order: -1; min-height: 0; aspect-ratio: 16 / 9; }
   /* stacked — the photo now sits above the copy, so the fade runs vertically
      into the section instead of sideways */
   .pnr-position__media::after {
@@ -2144,7 +2175,7 @@ html[data-theme="dark"] .pnr-models { background: var(--bg-soft); }
   .pnr-final__text, .pnr-final__frame { grid-column: auto; grid-row: auto; }
   .pnr-final__frame { order: -1; }
   .pnr-final__frame::before { display: none; }
-  .pnr-final__media { aspect-ratio: 16 / 10; clip-path: none; }
+  .pnr-final__media { aspect-ratio: 16 / 9; clip-path: none; }
   .pnr-hero-dots { display: none; }
 }
 
@@ -2488,13 +2519,13 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
 /* ── 01 · HERO ───────────────────────────────────────────── */
 .global-talent-page .gt-hero {
   background: var(--bg);
-  padding-top: calc(var(--header-h) + clamp(26px, 5.2vw, 94px));
-  padding-bottom: clamp(36px, 4.2vw, 70px);
+  padding-top: calc(var(--header-h) + clamp(8px, 1.1vw, 16px));
+  padding-bottom: clamp(20px, 2.2vw, 32px);
   border-bottom: 1px solid var(--hairline);
 }
 .global-talent-page .gt-hero__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(340px, 50vw, 820px);
+  grid-template-columns: minmax(0, 1fr) var(--fig-hero-w);
   gap: clamp(28px, 4vw, 64px);
   align-items: center;
 }
@@ -2506,7 +2537,7 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   margin-left: var(--gutter);
   border-left: 2px solid var(--gold);
   padding-inline-start: clamp(20px, 2.2vw, 34px);
-  max-width: 34rem;
+  max-width: 44rem;
 }
 .global-talent-page .gt-hero__title {
   font-family: var(--serif);
@@ -2534,7 +2565,7 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   position: relative;
   align-self: stretch;
   margin: 0; overflow: hidden;
-  min-height: clamp(360px, 46vw, 660px);
+  min-height: clamp(230px, 26vw, 366px);
 }
 .global-talent-page .gt-hero__media img {
   width: 100%; height: 100%;
@@ -2545,18 +2576,21 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
 /* melt the photo into the section — it fades left toward the copy and softly
    at the top/bottom so there is no hard rectangle. Same recipe as the About
    page's split photos and the Alliances position photo. */
+/* a touch lighter than the shared inner-page melt — the hero photo is the
+   one image on this page people actually look at, so it keeps more of
+   itself while still dissolving into the copy on the left */
 .global-talent-page .gt-hero__media::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background:
     linear-gradient(90deg,
       var(--bg) 0%,
-      color-mix(in srgb, var(--bg) 55%, transparent) 16%,
-      transparent 42%),
+      color-mix(in srgb, var(--bg) 50%, transparent) 17%,
+      transparent 44%),
     linear-gradient(180deg,
-      color-mix(in srgb, var(--bg) 60%, transparent) 0%,
-      transparent 18%,
-      transparent 82%,
-      color-mix(in srgb, var(--bg) 60%, transparent) 100%);
+      color-mix(in srgb, var(--bg) 78%, transparent) 0%,
+      transparent 24%,
+      transparent 76%,
+      color-mix(in srgb, var(--bg) 78%, transparent) 100%);
 }
 
 
@@ -2564,7 +2598,7 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
 .global-talent-page .gt-intro {
   position: relative;
   background: var(--bg);
-  padding-block: clamp(52px, 6.2vw, 104px) clamp(48px, 5.6vw, 94px);
+  padding-block: clamp(18px, 1.9vw, 27px) clamp(15px, 1.6vw, 23px);
   border-bottom: 1px solid var(--hairline);
 }
 /* a quiet dotted plate out in the left margin — same recipe as the
@@ -2587,32 +2621,32 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   font-size: clamp(.78rem, .95vw, 1.06rem);
   font-weight: 600;
   letter-spacing: .28em;
-  margin-bottom: clamp(16px, 2vw, 26px);
+  margin-bottom: clamp(8px, .9vw, 12px);
 }
 .global-talent-page .gt-intro__title {
   font-family: var(--serif);
   font-weight: 500;
-  font-size: clamp(1.55rem, 2.8vw, 2.45rem);
-  line-height: 1.18;
+  font-size: clamp(1.3rem, 2.1vw, 1.88rem);
+  line-height: 1.16;
   letter-spacing: 0;
   color: var(--navy);
   margin: 0 auto;
-  max-width: 24ch;
+  max-width: 32ch;
   text-wrap: balance;
 }
 .global-talent-page .gt-intro__lede {
   color: var(--muted);
-  font-size: clamp(.95rem, 1.08vw, 1.14rem);
-  line-height: 1.62;
-  max-width: 39rem;
-  margin: clamp(20px, 2.6vw, 32px) auto 0;
+  font-size: clamp(.9rem, .98vw, .98rem);
+  line-height: 1.58;
+  max-width: 68rem;
+  margin: clamp(8px, .9vw, 12px) auto 0;
 }
 
 
 /* ── 03–06 · TALENT SOLUTION BANDS ───────────────────────── */
 .global-talent-page .gt-solution {
   background: var(--bg);
-  padding-block: clamp(44px, 4vw, 64px);
+  padding-block: clamp(34px, 3.2vw, 48px);
 }
 .global-talent-page .gt-solution--cream { background: var(--bg-cream); }
 /* in dark theme --bg-cream sits almost on top of --bg, so the alternating
@@ -2631,6 +2665,8 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
 .global-talent-page .gt-cta .abx-eyebrow {
   font-size: .78rem;
 }
+/* the shared eyebrow drop is tuned for full-height bands */
+.global-talent-page .gt-cta .abx-eyebrow { margin-bottom: clamp(8px, 1vw, 13px); }
 .global-talent-page .gt-solution__aside .abx-eyebrow {
   margin-bottom: clamp(12px, 1.4vw, 18px);
 }
@@ -2697,11 +2733,11 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
   position: relative;
   overflow: hidden;
   background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
-  padding-block: clamp(56px, 6.6vw, 108px) clamp(48px, 5.4vw, 88px);
+  padding-block: clamp(16px, 1.8vw, 26px) clamp(14px, 1.5vw, 22px);
 }
 .global-talent-page .gt-cta__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(340px, 50vw, 820px);
+  grid-template-columns: minmax(0, 1fr) var(--fig-band-w);
   gap: clamp(28px, 4vw, 64px);
   align-items: center;
 }
@@ -2709,23 +2745,23 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
 .global-talent-page .gt-cta__title {
   font-family: var(--serif);
   font-weight: 500;
-  font-size: clamp(1.7rem, 3.4vw, 3.15rem);
+  font-size: clamp(1.3rem, 2.2vw, 1.85rem);
   line-height: 1.16;
   letter-spacing: .012em;
   color: #fff;
   margin: 0;
-  max-width: 22ch;
+  max-width: 38ch;
   text-wrap: balance;
 }
-.global-talent-page .gt-cta__act { margin: clamp(26px, 3vw, 40px) 0 0; }
+.global-talent-page .gt-cta__act { margin: clamp(9px, 1vw, 13px) 0 0; }
 
 /* outlined pill — the filled navy button would disappear on this band */
 .global-talent-page .gt-cta__btn {
   background: transparent;
   border: 1px solid rgba(255,255,255,.38);
   color: #fff;
-  min-height: 54px;
-  padding: 15px clamp(24px, 2.2vw, 38px);
+  min-height: 44px;
+  padding: 11px clamp(22px, 2vw, 32px);
   font-size: .8rem;
   letter-spacing: .075em;
 }
@@ -2745,7 +2781,7 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
   position: relative;
   align-self: stretch;
   margin: 0; overflow: hidden;
-  min-height: clamp(360px, 46vw, 660px);
+  min-height: clamp(148px, 12.6vw, 182px);
 }
 .global-talent-page .gt-cta__media img {
   width: 100%; height: 100%;
@@ -2758,8 +2794,8 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
   background:
     linear-gradient(90deg,
       var(--gt-melt) 0%,
-      color-mix(in srgb, var(--gt-melt) 55%, transparent) 16%,
-      transparent 42%),
+      color-mix(in srgb, var(--gt-melt) 50%, transparent) 17%,
+      transparent 44%),
     /* the horizontal fade is the Alliances value verbatim; the vertical one
        runs all the way to opaque because a bright photo against this navy
        shows a seam at 60% where it does not against the light sections */
@@ -2804,7 +2840,7 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
   .global-talent-page .gt-hero__lede,
   .global-talent-page .gt-hero__tail { max-width: 46ch; }
   .global-talent-page .gt-hero__media,
-  .global-talent-page .gt-cta__media { min-height: 0; aspect-ratio: 16 / 10; }
+  .global-talent-page .gt-cta__media { min-height: 0; aspect-ratio: 16 / 9; }
   /* stacked — the photos now sit under the copy, so the fade runs vertically
      (into the section top and bottom) instead of sideways */
   .global-talent-page .gt-hero__media::after {
@@ -2841,10 +2877,10 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
     padding-inline-start: 16px;
   }
   .global-talent-page .gt-hero__media,
-  .global-talent-page .gt-cta__media { aspect-ratio: 4 / 3; }
-  .global-talent-page .gt-solution { padding-block: clamp(42px, 11vw, 56px); }
-  .global-talent-page .gt-intro { padding-block: clamp(44px, 12vw, 60px); }
-  .global-talent-page .gt-cta { padding-block: clamp(48px, 13vw, 64px) clamp(40px, 11vw, 54px); }
+  .global-talent-page .gt-cta__media { aspect-ratio: 3 / 2; }
+  .global-talent-page .gt-solution { padding-block: clamp(32px, 8vw, 42px); }
+  .global-talent-page .gt-intro { padding-block: clamp(32px, 8.4vw, 44px); }
+  .global-talent-page .gt-cta { padding-block: clamp(34px, 9vw, 46px) clamp(30px, 8vw, 40px); }
   /* .btn goes full-width below 560px site-wide; these two are page CTAs,
      so let them keep that behaviour but stay comfortably tappable */
   .global-talent-page .gt-cta__title { max-width: 22ch; }
@@ -2892,13 +2928,13 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
 /* ── 01 · HERO ───────────────────────────────────────────── */
 .careers-page .car-hero {
   background: var(--bg);
-  padding-top: calc(var(--header-h) + clamp(24px, 5vw, 80px));
+  padding-top: calc(var(--header-h) + clamp(18px, 3.4vw, 54px));
   padding-bottom: clamp(34px, 4vw, 64px);
   border-bottom: 1px solid var(--hairline);
 }
 .careers-page .car-hero__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(340px, 50vw, 820px);
+  grid-template-columns: minmax(0, 1fr) var(--fig-hero-w);
   gap: clamp(28px, 4vw, 64px);
   align-items: center;
 }
@@ -2923,7 +2959,7 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
 .careers-page .car-hero__media {
   position: relative; align-self: stretch;
   margin: 0; overflow: hidden;
-  min-height: clamp(340px, 42vw, 600px);
+  min-height: clamp(222px, 25vw, 352px);
 }
 .careers-page .car-hero__media img {
   width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; display: block;
@@ -2933,20 +2969,20 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
   background:
     linear-gradient(90deg,
       var(--bg) 0%,
-      color-mix(in srgb, var(--bg) 55%, transparent) 16%,
-      transparent 42%),
+      color-mix(in srgb, var(--bg) 50%, transparent) 17%,
+      transparent 44%),
     linear-gradient(180deg,
-      color-mix(in srgb, var(--bg) 60%, transparent) 0%,
-      transparent 18%,
-      transparent 82%,
-      color-mix(in srgb, var(--bg) 60%, transparent) 100%);
+      color-mix(in srgb, var(--bg) 78%, transparent) 0%,
+      transparent 24%,
+      transparent 76%,
+      color-mix(in srgb, var(--bg) 78%, transparent) 100%);
 }
 
 /* ── 02 · THE RIGHT FIT (dark band) ──────────────────────── */
 .careers-page .car-fit {
   position: relative; overflow: hidden;
   background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
-  padding-block: clamp(48px, 6vw, 92px);
+  padding-block: clamp(38px, 4.4vw, 66px);
   text-align: center;
 }
 .careers-page .car-fit__slash {
@@ -2972,7 +3008,7 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
 /* ── 03 · WHAT YOU CAN EXPECT ────────────────────────────── */
 .careers-page .car-expect {
   background: var(--bg);
-  padding-block: clamp(44px, 5vw, 80px);
+  padding-block: clamp(34px, 3.8vw, 58px);
 }
 .careers-page .car-expect__head {
   text-align: center; max-width: 42ch;
@@ -3007,7 +3043,7 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
 .careers-page .car-roles {
   position: relative; overflow: hidden;
   background: var(--bg-sky);
-  padding-block: clamp(44px, 5vw, 82px);
+  padding-block: clamp(34px, 3.8vw, 58px);
 }
 .careers-page .car-roles__dots {
   position: absolute; top: clamp(30px, 4vw, 64px); right: clamp(20px, 4vw, 72px);
@@ -3107,7 +3143,7 @@ html[data-theme="dark"] .careers-page .car-roles__dots { color: var(--hairline);
 /* ── 05 · STAY CONNECTED (cream band) ────────────────────── */
 .careers-page .car-connect {
   background: var(--bg-cream);
-  padding-block: clamp(44px, 5vw, 80px);
+  padding-block: clamp(34px, 3.8vw, 58px);
 }
 html[data-theme="dark"] .careers-page .car-connect { background: var(--bg-soft); }
 .careers-page .car-connect__grid {
@@ -3166,7 +3202,7 @@ html[data-theme="dark"] .careers-page .car-connect { background: var(--bg-soft);
 .careers-page .car-promise {
   position: relative; overflow: hidden;
   background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
-  padding-block: clamp(48px, 6vw, 92px);
+  padding-block: clamp(38px, 4.4vw, 66px);
 }
 .careers-page .car-promise__slash {
   position: absolute; top: -20%; right: 12%;
@@ -3199,7 +3235,7 @@ html[data-theme="dark"] .careers-page .car-connect { background: var(--bg-soft);
     max-width: none;
   }
   .careers-page .car-hero__lede { max-width: 46ch; }
-  .careers-page .car-hero__media { min-height: 0; aspect-ratio: 16 / 10; }
+  .careers-page .car-hero__media { min-height: 0; aspect-ratio: 16 / 9; }
   .careers-page .car-hero__media::after {
     background: linear-gradient(180deg,
       var(--bg) 0%, color-mix(in srgb, var(--bg) 45%, transparent) 12%,
@@ -3271,13 +3307,13 @@ html[data-theme="dark"] .careers-page .car-connect { background: var(--bg-soft);
 /* ── 01 · HERO ───────────────────────────────────────────── */
 .bizcon-page .bc-hero {
   background: var(--bg);
-  padding-top: calc(var(--header-h) + clamp(24px, 5vw, 80px));
+  padding-top: calc(var(--header-h) + clamp(18px, 3.4vw, 54px));
   padding-bottom: clamp(34px, 4vw, 64px);
   border-bottom: 1px solid var(--hairline);
 }
 .bizcon-page .bc-hero__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(340px, 50vw, 820px);
+  grid-template-columns: minmax(0, 1fr) var(--fig-hero-w);
   gap: clamp(28px, 4vw, 64px);
   align-items: center;
 }
@@ -3302,7 +3338,7 @@ html[data-theme="dark"] .careers-page .car-connect { background: var(--bg-soft);
 .bizcon-page .bc-hero__media {
   position: relative; align-self: stretch;
   margin: 0; overflow: hidden;
-  min-height: clamp(340px, 42vw, 600px);
+  min-height: clamp(222px, 25vw, 352px);
 }
 .bizcon-page .bc-hero__media img {
   width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; display: block;
@@ -3312,20 +3348,20 @@ html[data-theme="dark"] .careers-page .car-connect { background: var(--bg-soft);
   background:
     linear-gradient(90deg,
       var(--bg) 0%,
-      color-mix(in srgb, var(--bg) 55%, transparent) 16%,
-      transparent 42%),
+      color-mix(in srgb, var(--bg) 50%, transparent) 17%,
+      transparent 44%),
     linear-gradient(180deg,
-      color-mix(in srgb, var(--bg) 60%, transparent) 0%,
-      transparent 18%,
-      transparent 82%,
-      color-mix(in srgb, var(--bg) 60%, transparent) 100%);
+      color-mix(in srgb, var(--bg) 78%, transparent) 0%,
+      transparent 24%,
+      transparent 76%,
+      color-mix(in srgb, var(--bg) 78%, transparent) 100%);
 }
 
 /* ── 02 · NO PRESET ANSWERS (dark band) ──────────────────── */
 .bizcon-page .bc-fit {
   position: relative; overflow: hidden;
   background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
-  padding-block: clamp(48px, 6vw, 92px);
+  padding-block: clamp(38px, 4.4vw, 66px);
   text-align: center;
 }
 .bizcon-page .bc-fit__slash {
@@ -3351,7 +3387,7 @@ html[data-theme="dark"] .careers-page .car-connect { background: var(--bg-soft);
 /* ── 03 · WHERE WE HELP (intro) ──────────────────────────── */
 .bizcon-page .bc-ways {
   background: var(--bg);
-  padding-block: clamp(44px, 5.4vw, 84px) clamp(24px, 3vw, 40px);
+  padding-block: clamp(36px, 4.2vw, 64px) clamp(20px, 2.4vw, 32px);
   text-align: center;
 }
 .bizcon-page .bc-ways__title {
@@ -3369,7 +3405,7 @@ html[data-theme="dark"] .careers-page .car-connect { background: var(--bg-soft);
 .bizcon-page .bc-row {
   position: relative; overflow: hidden;
   background: var(--bg);
-  padding-block: clamp(40px, 5vw, 72px);
+  padding-block: clamp(32px, 3.8vw, 56px);
   border-top: 1px solid var(--hairline);
 }
 .bizcon-page .bc-row--cream { background: var(--bg-cream); }
@@ -3422,7 +3458,7 @@ html[data-theme="dark"] .bizcon-page .bc-row__dots { color: var(--hairline); }
 }
 
 /* ── 05 · SUPPORT THAT FITS THE NEED ─────────────────────── */
-.bizcon-page .bc-support { background: var(--bg); padding-block: clamp(44px, 5.4vw, 84px); }
+.bizcon-page .bc-support { background: var(--bg); padding-block: clamp(36px, 4.4vw, 66px); }
 .bizcon-page .bc-support__head { text-align: center; max-width: 46ch; margin: 0 auto clamp(30px, 3.8vw, 48px); }
 .bizcon-page .bc-support__title {
   font-family: var(--serif); font-weight: 500;
@@ -3454,7 +3490,7 @@ html[data-theme="dark"] .bizcon-page .bc-row__dots { color: var(--hairline); }
 .bizcon-page .bc-final {
   position: relative; overflow: hidden;
   background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
-  padding-block: clamp(48px, 6.4vw, 96px);
+  padding-block: clamp(40px, 4.8vw, 74px);
 }
 .bizcon-page .bc-final__grid {
   position: relative;
@@ -3504,7 +3540,7 @@ html[data-theme="dark"] .bizcon-page .bc-row__dots { color: var(--hairline); }
     max-width: none;
   }
   .bizcon-page .bc-hero__lede { max-width: 46ch; }
-  .bizcon-page .bc-hero__media { min-height: 0; aspect-ratio: 16 / 10; }
+  .bizcon-page .bc-hero__media { min-height: 0; aspect-ratio: 16 / 9; }
   .bizcon-page .bc-hero__media::after {
     background: linear-gradient(180deg,
       var(--bg) 0%, color-mix(in srgb, var(--bg) 45%, transparent) 12%,
@@ -3556,13 +3592,13 @@ html[data-theme="dark"] .bizcon-page .bc-row__dots { color: var(--hairline); }
 /* ── 01 · HERO ───────────────────────────────────────────── */
 .letsconnect-page .lc-hero {
   background: var(--bg);
-  padding-top: calc(var(--header-h) + clamp(24px, 5vw, 80px));
+  padding-top: calc(var(--header-h) + clamp(18px, 3.4vw, 54px));
   padding-bottom: clamp(34px, 4vw, 64px);
   border-bottom: 1px solid var(--hairline);
 }
 .letsconnect-page .lc-hero__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(340px, 50vw, 820px);
+  grid-template-columns: minmax(0, 1fr) var(--fig-hero-w);
   gap: clamp(28px, 4vw, 64px);
   align-items: center;
 }
@@ -3587,7 +3623,7 @@ html[data-theme="dark"] .bizcon-page .bc-row__dots { color: var(--hairline); }
 .letsconnect-page .lc-hero__media {
   position: relative; align-self: stretch;
   margin: 0; overflow: hidden;
-  min-height: clamp(340px, 42vw, 600px);
+  min-height: clamp(222px, 25vw, 352px);
 }
 .letsconnect-page .lc-hero__media img {
   width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; display: block;
@@ -3597,17 +3633,17 @@ html[data-theme="dark"] .bizcon-page .bc-row__dots { color: var(--hairline); }
   background:
     linear-gradient(90deg,
       var(--bg) 0%,
-      color-mix(in srgb, var(--bg) 55%, transparent) 16%,
-      transparent 42%),
+      color-mix(in srgb, var(--bg) 50%, transparent) 17%,
+      transparent 44%),
     linear-gradient(180deg,
-      color-mix(in srgb, var(--bg) 60%, transparent) 0%,
-      transparent 18%,
-      transparent 82%,
-      color-mix(in srgb, var(--bg) 60%, transparent) 100%);
+      color-mix(in srgb, var(--bg) 78%, transparent) 0%,
+      transparent 24%,
+      transparent 76%,
+      color-mix(in srgb, var(--bg) 78%, transparent) 100%);
 }
 
 /* ── 02 · FORM ───────────────────────────────────────────── */
-.letsconnect-page .lc-form-section { background: var(--bg-cream); padding-block: clamp(44px, 5.4vw, 84px); }
+.letsconnect-page .lc-form-section { background: var(--bg-cream); padding-block: clamp(34px, 4vw, 60px); }
 html[data-theme="dark"] .letsconnect-page .lc-form-section { background: var(--bg-soft); }
 .letsconnect-page .lc-form-section__grid {
   display: grid;
@@ -3672,7 +3708,7 @@ html[data-theme="dark"] .letsconnect-page .lc-form-section { background: var(--b
 .letsconnect-page .lc-reach {
   position: relative; overflow: hidden;
   background: var(--bg-sky);
-  padding-block: clamp(48px, 6vw, 90px);
+  padding-block: clamp(36px, 4.4vw, 64px);
   text-align: center;
 }
 .letsconnect-page .lc-reach__ring {
@@ -3724,7 +3760,7 @@ html[data-theme="dark"] .letsconnect-page .lc-form-section { background: var(--b
 .letsconnect-page .lc-social {
   position: relative; overflow: hidden;
   background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
-  padding-block: clamp(48px, 6.4vw, 96px);
+  padding-block: clamp(40px, 4.8vw, 74px);
 }
 .letsconnect-page .lc-social__grid {
   position: relative;
@@ -3796,7 +3832,7 @@ html[data-theme="dark"] .letsconnect-page .lc-form-section { background: var(--b
     max-width: none;
   }
   .letsconnect-page .lc-hero__lede { max-width: 46ch; }
-  .letsconnect-page .lc-hero__media { min-height: 0; aspect-ratio: 16 / 10; }
+  .letsconnect-page .lc-hero__media { min-height: 0; aspect-ratio: 16 / 9; }
   .letsconnect-page .lc-hero__media::after {
     background: linear-gradient(180deg,
       var(--bg) 0%, color-mix(in srgb, var(--bg) 45%, transparent) 12%,
@@ -3830,3 +3866,481 @@ html[data-theme="dark"] .letsconnect-page .lc-form-section { background: var(--b
 @media (prefers-reduced-motion: reduce) {
   .letsconnect-page .lc-hero__media img { transform: none; }
 }
+
+
+/* ══════════ 16i. DATA & BUSINESS INSIGHT PAGE ═══════════════════
+   Solutions sub-page (02) reached from the "Explore" link on the
+   Data & Business Insight card (nav dropdown + on-page grid). Same
+   editorial spine as the Business Consulting page — a hero on the
+   gutter's gold rule, a dark "start with the decision" band, five
+   alternating rows, a four-step path band, and a dark closing CTA.
+   Scoped under .dbi-page; every colour comes from the existing
+   tokens so both themes follow the site. ───────────────────────── */
+
+.dbi-page #main { overflow-x: clip; }
+
+.dbi-page .dbi-hero__title,
+.dbi-page .dbi-focus__title,
+.dbi-page .dbi-ways__title,
+.dbi-page .dbi-row__title,
+.dbi-page .dbi-path__title,
+.dbi-page .dbi-final__title {
+  font-variant-numeric: lining-nums;
+  -webkit-font-feature-settings: "lnum" 1;
+  font-feature-settings: "lnum" 1;
+}
+
+/* ── 01 · HERO ───────────────────────────────────────────── */
+.dbi-page .dbi-hero {
+  background: var(--bg);
+  padding-top: calc(var(--header-h) + clamp(18px, 3.4vw, 54px));
+  padding-bottom: clamp(26px, 3vw, 48px);
+  border-bottom: 1px solid var(--hairline);
+}
+.dbi-page .dbi-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--fig-hero-w);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: center;
+}
+.dbi-page .dbi-hero__text {
+  align-self: center;
+  margin-left: var(--gutter);
+  border-left: 2px solid var(--gold);
+  padding-inline-start: clamp(20px, 2.2vw, 34px);
+  max-width: 34rem;
+}
+.dbi-page .dbi-hero__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.9rem, 3.3vw, 3rem);
+  line-height: 1.14; letter-spacing: -.012em;
+  color: var(--navy);
+  margin: clamp(10px, 1.4vw, 16px) 0 clamp(16px, 2vw, 24px);
+  text-wrap: balance;
+}
+.dbi-page .dbi-hero__lede {
+  color: var(--muted); font-size: clamp(.95rem, 1.05vw, 1.08rem);
+  line-height: 1.7; max-width: 32rem; margin: 0; text-wrap: pretty;
+}
+.dbi-page .dbi-hero__media {
+  position: relative; align-self: stretch;
+  margin: 0; overflow: hidden;
+  min-height: clamp(222px, 25vw, 358px);
+}
+.dbi-page .dbi-hero__media img {
+  width: 100%; height: 100%; object-fit: cover; object-position: 50% 34%;
+  display: block;
+  transform: scale(1.035);
+  transition: transform 1.4s var(--ease), opacity .9s var(--ease);
+}
+html.js .dbi-page .dbi-hero__media.is-in img { transform: scale(1); }
+.dbi-page .dbi-hero__media::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg,
+      var(--bg) 0%,
+      color-mix(in srgb, var(--bg) 50%, transparent) 17%,
+      transparent 44%),
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--bg) 78%, transparent) 0%,
+      transparent 24%,
+      transparent 76%,
+      color-mix(in srgb, var(--bg) 78%, transparent) 100%);
+}
+
+/* ── 02 · START WITH THE DECISION (dark band) ────────────── */
+.dbi-page .dbi-focus {
+  position: relative; overflow: hidden;
+  background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
+  padding-block: clamp(38px, 4.4vw, 68px);
+  text-align: center;
+}
+.dbi-page .dbi-focus__slash {
+  position: absolute; top: -20%; right: 9%;
+  width: 2px; height: 140%;
+  background: linear-gradient(180deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
+  transform: rotate(20deg); transform-origin: top;
+  opacity: .8; pointer-events: none;
+}
+.dbi-page .dbi-focus__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.55rem, 3vw, 2.5rem);
+  line-height: 1.2; color: #fff;
+  margin: 0 auto; max-width: 34ch; text-wrap: balance;
+}
+.dbi-page .dbi-focus__text {
+  margin: clamp(14px, 1.7vw, 22px) auto 0;
+  color: rgba(255,255,255,.72);
+  font-size: clamp(.95rem, 1.05vw, 1.05rem);
+  line-height: 1.65; max-width: 64ch;
+}
+
+/* ── 03 · WHERE WE HELP (intro) ──────────────────────────── */
+.dbi-page .dbi-ways {
+  position: relative; overflow: hidden;
+  background: var(--bg);
+  padding-block: clamp(36px, 4.2vw, 64px) clamp(20px, 2.4vw, 32px);
+  text-align: center;
+}
+.dbi-page .dbi-ways__dots {
+  position: absolute; top: clamp(22px, 3vw, 44px); right: clamp(18px, 4vw, 72px);
+  width: clamp(70px, 7vw, 116px); height: clamp(52px, 5vw, 84px);
+  background-image: radial-gradient(currentColor 1.4px, transparent 1.4px);
+  background-size: 16px 16px; color: var(--line);
+  opacity: .7; pointer-events: none;
+}
+html[data-theme="dark"] .dbi-page .dbi-ways__dots { color: var(--hairline); }
+.dbi-page .dbi-ways__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.5rem, 2.7vw, 2.35rem);
+  line-height: 1.16; color: var(--navy);
+  margin: clamp(8px, 1.2vw, 14px) auto 0; max-width: 32ch; text-wrap: balance;
+}
+.dbi-page .dbi-ways__lede {
+  margin: clamp(10px, 1.4vw, 16px) auto 0; color: var(--muted);
+  font-size: clamp(.95rem, 1.05vw, 1.05rem); line-height: 1.6; max-width: 56ch;
+}
+
+/* ── 04 · FIVE WAYS (alternating rows) ───────────────────── */
+.dbi-page .dbi-row {
+  position: relative; overflow: hidden;
+  background: var(--bg);
+  padding-block: clamp(32px, 3.8vw, 56px);
+  border-top: 1px solid var(--hairline);
+}
+.dbi-page .dbi-row--cream { background: var(--bg-cream); }
+html[data-theme="dark"] .dbi-page .dbi-row--cream { background: var(--bg-soft); }
+.dbi-page .dbi-row--sky { background: var(--bg-sky); }
+
+/* three quiet marks, one per motif, echoing the reference's margin
+   ornaments — all drawn from tokens so they follow the theme */
+.dbi-page .dbi-row__dots,
+.dbi-page .dbi-row__nodes,
+.dbi-page .dbi-row__bars {
+  position: absolute; pointer-events: none;
+  color: var(--line); opacity: .75;
+}
+html[data-theme="dark"] .dbi-page .dbi-row__dots,
+html[data-theme="dark"] .dbi-page .dbi-row__nodes,
+html[data-theme="dark"] .dbi-page .dbi-row__bars { color: var(--hairline); opacity: .9; }
+
+.dbi-page .dbi-row__dots {
+  top: clamp(22px, 3vw, 44px); right: clamp(18px, 4vw, 60px);
+  width: clamp(76px, 7.5vw, 124px); height: clamp(56px, 5.6vw, 90px);
+  background-image: radial-gradient(currentColor 1.4px, transparent 1.4px);
+  background-size: 16px 16px;
+}
+/* a small constellation: five nodes joined by two hairlines */
+.dbi-page .dbi-row__nodes {
+  top: clamp(20px, 3vw, 44px); right: clamp(18px, 4vw, 60px);
+  width: clamp(84px, 8vw, 132px); height: clamp(56px, 5.6vw, 90px);
+  background-repeat: no-repeat;
+  background-image:
+    linear-gradient(currentColor 0 100%),
+    linear-gradient(currentColor 0 100%),
+    radial-gradient(circle, currentColor 46%, transparent 50%),
+    radial-gradient(circle, currentColor 46%, transparent 50%),
+    radial-gradient(circle, currentColor 46%, transparent 50%),
+    radial-gradient(circle, currentColor 46%, transparent 50%),
+    radial-gradient(circle, currentColor 46%, transparent 50%);
+  background-size:
+    74% 1px, 1px 58%,
+    7px 7px, 7px 7px, 7px 7px, 7px 7px, 7px 7px;
+  background-position:
+    12% 28%, 82% 30%,
+    8% 28%, 50% 28%, 86% 28%, 30% 86%, 86% 86%;
+  opacity: .6;
+}
+/* five bars, shortest to tallest — one gradient layer per bar */
+.dbi-page .dbi-row__bars {
+  bottom: clamp(18px, 2.6vw, 38px); right: clamp(18px, 4vw, 60px);
+  width: clamp(80px, 7.6vw, 124px); height: clamp(44px, 4.4vw, 70px);
+  background-repeat: no-repeat;
+  background-image:
+    linear-gradient(currentColor 0 100%),
+    linear-gradient(currentColor 0 100%),
+    linear-gradient(currentColor 0 100%),
+    linear-gradient(currentColor 0 100%),
+    linear-gradient(currentColor 0 100%);
+  background-size: 11% 38%, 11% 62%, 11% 100%, 11% 52%, 11% 78%;
+  background-position: 0% 100%, 22% 100%, 44% 100%, 67% 100%, 89% 100%;
+  opacity: .55;
+}
+
+.dbi-page .dbi-row__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: clamp(24px, 4.4vw, 60px);
+  align-items: center;
+}
+.dbi-page .dbi-row__aside { max-width: 30rem; }
+.dbi-page .dbi-row__label {
+  font-family: var(--sans); font-size: .74rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--gold); margin: 0 0 10px;
+}
+.dbi-page .dbi-row__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.2rem, 1.9vw, 1.65rem);
+  line-height: 1.25; color: var(--navy); margin: 0 0 10px;
+}
+.dbi-page .dbi-row__text {
+  margin: 0; color: var(--muted);
+  font-size: clamp(.92rem, 1vw, 1rem); line-height: 1.6;
+}
+.dbi-page .dbi-list {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: clamp(11px, 1.3vw, 15px);
+  max-width: 34rem;
+}
+.dbi-page .dbi-list li {
+  position: relative; padding-left: 20px;
+  color: var(--muted); font-size: clamp(.9rem, .98vw, .98rem); line-height: 1.55;
+}
+.dbi-page .dbi-list li::before {
+  content: ""; position: absolute; left: 0; top: .58em;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--gold);
+}
+
+/* ── 05 · A CLEARER PATH TO A DECISION ───────────────────── */
+.dbi-page .dbi-path {
+  background: var(--bg);
+  padding-block: clamp(26px, 3vw, 44px);
+  border-top: 1px solid var(--hairline);
+}
+.dbi-page .dbi-path__head {
+  text-align: center; max-width: none;
+  margin: 0 auto clamp(18px, 2.2vw, 28px);
+}
+/* the measure is wide enough for the headline to sit on one line at
+   desktop (as in the reference) and two on tablet — a narrower cap
+   pushed it to three and cost the section a whole line of height */
+.dbi-page .dbi-path__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.45rem, 2.6vw, 2.2rem);
+  line-height: 1.18; color: var(--navy);
+  margin: clamp(6px, .9vw, 10px) auto 0; max-width: 52ch; text-wrap: balance;
+}
+.dbi-page .dbi-path__grid {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.dbi-page .dbi-path__grid li {
+  position: relative;
+  padding: 0 clamp(14px, 2vw, 28px);
+  border-left: 1px solid var(--hairline);
+}
+.dbi-page .dbi-path__grid li:first-child { border-left: 0; padding-inline-start: 0; }
+.dbi-page .dbi-path__grid li:last-child { padding-inline-end: 0; }
+.dbi-page .dbi-path__label {
+  font-family: var(--sans); font-size: .74rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--gold); margin: 0 0 10px;
+}
+.dbi-page .dbi-path__copy {
+  margin: 0; color: var(--muted);
+  font-size: clamp(.9rem, .98vw, .97rem); line-height: 1.6;
+}
+
+/* ── 06 · CTA (dark band) ────────────────────────────────── */
+.dbi-page .dbi-final {
+  position: relative; overflow: hidden;
+  background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
+  padding-block: clamp(40px, 4.8vw, 74px);
+}
+.dbi-page .dbi-final__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(24px, 4vw, 48px);
+  align-items: center;
+}
+.dbi-page .dbi-final__lead { grid-column: 1; grid-row: 1; max-width: 56rem; }
+/* sits in the grid gap, pinned to the lead column's trailing edge, so it
+   tracks the button at any width instead of drifting into it */
+.dbi-page .dbi-final__accent {
+  grid-column: 1; grid-row: 1;
+  justify-self: end; align-self: stretch;
+  width: 2px; margin-inline-end: clamp(2px, .6vw, 10px);
+  background: linear-gradient(180deg, transparent, var(--gold) 22%, var(--gold) 78%, transparent);
+  transform: rotate(9deg);
+  opacity: .75; pointer-events: none;
+}
+.dbi-page .dbi-final__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.45rem, 2.6vw, 2.2rem);
+  line-height: 1.2; color: #fff;
+  margin: clamp(8px, 1.2vw, 14px) 0 clamp(12px, 1.6vw, 18px);
+  max-width: 26ch; text-wrap: balance;
+}
+.dbi-page .dbi-final__text {
+  margin: 0; color: rgba(255,255,255,.72);
+  font-size: clamp(.92rem, 1vw, 1rem); line-height: 1.6; max-width: 58ch;
+}
+.dbi-page .dbi-final__act { grid-column: 2; grid-row: 1; margin: 0; }
+.dbi-page .dbi-final__btn {
+  border-color: rgba(255,255,255,.4); color: #fff;
+  white-space: nowrap;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .dbi-page .dbi-path__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(20px, 3vw, 30px) 0; }
+  .dbi-page .dbi-path__grid li:nth-child(odd) { border-left: 0; padding-inline-start: 0; }
+  .dbi-page .dbi-path__grid li:nth-child(even) { padding-inline-end: 0; }
+}
+@media (max-width: 1000px) {
+  .dbi-page .dbi-hero__text { max-width: none; }
+}
+@media (max-width: 900px) {
+  .dbi-page .dbi-hero { padding-top: calc(var(--header-h) + clamp(14px, 4vw, 28px)); }
+  .dbi-page .dbi-hero__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(20px, 5vw, 32px); }
+  .dbi-page .dbi-hero__text {
+    margin-inline: var(--gutter);
+    padding-inline-start: clamp(16px, 4vw, 24px);
+    max-width: none;
+  }
+  .dbi-page .dbi-hero__lede { max-width: 46ch; }
+  .dbi-page .dbi-hero__media { min-height: 0; aspect-ratio: 16 / 9; }
+  .dbi-page .dbi-hero__media::after {
+    background: linear-gradient(180deg,
+      var(--bg) 0%, color-mix(in srgb, var(--bg) 45%, transparent) 12%,
+      transparent 32%, transparent 74%,
+      color-mix(in srgb, var(--bg) 55%, transparent) 96%, var(--bg) 100%);
+  }
+  .dbi-page .dbi-row__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(18px, 4vw, 28px); }
+  .dbi-page .dbi-row--reverse .dbi-row__aside { order: -1; }
+  .dbi-page .dbi-row__aside { max-width: none; }
+  .dbi-page .dbi-list { max-width: none; }
+  .dbi-page .dbi-row__dots,
+  .dbi-page .dbi-row__nodes,
+  .dbi-page .dbi-row__bars,
+  .dbi-page .dbi-ways__dots { display: none; }
+  .dbi-page .dbi-final__grid { grid-template-columns: minmax(0, 1fr); }
+  .dbi-page .dbi-final__lead, .dbi-page .dbi-final__act { grid-column: auto; grid-row: auto; }
+  .dbi-page .dbi-final__act { justify-self: start; }
+  .dbi-page .dbi-final__accent { display: none; }
+}
+@media (max-width: 560px) {
+  .dbi-page .dbi-path__grid { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .dbi-page .dbi-path__grid li {
+    border-left: 0; border-top: 1px solid var(--hairline);
+    padding: clamp(13px, 3vw, 17px) 0 0;
+  }
+  .dbi-page .dbi-path__grid li:first-child { border-top: 0; padding-top: 0; }
+  .dbi-page .dbi-path__grid li + li { margin-top: clamp(13px, 3vw, 17px); }
+  .dbi-page .dbi-path__label { margin-bottom: 6px; }
+}
+@media (max-width: 380px) {
+  .dbi-page .dbi-hero__title { font-size: 1.65rem; }
+  .dbi-page .dbi-focus__title,
+  .dbi-page .dbi-path__title,
+  .dbi-page .dbi-final__title { font-size: 1.35rem; }
+}
+
+/* ── REDUCED MOTION ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .dbi-page .dbi-hero__media img { transform: none; transition: none; }
+}
+
+
+/* ══════════ 16j. INTERNAL-PAGE SPACING & MEDIA REFINEMENTS ══════
+   Two small adjustments that belong to the internal pages only. The
+   homepage is deliberately untouched: every selector below names a
+   class that exists solely on an inner page (verified against
+   index.html), so nothing here can reach the approved homepage
+   layout. ──────────────────────────────────────────────────────── */
+
+/* solutions.html — the on-page "How We Help" grid inherits the global
+   .section rhythm, which is tuned for the homepage. Scope a tighter
+   block to this page's own class rather than moving --section-y. */
+.section-solutions-help { padding-block: clamp(34px, 3.8vw, 58px); }
+
+/* Inner-page hero photographs sit against a near-black surface in dark
+   mode; the homepage already dims its hero art via --hero-dim, so the
+   inner heroes follow the same idea at a gentler strength and stop
+   reading as a bright cut-out. */
+html[data-theme="dark"] .dbi-page .dbi-hero__media img,
+html[data-theme="dark"] .bizcon-page .bc-hero__media img,
+html[data-theme="dark"] .careers-page .car-hero__media img,
+html[data-theme="dark"] .letsconnect-page .lc-hero__media img,
+html[data-theme="dark"] .global-talent-page .gt-hero__media img {
+  filter: brightness(.86) saturate(.92);
+}
+
+
+/* ══════════ 16k. INTERNAL-PAGE FIGURE SCALE ═══════════════════
+   One scale for every photograph on the inner pages, so they read as
+   a system rather than ten boxes tuned in isolation. Three roles:
+
+     hero    the image that opens a page — the largest, 16:9
+     band    the photo inside a dark closing CTA — a wider 9:4 strip
+     inset   a supporting image beside body copy — 2:1
+
+   Every ratio sits between 16:9 and 9:4, the range a photograph of
+   people survives without the crop running through faces. Width is
+   the grid column the figure occupies; height is the cap below.
+   Change a role here and every page that uses it follows.
+
+   Why a cap at all: these grids are align-items:center with the
+   figure set to stretch, so without one a long paragraph drags the
+   photo past 500px and it dominates the section.
+
+   The homepage is not part of this system and names none of these
+   classes, so nothing here can reach it. ─────────────────────────── */
+:root {
+  --fig-hero-w:  clamp(320px, 44vw, 640px);
+  --fig-hero-h:  clamp(250px, 24.6vw, 356px);
+  --fig-band-w:  clamp(320px, 42vw, 608px);
+  --fig-band-h:  clamp(198px, 18.6vw, 272px);
+  --fig-inset-w: clamp(300px, 40vw, 576px);
+  --fig-inset-h: clamp(215px, 20vw, 288px);
+}
+
+@media (min-width: 901px) {
+  /* hero */
+  .abx-intro__media,
+  .global-talent-page .gt-hero__media,
+  .careers-page .car-hero__media,
+  .letsconnect-page .lc-hero__media,
+  .bizcon-page .bc-hero__media,
+  .dbi-page .dbi-hero__media {
+    align-self: center;
+    height: var(--fig-hero-h);
+    min-height: 0;
+  }
+
+  /* band — .pnr-final__media is excluded on purpose: its angled cut is a
+     percentage of width, so it needs a fixed aspect-ratio, not a height */
+  .global-talent-page .gt-cta__media {
+    align-self: center;
+    height: var(--fig-band-h);
+    min-height: 0;
+  }
+
+  /* inset */
+  .abx-work__media,
+  .pnr-position__media {
+    align-self: center;
+    height: var(--fig-inset-h);
+    min-height: 0;
+  }
+}
+
+/* Inner-page hero photographs sit against a near-black surface in dark
+   mode; the homepage already dims its hero art via --hero-dim, so the
+   inner figures follow the same idea at a gentler strength and stop
+   reading as a bright cut-out. */
+html[data-theme="dark"] .dbi-page .dbi-hero__media img,
+html[data-theme="dark"] .bizcon-page .bc-hero__media img,
+html[data-theme="dark"] .careers-page .car-hero__media img,
+html[data-theme="dark"] .letsconnect-page .lc-hero__media img,
+html[data-theme="dark"] .global-talent-page .gt-hero__media img {
+  filter: brightness(.86) saturate(.92);
+}
+
+/* solutions.html — the on-page "How We Help" grid inherits the global
+   .section rhythm, which is tuned for the homepage. Scope a tighter
+   block to this page's own class rather than moving --section-y. */
+.section-solutions-help { padding-block: clamp(34px, 3.8vw, 58px); }

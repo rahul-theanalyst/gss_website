@@ -1,0 +1,72 @@
+{
+  "_readme": "HOW TO EDIT: Every opening is one { ... } block inside the \"jobs\" list below. To ADD a job, copy a whole block (from { to }), paste it after the last one, put a comma between blocks, and change the values. To REMOVE a job, delete its whole block (and the comma before it). Keep every quote \" and comma exactly where they are. Full instructions are in EDITING-JOBS.md.",
+
+  "jobs": [
+    {
+      "title": "iOS Developer (Java)",
+      "location": "San Leandro, CA",
+      "type": "On-site",
+      "experience": "4–7 Years",
+      "department": "Technology & Delivery",
+      "description": "Build and maintain customer-facing iOS applications alongside an in-house product team. You will work closely with backend Java services, take part in design discussions, and help raise the quality bar on release engineering and automated testing.",
+      "skills": ["iOS", "Swift", "Java", "REST APIs", "XCTest"],
+      "applyLink": "contact.html",
+      "featured": true
+    },
+    {
+      "title": "CyberArk Migration Lead",
+      "location": "Remote",
+      "type": "Contract",
+      "experience": "8+ Years",
+      "department": "Security & Identity",
+      "description": "Lead the migration of an enterprise privileged-access estate onto CyberArk. You will own discovery, onboarding of privileged accounts, safe and platform design, and the cutover plan agreed with the client's security and audit stakeholders.",
+      "skills": ["CyberArk", "PAM", "Identity & Access", "Migration Planning"],
+      "applyLink": "contact.html",
+      "featured": false
+    },
+    {
+      "title": "VMware Cloud Foundation Engineer",
+      "location": "Lakeland, FL",
+      "type": "On-site",
+      "experience": "5–8 Years",
+      "department": "Infrastructure & Cloud",
+      "description": "Design, deploy and operate VMware Cloud Foundation environments for a large on-premise estate. The role covers lifecycle management, capacity planning, and day-two operations across compute, storage and networking.",
+      "skills": ["VMware VCF", "vSphere", "NSX", "vSAN", "Automation"],
+      "applyLink": "contact.html",
+      "featured": false
+    },
+    {
+      "title": "Senior Power BI Developer",
+      "location": "Houston, TX",
+      "type": "Hybrid",
+      "experience": "5–8 Years",
+      "department": "Data & Analytics",
+      "description": "Turn operational data into reporting business leaders actually use. You will model data in Power BI, build performant DAX measures, and partner with finance and operations teams to agree definitions everyone can trust.",
+      "skills": ["Power BI", "DAX", "SQL", "Data Modelling", "Azure"],
+      "applyLink": "contact.html",
+      "featured": false
+    },
+    {
+      "title": "SQL / Python Developer",
+      "location": "New York, NY",
+      "type": "Hybrid",
+      "experience": "3–6 Years",
+      "department": "Data & Analytics",
+      "description": "Build and maintain the data pipelines behind a regulated reporting platform. Expect a mix of SQL performance work, Python automation, and close collaboration with analysts who depend on the output every morning.",
+      "skills": ["SQL", "Python", "ETL", "Airflow", "Data Quality"],
+      "applyLink": "contact.html",
+      "featured": false
+    },
+    {
+      "title": "Full Stack Developer (Java / React)",
+      "location": "Remote",
+      "type": "Contract",
+      "experience": "4–7 Years",
+      "department": "Technology & Delivery",
+      "description": "Work across a Java service layer and a React front end on an established product team. You will ship end-to-end features, contribute to code review, and help keep the delivery pipeline fast and dependable.",
+      "skills": ["Java", "Spring Boot", "React", "TypeScript", "CI/CD"],
+      "applyLink": "contact.html",
+      "featured": false
+    }
+  ]
+}
