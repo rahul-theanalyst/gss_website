@@ -251,13 +251,20 @@
       </div>
       <div class="car-field">
         <label for="role-model">Work model</label>
-        <select id="role-model" name="model">
-          <option value="">Work model</option>
-          <option>On-site</option>
-          <option>Hybrid</option>
-          <option>Remote</option>
-          <option>Contract</option>
-        </select>
+        <div class="gss-select" data-name="model">
+          <button type="button" class="gss-select__btn" id="role-model" aria-haspopup="listbox" aria-expanded="false">
+            <span class="gss-select__value">Work model</span>
+            <svg class="ico gss-select__caret" aria-hidden="true"><use href="#i-chevron"/></svg>
+          </button>
+          <ul class="gss-select__menu" role="listbox" aria-label="Work model" hidden>
+            <li class="gss-select__opt is-selected" role="option" aria-selected="true" data-value="">Work model</li>
+            <li class="gss-select__opt" role="option" aria-selected="false" data-value="On-site">On-site</li>
+            <li class="gss-select__opt" role="option" aria-selected="false" data-value="Hybrid">Hybrid</li>
+            <li class="gss-select__opt" role="option" aria-selected="false" data-value="Remote">Remote</li>
+            <li class="gss-select__opt" role="option" aria-selected="false" data-value="Contract">Contract</li>
+          </ul>
+          <input type="hidden" class="gss-select__input" name="model" value="">
+        </div>
       </div>
       <button class="btn btn-outline btn-sm car-search__btn" type="submit">Search <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
     </form>

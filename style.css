@@ -732,6 +732,74 @@ html[data-theme="dark"] .social-item:hover .social-item-ico,
 html[data-theme="dark"] .social-item:focus-visible .social-item-ico { background: var(--gold); color: #0B1424; }
 
 
+/* ── 07b. CUSTOM SELECT (form dropdown menus — Work Model,
+   Select an Area, …) ─────────────────────────────────────
+   Native <select> popups can't be styled cross-browser (no radius,
+   border, hover states), so form dropdowns that need a styled menu
+   use this button + listbox pattern instead — mirrors the header's
+   social-menu component. A hidden input carries the value for the
+   form's name/value pair. Shared across pages via this one block. */
+.gss-select { position: relative; width: 100%; }
+.gss-select__btn {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  width: 100%;
+  padding: 10px 2px;
+  border: 0; border-bottom: 1px solid var(--line);
+  background: transparent;
+  font-family: var(--sans); font-size: .95rem; text-align: left;
+  color: var(--muted-2);
+  cursor: pointer;
+  transition: border-color .2s var(--ease);
+}
+.gss-select__btn:hover { border-bottom-color: var(--gold); }
+.gss-select.is-open .gss-select__btn,
+.gss-select__btn:focus-visible { outline: none; border-bottom-color: var(--gold); }
+.gss-select.has-value .gss-select__value { color: var(--navy); }
+.gss-select__caret {
+  width: 15px; height: 15px; flex: 0 0 auto; color: var(--muted-2);
+  transition: transform .22s var(--ease), color .2s var(--ease);
+}
+.gss-select.is-open .gss-select__caret { transform: rotate(180deg); color: var(--gold); }
+
+.gss-select__menu {
+  position: absolute; top: calc(100% + 8px); left: 0; right: 0;
+  z-index: 40;
+  max-height: 260px; overflow-y: auto;
+  margin: 0; padding: 7px;
+  list-style: none;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--gold) 20%, var(--hairline));
+  background: color-mix(in srgb, var(--card) 97%, transparent);
+  -webkit-backdrop-filter: saturate(1.5) blur(18px);
+  backdrop-filter: saturate(1.5) blur(18px);
+  box-shadow: 0 4px 12px rgba(15,34,71,.09), 0 20px 44px rgba(15,34,71,.15);
+  opacity: 0; visibility: hidden;
+  transform: translateY(-6px) scale(.98);
+  transform-origin: top;
+  transition: opacity .2s var(--ease), transform .22s var(--ease), visibility .22s var(--ease);
+}
+html[data-theme="dark"] .gss-select__menu {
+  background: color-mix(in srgb, var(--card) 98%, transparent);
+  box-shadow: 0 4px 12px rgba(0,0,0,.45), 0 20px 44px rgba(0,0,0,.6);
+}
+.gss-select__menu[hidden] { display: none; }
+.gss-select.is-open .gss-select__menu {
+  opacity: 1; visibility: visible;
+  transform: translateY(0) scale(1);
+}
+.gss-select__opt {
+  padding: 9px 12px;
+  border-radius: 9px;
+  color: var(--navy);
+  font-size: .9rem;
+  cursor: pointer;
+  transition: background-color .16s var(--ease);
+}
+.gss-select__opt + .gss-select__opt { margin-top: 1px; }
+.gss-select__opt.is-active { background: color-mix(in srgb, var(--gold) 12%, transparent); }
+.gss-select__opt.is-selected { color: var(--gold-2); font-weight: 600; }
+
+
 /* ── 08. MOBILE OVERLAY MENU ─────────────────────────────── */
 .mobile-nav {
   position: fixed; inset: 0;
@@ -1507,8 +1575,8 @@ html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1
   text-align: center;
   border-bottom: 1px solid var(--hairline);
   background: linear-gradient(180deg, var(--bg-sky) 0%, var(--bg-soft) 100%);
-  padding-top: calc(var(--header-h) + clamp(26px, 3.6vw, 54px));
-  padding-bottom: clamp(28px, 3.2vw, 44px);
+  padding-top: calc(var(--header-h) + clamp(16px, 2.2vw, 34px));
+  padding-bottom: clamp(20px, 2.4vw, 32px);
 }
 .page-hero .container { position: relative; z-index: 1; }
 /* the banner is shorter than the closing CTA section, so the rays are scaled
@@ -1537,7 +1605,7 @@ html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1
   text-wrap: pretty;
 }
 
-.page-body { background: var(--bg); padding-block: clamp(30px, 3.4vw, 52px); }
+.page-body { background: var(--bg); padding-block: clamp(22px, 2.6vw, 38px); }
 .page-body .container { max-width: 940px; }
 .page-intro p {
   color: var(--muted);
@@ -1619,7 +1687,7 @@ html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1
 .abx-intro {
   background: var(--bg);
   padding-top: calc(var(--header-h) + clamp(6px, 1.4vw, 18px));
-  padding-bottom: clamp(40px, 6vw, 84px);
+  padding-bottom: clamp(28px, 3.6vw, 50px);
 }
 .abx-intro__grid {
   display: grid;
@@ -1659,16 +1727,11 @@ html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1
     linear-gradient(90deg,
       var(--bg) 0%,
       color-mix(in srgb, var(--bg) 50%, transparent) 17%,
-      transparent 44%),
-    linear-gradient(180deg,
-      color-mix(in srgb, var(--bg) 78%, transparent) 0%,
-      transparent 24%,
-      transparent 76%,
-      color-mix(in srgb, var(--bg) 78%, transparent) 100%);
+      transparent 44%);
 }
 .abx-intro__more {
-  margin-top: clamp(34px, 5vw, 64px);
-  padding-top: clamp(26px, 3vw, 40px);
+  margin-top: clamp(24px, 3.2vw, 44px);
+  padding-top: clamp(20px, 2.4vw, 32px);
   border-top: 1px solid var(--hairline);
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
@@ -1734,12 +1797,7 @@ html[data-theme="dark"] .abx-work { background: var(--bg-soft); }
     linear-gradient(270deg,
       var(--melt) 0%,
       color-mix(in srgb, var(--melt) 50%, transparent) 17%,
-      transparent 44%),
-    linear-gradient(180deg,
-      color-mix(in srgb, var(--melt) 78%, transparent) 0%,
-      transparent 24%,
-      transparent 76%,
-      color-mix(in srgb, var(--melt) 78%, transparent) 100%);
+      transparent 44%);
 }
 html[data-theme="dark"] .abx-work__media::after { --melt: var(--bg-soft); }
 .abx-work__text {
@@ -1800,7 +1858,7 @@ html[data-theme="dark"] .abx-flow__dot { background: var(--bg-soft); }
 }
 
 /* ── 02 · ABOUT THE COMPANY ──────────────────────────────── */
-.abx-company { background: var(--bg-sky); padding-block: clamp(40px, 5.2vw, 74px); }
+.abx-company { background: var(--bg-sky); padding-block: clamp(28px, 3.6vw, 50px); }
 html[data-theme="dark"] .abx-company { background: var(--bg-sky); }
 .abx-company__grid {
   display: grid;
@@ -1836,8 +1894,8 @@ html[data-theme="dark"] .abx-cred {
 .abx-cred--wide img { max-height: clamp(60px, 8vw, 88px); }
 
 .abx-approach {
-  margin-top: clamp(40px, 5vw, 72px);
-  padding-top: clamp(26px, 3vw, 40px);
+  margin-top: clamp(28px, 3.6vw, 50px);
+  padding-top: clamp(20px, 2.4vw, 32px);
   border-top: 1px solid var(--hairline);
 }
 .abx-approach__row {
@@ -1929,19 +1987,11 @@ html[data-theme="dark"] .abx-cred {
   .abx-work__media { min-height: 0; aspect-ratio: 16 / 9; }
   .abx-work__media { grid-row: 1; }
   .abx-work__text { grid-row: 2; align-self: start; padding: clamp(28px, 6vw, 44px) var(--gutter); max-width: none; }
-  /* stacked — the photos now sit between blocks of copy, so the fade
-     runs vertically (into the section top and bottom) instead of sideways */
-  .abx-intro__media::after {
-    background: linear-gradient(180deg,
-      var(--bg) 0%, color-mix(in srgb, var(--bg) 45%, transparent) 12%,
-      transparent 32%, transparent 74%,
-      color-mix(in srgb, var(--bg) 55%, transparent) 96%, var(--bg) 100%);
-  }
+  /* stacked — the photos now run full-width between blocks of copy, so
+     they fill edge to edge instead of fading top/bottom */
+  .abx-intro__media::after,
   .abx-work__media::after {
-    background: linear-gradient(180deg,
-      var(--melt) 0%, color-mix(in srgb, var(--melt) 45%, transparent) 12%,
-      transparent 32%, transparent 74%,
-      color-mix(in srgb, var(--melt) 55%, transparent) 96%, var(--melt) 100%);
+    background: none;
   }
   .abx-intro__more { grid-template-columns: minmax(0, 1fr); gap: 14px; }
   .abx-company__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 6vw, 40px); }
@@ -1997,7 +2047,7 @@ html[data-theme="dark"] .abx-cred {
 html[data-theme="dark"] .pnr-hero-dots { color: var(--hairline); }
 
 /* ── OUR POSITION (image + text split) ───────────────────── */
-.pnr-position { background: var(--bg); padding-block: clamp(30px, 3.6vw, 54px); }
+.pnr-position { background: var(--bg); padding-block: clamp(22px, 2.6vw, 38px); }
 .pnr-position__grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) var(--fig-inset-w);
@@ -2020,13 +2070,15 @@ html[data-theme="dark"] .pnr-hero-dots { color: var(--hairline); }
   background:
     linear-gradient(90deg,
       var(--bg) 0%,
-      color-mix(in srgb, var(--bg) 50%, transparent) 17%,
-      transparent 44%),
-    linear-gradient(180deg,
-      color-mix(in srgb, var(--bg) 78%, transparent) 0%,
-      transparent 24%,
-      transparent 76%,
-      color-mix(in srgb, var(--bg) 78%, transparent) 100%);
+      color-mix(in srgb, var(--bg) 38%, transparent) 8%,
+      transparent 22%);
+}
+/* the photo bleeds past the section's own top/bottom padding so it fills
+   the section edge to edge instead of leaving a blank band above/below —
+   text keeps its normal padding; only the photo (which clips via
+   overflow:hidden + object-fit:cover) extends and zooms to cover it */
+@media (min-width: 901px) {
+  .pnr-position__media { margin-block: calc(-1 * clamp(22px, 2.6vw, 38px)); }
 }
 .pnr-position__text { align-self: center; margin-left: var(--gutter); max-width: 34rem; }
 .pnr-position__text .abx-h2 { margin-bottom: clamp(18px, 2.2vw, 26px); }
@@ -2087,7 +2139,7 @@ html[data-theme="dark"] .pnr-models { background: var(--bg-soft); }
   letter-spacing: .05em; text-transform: uppercase; color: var(--gold-2);
   margin: 0 0 clamp(10px, 1.2vw, 14px); line-height: 1.45;
 }
-.pnr-model .btn { align-self: flex-start; }
+.pnr-model .btn { align-self: flex-start; margin-bottom: 8px; }
 .pnr-model-note { margin: 8px 0 0; color: var(--muted-2); font-size: .79rem; line-height: 1.5; }
 
 .pnr-model--wide .pnr-model-inner {
@@ -2129,25 +2181,15 @@ html[data-theme="dark"] .pnr-models { background: var(--bg-soft); }
 }
 /* the left edge is cut to the same 9° the gold line is rotated to, so the two
    run parallel — height × tan(9°) is 7.04% of the width at this 9:4 box.
-   Recompute this figure whenever the aspect ratio changes or the cut stops
-   matching the line. clip-path also clips box-shadow, so this box carries none. */
-/* the band behind this photo is a navy gradient, so an overlay in a single
-   flat navy always leaves a faint seam. Masking the image itself instead
-   lets the real band show through at every edge — a true dissolve, and it
-   stays correct whatever the gradient is doing at that height. The rounded
-   corner went with it: a card edge and a dissolve cannot both be right. */
+   The right two corners are rounded instead of dissolving into the band, via
+   an SVG clip-path (#pnrFinalClip in the page's sprite svg) since a plain
+   polygon() can only give straight edges — objectBoundingBox units mean it
+   scales with the box. Recompute the 0.0704 start point (and the gold line's
+   offset below) if the aspect ratio changes or the cut stops matching it. */
 .pnr-final__media {
   position: relative; margin: 0; overflow: hidden;
   aspect-ratio: 9 / 4;
-  clip-path: polygon(7.04% 0, 100% 0, 100% 100%, 0 100%);
-  -webkit-mask-image:
-    linear-gradient(90deg, transparent 0%, rgba(0,0,0,.28) 18%, #000 54%, #000 91%, transparent 100%),
-    linear-gradient(180deg, transparent 0%, #000 22%, #000 80%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-image:
-    linear-gradient(90deg, transparent 0%, rgba(0,0,0,.28) 18%, #000 54%, #000 91%, transparent 100%),
-    linear-gradient(180deg, transparent 0%, #000 22%, #000 80%, transparent 100%);
-  mask-composite: intersect;
+  clip-path: url(#pnrFinalClip);
 }
 /* the 16:5 crop takes a narrow slice of a 3:2 source, so the focal point
    moves up to keep faces in frame rather than centring on torsos */
@@ -2160,13 +2202,10 @@ html[data-theme="dark"] .pnr-models { background: var(--bg-soft); }
   .pnr-position__grid { grid-template-columns: minmax(0, 1fr); }
   .pnr-position__text { margin-left: 0; padding-inline: var(--gutter); order: 1; }
   .pnr-position__media { order: -1; min-height: 0; aspect-ratio: 16 / 9; }
-  /* stacked — the photo now sits above the copy, so the fade runs vertically
-     into the section instead of sideways */
+  /* stacked — the photo now runs full-width above the copy, so it fills
+     edge to edge instead of fading top/bottom */
   .pnr-position__media::after {
-    background: linear-gradient(180deg,
-      var(--bg) 0%, color-mix(in srgb, var(--bg) 45%, transparent) 12%,
-      transparent 32%, transparent 74%,
-      color-mix(in srgb, var(--bg) 55%, transparent) 96%, var(--bg) 100%);
+    background: none;
   }
   .pnr-model-grid { grid-template-columns: minmax(0, 1fr); }
   .pnr-model--wide .pnr-model-inner { grid-template-columns: minmax(0, 1fr); }
@@ -2585,12 +2624,7 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
     linear-gradient(90deg,
       var(--bg) 0%,
       color-mix(in srgb, var(--bg) 50%, transparent) 17%,
-      transparent 44%),
-    linear-gradient(180deg,
-      color-mix(in srgb, var(--bg) 78%, transparent) 0%,
-      transparent 24%,
-      transparent 76%,
-      color-mix(in srgb, var(--bg) 78%, transparent) 100%);
+      transparent 44%);
 }
 
 
@@ -2646,7 +2680,7 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
 /* ── 03–06 · TALENT SOLUTION BANDS ───────────────────────── */
 .global-talent-page .gt-solution {
   background: var(--bg);
-  padding-block: clamp(34px, 3.2vw, 48px);
+  padding-block: clamp(26px, 2.6vw, 38px);
 }
 .global-talent-page .gt-solution--cream { background: var(--bg-cream); }
 /* in dark theme --bg-cream sits almost on top of --bg, so the alternating
@@ -2841,19 +2875,16 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
   .global-talent-page .gt-hero__tail { max-width: 46ch; }
   .global-talent-page .gt-hero__media,
   .global-talent-page .gt-cta__media { min-height: 0; aspect-ratio: 16 / 9; }
-  /* stacked — the photos now sit under the copy, so the fade runs vertically
-     (into the section top and bottom) instead of sideways */
+  /* stacked — the hero photo now runs full-width under the copy, so it
+     fills edge to edge instead of fading top/bottom */
   .global-talent-page .gt-hero__media::after {
-    background: linear-gradient(180deg,
-      var(--bg) 0%, color-mix(in srgb, var(--bg) 45%, transparent) 12%,
-      transparent 32%, transparent 74%,
-      color-mix(in srgb, var(--bg) 55%, transparent) 96%, var(--bg) 100%);
+    background: none;
   }
   .global-talent-page .gt-cta__media::after {
     background: linear-gradient(180deg,
-      var(--gt-melt) 0%, color-mix(in srgb, var(--gt-melt) 45%, transparent) 12%,
-      transparent 32%, transparent 74%,
-      color-mix(in srgb, var(--gt-melt) 55%, transparent) 96%, var(--gt-melt) 100%);
+      var(--gt-melt) 0%, color-mix(in srgb, var(--gt-melt) 25%, transparent) 6%,
+      transparent 16%, transparent 84%,
+      color-mix(in srgb, var(--gt-melt) 25%, transparent) 94%, var(--gt-melt) 100%);
   }
   .global-talent-page .gt-intro__dots { opacity: .6; }
 }
@@ -2928,8 +2959,8 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
 /* ── 01 · HERO ───────────────────────────────────────────── */
 .careers-page .car-hero {
   background: var(--bg);
-  padding-top: calc(var(--header-h) + clamp(18px, 3.4vw, 54px));
-  padding-bottom: clamp(34px, 4vw, 64px);
+  padding-top: calc(var(--header-h) + clamp(14px, 2vw, 30px));
+  padding-bottom: clamp(20px, 2.4vw, 36px);
   border-bottom: 1px solid var(--hairline);
 }
 .careers-page .car-hero__grid {
@@ -2970,19 +3001,24 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
     linear-gradient(90deg,
       var(--bg) 0%,
       color-mix(in srgb, var(--bg) 50%, transparent) 17%,
-      transparent 44%),
-    linear-gradient(180deg,
-      color-mix(in srgb, var(--bg) 78%, transparent) 0%,
-      transparent 24%,
-      transparent 76%,
-      color-mix(in srgb, var(--bg) 78%, transparent) 100%);
+      transparent 44%);
+}
+/* the photo column bleeds past the section's own top/bottom padding so the
+   image reaches the header's bottom edge and the section's bottom border
+   instead of leaving a blank band there — it stops flush at the header
+   rather than running behind it, and text keeps its normal padding; only
+   the photo (which clips via overflow:hidden + object-fit:cover) extends */
+@media (min-width: 901px) {
+  .careers-page .car-hero__media {
+    margin-block: calc(-1 * clamp(14px, 2vw, 30px)) calc(-1 * clamp(20px, 2.4vw, 36px));
+  }
 }
 
 /* ── 02 · THE RIGHT FIT (dark band) ──────────────────────── */
 .careers-page .car-fit {
   position: relative; overflow: hidden;
   background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
-  padding-block: clamp(38px, 4.4vw, 66px);
+  padding-block: clamp(28px, 3.2vw, 46px);
   text-align: center;
 }
 .careers-page .car-fit__slash {
@@ -3008,11 +3044,11 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
 /* ── 03 · WHAT YOU CAN EXPECT ────────────────────────────── */
 .careers-page .car-expect {
   background: var(--bg);
-  padding-block: clamp(34px, 3.8vw, 58px);
+  padding-block: clamp(24px, 2.8vw, 40px);
 }
 .careers-page .car-expect__head {
   text-align: center; max-width: 42ch;
-  margin: 0 auto clamp(32px, 4vw, 52px);
+  margin: 0 auto clamp(20px, 2.4vw, 32px);
 }
 .careers-page .car-expect__title {
   font-family: var(--serif); font-weight: 500;
@@ -3043,7 +3079,7 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
 .careers-page .car-roles {
   position: relative; overflow: hidden;
   background: var(--bg-sky);
-  padding-block: clamp(34px, 3.8vw, 58px);
+  padding-block: clamp(24px, 2.8vw, 40px);
 }
 .careers-page .car-roles__dots {
   position: absolute; top: clamp(30px, 4vw, 64px); right: clamp(20px, 4vw, 72px);
@@ -3081,8 +3117,7 @@ html[data-theme="dark"] .careers-page .car-roles__dots { color: var(--hairline);
   position: absolute; width: 1px; height: 1px;
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
 }
-.careers-page .car-field input,
-.careers-page .car-field select {
+.careers-page .car-field input {
   width: 100%;
   padding: 10px 2px;
   border: 0; border-bottom: 1px solid var(--line);
@@ -3093,15 +3128,7 @@ html[data-theme="dark"] .careers-page .car-roles__dots { color: var(--hairline);
   transition: border-color .2s var(--ease);
 }
 .careers-page .car-field input::placeholder { color: var(--muted-2); }
-.careers-page .car-field input:focus,
-.careers-page .car-field select:focus { outline: none; border-bottom-color: var(--gold); }
-.careers-page .car-field select {
-  appearance: none; -webkit-appearance: none;
-  color: var(--muted-2); cursor: pointer;
-  padding-right: 24px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238C9BB0' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 9 7 7 7-7'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 0 center; background-size: 15px;
-}
+.careers-page .car-field input:focus { outline: none; border-bottom-color: var(--gold); }
 
 /* jobs list */
 .careers-page .car-jobs {
@@ -3143,7 +3170,7 @@ html[data-theme="dark"] .careers-page .car-roles__dots { color: var(--hairline);
 /* ── 05 · STAY CONNECTED (cream band) ────────────────────── */
 .careers-page .car-connect {
   background: var(--bg-cream);
-  padding-block: clamp(34px, 3.8vw, 58px);
+  padding-block: clamp(24px, 2.8vw, 40px);
 }
 html[data-theme="dark"] .careers-page .car-connect { background: var(--bg-soft); }
 .careers-page .car-connect__grid {
@@ -3202,7 +3229,7 @@ html[data-theme="dark"] .careers-page .car-connect { background: var(--bg-soft);
 .careers-page .car-promise {
   position: relative; overflow: hidden;
   background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
-  padding-block: clamp(38px, 4.4vw, 66px);
+  padding-block: clamp(28px, 3.2vw, 46px);
 }
 .careers-page .car-promise__slash {
   position: absolute; top: -20%; right: 12%;
@@ -3236,12 +3263,7 @@ html[data-theme="dark"] .careers-page .car-connect { background: var(--bg-soft);
   }
   .careers-page .car-hero__lede { max-width: 46ch; }
   .careers-page .car-hero__media { min-height: 0; aspect-ratio: 16 / 9; }
-  .careers-page .car-hero__media::after {
-    background: linear-gradient(180deg,
-      var(--bg) 0%, color-mix(in srgb, var(--bg) 45%, transparent) 12%,
-      transparent 32%, transparent 74%,
-      color-mix(in srgb, var(--bg) 55%, transparent) 96%, var(--bg) 100%);
-  }
+  .careers-page .car-hero__media::after { background: none; }
   .careers-page .car-expect__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: clamp(26px, 5vw, 36px); }
   .careers-page .car-expect__grid li:nth-child(odd) { border-left: 0; padding-left: 0; }
   .careers-page .car-expect__grid li:nth-child(n+3) {
@@ -3252,6 +3274,8 @@ html[data-theme="dark"] .careers-page .car-connect { background: var(--bg-soft);
   .careers-page .car-search__btn { grid-column: 1 / -1; justify-self: start; }
   .careers-page .car-connect__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 6vw, 44px); }
   .careers-page .car-connect__title { max-width: none; }
+  .careers-page .car-fit__slash,
+  .careers-page .car-promise__slash { display: none; }
 }
 @media (max-width: 700px) {
   .careers-page .car-job {
@@ -3307,8 +3331,8 @@ html[data-theme="dark"] .careers-page .car-connect { background: var(--bg-soft);
 /* ── 01 · HERO ───────────────────────────────────────────── */
 .bizcon-page .bc-hero {
   background: var(--bg);
-  padding-top: calc(var(--header-h) + clamp(18px, 3.4vw, 54px));
-  padding-bottom: clamp(34px, 4vw, 64px);
+  padding-top: calc(var(--header-h) + clamp(14px, 2vw, 30px));
+  padding-bottom: clamp(20px, 2.4vw, 36px);
   border-bottom: 1px solid var(--hairline);
 }
 .bizcon-page .bc-hero__grid {
@@ -3349,19 +3373,24 @@ html[data-theme="dark"] .careers-page .car-connect { background: var(--bg-soft);
     linear-gradient(90deg,
       var(--bg) 0%,
       color-mix(in srgb, var(--bg) 50%, transparent) 17%,
-      transparent 44%),
-    linear-gradient(180deg,
-      color-mix(in srgb, var(--bg) 78%, transparent) 0%,
-      transparent 24%,
-      transparent 76%,
-      color-mix(in srgb, var(--bg) 78%, transparent) 100%);
+      transparent 44%);
+}
+/* the photo column bleeds past the section's own top/bottom padding so the
+   image reaches the header's bottom edge and the section's bottom border
+   instead of leaving a blank band there — it stops flush at the header
+   rather than running behind it, and text keeps its normal padding; only
+   the photo (which clips via overflow:hidden + object-fit:cover) extends */
+@media (min-width: 901px) {
+  .bizcon-page .bc-hero__media {
+    margin-block: calc(-1 * clamp(14px, 2vw, 30px)) calc(-1 * clamp(20px, 2.4vw, 36px));
+  }
 }
 
 /* ── 02 · NO PRESET ANSWERS (dark band) ──────────────────── */
 .bizcon-page .bc-fit {
   position: relative; overflow: hidden;
   background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
-  padding-block: clamp(38px, 4.4vw, 66px);
+  padding-block: clamp(28px, 3.2vw, 46px);
   text-align: center;
 }
 .bizcon-page .bc-fit__slash {
@@ -3387,7 +3416,7 @@ html[data-theme="dark"] .careers-page .car-connect { background: var(--bg-soft);
 /* ── 03 · WHERE WE HELP (intro) ──────────────────────────── */
 .bizcon-page .bc-ways {
   background: var(--bg);
-  padding-block: clamp(36px, 4.2vw, 64px) clamp(20px, 2.4vw, 32px);
+  padding-block: clamp(26px, 3vw, 44px) clamp(16px, 2vw, 26px);
   text-align: center;
 }
 .bizcon-page .bc-ways__title {
@@ -3405,7 +3434,7 @@ html[data-theme="dark"] .careers-page .car-connect { background: var(--bg-soft);
 .bizcon-page .bc-row {
   position: relative; overflow: hidden;
   background: var(--bg);
-  padding-block: clamp(32px, 3.8vw, 56px);
+  padding-block: clamp(24px, 2.8vw, 40px);
   border-top: 1px solid var(--hairline);
 }
 .bizcon-page .bc-row--cream { background: var(--bg-cream); }
@@ -3458,8 +3487,8 @@ html[data-theme="dark"] .bizcon-page .bc-row__dots { color: var(--hairline); }
 }
 
 /* ── 05 · SUPPORT THAT FITS THE NEED ─────────────────────── */
-.bizcon-page .bc-support { background: var(--bg); padding-block: clamp(36px, 4.4vw, 66px); }
-.bizcon-page .bc-support__head { text-align: center; max-width: 46ch; margin: 0 auto clamp(30px, 3.8vw, 48px); }
+.bizcon-page .bc-support { background: var(--bg); padding-block: clamp(26px, 3.2vw, 46px); }
+.bizcon-page .bc-support__head { text-align: center; max-width: 46ch; margin: 0 auto clamp(20px, 2.4vw, 32px); }
 .bizcon-page .bc-support__title {
   font-family: var(--serif); font-weight: 500;
   font-size: clamp(1.5rem, 2.7vw, 2.3rem);
@@ -3490,7 +3519,7 @@ html[data-theme="dark"] .bizcon-page .bc-row__dots { color: var(--hairline); }
 .bizcon-page .bc-final {
   position: relative; overflow: hidden;
   background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
-  padding-block: clamp(40px, 4.8vw, 74px);
+  padding-block: clamp(28px, 3.2vw, 46px);
 }
 .bizcon-page .bc-final__grid {
   position: relative;
@@ -3541,12 +3570,8 @@ html[data-theme="dark"] .bizcon-page .bc-row__dots { color: var(--hairline); }
   }
   .bizcon-page .bc-hero__lede { max-width: 46ch; }
   .bizcon-page .bc-hero__media { min-height: 0; aspect-ratio: 16 / 9; }
-  .bizcon-page .bc-hero__media::after {
-    background: linear-gradient(180deg,
-      var(--bg) 0%, color-mix(in srgb, var(--bg) 45%, transparent) 12%,
-      transparent 32%, transparent 74%,
-      color-mix(in srgb, var(--bg) 55%, transparent) 96%, var(--bg) 100%);
-  }
+  .bizcon-page .bc-hero__media::after { background: none; }
+  .bizcon-page .bc-fit__slash { display: none; }
   .bizcon-page .bc-row__grid { grid-template-columns: minmax(0, 1fr); }
   .bizcon-page .bc-row--reverse .bc-row__aside { order: -1; }
   .bizcon-page .bc-row__aside { max-width: none; }
@@ -3592,8 +3617,8 @@ html[data-theme="dark"] .bizcon-page .bc-row__dots { color: var(--hairline); }
 /* ── 01 · HERO ───────────────────────────────────────────── */
 .letsconnect-page .lc-hero {
   background: var(--bg);
-  padding-top: calc(var(--header-h) + clamp(18px, 3.4vw, 54px));
-  padding-bottom: clamp(34px, 4vw, 64px);
+  padding-top: calc(var(--header-h) + clamp(14px, 2vw, 30px));
+  padding-bottom: clamp(20px, 2.4vw, 36px);
   border-bottom: 1px solid var(--hairline);
 }
 .letsconnect-page .lc-hero__grid {
@@ -3634,16 +3659,21 @@ html[data-theme="dark"] .bizcon-page .bc-row__dots { color: var(--hairline); }
     linear-gradient(90deg,
       var(--bg) 0%,
       color-mix(in srgb, var(--bg) 50%, transparent) 17%,
-      transparent 44%),
-    linear-gradient(180deg,
-      color-mix(in srgb, var(--bg) 78%, transparent) 0%,
-      transparent 24%,
-      transparent 76%,
-      color-mix(in srgb, var(--bg) 78%, transparent) 100%);
+      transparent 44%);
+}
+/* the photo column bleeds past the section's own top/bottom padding so the
+   image reaches the header's bottom edge and the section's bottom border
+   instead of leaving a blank band there — it stops flush at the header
+   rather than running behind it, and text keeps its normal padding; only
+   the photo (which clips via overflow:hidden + object-fit:cover) extends */
+@media (min-width: 901px) {
+  .letsconnect-page .lc-hero__media {
+    margin-block: calc(-1 * clamp(14px, 2vw, 30px)) calc(-1 * clamp(20px, 2.4vw, 36px));
+  }
 }
 
 /* ── 02 · FORM ───────────────────────────────────────────── */
-.letsconnect-page .lc-form-section { background: var(--bg-cream); padding-block: clamp(34px, 4vw, 60px); }
+.letsconnect-page .lc-form-section { background: var(--bg-cream); padding-block: clamp(24px, 2.8vw, 40px); }
 html[data-theme="dark"] .letsconnect-page .lc-form-section { background: var(--bg-soft); }
 .letsconnect-page .lc-form-section__grid {
   display: grid;
@@ -3673,7 +3703,6 @@ html[data-theme="dark"] .letsconnect-page .lc-form-section { background: var(--b
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
 }
 .letsconnect-page .lc-field input,
-.letsconnect-page .lc-field select,
 .letsconnect-page .lc-field textarea {
   width: 100%;
   padding: 10px 2px;
@@ -3688,15 +3717,83 @@ html[data-theme="dark"] .letsconnect-page .lc-form-section { background: var(--b
 .letsconnect-page .lc-field input::placeholder,
 .letsconnect-page .lc-field textarea::placeholder { color: var(--muted-2); }
 .letsconnect-page .lc-field input:focus,
-.letsconnect-page .lc-field select:focus,
 .letsconnect-page .lc-field textarea:focus { outline: none; border-bottom-color: var(--gold); }
-.letsconnect-page .lc-field select {
-  appearance: none; -webkit-appearance: none;
-  color: var(--muted-2); cursor: pointer;
-  padding-right: 24px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238C9BB0' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 9 7 7 7-7'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 0 center; background-size: 15px;
+
+/* Phone field: country-code select + number share one underline, styled as
+   a single field rather than two separate boxes side by side. */
+.letsconnect-page .lc-phone {
+  display: flex; align-items: stretch;
+  border-bottom: 1px solid var(--line);
+  transition: border-color .2s var(--ease);
 }
+.letsconnect-page .lc-phone:focus-within { border-bottom-color: var(--gold); }
+.letsconnect-page .lc-phone .gss-select { width: auto; flex: 0 0 auto; }
+.letsconnect-page .lc-phone .gss-select__btn {
+  width: auto; border-bottom: 0;
+  padding: 10px 22px 10px 2px;
+  gap: 4px;
+}
+.letsconnect-page .lc-phone .gss-select__caret { width: 13px; height: 13px; }
+.letsconnect-page .lc-phone__divider {
+  flex: 0 0 auto; align-self: center;
+  width: 1px; height: 20px; margin: 0 12px;
+  background: var(--line);
+}
+.letsconnect-page .lc-field .lc-phone__input {
+  flex: 1; min-width: 0;
+  border: 0; border-bottom: 0;
+}
+.letsconnect-page .lc-field .lc-phone__input:focus { border-bottom: 0; }
+
+/* the trigger is only as wide as "+1", but the menu lists full country
+   names — it can't inherit the trigger's width the way the other two
+   dropdowns do, so it gets its own fixed, comfortably-wide box and a
+   taller scroll area (18 rows, ~8-9 visible at a time) at every size */
+.gss-select--code .gss-select__menu {
+  left: 0; right: auto;
+  width: 260px;
+  max-height: 320px;
+}
+/* code first, then the country name, on one line — narrow codes align
+   in a fixed column so the names start flush underneath one another */
+.gss-select__opt--code {
+  display: flex; align-items: baseline; gap: 10px;
+  padding-block: 6px;
+}
+.gss-select__opt--code .gss-select__optcode {
+  flex: 0 0 32px; color: var(--gold-2); font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.gss-select__opt--code .gss-select__optname {
+  flex: 1 1 auto; min-width: 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* on phones the code list opens as a centered popup, sized for its full
+   country names, instead of a thin strip pinned under a ~50px-wide
+   trigger — same open/close logic, just a different position, so no
+   extra JS is needed for the switch. */
+@media (max-width: 640px) {
+  .gss-select--code .gss-select__menu {
+    position: fixed; inset: auto;
+    top: 50%; left: 50%; right: auto; bottom: auto;
+    width: min(320px, calc(100vw - 32px));
+    max-height: min(70vh, 440px);
+    transform: translate(-50%, -50%) scale(.96);
+    transform-origin: center;
+  }
+  .gss-select--code.is-open .gss-select__menu {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  .gss-select--code.is-open::before {
+    content: "";
+    position: fixed; inset: 0;
+    z-index: 39;
+    background: rgba(9, 17, 33, .45);
+    pointer-events: none;
+  }
+}
+
 .letsconnect-page .lc-form__act { margin: 4px 0 0; }
 .letsconnect-page .lc-form__fine {
   margin: -8px 0 0; color: var(--muted-2);
@@ -3708,7 +3805,7 @@ html[data-theme="dark"] .letsconnect-page .lc-form-section { background: var(--b
 .letsconnect-page .lc-reach {
   position: relative; overflow: hidden;
   background: var(--bg-sky);
-  padding-block: clamp(36px, 4.4vw, 64px);
+  padding-block: clamp(26px, 3vw, 42px);
   text-align: center;
 }
 .letsconnect-page .lc-reach__ring {
@@ -3726,7 +3823,7 @@ html[data-theme="dark"] .letsconnect-page .lc-form-section { background: var(--b
   width: 9px; height: 9px; border-radius: 50%;
   background: var(--gold); opacity: .9;
 }
-.letsconnect-page .lc-reach__head { position: relative; max-width: 52ch; margin: 0 auto clamp(30px, 3.6vw, 46px); }
+.letsconnect-page .lc-reach__head { position: relative; max-width: 52ch; margin: 0 auto clamp(20px, 2.4vw, 30px); }
 .letsconnect-page .lc-reach__title {
   font-family: var(--serif); font-weight: 500;
   font-size: clamp(1.55rem, 2.9vw, 2.5rem);
@@ -3760,7 +3857,7 @@ html[data-theme="dark"] .letsconnect-page .lc-form-section { background: var(--b
 .letsconnect-page .lc-social {
   position: relative; overflow: hidden;
   background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
-  padding-block: clamp(40px, 4.8vw, 74px);
+  padding-block: clamp(28px, 3.2vw, 46px);
 }
 .letsconnect-page .lc-social__grid {
   position: relative;
@@ -3833,12 +3930,7 @@ html[data-theme="dark"] .letsconnect-page .lc-form-section { background: var(--b
   }
   .letsconnect-page .lc-hero__lede { max-width: 46ch; }
   .letsconnect-page .lc-hero__media { min-height: 0; aspect-ratio: 16 / 9; }
-  .letsconnect-page .lc-hero__media::after {
-    background: linear-gradient(180deg,
-      var(--bg) 0%, color-mix(in srgb, var(--bg) 45%, transparent) 12%,
-      transparent 32%, transparent 74%,
-      color-mix(in srgb, var(--bg) 55%, transparent) 96%, var(--bg) 100%);
-  }
+  .letsconnect-page .lc-hero__media::after { background: none; }
   .letsconnect-page .lc-form-section__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 6vw, 40px); }
   .letsconnect-page .lc-form-section__title,
   .letsconnect-page .lc-form-section__text { max-width: none; }
@@ -3893,8 +3985,8 @@ html[data-theme="dark"] .letsconnect-page .lc-form-section { background: var(--b
 /* ── 01 · HERO ───────────────────────────────────────────── */
 .dbi-page .dbi-hero {
   background: var(--bg);
-  padding-top: calc(var(--header-h) + clamp(18px, 3.4vw, 54px));
-  padding-bottom: clamp(26px, 3vw, 48px);
+  padding-top: calc(var(--header-h) + clamp(14px, 2vw, 30px));
+  padding-bottom: clamp(18px, 2.2vw, 32px);
   border-bottom: 1px solid var(--hairline);
 }
 .dbi-page .dbi-hero__grid {
@@ -3940,19 +4032,24 @@ html.js .dbi-page .dbi-hero__media.is-in img { transform: scale(1); }
     linear-gradient(90deg,
       var(--bg) 0%,
       color-mix(in srgb, var(--bg) 50%, transparent) 17%,
-      transparent 44%),
-    linear-gradient(180deg,
-      color-mix(in srgb, var(--bg) 78%, transparent) 0%,
-      transparent 24%,
-      transparent 76%,
-      color-mix(in srgb, var(--bg) 78%, transparent) 100%);
+      transparent 44%);
+}
+/* the photo column bleeds past the section's own top/bottom padding so the
+   image reaches the header's bottom edge and the section's bottom border
+   instead of leaving a blank band there — it stops flush at the header
+   rather than running behind it, and text keeps its normal padding; only
+   the photo (which clips via overflow:hidden + object-fit:cover) extends */
+@media (min-width: 901px) {
+  .dbi-page .dbi-hero__media {
+    margin-block: calc(-1 * clamp(14px, 2vw, 30px)) calc(-1 * clamp(18px, 2.2vw, 32px));
+  }
 }
 
 /* ── 02 · START WITH THE DECISION (dark band) ────────────── */
 .dbi-page .dbi-focus {
   position: relative; overflow: hidden;
   background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
-  padding-block: clamp(38px, 4.4vw, 68px);
+  padding-block: clamp(28px, 3.2vw, 46px);
   text-align: center;
 }
 .dbi-page .dbi-focus__slash {
@@ -3979,7 +4076,7 @@ html.js .dbi-page .dbi-hero__media.is-in img { transform: scale(1); }
 .dbi-page .dbi-ways {
   position: relative; overflow: hidden;
   background: var(--bg);
-  padding-block: clamp(36px, 4.2vw, 64px) clamp(20px, 2.4vw, 32px);
+  padding-block: clamp(26px, 3vw, 44px) clamp(16px, 2vw, 26px);
   text-align: center;
 }
 .dbi-page .dbi-ways__dots {
@@ -4005,7 +4102,7 @@ html[data-theme="dark"] .dbi-page .dbi-ways__dots { color: var(--hairline); }
 .dbi-page .dbi-row {
   position: relative; overflow: hidden;
   background: var(--bg);
-  padding-block: clamp(32px, 3.8vw, 56px);
+  padding-block: clamp(24px, 2.8vw, 40px);
   border-top: 1px solid var(--hairline);
 }
 .dbi-page .dbi-row--cream { background: var(--bg-cream); }
@@ -4106,12 +4203,12 @@ html[data-theme="dark"] .dbi-page .dbi-row__bars { color: var(--hairline); opaci
 /* ── 05 · A CLEARER PATH TO A DECISION ───────────────────── */
 .dbi-page .dbi-path {
   background: var(--bg);
-  padding-block: clamp(26px, 3vw, 44px);
+  padding-block: clamp(20px, 2.4vw, 32px);
   border-top: 1px solid var(--hairline);
 }
 .dbi-page .dbi-path__head {
   text-align: center; max-width: none;
-  margin: 0 auto clamp(18px, 2.2vw, 28px);
+  margin: 0 auto clamp(14px, 1.8vw, 22px);
 }
 /* the measure is wide enough for the headline to sit on one line at
    desktop (as in the reference) and two on tablet — a narrower cap
@@ -4147,7 +4244,7 @@ html[data-theme="dark"] .dbi-page .dbi-row__bars { color: var(--hairline); opaci
 .dbi-page .dbi-final {
   position: relative; overflow: hidden;
   background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
-  padding-block: clamp(40px, 4.8vw, 74px);
+  padding-block: clamp(28px, 3.2vw, 46px);
 }
 .dbi-page .dbi-final__grid {
   position: relative;
@@ -4203,12 +4300,7 @@ html[data-theme="dark"] .dbi-page .dbi-row__bars { color: var(--hairline); opaci
   }
   .dbi-page .dbi-hero__lede { max-width: 46ch; }
   .dbi-page .dbi-hero__media { min-height: 0; aspect-ratio: 16 / 9; }
-  .dbi-page .dbi-hero__media::after {
-    background: linear-gradient(180deg,
-      var(--bg) 0%, color-mix(in srgb, var(--bg) 45%, transparent) 12%,
-      transparent 32%, transparent 74%,
-      color-mix(in srgb, var(--bg) 55%, transparent) 96%, var(--bg) 100%);
-  }
+  .dbi-page .dbi-hero__media::after { background: none; }
   .dbi-page .dbi-row__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(18px, 4vw, 28px); }
   .dbi-page .dbi-row--reverse .dbi-row__aside { order: -1; }
   .dbi-page .dbi-row__aside { max-width: none; }
@@ -4216,7 +4308,8 @@ html[data-theme="dark"] .dbi-page .dbi-row__bars { color: var(--hairline); opaci
   .dbi-page .dbi-row__dots,
   .dbi-page .dbi-row__nodes,
   .dbi-page .dbi-row__bars,
-  .dbi-page .dbi-ways__dots { display: none; }
+  .dbi-page .dbi-ways__dots,
+  .dbi-page .dbi-focus__slash { display: none; }
   .dbi-page .dbi-final__grid { grid-template-columns: minmax(0, 1fr); }
   .dbi-page .dbi-final__lead, .dbi-page .dbi-final__act { grid-column: auto; grid-row: auto; }
   .dbi-page .dbi-final__act { justify-self: start; }
@@ -4255,7 +4348,7 @@ html[data-theme="dark"] .dbi-page .dbi-row__bars { color: var(--hairline); opaci
 /* solutions.html — the on-page "How We Help" grid inherits the global
    .section rhythm, which is tuned for the homepage. Scope a tighter
    block to this page's own class rather than moving --section-y. */
-.section-solutions-help { padding-block: clamp(34px, 3.8vw, 58px); }
+.section-solutions-help { padding-block: clamp(24px, 2.8vw, 40px); }
 
 /* Inner-page hero photographs sit against a near-black surface in dark
    mode; the homepage already dims its hero art via --hero-dim, so the
@@ -4299,31 +4392,29 @@ html[data-theme="dark"] .global-talent-page .gt-hero__media img {
 }
 
 @media (min-width: 901px) {
-  /* hero */
+  /* hero — stretch to fill the grid row so the image covers the full
+     height of the text column beside it; no fixed height cap. */
   .abx-intro__media,
   .global-talent-page .gt-hero__media,
   .careers-page .car-hero__media,
   .letsconnect-page .lc-hero__media,
   .bizcon-page .bc-hero__media,
   .dbi-page .dbi-hero__media {
-    align-self: center;
-    height: var(--fig-hero-h);
+    align-self: stretch;
     min-height: 0;
   }
 
   /* band — .pnr-final__media is excluded on purpose: its angled cut is a
      percentage of width, so it needs a fixed aspect-ratio, not a height */
   .global-talent-page .gt-cta__media {
-    align-self: center;
-    height: var(--fig-band-h);
+    align-self: stretch;
     min-height: 0;
   }
 
   /* inset */
   .abx-work__media,
   .pnr-position__media {
-    align-self: center;
-    height: var(--fig-inset-h);
+    align-self: stretch;
     min-height: 0;
   }
 }
@@ -4343,4 +4434,4 @@ html[data-theme="dark"] .global-talent-page .gt-hero__media img {
 /* solutions.html — the on-page "How We Help" grid inherits the global
    .section rhythm, which is tuned for the homepage. Scope a tighter
    block to this page's own class rather than moving --section-y. */
-.section-solutions-help { padding-block: clamp(34px, 3.8vw, 58px); }
+.section-solutions-help { padding-block: clamp(24px, 2.8vw, 40px); }

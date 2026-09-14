@@ -231,6 +231,107 @@
   }());
 
 
+  /* ── 04b1. CUSTOM SELECT (form dropdown menus) ───────────
+     Native <select> popups can't be styled cross-browser, so form fields
+     that need a styled dropdown (Work Model, Select an Area, …) use this
+     button + listbox pattern instead — one init per .gss-select found on
+     the page. Same open/close/outside-click shape as the social menu
+     above, plus a roving "active" option for arrow-key navigation. */
+  $$('.gss-select').forEach(function (root) {
+    var btn   = $('.gss-select__btn', root);
+    var menu  = $('.gss-select__menu', root);
+    var value = $('.gss-select__value', root);
+    var input = $('.gss-select__input', root);
+    var opts  = $$('.gss-select__opt', root);
+    if (!btn || !menu || !opts.length) return;
+
+    opts.forEach(function (opt, i) {
+      if (!opt.id) opt.id = (root.getAttribute('data-name') || 'gss-select') + '-opt-' + i;
+    });
+
+    var closeTimer = null;
+    var activeIndex = Math.max(0, opts.findIndex(function (o) { return o.classList.contains('is-selected'); }));
+
+    function isOpen() { return root.classList.contains('is-open'); }
+
+    function setActive(i, scrollIt) {
+      activeIndex = (i + opts.length) % opts.length;
+      opts.forEach(function (o, idx) { o.classList.toggle('is-active', idx === activeIndex); });
+      btn.setAttribute('aria-activedescendant', opts[activeIndex].id);
+      if (scrollIt !== false) opts[activeIndex].scrollIntoView({ block: 'nearest' });
+    }
+
+    function open() {
+      window.clearTimeout(closeTimer);
+      menu.hidden = false;
+      window.requestAnimationFrame(function () { root.classList.add('is-open'); });
+      btn.setAttribute('aria-expanded', 'true');
+      setActive(activeIndex);
+      window.setTimeout(function () { document.addEventListener('click', onOutside); }, 0);
+      document.addEventListener('keydown', onKey);
+    }
+
+    function close(returnFocus) {
+      root.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+      document.removeEventListener('click', onOutside);
+      document.removeEventListener('keydown', onKey);
+      closeTimer = window.setTimeout(function () {
+        if (!isOpen()) menu.hidden = true;
+      }, reduceMotion ? 0 : 220);
+      if (returnFocus) btn.focus();
+    }
+
+    function onOutside(e) { if (!root.contains(e.target)) close(false); }
+
+    function selectOption(i) {
+      var opt = opts[i];
+      if (!opt) return;
+      opts.forEach(function (o) { o.classList.remove('is-selected'); o.setAttribute('aria-selected', 'false'); });
+      opt.classList.add('is-selected');
+      opt.setAttribute('aria-selected', 'true');
+      value.textContent = opt.dataset.short || opt.textContent;
+      root.classList.toggle('has-value', !!opt.dataset.value);
+      if (input) input.value = opt.dataset.value || '';
+      // country-code options repeat the same dial code (US/Canada are both
+      // "+1"), so the visible trigger alone can't tell them apart — keep the
+      // accessible name in sync with the full option label instead.
+      if (opt.dataset.short) {
+        var nameEl = $('.gss-select__optname', opt);
+        btn.setAttribute('aria-label', (nameEl ? nameEl.textContent : opt.textContent) + ', ' + opt.dataset.short);
+      }
+      activeIndex = i;
+    }
+
+    function onKey(e) {
+      switch (e.key) {
+        case 'Escape': e.preventDefault(); close(true); break;
+        case 'ArrowDown': e.preventDefault(); setActive(activeIndex + 1); break;
+        case 'ArrowUp': e.preventDefault(); setActive(activeIndex - 1); break;
+        case 'Home': e.preventDefault(); setActive(0); break;
+        case 'End': e.preventDefault(); setActive(opts.length - 1); break;
+        case 'Enter':
+        case ' ':
+          e.preventDefault(); selectOption(activeIndex); close(true); break;
+        case 'Tab':
+          window.setTimeout(function () {
+            if (!root.contains(document.activeElement)) close(false);
+          }, 0);
+          break;
+      }
+    }
+
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      isOpen() ? close(false) : open();
+    });
+    opts.forEach(function (opt, i) {
+      opt.addEventListener('click', function (e) { e.stopPropagation(); selectOption(i); close(true); });
+      opt.addEventListener('mouseenter', function () { setActive(i, false); });
+    });
+  });
+
+
   /* ── 04b2. NAV MEGA MENU (Solutions, desktop) ────────────
      Plain CSS :hover breaks here: the panel is position:fixed right under
      the header, so there's a real pixel gap between the "Solutions" link

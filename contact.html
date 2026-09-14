@@ -217,21 +217,58 @@
         </div>
         <div class="lc-field">
           <label for="lc-phone">Phone number</label>
-          <input type="tel" id="lc-phone" name="phone" placeholder="Phone number" autocomplete="tel">
+          <div class="lc-phone">
+            <div class="gss-select gss-select--code has-value" data-name="country_code">
+              <button type="button" class="gss-select__btn" id="lc-country-code" aria-haspopup="listbox" aria-expanded="false" aria-label="Country code, United States, plus 1">
+                <span class="gss-select__value">+1</span>
+                <svg class="ico gss-select__caret" aria-hidden="true"><use href="#i-chevron"/></svg>
+              </button>
+              <ul class="gss-select__menu" role="listbox" aria-label="Country code" hidden>
+                <li class="gss-select__opt gss-select__opt--code is-selected" role="option" aria-selected="true" data-value="+1" data-short="+1"><span class="gss-select__optcode">+1</span><span class="gss-select__optname">United States</span></li>
+                <li class="gss-select__opt gss-select__opt--code" role="option" aria-selected="false" data-value="+1" data-short="+1"><span class="gss-select__optcode">+1</span><span class="gss-select__optname">Canada</span></li>
+                <li class="gss-select__opt gss-select__opt--code" role="option" aria-selected="false" data-value="+44" data-short="+44"><span class="gss-select__optcode">+44</span><span class="gss-select__optname">United Kingdom</span></li>
+                <li class="gss-select__opt gss-select__opt--code" role="option" aria-selected="false" data-value="+91" data-short="+91"><span class="gss-select__optcode">+91</span><span class="gss-select__optname">India</span></li>
+                <li class="gss-select__opt gss-select__opt--code" role="option" aria-selected="false" data-value="+61" data-short="+61"><span class="gss-select__optcode">+61</span><span class="gss-select__optname">Australia</span></li>
+                <li class="gss-select__opt gss-select__opt--code" role="option" aria-selected="false" data-value="+49" data-short="+49"><span class="gss-select__optcode">+49</span><span class="gss-select__optname">Germany</span></li>
+                <li class="gss-select__opt gss-select__opt--code" role="option" aria-selected="false" data-value="+33" data-short="+33"><span class="gss-select__optcode">+33</span><span class="gss-select__optname">France</span></li>
+                <li class="gss-select__opt gss-select__opt--code" role="option" aria-selected="false" data-value="+52" data-short="+52"><span class="gss-select__optcode">+52</span><span class="gss-select__optname">Mexico</span></li>
+                <li class="gss-select__opt gss-select__opt--code" role="option" aria-selected="false" data-value="+55" data-short="+55"><span class="gss-select__optcode">+55</span><span class="gss-select__optname">Brazil</span></li>
+                <li class="gss-select__opt gss-select__opt--code" role="option" aria-selected="false" data-value="+971" data-short="+971"><span class="gss-select__optcode">+971</span><span class="gss-select__optname">United Arab Emirates</span></li>
+                <li class="gss-select__opt gss-select__opt--code" role="option" aria-selected="false" data-value="+63" data-short="+63"><span class="gss-select__optcode">+63</span><span class="gss-select__optname">Philippines</span></li>
+                <li class="gss-select__opt gss-select__opt--code" role="option" aria-selected="false" data-value="+65" data-short="+65"><span class="gss-select__optcode">+65</span><span class="gss-select__optname">Singapore</span></li>
+                <li class="gss-select__opt gss-select__opt--code" role="option" aria-selected="false" data-value="+27" data-short="+27"><span class="gss-select__optcode">+27</span><span class="gss-select__optname">South Africa</span></li>
+                <li class="gss-select__opt gss-select__opt--code" role="option" aria-selected="false" data-value="+353" data-short="+353"><span class="gss-select__optcode">+353</span><span class="gss-select__optname">Ireland</span></li>
+                <li class="gss-select__opt gss-select__opt--code" role="option" aria-selected="false" data-value="+31" data-short="+31"><span class="gss-select__optcode">+31</span><span class="gss-select__optname">Netherlands</span></li>
+                <li class="gss-select__opt gss-select__opt--code" role="option" aria-selected="false" data-value="+34" data-short="+34"><span class="gss-select__optcode">+34</span><span class="gss-select__optname">Spain</span></li>
+                <li class="gss-select__opt gss-select__opt--code" role="option" aria-selected="false" data-value="+39" data-short="+39"><span class="gss-select__optcode">+39</span><span class="gss-select__optname">Italy</span></li>
+                <li class="gss-select__opt gss-select__opt--code" role="option" aria-selected="false" data-value="+81" data-short="+81"><span class="gss-select__optcode">+81</span><span class="gss-select__optname">Japan</span></li>
+              </ul>
+              <input type="hidden" class="gss-select__input" name="country_code" value="+1">
+            </div>
+            <span class="lc-phone__divider" aria-hidden="true"></span>
+            <input type="tel" id="lc-phone" name="phone" placeholder="Phone number" autocomplete="tel" class="lc-phone__input">
+          </div>
         </div>
       </div>
       <div class="lc-field">
         <label for="lc-area">How can we help?</label>
-        <select id="lc-area" name="area">
-          <option value="">Select an area</option>
-          <option>Business Consulting</option>
-          <option>Data &amp; Business Insight</option>
-          <option>Technology &amp; Delivery</option>
-          <option>Global Talent</option>
-          <option>Alliances</option>
-          <option>Careers</option>
-          <option>Something else</option>
-        </select>
+        <div class="gss-select" data-name="area">
+          <button type="button" class="gss-select__btn" id="lc-area" aria-haspopup="listbox" aria-expanded="false">
+            <span class="gss-select__value">Select an area</span>
+            <svg class="ico gss-select__caret" aria-hidden="true"><use href="#i-chevron"/></svg>
+          </button>
+          <ul class="gss-select__menu" role="listbox" aria-label="How can we help?" hidden>
+            <li class="gss-select__opt is-selected" role="option" aria-selected="true" data-value="">Select an area</li>
+            <li class="gss-select__opt" role="option" aria-selected="false" data-value="Business Consulting">Business Consulting</li>
+            <li class="gss-select__opt" role="option" aria-selected="false" data-value="Data &amp; Business Insight">Data &amp; Business Insight</li>
+            <li class="gss-select__opt" role="option" aria-selected="false" data-value="Technology &amp; Delivery">Technology &amp; Delivery</li>
+            <li class="gss-select__opt" role="option" aria-selected="false" data-value="Global Talent">Global Talent</li>
+            <li class="gss-select__opt" role="option" aria-selected="false" data-value="Alliances">Alliances</li>
+            <li class="gss-select__opt" role="option" aria-selected="false" data-value="Careers">Careers</li>
+            <li class="gss-select__opt" role="option" aria-selected="false" data-value="Something else">Something else</li>
+          </ul>
+          <input type="hidden" class="gss-select__input" name="area" value="">
+        </div>
       </div>
       <div class="lc-field">
         <label for="lc-subject">Subject</label>
