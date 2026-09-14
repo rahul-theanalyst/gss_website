@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Our Focus Area — GSS</title>
-<meta name="description" content="Our Focus Area from GSS: managed remote delivery, dedicated remote teams, applied AI and workflow automation, and practical modernization — sized to the need, not a predefined package.">
+<title>Clientele — GSS</title>
+<meta name="description" content="Organizations our teams have supported. GSS teams and consultants contribute through direct engagements and through delivery relationships with prime vendors, systems integrators, partners and alliances.">
 <meta name="theme-color" content="#0F2247">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Our Focus Area — GSS">
-<meta property="og:description" content="Our Focus Area from GSS: managed remote delivery, dedicated remote teams, applied AI and workflow automation, and practical modernization — sized to the need, not a predefined package.">
-<meta property="og:image" content="images/hero-skyline-1200.webp">
+<meta property="og:title" content="Clientele &mdash; GSS">
+<meta property="og:description" content="Organizations our teams have supported — through direct engagements and through delivery relationships with prime vendors, systems integrators, partners and alliances.">
+<meta property="og:image" content="images/clx-hero-1300.webp">
 <meta property="og:site_name" content="Global Soft Systems">
 <meta name="twitter:card" content="summary_large_image">
 
@@ -22,16 +22,49 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap">
 
+<!-- The hero photo is the LCP element — preload it. -->
+<link rel="preload" as="image" href="images/clx-hero-1300.webp" imagesrcset="images/clx-hero-560.webp 560w, images/clx-hero-900.webp 900w, images/clx-hero-1300.webp 1300w" imagesizes="(max-width: 900px) 100vw, 44vw" fetchpriority="high">
+
 <link rel="stylesheet" href="style.css">
 
 <!-- Flag JS support so scroll-reveal never hides content when scripting is off -->
 <script>document.documentElement.classList.add('js');</script>
 </head>
-<body class="focusarea-page">
+<body class="clientele-page">
 
 <a class="skip-link" href="#main">Skip to main content</a>
 
 <svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <g id="ico-base" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></g>
+  </defs>
+
+  <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6.8V12l3.6 2.1"/></g></symbol>
+
+  <symbol id="i-users" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.4" cy="8.4" r="3.2"/><path d="M3.2 19.4a6.2 6.2 0 0 1 12.4 0"/><path d="M16.4 5.7a3 3 0 0 1 0 5.5"/><path d="M17.6 14.4a5.3 5.3 0 0 1 3.2 5"/></g></symbol>
+
+  <symbol id="i-handshake" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></g></symbol>
+
+  <symbol id="i-chart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 19.5v-4.8M10.3 19.5V9.2M15.7 19.5v-7.4M21 19.5V5.4"/></g></symbol>
+
+  <symbol id="i-user-circle" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.4 18.7a6.4 6.4 0 0 1 11.2 0"/></g></symbol>
+
+  <symbol id="i-briefcase-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12.6 18.5H4.1a1.6 1.6 0 0 1-1.6-1.6V9.1a1.6 1.6 0 0 1 1.6-1.6h11.4a1.6 1.6 0 0 1 1.6 1.6v1.6"/><path d="M6.9 7.5V6a1.6 1.6 0 0 1 1.6-1.6h2.6A1.6 1.6 0 0 1 12.7 6v1.5"/><circle cx="17.6" cy="16" r="4.4"/><path d="M17.6 13.9V16l1.5.9"/></g></symbol>
+
+  <symbol id="i-org" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.4"/><circle cx="6" cy="19" r="2.4"/><circle cx="18" cy="19" r="2.4"/><path d="M12 7.4v3.3M6 16.6V14h12v2.6M12 10.7V14"/></g></symbol>
+
+  <symbol id="i-globe" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3.3 12h17.4"/><path d="M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"/></g></symbol>
+
+  <symbol id="i-user-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.4" cy="8" r="3.4"/><path d="M3.1 19.6a6.3 6.3 0 0 1 12.6 0"/><path d="m16.6 11.7 2 2 3.4-3.6"/></g></symbol>
+
+  <symbol id="i-award" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5.2"/><path d="m8.7 13.5-1.4 6.4 4.7-2.5 4.7 2.5-1.4-6.4"/></g></symbol>
+
+  <symbol id="i-compass" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15.6 8.4-2.1 5.1-5.1 2.1 2.1-5.1z"/></g></symbol>
+
+  <symbol id="i-layers" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 4.6-9 4.6-9-4.6z"/><path d="m3 12.4 9 4.6 9-4.6"/><path d="m3 16.9 9 4.6 9-4.6"/></g></symbol>
+
+  <symbol id="i-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4.6 6.1v5.6c0 4.5 3.1 7.8 7.4 9.2 4.3-1.4 7.4-4.7 7.4-9.2V6.1z"/><path d="m9.1 12 2.2 2.2 4.1-4.4"/></g></symbol>
+
   <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h14.5"/><path d="m13.4 6.6 5.4 5.4-5.4 5.4"/></g></symbol>
 
   <symbol id="i-chevron" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 9 7 7 7-7"/></g></symbol>
@@ -40,7 +73,7 @@
 
   <symbol id="i-moon" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5a8.6 8.6 0 1 0 10.7 10.7z"/></g></symbol>
 
-  <symbol id="i-globe" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3.3 12h17.4"/><path d="M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"/></g></symbol>
+  <symbol id="i-quote" viewBox="0 0 40 30"><g fill="currentColor"><path d="M0 30V16.6C0 7.4 4.9 1.4 14.3 0l1.3 4.4c-5 1.4-7.6 4.4-7.7 8.9h6.7V30zm23.4 0V16.6C23.4 7.4 28.3 1.4 37.7 0L39 4.4c-5 1.4-7.6 4.4-7.7 8.9H38V30z"/></g></symbol>
 
   <symbol id="i-x" viewBox="0 0 24 24"><path fill="currentColor" d="M18.9 2.6h3.1l-6.8 7.8 8 10.6h-6.3l-4.9-6.4-5.6 6.4H3.3l7.3-8.3-7.7-10.1h6.4l4.4 5.9zM17.8 19.1h1.7L7.7 4.3H5.9z"/></symbol>
 </svg>
@@ -57,7 +90,7 @@
           <ul>
             <li><a href="about.html">About Us</a></li>
             <li class="has-dropdown">
-              <a href="#" class="is-current" aria-current="page" aria-haspopup="true" aria-expanded="false">Solutions <svg class="ico nav-caret" aria-hidden="true"><use href="#i-chevron"/></svg></a>
+              <a href="#" aria-haspopup="true" aria-expanded="false">Solutions <svg class="ico nav-caret" aria-hidden="true"><use href="#i-chevron"/></svg></a>
               <!-- Solutions mega menu (reusable "solutions-card" component; each item links to its own page) -->
               <div class="nav-megamenu" role="menu" aria-label="Solutions menu">
               <div class="container nav-megamenu-head">
@@ -93,7 +126,7 @@
               </div>
             </li>
             <li><a href="global-talent.html">Global Talent</a></li>
-            <li><a href="clientele.html">Clientele</a></li>
+            <li><a href="clientele.html" class="is-current" aria-current="page">Clientele</a></li>
             <li><a href="partner.html">Alliances</a></li>
             <li><a href="career.html">Careers</a></li>
             <li><a href="contact.html">Let's Connect</a></li>
@@ -133,7 +166,7 @@
         <li><a href="about.html">About Us</a></li>
         <li class="mobile-subnav">
           <div class="mobile-subnav-row">
-          <a href="#" class="is-current" aria-current="page">Solutions</a>
+          <a href="#">Solutions</a>
           <button class="mobile-subnav-toggle" type="button" aria-expanded="false" aria-controls="mobileSolutionsPanel" aria-label="Toggle Solutions submenu"><svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></button>
           </div>
           <div class="mobile-subnav-wrap">
@@ -141,12 +174,12 @@
             <li><a href="business-consulting.html">Business Consulting</a></li>
             <li><a href="data-business-insight.html">Data &amp; Business Insight</a></li>
             <li><a href="technology-delivery.html">Technology &amp; Delivery</a></li>
-            <li><a href="our-focus-area.html" class="is-current" aria-current="page">Our Focus Area</a></li>
+            <li><a href="our-focus-area.html">Our Focus Area</a></li>
           </ul>
           </div>
         </li>
         <li><a href="global-talent.html">Global Talent</a></li>
-        <li><a href="clientele.html">Clientele</a></li>
+        <li><a href="clientele.html" class="is-current" aria-current="page">Clientele</a></li>
         <li><a href="partner.html">Alliances</a></li>
         <li><a href="career.html">Careers</a></li>
         <li><a href="contact.html">Let's Connect</a></li>
@@ -172,159 +205,142 @@
 <main id="main">
 
 <!-- ══════════ 01 · HERO ══════════════════════════════════════ -->
-<section class="fa-hero" id="our-focus-area">
-  <div class="fa-hero__grid">
-    <div class="fa-hero__text">
-      <p class="abx-eyebrow reveal">Our Focus Area</p>
-      <h1 class="fa-hero__title reveal">More capability. More control. A smarter way to move the work forward.</h1>
-      <p class="fa-hero__lede reveal">Growing businesses should not have to choose between capable people, accountable delivery, and responsible cost. We combine close, business-first guidance with carefully aligned remote expertise&mdash;so important work can move without unnecessary overhead.</p>
+<section class="clx-hero" id="clientele">
+  <div class="clx-hero__grid">
+
+    <div class="clx-hero__text">
+      <p class="abx-eyebrow reveal">Our Client Experience</p>
+      <h1 class="clx-hero__title reveal">Good work earns <br class="clx-nb">lasting relationships.</h1>
+      <p class="clx-hero__lede reveal">Every organization has its own priorities, pressures and way of working. We begin by understanding the business, then align the right people and capabilities around what needs to get done.</p>
     </div>
-    <figure class="fa-hero__media reveal">
-      <img src="images/our-focus-area.png"
-           width="2752" height="1536" fetchpriority="high" decoding="async"
-           alt="A GSS advisor pointing out details on a tablet to two colleagues around an office table">
+
+    <figure class="clx-hero__media reveal">
+      <img src="images/clx-hero-1300.webp"
+           srcset="images/clx-hero-560.webp 560w, images/clx-hero-900.webp 900w, images/clx-hero-1300.webp 1300w"
+           sizes="(max-width: 900px) 100vw, 44vw"
+           width="1300" height="732" fetchpriority="high" decoding="async"
+           alt="A GSS adviser and two clients reviewing signed documents across a meeting table">
     </figure>
+
   </div>
 </section>
 
 
-<!-- ══════════ 02 · CLOSE GUIDANCE. DISTRIBUTED DELIVERY. (dark band) ══ -->
-<section class="fa-focus" data-header="dark">
-  <span class="sunburst sunburst-left sunburst--onDark" aria-hidden="true"></span>
-  <span class="fa-focus__slash" aria-hidden="true"></span>
-  <div class="container fa-focus__inner">
-    <p class="abx-eyebrow abx-eyebrow--onDark reveal">Close Guidance. Distributed Delivery.</p>
-    <h2 class="fa-focus__title reveal">Stay close to the decisions&mdash;while the right team moves the work.</h2>
-    <p class="fa-focus__text reveal">Your GSS delivery leads stay connected to your priorities, coordinate the work, and keep progress visible across the engagement.</p>
-  </div>
-</section>
-
-
-<!-- ══════════ 03 · WHERE WE ARE FOCUSED (intro) ═══════════════ -->
-<section class="fa-ways">
-  <span class="fa-ways__dots" aria-hidden="true"></span>
-  <div class="container">
-    <p class="abx-eyebrow reveal" style="text-align:center">Where We Are Focused</p>
-    <h2 class="fa-ways__title reveal">Four practical ways we help growing businesses do more.</h2>
-    <p class="fa-ways__lede reveal">Each model begins with the need&mdash;not a predefined platform, package, or oversized commitment.</p>
-  </div>
-</section>
-
-
-<!-- ══════════ 04 · FOUR WAYS (alternating rows) ═══════════════ -->
-<section class="fa-row" id="managed-remote-delivery">
-  <div class="container fa-row__grid">
-    <div class="fa-row__aside reveal">
-      <p class="fa-row__label">Accountable From Here. Delivered From Anywhere.</p>
-      <h3 class="fa-row__title">Managed Remote Delivery</h3>
-      <p class="fa-row__text">You bring the business need. GSS shapes the plan, coordinates the specialists, and manages delivery through a clear PMO-led structure.</p>
+<!-- ══════════ 02 · TRUST, BUILT THROUGH THE WORK (dark band) ══ -->
+<section class="clx-band" data-header="dark">
+  <div class="container clx-band__grid">
+    <div class="clx-band__lead">
+      <p class="abx-eyebrow abx-eyebrow--onDark reveal">Trust, Built Through the Work</p>
+      <h2 class="clx-band__title reveal">Different engagements. <br class="clx-nb">The same responsibility.</h2>
     </div>
-    <ul class="fa-list">
-      <li class="reveal">Begin with discovery, priorities, and a high-level solution direction</li>
-      <li class="reveal">Align project leadership, architecture, and delivery roles</li>
-      <li class="reveal">Coordinate remote specialists around milestones and outcomes</li>
-      <li class="reveal">Keep decisions, progress, risks, and quality visible</li>
+    <span class="clx-band__rule" aria-hidden="true"><span class="clx-band__slash"></span></span>
+    <p class="clx-band__body reveal">Whether we work directly with an organization or contribute through a trusted delivery partner, we show up prepared, accountable and focused on the work.</p>
+  </div>
+</section>
+
+
+<!-- ══════════ 03 · REPRESENTATIVE EXPERIENCE ═════════════════ -->
+<section class="clx-logos" id="representative-experience">
+
+  <div class="container clx-logos__head">
+    <p class="abx-eyebrow reveal">Representative Experience</p>
+    <h2 class="clx-logos__title reveal">Organizations our teams have supported.</h2>
+    <p class="clx-logos__lede reveal">GSS teams and consultants have contributed to work for recognized organizations through direct engagements and through delivery relationships with prime vendors, systems integrators, partners and alliances.</p>
+  </div>
+
+  <!-- Three-row marquee. Rows are built at runtime from the logo list below:
+       row 1 scrolls right-to-left, row 2 left-to-right, row 3 right-to-left.
+       The rows here are empty on purpose — do not hand-edit them. -->
+  <div class="clx-wall">
+  <div class="clx-marquee" data-clx-marquee role="region"
+       aria-label="Organizations our teams have supported">
+    <div class="clx-rail" data-clx-rail="1" data-dir="rtl" aria-hidden="true"></div>
+    <div class="clx-rail" data-clx-rail="2" data-dir="ltr" aria-hidden="true"></div>
+    <div class="clx-rail" data-clx-rail="3" data-dir="rtl" aria-hidden="true"></div>
+  </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       CLIENT LOGOS — THIS IS THE ONLY PLACE YOU EDIT
+       ────────────────────────────────────────────────────────────────────
+       To ADD a logo     : copy any line below and change the file name + name.
+       To REMOVE a logo  : delete its whole <li> line.
+       To REPLACE a logo : drop the new file into images/clients/ and change
+                           the src. Keep the same file name to change nothing
+                           else.
+       To REORDER logos  : move the <li> lines up or down. They are dealt out
+                           across the three rows in the order they appear here.
+
+       Every logo is one line and looks like this:
+
+         <li><img src="images/clients/NAME.webp" alt="COMPANY NAME"
+                  width="W" height="H" loading="lazy" decoding="async"></li>
+
+       width / height are the file's real pixel size — they keep the row from
+       jumping while images load, and they are what balances a wide wordmark
+       against a square mark, so please keep them accurate.
+
+       Optional class on the <img>, only if a logo looks wrong in one theme:
+         class="clx-logo--lift"   a very dark logo: lightened in dark mode
+         class="clx-logo--ink"    a white/light logo: darkened in light mode
+         class="clx-logo--keep"   never touched in either theme
+       ════════════════════════════════════════════════════════════════════ -->
+  <div class="clientele-logo-list" id="clienteleLogos" data-clx-source>
+    <ul>
+      <li><img src="images/clients/accumatch-consulting.webp" alt="Accumatch Consulting" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/skybeyo-technologies.webp" alt="Skybeyo Technologies" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/populus-group.webp" alt="Populus Group" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/vkore-solutions.webp" alt="vKore Solutions" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/stellar-gis.webp" alt="Stellar GIS Corp" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/apex-systems.webp" alt="Apex Systems" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/sogeti.webp" alt="Sogeti, part of Capgemini" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/smart-it-frame.webp" alt="Smart IT Frame" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/cloudq.webp" alt="CloudQ" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/concentrix-catalyst.webp" alt="Concentrix Catalyst" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/paige-technologies.webp" alt="Paige Technologies" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/snap-it-solutions.webp" alt="Snap IT Solutions" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/paragon-it-proffesional.webp" alt="Paragon IT Professionals" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/gac-solutions.webp" alt="GAC Solutions" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/next-source-staffing.webp" alt="nextSource" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/mphasis.webp" alt="Mphasis" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/medsure-systems.webp" alt="MedSure Systems" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/niche-software.webp" alt="Niche Software Solutions" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/hcl-vendor-pass.webp" alt="VendorPass, an ICON Consultants company" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/sidmans.webp" alt="Sidmans" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/ecloud-labs.webp" alt="eCloud Labs" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/p3-uplift.webp" alt="P3 + Uplift" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/insight-global.webp" alt="Insight Global" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/data-concepts.webp" alt="Data Concepts" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/synapse-tech-services.webp" alt="Synapse Tech Services" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/hcl-global.webp" alt="HCL Global Systems" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/apex-2000-inc.webp" alt="Apex 2000 Inc." width="660" height="220" loading="lazy" decoding="async"></li>
     </ul>
   </div>
-  <p class="fa-row__tag reveal">Potentially 40&ndash;60% lower delivery costs&mdash;depending on scope and team design</p>
-</section>
 
-<section class="fa-row fa-row--cream fa-row--reverse" id="dedicated-remote-teams">
-  <div class="container fa-row__grid">
-    <ul class="fa-list">
-      <li class="reveal">Choose individual specialists or a coordinated team</li>
-      <li class="reveal">Align skills, working hours, communication, and expectations</li>
-      <li class="reveal">Scale capacity as priorities and workloads change</li>
-      <li class="reveal">Address fit concerns quickly through a defined replacement process</li>
-    </ul>
-    <div class="fa-row__aside reveal">
-      <p class="fa-row__label">Flexible Capacity Under Your Direction</p>
-      <h3 class="fa-row__title">Dedicated Remote Teams</h3>
-      <p class="fa-row__text">Lead the work directly while GSS helps assemble and support the remote professionals your plan requires.</p>
-    </div>
-  </div>
-  <p class="fa-row__tag reveal">One-week fit assurance: replacement support at no additional cost, subject to engagement terms</p>
-</section>
-
-<section class="fa-row fa-row--sky" id="applied-ai-workflow-automation">
-  <div class="container fa-row__grid">
-    <div class="fa-row__aside reveal">
-      <p class="fa-row__label">Automation With a Business Purpose</p>
-      <h3 class="fa-row__title">Applied AI &amp; Workflow Automation</h3>
-      <p class="fa-row__text">Start with repetitive work, slow handoffs, or missed information&mdash;not with the technology trend.</p>
-    </div>
-    <ul class="fa-list">
-      <li class="reveal">Identify tasks and decisions where automation can create value</li>
-      <li class="reveal">Choose realistic AI and workflow opportunities</li>
-      <li class="reveal">Connect solutions to the tools and processes already in use</li>
-      <li class="reveal">Pilot, measure, learn, and expand responsibly</li>
-    </ul>
-  </div>
-  <p class="fa-row__tag reveal">Begin small. Prove the value. Scale what works.</p>
-</section>
-
-<section class="fa-row fa-row--cream fa-row--reverse" id="practical-modernization">
-  <div class="container fa-row__grid">
-    <ul class="fa-list">
-      <li class="reveal">Prioritize the improvements that remove the greatest friction</li>
-      <li class="reveal">Extend or simplify existing systems before replacing them</li>
-      <li class="reveal">Strengthen data, security, integration, and usability</li>
-      <li class="reveal">Phase investment around business value and readiness</li>
-    </ul>
-    <div class="fa-row__aside reveal">
-      <p class="fa-row__label">Change Sized for a Growing Business</p>
-      <h3 class="fa-row__title">Practical Modernization</h3>
-      <p class="fa-row__text">Improve the technology you rely on today while preparing the business for what comes next.</p>
-    </div>
-  </div>
-  <p class="fa-row__tag reveal">Modernization without the all-or-nothing reset.</p>
 </section>
 
 
-<!-- ══════════ 05 · TALK. ASSESS. RECOMMEND. DECIDE. ═══════════ -->
-<section class="fa-path">
-  <div class="container">
-    <div class="fa-path__head">
-      <p class="abx-eyebrow reveal" style="text-align:center">Before There Is a Project</p>
-      <h2 class="fa-path__title reveal">Talk. Assess. Recommend. Decide.</h2>
-      <p class="fa-path__lede reveal">Tell us what you are trying to accomplish and what is getting in the way. We will listen, review the need at a high level, and outline a practical direction&mdash;before you decide whether to move forward.</p>
+<!-- ══════════ 04 · HOW WE CONTRIBUTE ═════════════════════════ -->
+<section class="clx-contribute">
+  <div class="container clx-contribute__inner">
+    <div class="clx-contribute__lead">
+      <p class="abx-eyebrow reveal">How We Contribute</p>
+      <h2 class="clx-contribute__title reveal">Direct when it fits. <br class="clx-nb">Collaborative when the work calls for it.</h2>
     </div>
-    <ol class="fa-path__grid">
-      <li class="reveal">
-        <p class="fa-path__label">Conversation</p>
-        <p class="fa-path__copy">Share the goal, concern, or idea in plain language.</p>
-      </li>
-      <li class="reveal">
-        <p class="fa-path__label">Initial Review</p>
-        <p class="fa-path__copy">We consider the business need and current environment.</p>
-      </li>
-      <li class="reveal">
-        <p class="fa-path__label">High-Level Proposal</p>
-        <p class="fa-path__copy">We outline an approach, team model, and next steps.</p>
-      </li>
-      <li class="reveal">
-        <p class="fa-path__label">Your Decision</p>
-        <p class="fa-path__copy">Review the direction and choose whether to proceed.</p>
-      </li>
-    </ol>
-    <p class="fa-path__tag reveal">No cost through the initial high-level proposal.</p>
+    <p class="clx-contribute__body reveal">Some relationships begin directly with GSS. Others take shape within delivery teams led by prime vendors, systems integrators or alliance partners. The engagement model may change; our commitment to the work does not.</p>
   </div>
 </section>
 
 
-<!-- ══════════ 06 · CTA (dark band) ═════════════════════════════ -->
-<section class="fa-final" data-header="dark">
-  <span class="sunburst sunburst-left sunburst--onDark" aria-hidden="true"></span>
-  <div class="container fa-final__grid">
-    <div class="fa-final__lead">
-      <p class="abx-eyebrow abx-eyebrow--onDark reveal">A Better Use of the Budget</p>
-      <h2 class="fa-final__title reveal">Put more of the investment into moving the work forward.</h2>
-      <p class="fa-final__text reveal">Whether you need GSS to manage delivery or support a team you lead, we will help shape an approach around the outcome, the level of control you want, and the budget you have.</p>
+<!-- ══════════ 05 · THE WORK BEHIND THE NAMES (dark band) ══════ -->
+<section class="clx-band clx-band--close" data-header="dark">
+  <div class="container clx-band__grid">
+    <div class="clx-band__lead">
+      <p class="abx-eyebrow abx-eyebrow--onDark reveal">The Work Behind the Names</p>
+      <h2 class="clx-band__title reveal">Experience matters. <br class="clx-nb">How you earn it matters more.</h2>
     </div>
-    <span class="fa-final__accent" aria-hidden="true"></span>
-    <p class="fa-final__act reveal">
-      <a class="btn btn-outline fa-final__btn" href="contact.html">Talk Through the Work <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-    </p>
+    <span class="clx-band__rule" aria-hidden="true"><span class="clx-band__slash"></span></span>
+    <p class="clx-band__body reveal">Behind every name is a team, a challenge and a responsibility to deliver with care.</p>
   </div>
 </section>
 
@@ -364,5 +380,6 @@
 </footer>
 
 <script src="script.js"></script>
+<script src="clientele.js"></script>
 </body>
 </html>
