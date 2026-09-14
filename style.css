@@ -2050,7 +2050,11 @@ html[data-theme="dark"] .pnr-hero-dots { color: var(--hairline); }
 .pnr-position { background: var(--bg); padding-block: clamp(22px, 2.6vw, 38px); }
 .pnr-position__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--fig-inset-w);
+  /* wider than the shared --fig-inset-w: this box stretches tall to match
+     the copy's height (below), and a narrower column at that height was
+     cropping most of the photo's width away — the extra room keeps both
+     people and the office behind them in frame instead of a tight zoom */
+  grid-template-columns: minmax(0, 1fr) clamp(380px, 52vw, 900px);
   align-items: center;
   gap: clamp(28px, 4vw, 64px);
 }
@@ -2064,14 +2068,25 @@ html[data-theme="dark"] .pnr-hero-dots { color: var(--hairline); }
   margin: 0; overflow: hidden;
   min-height: clamp(230px, 26vw, 366px);
 }
-.pnr-position__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; display: block; }
+.pnr-position__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; display: block; }
+/* a long, eased fade (0→55% of the photo's width) rather than a short
+   linear ramp — enough color stops that the rate of change itself changes
+   smoothly, so there's no kink where the fade meets full transparency.
+   var(--bg) carries both themes, so the same rule serves light and dark. */
 .pnr-position__media::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background:
     linear-gradient(90deg,
       var(--bg) 0%,
-      color-mix(in srgb, var(--bg) 38%, transparent) 8%,
-      transparent 22%);
+      color-mix(in srgb, var(--bg) 94%, transparent) 5%,
+      color-mix(in srgb, var(--bg) 84%, transparent) 10%,
+      color-mix(in srgb, var(--bg) 70%, transparent) 16%,
+      color-mix(in srgb, var(--bg) 54%, transparent) 23%,
+      color-mix(in srgb, var(--bg) 38%, transparent) 30%,
+      color-mix(in srgb, var(--bg) 24%, transparent) 38%,
+      color-mix(in srgb, var(--bg) 13%, transparent) 46%,
+      color-mix(in srgb, var(--bg) 5%, transparent) 51%,
+      transparent 55%);
 }
 /* the photo bleeds past the section's own top/bottom padding so it fills
    the section edge to edge instead of leaving a blank band above/below —
@@ -2829,17 +2844,16 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
     linear-gradient(90deg,
       var(--gt-melt) 0%,
       color-mix(in srgb, var(--gt-melt) 50%, transparent) 17%,
-      transparent 44%),
-    /* the horizontal fade is the Alliances value verbatim; the vertical one
-       runs all the way to opaque because a bright photo against this navy
-       shows a seam at 60% where it does not against the light sections */
-    linear-gradient(180deg,
-      var(--gt-melt) 0%,
-      color-mix(in srgb, var(--gt-melt) 72%, transparent) 4%,
-      transparent 20%,
-      transparent 80%,
-      color-mix(in srgb, var(--gt-melt) 72%, transparent) 96%,
-      var(--gt-melt) 100%);
+      transparent 44%);
+}
+/* the photo bleeds past the section's own top/bottom padding so it fills
+   the band edge to edge instead of leaving a blank strip above/below —
+   text keeps its normal padding; only the photo (which clips via
+   overflow:hidden + object-fit:cover) extends and zooms to cover it */
+@media (min-width: 901px) {
+  .global-talent-page .gt-cta__media {
+    margin-block: calc(-1 * clamp(16px, 1.8vw, 26px)) calc(-1 * clamp(14px, 1.5vw, 22px));
+  }
 }
 
 
@@ -2875,16 +2889,11 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
   .global-talent-page .gt-hero__tail { max-width: 46ch; }
   .global-talent-page .gt-hero__media,
   .global-talent-page .gt-cta__media { min-height: 0; aspect-ratio: 16 / 9; }
-  /* stacked — the hero photo now runs full-width under the copy, so it
-     fills edge to edge instead of fading top/bottom */
-  .global-talent-page .gt-hero__media::after {
-    background: none;
-  }
+  /* stacked — the photos now run full-width under the copy, so they fill
+     edge to edge instead of fading top/bottom */
+  .global-talent-page .gt-hero__media::after,
   .global-talent-page .gt-cta__media::after {
-    background: linear-gradient(180deg,
-      var(--gt-melt) 0%, color-mix(in srgb, var(--gt-melt) 25%, transparent) 6%,
-      transparent 16%, transparent 84%,
-      color-mix(in srgb, var(--gt-melt) 25%, transparent) 94%, var(--gt-melt) 100%);
+    background: none;
   }
   .global-talent-page .gt-intro__dots { opacity: .6; }
 }
@@ -4345,11 +4354,6 @@ html[data-theme="dark"] .dbi-page .dbi-row__bars { color: var(--hairline); opaci
    index.html), so nothing here can reach the approved homepage
    layout. ──────────────────────────────────────────────────────── */
 
-/* solutions.html — the on-page "How We Help" grid inherits the global
-   .section rhythm, which is tuned for the homepage. Scope a tighter
-   block to this page's own class rather than moving --section-y. */
-.section-solutions-help { padding-block: clamp(24px, 2.8vw, 40px); }
-
 /* Inner-page hero photographs sit against a near-black surface in dark
    mode; the homepage already dims its hero art via --hero-dim, so the
    inner heroes follow the same idea at a gentler strength and stop
@@ -4431,7 +4435,645 @@ html[data-theme="dark"] .global-talent-page .gt-hero__media img {
   filter: brightness(.86) saturate(.92);
 }
 
-/* solutions.html — the on-page "How We Help" grid inherits the global
-   .section rhythm, which is tuned for the homepage. Scope a tighter
-   block to this page's own class rather than moving --section-y. */
-.section-solutions-help { padding-block: clamp(24px, 2.8vw, 40px); }
+/* ══════════ 16k. SOLUTIONS — TECHNOLOGY & DELIVERY ══════════════
+   technology-delivery.html's entire body (id="technology-delivery" on the hero,
+   matching the header nav's existing link). Reuses the same editorial
+   spine as About/Business Consulting/Data & Business Insight: a split
+   hero, a dark "focus" band, a centred intro, five alternating rows,
+   a four-icon delivery-rhythm band, and a dark closing CTA. Scoped
+   under .techdelivery-page; every colour comes from the existing tokens
+   so both themes follow the site. ─────────────────────────────────── */
+
+.techdelivery-page #main { overflow-x: clip; }
+
+.techdelivery-page .td-hero__title,
+.techdelivery-page .td-focus__title,
+.techdelivery-page .td-ways__title,
+.techdelivery-page .td-row__title,
+.techdelivery-page .td-rhythm__title,
+.techdelivery-page .td-final__title {
+  font-variant-numeric: lining-nums;
+  -webkit-font-feature-settings: "lnum" 1;
+  font-feature-settings: "lnum" 1;
+}
+
+/* ── OUR FOCUS AREA (hero) ────────────────────────────────── */
+.techdelivery-page .td-hero {
+  background: var(--bg);
+  padding-top: calc(var(--header-h) + clamp(14px, 2vw, 30px));
+  padding-bottom: clamp(18px, 2.2vw, 32px);
+  border-bottom: 1px solid var(--hairline);
+}
+.techdelivery-page .td-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--fig-hero-w);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: center;
+}
+.techdelivery-page .td-hero__text {
+  align-self: center;
+  margin-left: var(--gutter);
+  border-left: 2px solid var(--gold);
+  padding-inline-start: clamp(20px, 2.2vw, 34px);
+  max-width: 34rem;
+}
+.techdelivery-page .td-hero__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.9rem, 3.3vw, 3rem);
+  line-height: 1.14; letter-spacing: -.012em;
+  color: var(--navy);
+  margin: clamp(10px, 1.4vw, 16px) 0 clamp(16px, 2vw, 24px);
+  text-wrap: balance;
+}
+.techdelivery-page .td-hero__lede {
+  color: var(--muted); font-size: clamp(.95rem, 1.05vw, 1.08rem);
+  line-height: 1.7; max-width: 32rem; margin: 0; text-wrap: pretty;
+}
+.techdelivery-page .td-hero__media {
+  position: relative; align-self: stretch;
+  margin: 0; overflow: hidden;
+  min-height: clamp(222px, 25vw, 358px);
+}
+.techdelivery-page .td-hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 32%; display: block; }
+.techdelivery-page .td-hero__media::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg,
+      var(--bg) 0%,
+      color-mix(in srgb, var(--bg) 50%, transparent) 17%,
+      transparent 44%);
+}
+/* the photo bleeds past the section's own padding so it fills the band
+   edge to edge instead of leaving a blank strip above/below — text
+   keeps its normal padding; only the photo (which clips via
+   overflow:hidden + object-fit:cover) extends and zooms to cover it */
+@media (min-width: 901px) {
+  .techdelivery-page .td-hero__media {
+    margin-block: calc(-1 * clamp(14px, 2vw, 30px)) calc(-1 * clamp(18px, 2.2vw, 32px));
+  }
+}
+
+/* ── CLOSE GUIDANCE. DISTRIBUTED DELIVERY. (dark band) ───── */
+.techdelivery-page .td-focus {
+  position: relative; overflow: hidden;
+  background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
+  padding-block: clamp(28px, 3.2vw, 46px);
+  text-align: center;
+}
+.techdelivery-page .td-focus__slash {
+  position: absolute; top: -20%; right: 9%;
+  width: 2px; height: 140%;
+  background: linear-gradient(180deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
+  transform: rotate(20deg); transform-origin: top;
+  opacity: .8; pointer-events: none;
+}
+.techdelivery-page .td-focus__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.55rem, 3vw, 2.5rem);
+  line-height: 1.2; color: #fff;
+  margin: 0 auto; max-width: 34ch; text-wrap: balance;
+}
+.techdelivery-page .td-focus__text {
+  margin: clamp(14px, 1.7vw, 22px) auto 0;
+  color: rgba(255,255,255,.72);
+  font-size: clamp(.95rem, 1.05vw, 1.05rem);
+  line-height: 1.65; max-width: 64ch;
+}
+
+/* ── WHERE WE ARE FOCUSED (intro) ────────────────────────── */
+.techdelivery-page .td-ways {
+  position: relative; overflow: hidden;
+  background: var(--bg);
+  padding-block: clamp(26px, 3vw, 44px) clamp(16px, 2vw, 26px);
+  text-align: center;
+}
+.techdelivery-page .td-ways__dots {
+  position: absolute; top: clamp(22px, 3vw, 44px); right: clamp(18px, 4vw, 72px);
+  width: clamp(70px, 7vw, 116px); height: clamp(52px, 5vw, 84px);
+  background-image: radial-gradient(currentColor 1.4px, transparent 1.4px);
+  background-size: 16px 16px; color: var(--line);
+  opacity: .7; pointer-events: none;
+}
+html[data-theme="dark"] .techdelivery-page .td-ways__dots { color: var(--hairline); }
+.techdelivery-page .td-ways__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.5rem, 2.7vw, 2.35rem);
+  line-height: 1.16; color: var(--navy);
+  margin: clamp(8px, 1.2vw, 14px) auto 0; max-width: 36ch; text-wrap: balance;
+}
+.techdelivery-page .td-ways__lede {
+  margin: clamp(10px, 1.4vw, 16px) auto 0; color: var(--muted);
+  font-size: clamp(.95rem, 1.05vw, 1.05rem); line-height: 1.6; max-width: 56ch;
+}
+
+/* ── FOUR WAYS (alternating rows) ────────────────────────── */
+.techdelivery-page .td-row {
+  position: relative; overflow: hidden;
+  background: var(--bg);
+  padding-block: clamp(24px, 2.8vw, 40px);
+  border-top: 1px solid var(--hairline);
+}
+.techdelivery-page .td-row--cream { background: var(--bg-cream); }
+html[data-theme="dark"] .techdelivery-page .td-row--cream { background: var(--bg-soft); }
+.techdelivery-page .td-row--sky { background: var(--bg-sky); }
+
+.techdelivery-page .td-row__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: clamp(24px, 4.4vw, 60px);
+  align-items: center;
+}
+.techdelivery-page .td-row__aside { max-width: 30rem; }
+.techdelivery-page .td-row__label {
+  font-family: var(--sans); font-size: .74rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--gold); margin: 0 0 10px;
+}
+.techdelivery-page .td-row__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.2rem, 1.9vw, 1.65rem);
+  line-height: 1.25; color: var(--navy); margin: 0 0 10px;
+}
+.techdelivery-page .td-row__text {
+  margin: 0; color: var(--muted);
+  font-size: clamp(.92rem, 1vw, 1rem); line-height: 1.6;
+}
+.techdelivery-page .td-list {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: clamp(11px, 1.3vw, 15px);
+  max-width: 34rem;
+}
+.techdelivery-page .td-list li {
+  position: relative; padding-left: 20px;
+  color: var(--muted); font-size: clamp(.9rem, .98vw, .98rem); line-height: 1.55;
+}
+.techdelivery-page .td-list li::before {
+  content: ""; position: absolute; left: 0; top: .58em;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--gold);
+}
+/* ── A DELIVERY RHYTHM YOU CAN FOLLOW ────────────────────── */
+.techdelivery-page .td-rhythm-section {
+  background: var(--bg);
+  padding-block: clamp(24px, 2.8vw, 40px);
+  border-top: 1px solid var(--hairline);
+}
+.techdelivery-page .td-rhythm__head {
+  text-align: center; max-width: none;
+  margin: 0 auto clamp(14px, 1.8vw, 22px);
+}
+.techdelivery-page .td-rhythm__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.45rem, 2.6vw, 2.2rem);
+  line-height: 1.18; color: var(--navy);
+  margin: clamp(6px, .9vw, 10px) auto 0; max-width: 44ch; text-wrap: balance;
+}
+/* four icon steps on a shared hairline — the line sits at the icon
+   circles' vertical centre (22px = half of the 44px circle) */
+.techdelivery-page .td-rhythm {
+  position: relative;
+  list-style: none; margin: clamp(22px, 3vw, 36px) 0 0; padding: 0;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(20px, 3vw, 36px);
+  text-align: center;
+}
+.techdelivery-page .td-rhythm::before {
+  content: ""; position: absolute; top: 22px; left: 12.5%; right: 12.5%;
+  height: 1px; background: var(--hairline);
+}
+.techdelivery-page .td-rhythm__icon {
+  position: relative; z-index: 1;
+  display: grid; place-items: center;
+  width: 44px; height: 44px; margin: 0 auto 14px;
+  border-radius: 50%;
+  background: var(--bg-cream);
+  border: 1px solid var(--hairline);
+  color: var(--gold);
+}
+html[data-theme="dark"] .techdelivery-page .td-rhythm__icon { background: var(--bg-soft); }
+.techdelivery-page .td-rhythm__icon .ico { width: 20px; height: 20px; }
+.techdelivery-page .td-rhythm__label {
+  font-family: var(--sans); font-weight: 700; font-size: .78rem;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--navy);
+  margin: 0 0 6px;
+}
+.techdelivery-page .td-rhythm__copy {
+  margin: 0; color: var(--muted); font-size: .88rem; line-height: 1.5;
+}
+
+/* ── CTA (dark band) ─────────────────────────────────────── */
+.techdelivery-page .td-final {
+  position: relative; overflow: hidden;
+  background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
+  padding-block: clamp(28px, 3.2vw, 46px);
+}
+.techdelivery-page .td-final__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(24px, 4vw, 48px);
+  align-items: center;
+}
+.techdelivery-page .td-final__lead { grid-column: 1; grid-row: 1; max-width: 56rem; }
+.techdelivery-page .td-final__accent {
+  grid-column: 1; grid-row: 1;
+  justify-self: end; align-self: stretch;
+  width: 2px; margin-inline-end: clamp(2px, .6vw, 10px);
+  background: linear-gradient(180deg, transparent, var(--gold) 22%, var(--gold) 78%, transparent);
+  transform: rotate(9deg);
+  opacity: .75; pointer-events: none;
+}
+.techdelivery-page .td-final__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.45rem, 2.6vw, 2.2rem);
+  line-height: 1.2; color: #fff;
+  margin: clamp(8px, 1.2vw, 14px) 0 clamp(12px, 1.6vw, 18px);
+  max-width: 30ch; text-wrap: balance;
+}
+.techdelivery-page .td-final__text {
+  margin: 0; color: rgba(255,255,255,.72);
+  font-size: clamp(.92rem, 1vw, 1rem); line-height: 1.6; max-width: 58ch;
+}
+.techdelivery-page .td-final__act { grid-column: 2; grid-row: 1; margin: 0; }
+.techdelivery-page .td-final__btn {
+  border-color: rgba(255,255,255,.4); color: #fff;
+  white-space: nowrap;
+}
+
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+@media (max-width: 700px) {
+  .techdelivery-page .td-rhythm { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .techdelivery-page .td-rhythm::before { display: none; }
+}
+@media (max-width: 1000px) {
+  .techdelivery-page .td-hero__text { max-width: none; }
+}
+@media (max-width: 900px) {
+  .techdelivery-page .td-hero { padding-top: calc(var(--header-h) + clamp(14px, 4vw, 28px)); }
+  .techdelivery-page .td-hero__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(20px, 5vw, 32px); }
+  .techdelivery-page .td-hero__text {
+    margin-inline: var(--gutter);
+    padding-inline-start: clamp(16px, 4vw, 24px);
+    max-width: none;
+  }
+  .techdelivery-page .td-hero__lede { max-width: 46ch; }
+  .techdelivery-page .td-hero__media { min-height: 0; aspect-ratio: 16 / 9; }
+  .techdelivery-page .td-hero__media::after { background: none; }
+  .techdelivery-page .td-row__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(18px, 4vw, 28px); }
+  .techdelivery-page .td-row--reverse .td-row__aside { order: -1; }
+  .techdelivery-page .td-row__aside { max-width: none; }
+  .techdelivery-page .td-list { max-width: none; }
+  .techdelivery-page .td-ways__dots,
+  .techdelivery-page .td-focus__slash { display: none; }
+  .techdelivery-page .td-final__grid { grid-template-columns: minmax(0, 1fr); }
+  .techdelivery-page .td-final__lead, .techdelivery-page .td-final__act { grid-column: auto; grid-row: auto; }
+  .techdelivery-page .td-final__act { justify-self: start; }
+  .techdelivery-page .td-final__accent { display: none; }
+}
+@media (max-width: 380px) {
+  .techdelivery-page .td-hero__title { font-size: 1.65rem; }
+  .techdelivery-page .td-focus__title,
+  .techdelivery-page .td-rhythm__title,
+  .techdelivery-page .td-final__title { font-size: 1.35rem; }
+}
+
+/* Inner-page hero photograph sits against a near-black surface in dark
+   mode, same treatment as the other inner pages' hero art. */
+html[data-theme="dark"] .techdelivery-page .td-hero__media img {
+  filter: brightness(.86) saturate(.92);
+}
+
+
+/* ══════════ 16l. OUR FOCUS AREA ══════════════════════════════════
+   our-focus-area.html's entire body. Same editorial spine as the rest
+   of the Solutions family: a split hero, a dark "focus" band, a
+   centred intro, four alternating rows (each closed by a small accent
+   tagline), a four-step path band, and a dark closing CTA. Scoped
+   under .focusarea-page; every colour comes from the existing tokens
+   so both themes follow the site. ─────────────────────────────────── */
+
+.focusarea-page #main { overflow-x: clip; }
+
+.focusarea-page .fa-hero__title,
+.focusarea-page .fa-focus__title,
+.focusarea-page .fa-ways__title,
+.focusarea-page .fa-row__title,
+.focusarea-page .fa-path__title,
+.focusarea-page .fa-final__title {
+  font-variant-numeric: lining-nums;
+  -webkit-font-feature-settings: "lnum" 1;
+  font-feature-settings: "lnum" 1;
+}
+
+/* ── OUR FOCUS AREA (hero) ────────────────────────────────── */
+.focusarea-page .fa-hero {
+  background: var(--bg);
+  padding-top: calc(var(--header-h) + clamp(14px, 2vw, 30px));
+  padding-bottom: clamp(18px, 2.2vw, 32px);
+  border-bottom: 1px solid var(--hairline);
+}
+.focusarea-page .fa-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--fig-hero-w);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: center;
+}
+.focusarea-page .fa-hero__text {
+  align-self: center;
+  margin-left: var(--gutter);
+  border-left: 2px solid var(--gold);
+  padding-inline-start: clamp(20px, 2.2vw, 34px);
+  max-width: 34rem;
+}
+.focusarea-page .fa-hero__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.9rem, 3.3vw, 3rem);
+  line-height: 1.14; letter-spacing: -.012em;
+  color: var(--navy);
+  margin: clamp(10px, 1.4vw, 16px) 0 clamp(16px, 2vw, 24px);
+  text-wrap: balance;
+}
+.focusarea-page .fa-hero__lede {
+  color: var(--muted); font-size: clamp(.95rem, 1.05vw, 1.08rem);
+  line-height: 1.7; max-width: 32rem; margin: 0; text-wrap: pretty;
+}
+.focusarea-page .fa-hero__media {
+  position: relative; align-self: stretch;
+  margin: 0; overflow: hidden;
+  min-height: clamp(222px, 25vw, 358px);
+}
+.focusarea-page .fa-hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; display: block; }
+.focusarea-page .fa-hero__media::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg,
+      var(--bg) 0%,
+      color-mix(in srgb, var(--bg) 50%, transparent) 17%,
+      transparent 44%);
+}
+/* the photo column bleeds past the section's own top/bottom padding so the
+   image reaches the header's bottom edge and the section's bottom border
+   instead of leaving a blank band there — it stops flush at the header
+   rather than running behind it, and text keeps its normal padding; only
+   the photo (which clips via overflow:hidden + object-fit:cover) extends */
+@media (min-width: 901px) {
+  .focusarea-page .fa-hero__media {
+    margin-block: calc(-1 * clamp(14px, 2vw, 30px)) calc(-1 * clamp(18px, 2.2vw, 32px));
+  }
+}
+
+/* ── CLOSE GUIDANCE. DISTRIBUTED DELIVERY. (dark band) ───── */
+.focusarea-page .fa-focus {
+  position: relative; overflow: hidden;
+  background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
+  padding-block: clamp(28px, 3.2vw, 46px);
+  text-align: center;
+}
+.focusarea-page .fa-focus__slash {
+  position: absolute; top: -20%; right: 9%;
+  width: 2px; height: 140%;
+  background: linear-gradient(180deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
+  transform: rotate(20deg); transform-origin: top;
+  opacity: .8; pointer-events: none;
+}
+.focusarea-page .fa-focus__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.55rem, 3vw, 2.5rem);
+  line-height: 1.2; color: #fff;
+  margin: 0 auto; max-width: 34ch; text-wrap: balance;
+}
+.focusarea-page .fa-focus__text {
+  margin: clamp(14px, 1.7vw, 22px) auto 0;
+  color: rgba(255,255,255,.72);
+  font-size: clamp(.95rem, 1.05vw, 1.05rem);
+  line-height: 1.65; max-width: 64ch;
+}
+
+/* ── WHERE WE ARE FOCUSED (intro) ────────────────────────── */
+.focusarea-page .fa-ways {
+  position: relative; overflow: hidden;
+  background: var(--bg);
+  padding-block: clamp(26px, 3vw, 44px) clamp(16px, 2vw, 26px);
+  text-align: center;
+}
+.focusarea-page .fa-ways__dots {
+  position: absolute; top: clamp(22px, 3vw, 44px); right: clamp(18px, 4vw, 72px);
+  width: clamp(70px, 7vw, 116px); height: clamp(52px, 5vw, 84px);
+  background-image: radial-gradient(currentColor 1.4px, transparent 1.4px);
+  background-size: 16px 16px; color: var(--line);
+  opacity: .7; pointer-events: none;
+}
+html[data-theme="dark"] .focusarea-page .fa-ways__dots { color: var(--hairline); }
+.focusarea-page .fa-ways__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.5rem, 2.7vw, 2.35rem);
+  line-height: 1.16; color: var(--navy);
+  margin: clamp(8px, 1.2vw, 14px) auto 0; max-width: 36ch; text-wrap: balance;
+}
+.focusarea-page .fa-ways__lede {
+  margin: clamp(10px, 1.4vw, 16px) auto 0; color: var(--muted);
+  font-size: clamp(.95rem, 1.05vw, 1.05rem); line-height: 1.6; max-width: 56ch;
+}
+
+/* ── FOUR WAYS (alternating rows) ────────────────────────── */
+.focusarea-page .fa-row {
+  position: relative; overflow: hidden;
+  background: var(--bg);
+  padding-block: clamp(24px, 2.8vw, 40px);
+  border-top: 1px solid var(--hairline);
+}
+.focusarea-page .fa-row--cream { background: var(--bg-cream); }
+html[data-theme="dark"] .focusarea-page .fa-row--cream { background: var(--bg-soft); }
+.focusarea-page .fa-row--sky { background: var(--bg-sky); }
+
+.focusarea-page .fa-row__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: clamp(24px, 4.4vw, 60px);
+  align-items: center;
+}
+.focusarea-page .fa-row__aside { max-width: 30rem; }
+.focusarea-page .fa-row__label {
+  font-family: var(--sans); font-size: .74rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--gold); margin: 0 0 10px;
+}
+.focusarea-page .fa-row__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.2rem, 1.9vw, 1.65rem);
+  line-height: 1.25; color: var(--navy); margin: 0 0 10px;
+}
+.focusarea-page .fa-row__text {
+  margin: 0; color: var(--muted);
+  font-size: clamp(.92rem, 1vw, 1rem); line-height: 1.6;
+}
+.focusarea-page .fa-list {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: clamp(11px, 1.3vw, 15px);
+  max-width: 34rem;
+}
+.focusarea-page .fa-list li {
+  position: relative; padding-left: 20px;
+  color: var(--muted); font-size: clamp(.9rem, .98vw, .98rem); line-height: 1.55;
+}
+.focusarea-page .fa-list li::before {
+  content: ""; position: absolute; left: 0; top: .58em;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--gold);
+}
+/* the accent line each row closes on — a quiet, centred callout rather
+   than a full extra section, so it reads as this row's one key number
+   or guarantee without competing with the heading above it */
+.focusarea-page .fa-row__tag {
+  position: relative;
+  margin: clamp(20px, 2.6vw, 30px) 0 0;
+  padding: clamp(12px, 1.6vw, 18px) var(--gutter) 0;
+  border-top: 1px solid var(--hairline);
+  text-align: center;
+  color: var(--gold-2);
+  font-family: var(--sans); font-weight: 700;
+  font-size: .8rem; letter-spacing: .03em; line-height: 1.5;
+}
+
+/* ── BEFORE THERE IS A PROJECT (path) ────────────────────── */
+.focusarea-page .fa-path {
+  background: var(--bg);
+  padding-block: clamp(20px, 2.4vw, 32px);
+  border-top: 1px solid var(--hairline);
+}
+.focusarea-page .fa-path__head {
+  text-align: center; max-width: none;
+  margin: 0 auto clamp(14px, 1.8vw, 22px);
+}
+.focusarea-page .fa-path__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.45rem, 2.6vw, 2.2rem);
+  line-height: 1.18; color: var(--navy);
+  margin: clamp(6px, .9vw, 10px) auto 0; max-width: 52ch; text-wrap: balance;
+}
+.focusarea-page .fa-path__lede {
+  margin: clamp(10px, 1.4vw, 16px) auto 0; color: var(--muted);
+  font-size: clamp(.92rem, 1vw, 1rem); line-height: 1.6; max-width: 70ch;
+}
+.focusarea-page .fa-path__grid {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.focusarea-page .fa-path__grid li {
+  position: relative;
+  padding: 0 clamp(14px, 2vw, 28px);
+  border-left: 1px solid var(--hairline);
+}
+.focusarea-page .fa-path__grid li:first-child { border-left: 0; padding-inline-start: 0; }
+.focusarea-page .fa-path__grid li:last-child { padding-inline-end: 0; }
+.focusarea-page .fa-path__label {
+  font-family: var(--sans); font-size: .74rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--gold); margin: 0 0 10px;
+}
+.focusarea-page .fa-path__copy {
+  margin: 0; color: var(--muted);
+  font-size: clamp(.9rem, .98vw, .97rem); line-height: 1.6;
+}
+.focusarea-page .fa-path__tag {
+  margin: clamp(20px, 2.6vw, 30px) 0 0;
+  padding-top: clamp(12px, 1.6vw, 18px);
+  border-top: 1px solid var(--hairline);
+  text-align: center;
+  color: var(--gold-2);
+  font-family: var(--sans); font-weight: 700;
+  font-size: .8rem; letter-spacing: .03em;
+}
+
+/* ── CTA (dark band) ─────────────────────────────────────── */
+.focusarea-page .fa-final {
+  position: relative; overflow: hidden;
+  background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
+  padding-block: clamp(28px, 3.2vw, 46px);
+}
+.focusarea-page .fa-final__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(24px, 4vw, 48px);
+  align-items: center;
+}
+.focusarea-page .fa-final__lead { grid-column: 1; grid-row: 1; max-width: 56rem; }
+.focusarea-page .fa-final__accent {
+  grid-column: 1; grid-row: 1;
+  justify-self: end; align-self: stretch;
+  width: 2px; margin-inline-end: clamp(2px, .6vw, 10px);
+  background: linear-gradient(180deg, transparent, var(--gold) 22%, var(--gold) 78%, transparent);
+  transform: rotate(9deg);
+  opacity: .75; pointer-events: none;
+}
+.focusarea-page .fa-final__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.45rem, 2.6vw, 2.2rem);
+  line-height: 1.2; color: #fff;
+  margin: clamp(8px, 1.2vw, 14px) 0 clamp(12px, 1.6vw, 18px);
+  max-width: 30ch; text-wrap: balance;
+}
+.focusarea-page .fa-final__text {
+  margin: 0; color: rgba(255,255,255,.72);
+  font-size: clamp(.92rem, 1vw, 1rem); line-height: 1.6; max-width: 58ch;
+}
+.focusarea-page .fa-final__act { grid-column: 2; grid-row: 1; margin: 0; }
+.focusarea-page .fa-final__btn {
+  border-color: rgba(255,255,255,.4); color: #fff;
+  white-space: nowrap;
+}
+
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .focusarea-page .fa-path__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(20px, 3vw, 30px) 0; }
+  .focusarea-page .fa-path__grid li:nth-child(odd) { border-left: 0; padding-inline-start: 0; }
+  .focusarea-page .fa-path__grid li:nth-child(even) { padding-inline-end: 0; }
+}
+@media (max-width: 1000px) {
+  .focusarea-page .fa-hero__text { max-width: none; }
+}
+@media (max-width: 900px) {
+  .focusarea-page .fa-hero { padding-top: calc(var(--header-h) + clamp(14px, 4vw, 28px)); }
+  .focusarea-page .fa-hero__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(20px, 5vw, 32px); }
+  .focusarea-page .fa-hero__text {
+    margin-inline: var(--gutter);
+    padding-inline-start: clamp(16px, 4vw, 24px);
+    max-width: none;
+  }
+  .focusarea-page .fa-hero__lede { max-width: 46ch; }
+  .focusarea-page .fa-hero__media { min-height: 0; aspect-ratio: 16 / 9; }
+  .focusarea-page .fa-hero__media::after { background: none; }
+  .focusarea-page .fa-row__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(18px, 4vw, 28px); }
+  .focusarea-page .fa-row--reverse .fa-row__aside { order: -1; }
+  .focusarea-page .fa-row__aside { max-width: none; }
+  .focusarea-page .fa-list { max-width: none; }
+  .focusarea-page .fa-ways__dots,
+  .focusarea-page .fa-focus__slash { display: none; }
+  .focusarea-page .fa-final__grid { grid-template-columns: minmax(0, 1fr); }
+  .focusarea-page .fa-final__lead, .focusarea-page .fa-final__act { grid-column: auto; grid-row: auto; }
+  .focusarea-page .fa-final__act { justify-self: start; }
+  .focusarea-page .fa-final__accent { display: none; }
+}
+@media (max-width: 560px) {
+  .focusarea-page .fa-path__grid { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .focusarea-page .fa-path__grid li {
+    border-left: 0; border-top: 1px solid var(--hairline);
+    padding: clamp(13px, 3vw, 17px) 0 0;
+  }
+  .focusarea-page .fa-path__grid li:first-child { border-top: 0; padding-top: 0; }
+  .focusarea-page .fa-path__grid li + li { margin-top: clamp(13px, 3vw, 17px); }
+  .focusarea-page .fa-path__label { margin-bottom: 6px; }
+}
+@media (max-width: 380px) {
+  .focusarea-page .fa-hero__title { font-size: 1.65rem; }
+  .focusarea-page .fa-focus__title,
+  .focusarea-page .fa-path__title,
+  .focusarea-page .fa-final__title { font-size: 1.35rem; }
+}
+
+/* Inner-page hero photograph sits against a near-black surface in dark
+   mode, same treatment as the other inner pages' hero art. */
+html[data-theme="dark"] .focusarea-page .fa-hero__media img {
+  filter: brightness(.86) saturate(.92);
+}

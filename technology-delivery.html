@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Solutions &amp; Services — GSS</title>
-<meta name="description" content="Technology consulting, digital transformation and development, managed IT and support, and specialized talent and staffing from GSS.">
+<title>Technology & Delivery — GSS</title>
+<meta name="description" content="Technology & Delivery from GSS: assessment and architecture, modernization, integration and automation, custom applications, and accountable implementation.">
 <meta name="theme-color" content="#0F2247">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Solutions &amp; Services — GSS">
-<meta property="og:description" content="Technology consulting, digital transformation and development, managed IT and support, and specialized talent and staffing from GSS.">
+<meta property="og:title" content="Technology &amp; Delivery — GSS">
+<meta property="og:description" content="Technology & Delivery from GSS: assessment and architecture, modernization, integration and automation, custom applications, and accountable implementation.">
 <meta property="og:image" content="images/hero-skyline-1200.webp">
 <meta property="og:site_name" content="Global Soft Systems">
 <meta name="twitter:card" content="summary_large_image">
@@ -27,7 +27,7 @@
 <!-- Flag JS support so scroll-reveal never hides content when scripting is off -->
 <script>document.documentElement.classList.add('js');</script>
 </head>
-<body>
+<body class="techdelivery-page">
 
 <a class="skip-link" href="#main">Skip to main content</a>
 
@@ -43,6 +43,14 @@
   <symbol id="i-globe" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3.3 12h17.4"/><path d="M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"/></g></symbol>
 
   <symbol id="i-x" viewBox="0 0 24 24"><path fill="currentColor" d="M18.9 2.6h3.1l-6.8 7.8 8 10.6h-6.3l-4.9-6.4-5.6 6.4H3.3l7.3-8.3-7.7-10.1h6.4l4.4 5.9zM17.8 19.1h1.7L7.7 4.3H5.9z"/></symbol>
+
+  <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.8-4.8"/></g></symbol>
+
+  <symbol id="i-compass" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15.6 8.4-2.1 5.1-5.1 2.1 2.1-5.1z"/></g></symbol>
+
+  <symbol id="i-gear" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 3.6v2.3M12 18.1v2.3M20.4 12h-2.3M5.9 12H3.6M17.7 6.3l-1.6 1.6M7.9 16.1l-1.6 1.6M17.7 17.7l-1.6-1.6M7.9 7.9 6.3 6.3"/></g></symbol>
+
+  <symbol id="i-chart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 19.5v-4.8M10.3 19.5V9.2M15.7 19.5v-7.4M21 19.5V5.4"/></g></symbol>
 </svg>
 
 <header class="site-header" id="siteHeader">
@@ -57,8 +65,8 @@
           <ul>
             <li><a href="about.html">About Us</a></li>
             <li class="has-dropdown">
-              <a href="solutions.html" class="is-current" aria-current="page" aria-haspopup="true" aria-expanded="false">Solutions <svg class="ico nav-caret" aria-hidden="true"><use href="#i-chevron"/></svg></a>
-              <!-- Solutions mega menu (reusable "solutions-card" component, mirrors the on-page grid in solutions.html) -->
+              <a href="#" class="is-current" aria-current="page" aria-haspopup="true" aria-expanded="false">Solutions <svg class="ico nav-caret" aria-hidden="true"><use href="#i-chevron"/></svg></a>
+              <!-- Solutions mega menu (reusable "solutions-card" component; each item links to its own page) -->
               <div class="nav-megamenu" role="menu" aria-label="Solutions menu">
               <div class="container nav-megamenu-head">
                 <p class="nav-megamenu-eyebrow">How We Help</p>
@@ -77,13 +85,13 @@
                   <span class="solutions-card-desc">Turn the information you have into better business decisions.</span>
                   <span class="solutions-card-explore">Explore <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
                 </a>
-                <a class="solutions-card" role="menuitem" href="solutions.html#technology-delivery">
+                <a class="solutions-card" role="menuitem" href="technology-delivery.html">
                   <span class="solutions-card-num">03</span>
                   <span class="solutions-card-title">Technology &amp; Delivery</span>
                   <span class="solutions-card-desc">Make the technology your business depends on work better.</span>
                   <span class="solutions-card-explore">Explore <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
                 </a>
-                <a class="solutions-card" role="menuitem" href="solutions.html#focus-area">
+                <a class="solutions-card" role="menuitem" href="our-focus-area.html">
                   <span class="solutions-card-num">04</span>
                   <span class="solutions-card-title">Our Focus Area</span>
                   <span class="solutions-card-desc">See where we&rsquo;re bringing added focus to the challenges shaping what comes next.</span>
@@ -133,15 +141,15 @@
         <li><a href="about.html">About Us</a></li>
         <li class="mobile-subnav">
           <div class="mobile-subnav-row">
-          <a href="solutions.html" class="is-current" aria-current="page">Solutions</a>
+          <a href="#" class="is-current" aria-current="page">Solutions</a>
           <button class="mobile-subnav-toggle" type="button" aria-expanded="false" aria-controls="mobileSolutionsPanel" aria-label="Toggle Solutions submenu"><svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></button>
           </div>
           <div class="mobile-subnav-wrap">
           <ul class="mobile-subnav-panel" id="mobileSolutionsPanel">
             <li><a href="business-consulting.html">Business Consulting</a></li>
             <li><a href="data-business-insight.html">Data &amp; Business Insight</a></li>
-            <li><a href="solutions.html#technology-delivery">Technology &amp; Delivery</a></li>
-            <li><a href="solutions.html#focus-area">Our Focus Area</a></li>
+            <li><a href="technology-delivery.html" class="is-current" aria-current="page">Technology &amp; Delivery</a></li>
+            <li><a href="our-focus-area.html">Our Focus Area</a></li>
           </ul>
           </div>
         </li>
@@ -170,63 +178,178 @@
 </div>
 
 <main id="main">
-<section class="page-hero">
-  <span class="sunburst sunburst-left" aria-hidden="true"></span>
-  <span class="sunburst sunburst-right" aria-hidden="true"></span>
-  <div class="container">
-    <p class="eyebrow eyebrow-navy"><span class="rule" aria-hidden="true"></span>Solutions &amp; Services<span class="rule" aria-hidden="true"></span></p>
-    <h1 class="page-title">Capabilities built around your outcomes.</h1>
-    <p class="page-lede">Four connected practices, delivered by one accountable partner &mdash; so strategy, build, run and talent never sit in separate silos.</p>
+
+<!-- ══════════ 01 · HERO ══════════════════════════════════════ -->
+<section class="td-hero" id="technology-delivery">
+  <div class="td-hero__grid">
+    <div class="td-hero__text">
+      <p class="abx-eyebrow reveal">Technology &amp; Delivery</p>
+      <h1 class="td-hero__title reveal">Build on what works. Change what needs to.</h1>
+      <p class="td-hero__lede reveal">Technology should make the business easier to run&mdash;not force the business to work around it. We begin with your goals and current environment, then modernize, connect, or build only where it creates real value.</p>
+    </div>
+    <figure class="td-hero__media reveal">
+      <img src="images/solutions-hero.png"
+           width="1672" height="941" fetchpriority="high" decoding="async"
+           alt="A GSS advisor and a colleague reviewing an architecture diagram together at a laptop">
+    </figure>
   </div>
 </section>
 
-<!-- "How We Help" — reusable "solutions-card" component, also used in the header's Solutions mega menu -->
-<section class="section section-solutions-help" id="how-we-help">
-  <div class="container">
-    <p class="eyebrow eyebrow-navy reveal"><span class="rule" aria-hidden="true"></span>How We Help<span class="rule" aria-hidden="true"></span></p>
-    <h2 class="section-title reveal">Start with the business. Choose the right path forward.</h2>
 
-    <div class="solutions-cards reveal">
-      <div class="solutions-card" id="business-consulting">
-        <span class="solutions-card-num">01</span>
-        <span class="solutions-card-title">Business Consulting</span>
-        <span class="solutions-card-desc">Understand the challenge first. Then build the right path forward.</span>
-        <a class="solutions-card-explore" href="business-consulting.html">Explore <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </div>
-      <div class="solutions-card" id="data-business-insight">
-        <span class="solutions-card-num">02</span>
-        <span class="solutions-card-title">Data &amp; Business Insight</span>
-        <span class="solutions-card-desc">Turn the information you have into better business decisions.</span>
-        <a class="solutions-card-explore" href="data-business-insight.html">Explore <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </div>
-      <div class="solutions-card" id="technology-delivery">
-        <span class="solutions-card-num">03</span>
-        <span class="solutions-card-title">Technology &amp; Delivery</span>
-        <span class="solutions-card-desc">Make the technology your business depends on work better.</span>
-        <a class="solutions-card-explore" href="contact.html">Explore <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </div>
-      <div class="solutions-card" id="focus-area">
-        <span class="solutions-card-num">04</span>
-        <span class="solutions-card-title">Our Focus Area</span>
-        <span class="solutions-card-desc">See where we&rsquo;re bringing added focus to the challenges shaping what comes next.</span>
-        <a class="solutions-card-explore" href="contact.html">Explore <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </div>
+<!-- ══════════ 02 · BUILT FOR YOUR ENVIRONMENT (dark band) ═════ -->
+<section class="td-focus" data-header="dark">
+  <span class="sunburst sunburst-left sunburst--onDark" aria-hidden="true"></span>
+  <span class="td-focus__slash" aria-hidden="true"></span>
+  <div class="container td-focus__inner">
+    <p class="abx-eyebrow abx-eyebrow--onDark reveal">Built for Your Environment</p>
+    <h2 class="td-focus__title reveal">We don&rsquo;t begin with a product. We begin with what the business needs to work better.</h2>
+    <p class="td-focus__text reveal">Then we choose the simplest responsible path&mdash;improve, integrate, modernize, or build.</p>
+  </div>
+</section>
+
+
+<!-- ══════════ 03 · HOW WE MAKE IT REAL (intro) ════════════════ -->
+<section class="td-ways">
+  <span class="td-ways__dots" aria-hidden="true"></span>
+  <div class="container">
+    <p class="abx-eyebrow reveal" style="text-align:center">How We Make It Real</p>
+    <h2 class="td-ways__title reveal">From today&rsquo;s environment to technology that works in practice.</h2>
+    <p class="td-ways__lede reveal">Clear decisions, practical stages, and visible accountability from the first assessment through delivery.</p>
+  </div>
+</section>
+
+
+<!-- ══════════ 04 · FIVE WAYS (alternating rows) ═══════════════ -->
+<section class="td-row" id="technology-assessment-architecture">
+  <div class="container td-row__grid">
+    <div class="td-row__aside reveal">
+      <p class="td-row__label">Understand the Current Landscape</p>
+      <h3 class="td-row__title">Technology Assessment &amp; Architecture</h3>
+      <p class="td-row__text">See what is working, what is getting in the way, and how the pieces fit together.</p>
+    </div>
+    <ul class="td-list">
+      <li class="reveal">Map applications, infrastructure, data, and dependencies</li>
+      <li class="reveal">Identify strengths, gaps, risks, and constraints</li>
+      <li class="reveal">Separate urgent needs from optional upgrades</li>
+      <li class="reveal">Define a practical architecture for the path ahead</li>
+    </ul>
+  </div>
+</section>
+
+<section class="td-row td-row--cream td-row--reverse" id="modernization-optimization">
+  <div class="container td-row__grid">
+    <ul class="td-list">
+      <li class="reveal">Stabilize performance, usability, and supportability</li>
+      <li class="reveal">Update high-value components without unnecessary disruption</li>
+      <li class="reveal">Extend existing platforms through thoughtful layers and services</li>
+      <li class="reveal">Replace only when the business case clearly supports it</li>
+    </ul>
+    <div class="td-row__aside reveal">
+      <p class="td-row__label">Protect What Already Works</p>
+      <h3 class="td-row__title">Modernization &amp; Optimization</h3>
+      <p class="td-row__text">Improve useful technology in manageable stages instead of replacing it by default.</p>
     </div>
   </div>
 </section>
 
-<section class="page-body">
-  <div class="container">
-    <div class="page-intro">
-        <p class="reveal">Technology consulting, digital transformation and development, managed IT and support, and specialized talent and staffing. Each stands on its own; together they remove the seams where most programmes lose time.</p>
-        <p class="reveal">Our staffing practice is backed by an established in-house workforce and a trusted supplier ecosystem, covering contract talent, project staffing, remote and offshore teams, and direct W2 placement.</p>
-      <div class="divider-gold reveal" aria-hidden="true"></div>
-      <p class="closing-line reveal">The right capabilities, sized to the problem in front of you.</p>
-      <p class="center-cta reveal"><a class="btn btn-primary" href="contact.html">Discuss Your Requirements <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
-      <p class="reveal" style="text-align:center"><span class="page-stub reveal">Full page content in progress</span></p>
+<section class="td-row td-row--sky" id="integration-automation">
+  <div class="container td-row__grid">
+    <div class="td-row__aside reveal">
+      <p class="td-row__label">Connect the Moving Parts</p>
+      <h3 class="td-row__title">Integration &amp; Automation</h3>
+      <p class="td-row__text">Help systems, information, and workflows work together with less manual effort.</p>
+    </div>
+    <ul class="td-list">
+      <li class="reveal">Connect applications around the real business process</li>
+      <li class="reveal">Reduce repeated entry and fragile handoffs</li>
+      <li class="reveal">Automate routine work with clear controls</li>
+      <li class="reveal">Keep ownership, exceptions, and visibility with your team</li>
+    </ul>
+  </div>
+</section>
+
+<section class="td-row td-row--cream td-row--reverse" id="custom-applications-digital-solutions">
+  <div class="container td-row__grid">
+    <ul class="td-list">
+      <li class="reveal">Translate the business need into a clear solution scope</li>
+      <li class="reveal">Prototype and test ideas with the people who will use them</li>
+      <li class="reveal">Design around your existing environment and priorities</li>
+      <li class="reveal">Build for adoption, maintainability, and future change</li>
+    </ul>
+    <div class="td-row__aside reveal">
+      <p class="td-row__label">Build for the Actual Need</p>
+      <h3 class="td-row__title">Custom Applications &amp; Digital Solutions</h3>
+      <p class="td-row__text">Create focused solutions when an existing product cannot fit the requirement responsibly.</p>
     </div>
   </div>
 </section>
+
+<section class="td-row td-row--sky" id="implementation-quality-support">
+  <div class="container td-row__grid">
+    <div class="td-row__aside reveal">
+      <p class="td-row__label">Deliver With Control</p>
+      <h3 class="td-row__title">Implementation, Quality &amp; Support</h3>
+      <p class="td-row__text">Move from plan to production through visible stages, shared decisions, and accountable delivery.</p>
+    </div>
+    <ul class="td-list">
+      <li class="reveal">Organize delivery into practical phases and checkpoints</li>
+      <li class="reveal">Make progress, decisions, risks, and dependencies visible</li>
+      <li class="reveal">Validate security, performance, usability, and quality</li>
+      <li class="reveal">Support launch, knowledge transfer, and ongoing improvement</li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- ══════════ 05 · A DELIVERY RHYTHM YOU CAN FOLLOW ═══════════ -->
+<section class="td-rhythm-section">
+  <div class="container">
+    <div class="td-rhythm__head">
+      <p class="abx-eyebrow reveal" style="text-align:center">A Delivery Rhythm You Can Follow</p>
+      <h2 class="td-rhythm__title reveal">Understand. Shape. Deliver. Improve.</h2>
+    </div>
+    <ol class="td-rhythm">
+      <li class="reveal">
+        <span class="td-rhythm__icon"><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg></span>
+        <p class="td-rhythm__label">Understand</p>
+        <p class="td-rhythm__copy">Learn the business need and current environment.</p>
+      </li>
+      <li class="reveal">
+        <span class="td-rhythm__icon"><svg class="ico" aria-hidden="true"><use href="#i-compass"/></svg></span>
+        <p class="td-rhythm__label">Shape</p>
+        <p class="td-rhythm__copy">Choose a practical path and define what success means.</p>
+      </li>
+      <li class="reveal">
+        <span class="td-rhythm__icon"><svg class="ico" aria-hidden="true"><use href="#i-gear"/></svg></span>
+        <p class="td-rhythm__label">Deliver</p>
+        <p class="td-rhythm__copy">Build in visible stages with shared checkpoints.</p>
+      </li>
+      <li class="reveal">
+        <span class="td-rhythm__icon"><svg class="ico" aria-hidden="true"><use href="#i-chart"/></svg></span>
+        <p class="td-rhythm__label">Improve</p>
+        <p class="td-rhythm__copy">Measure the outcome and strengthen what comes next.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+
+<!-- ══════════ 06 · CTA (dark band) ═════════════════════════════ -->
+<section class="td-final" data-header="dark">
+  <span class="sunburst sunburst-left sunburst--onDark" aria-hidden="true"></span>
+  <div class="container td-final__grid">
+    <div class="td-final__lead">
+      <p class="abx-eyebrow abx-eyebrow--onDark reveal">Technology That Fits the Business</p>
+      <h2 class="td-final__title reveal">Keep what works. Improve what matters. Build what&rsquo;s next.</h2>
+      <p class="td-final__text reveal">Bring us the environment you have and the outcome you need. We&rsquo;ll help define and deliver a practical path between them.</p>
+    </div>
+    <span class="td-final__accent" aria-hidden="true"></span>
+    <p class="td-final__act reveal">
+      <a class="btn btn-outline td-final__btn" href="contact.html">Start a Conversation <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </p>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer">
