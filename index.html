@@ -27,7 +27,7 @@
      theme (see script.js), so that's what actually paints first; the night
      photo loads normally if a stored dark preference swaps it in after. -->
 <link rel="preload" as="image" href="images/hero-skyline-day-1672.jpg" imagesrcset="images/hero-skyline-day-800.jpg 800w, images/hero-skyline-day-1200.jpg 1200w, images/hero-skyline-day-1672.jpg 1672w" imagesizes="100vw" fetchpriority="high">
-<link rel="preload" as="image" href="images/hero-datahall-1672.webp" imagesrcset="images/hero-datahall-800.webp 800w, images/hero-datahall-1200.webp 1200w, images/hero-datahall-1672.webp 1672w" imagesizes="100vw">
+<link rel="preload" as="image" href="images/hero-datahall-light-1672.jpg" imagesrcset="images/hero-datahall-light-800.jpg 800w, images/hero-datahall-light-1200.jpg 1200w, images/hero-datahall-light-1672.jpg 1672w" imagesizes="100vw">
 
 <link rel="stylesheet" href="style.css">
 
@@ -260,9 +260,14 @@
     <!-- ---------- SLIDE 3 ---------- -->
     <article class="hero-slide" data-slide="1" aria-roledescription="slide" aria-label="Slide 3 of 4: From Business Challenge to Technology Outcome" aria-hidden="true">
       <div class="hero-media">
-        <img src="images/hero-datahall-1672.webp"
-             srcset="images/hero-datahall-560.webp 560w, images/hero-datahall-800.webp 800w, images/hero-datahall-1200.webp 1200w, images/hero-datahall-1672.webp 1672w"
+        <img class="hero-media-img hero-media-img--day"
+             src="images/hero-datahall-light-1672.jpg"
+             srcset="images/hero-datahall-light-560.jpg 560w, images/hero-datahall-light-800.jpg 800w, images/hero-datahall-light-1200.jpg 1200w, images/hero-datahall-light-1672.jpg 1672w"
              sizes="100vw" alt="Bright white data-hall corridor lined with server cabinets glowing with warm gold indicator light" decoding="async">
+        <img class="hero-media-img hero-media-img--night"
+             src="images/hero-datahall-dark-1672.jpg"
+             srcset="images/hero-datahall-dark-560.jpg 560w, images/hero-datahall-dark-800.jpg 800w, images/hero-datahall-dark-1200.jpg 1200w, images/hero-datahall-dark-1672.jpg 1672w"
+             sizes="100vw" alt="" aria-hidden="true" decoding="async">
         <span class="hero-tint tint-1" aria-hidden="true"></span>
       </div>
       <div class="container hero-content">

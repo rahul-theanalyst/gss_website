@@ -962,7 +962,13 @@ html[data-theme="dark"] .mobile-social-ico { background: rgba(255,255,255,.08); 
      hero's height is always the tallest slide — switching never shifts layout */
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: minmax(0, auto);
-  min-height: max(100svh, 760px);
+  /* svh already excludes mobile browser chrome; the old 760px floor was
+     taller than the real viewport on plenty of laptops/desktops (browser
+     chrome + OS scaling routinely leave well under 760px of 100svh), which
+     pushed the CTA and bottom cred-cards past the fold on first load. The
+     floor here only exists to stop a genuinely tiny window from collapsing
+     the hero — it no longer overrides a real, shorter viewport. */
+  min-height: max(100svh, 480px);
 }
 
 .hero-slide {
@@ -972,7 +978,10 @@ html[data-theme="dark"] .mobile-social-ico { background: rgba(255,255,255,.08); 
   position: relative;
   display: flex;
   align-items: center;
-  padding-block: calc(var(--header-h) + 34px) 138px;
+  /* the extra top/bottom breathing room scales down on short viewports
+     (svh) instead of staying fixed, so the hero's content fits inside
+     whatever height is actually available rather than overflowing it */
+  padding-block: calc(var(--header-h) + clamp(16px, 4svh, 34px)) clamp(56px, 14svh, 138px);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -989,20 +998,33 @@ html[data-theme="dark"] .mobile-social-ico { background: rgba(255,255,255,.08); 
   pointer-events: auto;
 }
 
-.hero-media { position: absolute; inset: 0; overflow: hidden; z-index: -1; }
+.hero-media { position: absolute; inset: 0; overflow: hidden; z-index: -1; background: var(--bg-sky); }
 .hero-media img {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
-  object-fit: cover; object-position: center;
+  /* anchor to the top so any unavoidable cover-crop is taken from the
+     bottom of the photo, never the top */
+  object-fit: cover; object-position: top center;
   /* dim the photograph itself rather than piling on a white veil, so the
      navy headline gains contrast instead of losing it */
   filter: brightness(var(--hero-dim)) contrast(1.04) saturate(1.06);
 }
-/* Slide 1 (skyline) carries two real photos — day and night — instead of
-   darkening one image for dark mode like the other three slides still do.
-   Both sit stacked via the position:absolute above; only one is ever
-   displayed. The night shot is already correctly exposed, so it keeps a
-   light touch-up instead of the brightness cut the day plate gets. */
+/* On tall/narrow viewports (portrait phones and tablets) the hero box's
+   own aspect ratio is far taller than the photos' (~16:9), so "cover"
+   has to blow the image up and cut away most of its width just to fill
+   the height — that's the left/right cropping. Switching to "contain"
+   there keeps the full image width on screen at all times (no side
+   cropping) and, anchored to the top, lands any leftover space as a
+   letterbox at the bottom instead of cropping anything. */
+@media (max-aspect-ratio: 4/5) {
+  .hero-media img { object-fit: contain; }
+}
+/* Some slides (skyline, data hall) carry two real photos — day/light and
+   night/dark — instead of darkening one image for dark mode like the
+   remaining slides still do. Both sit stacked via the position:absolute
+   above; only one is ever displayed. The dark plate is already graded
+   for its theme, so it keeps a light touch-up instead of the brightness
+   cut the light plate gets. */
 .hero-media .hero-media-img--night { display: none; }
 html[data-theme="dark"] .hero-media .hero-media-img--day { display: none; }
 html[data-theme="dark"] .hero-media .hero-media-img--night {
@@ -1025,13 +1047,12 @@ html[data-theme="dark"] .hero-media .hero-media-img--night {
   radial-gradient(ellipse 78% 68% at 50% 46%, var(--veil-core), var(--veil-edge) 74%),
   linear-gradient(180deg, var(--veil-wash), transparent 46%, var(--veil-wash)); }
 .tint-3 { background:
-  radial-gradient(ellipse 66% 58% at 50% 42%, var(--veil-core), var(--veil-edge) 70%),
-  linear-gradient(180deg, var(--veil-wash), transparent 50%, var(--veil-wash)); }
+  radial-gradient(ellipse 76% 66% at 50% 42%, var(--veil-core), var(--veil-edge) 76%),
+  linear-gradient(180deg, var(--veil-wash), transparent 36%, var(--veil-wash)); }
 .tint-4 { background:
   radial-gradient(ellipse 70% 60% at 50% 44%, var(--veil-core), var(--veil-edge) 72%),
   linear-gradient(180deg, var(--veil-wash), transparent 44%, var(--veil-wash)); }
 html[data-theme="dark"] .hero-media img { filter: brightness(var(--hero-dim)) saturate(.85); }
-html[data-theme="dark"] .hero-slide[data-slide="1"],
 html[data-theme="dark"] .hero-slide[data-slide="2"],
 html[data-theme="dark"] .hero-slide[data-slide="3"] { --hero-dim: .48; }
 
@@ -1074,6 +1095,13 @@ html[data-theme="dark"] .hero-slide[data-slide="3"] { --hero-dim: .48; }
   font-weight: 500;
 }
 .hero-cta { margin-top: 38px; }
+/* Slide 1 is the only slide carrying a 5-up cred-row, which makes its
+   content block taller than the other three; since hero-content is
+   vertically centered as a single unit, that extra height brings this
+   slide's CTA button noticeably closer to the shared dot chrome fixed to
+   the bottom of the hero. Nudging it up here restores even breathing
+   room without touching the chrome or any other slide. */
+.hero-slide[data-slide="0"] .hero-cta { margin-bottom: 50px; }
 
 /* credibility card rows
    Everything here is fluid: the row width, the gaps, the card padding, the
@@ -1128,7 +1156,7 @@ html[data-theme="dark"] .hero-slide[data-slide="3"] { --hero-dim: .48; }
   gap: clamp(9px, .9vw, 13px);
   padding: clamp(12px, 1.15vw, 18px) clamp(11px, 1.2vw, 18px);
   border-radius: clamp(18px, 2vw, 28px);
-  background: linear-gradient(165deg, rgba(255,255,255,.34), rgba(255,255,255,.13));
+  background: linear-gradient(165deg, rgba(255,255,255,.56), rgba(255,255,255,.32));
   border: 1px solid var(--glass-rim-dim);
   border-top-color: var(--glass-rim);
   -webkit-backdrop-filter: blur(18px) saturate(165%);
@@ -1234,6 +1262,27 @@ html[data-theme="dark"] .cred-card {
 @keyframes cue-bounce {
   0%, 22%, 100% { transform: translateY(0); opacity: .75; }
   10%           { transform: translateY(7px); opacity: 1; }
+}
+
+/* Many laptops/desktops are wide enough to stay on the desktop nav layout
+   but shorter in usable height than the design was tuned against — browser
+   chrome, taskbars and OS display scaling all eat into the real 100svh.
+   This is a height-based query (not width) so it catches that case
+   directly and tightens the hero's vertical rhythm until everything,
+   including the CTA and cred-cards, comfortably fits without the bottom
+   of the section landing below the fold. */
+@media (max-height: 760px) {
+  .hero-title { margin-bottom: 16px; }
+  .hero-tagline { margin-top: 18px; }
+  .hero-cta { margin-top: 22px; }
+  .cred-row { margin-top: clamp(16px, 2.4vw, 28px); }
+}
+@media (max-height: 620px) {
+  .hero-title { font-size: clamp(1.9rem, 4.4vw, 3.2rem); margin-bottom: 12px; }
+  .hero-sub { font-size: .95rem; }
+  .hero-tagline { margin-top: 12px; }
+  .hero-cta { margin-top: 16px; }
+  .cred-row { margin-top: clamp(12px, 1.8vw, 20px); }
 }
 
 
@@ -1771,8 +1820,11 @@ html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1
 /* ── 01 · WHO WE ARE ─────────────────────────────────────── */
 .abx-intro {
   background: var(--bg);
-  padding-top: calc(var(--header-h) + clamp(6px, 1.4vw, 18px));
-  padding-bottom: clamp(28px, 3.6vw, 50px);
+  /* matches the Careers/Let's Connect hero exactly, so all four split
+     hero pages (About, Clientele, Careers, Let's Connect) share the
+     same top/bottom spacing and overall height */
+  padding-top: calc(var(--header-h) + clamp(14px, 2vw, 30px));
+  padding-bottom: clamp(20px, 2.4vw, 36px);
 }
 .abx-intro__grid {
   display: grid;
@@ -1797,9 +1849,28 @@ html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1
 .abx-intro__media {
   position: relative;
   margin: 0; overflow: hidden;
-  min-height: clamp(214px, 25vw, 344px);
+  min-height: clamp(222px, 25vw, 352px);
 }
+/* the photo bleeds past the section's own top padding so it reaches the
+   header's bottom edge, same as Clientele. The bottom bleed is capped at
+   .abx-intro__more's own margin-top (not the section's full bottom
+   padding) — that paragraph block sits directly below this grid, so
+   this stops the photo exactly at its divider line instead of running
+   past it into the text, which is what happened last time. */
+@media (min-width: 901px) {
+  .abx-intro__media {
+    margin-block: calc(-1 * clamp(14px, 2vw, 30px)) calc(-1 * clamp(12px, 1.4vw, 20px));
+  }
+}
+/* absolutely positioning the img takes it out of normal flow, so it no
+   longer contributes its own intrinsic (aspect-ratio-driven) height to
+   the grid row's auto sizing — otherwise a wide/short photo forces the
+   row taller than the copy beside it, leaving that copy (align-self:
+   center) visibly floating with blank space above and below it. With
+   the img out of the sizing equation, the row is sized by the text
+   alone, exactly as the min-height:0/stretch rule below already intends. */
 .abx-intro__media img {
+  position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover; object-position: 100% 42%;
   display: block;
@@ -1815,8 +1886,8 @@ html.js .section-final .sunburst.reveal.is-in { opacity: .85; transform: scale(1
       transparent 44%);
 }
 .abx-intro__more {
-  margin-top: clamp(24px, 3.2vw, 44px);
-  padding-top: clamp(20px, 2.4vw, 32px);
+  margin-top: clamp(12px, 1.4vw, 20px);
+  padding-top: clamp(12px, 1.4vw, 18px);
   border-top: 1px solid var(--hairline);
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
@@ -1910,9 +1981,10 @@ html[data-theme="dark"] .abx-work__media::after { --melt: var(--bg-soft); }
 
 /* horizontal process flow */
 .abx-flow {
-  list-style: none; margin: clamp(10px, 1.1vw, 14px) 0 0; padding: 21px 0 0;
+  list-style: none; margin: clamp(10px, 1.1vw, 14px) auto 0; padding: 21px 0 0;
   display: grid; grid-template-columns: repeat(4, 1fr);
   gap: clamp(14px, 2vw, 30px);
+  max-width: 1040px;
   position: relative; text-align: left;
 }
 .abx-flow::before {
@@ -2007,6 +2079,15 @@ html[data-theme="dark"] .abx-cred {
 /* the eyebrow's shared 24px drop is tuned for full-height sections */
 .abx-cta .abx-eyebrow { margin-bottom: clamp(8px, 1vw, 13px); }
 .abx-pov__slash--cta { right: 40%; opacity: .6; }
+/* right:40% is measured against this full-bleed section, but the grid
+   beside it is capped at the shared 1400px container — past the width
+   where that container stops growing, 40%-of-section keeps drifting
+   rightward while the actual column gap does not, walking the line into
+   the "Let's Talk" copy. Past that point, anchor it to the viewport
+   center with a fixed offset instead so it tracks the (now-static) gap. */
+@media (min-width: 1500px) {
+  .abx-pov__slash--cta { right: calc(50% - 86px); }
+}
 .abx-cta__grid {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
@@ -2494,7 +2575,7 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   .cred-txt strong { font-size: clamp(.66rem, .9vw, .77rem); }
   .cred-txt small  { font-size: clamp(.6rem, .8vw, .69rem); }
   .cred-ico .ico   { width: clamp(20px, 2.6vw, 26px); height: clamp(20px, 2.6vw, 26px); }
-  .hero-viewport { min-height: max(100svh, 720px); }
+  .hero-viewport { min-height: max(100svh, 460px); }
 }
 
 /* ≤900px — solutions & panels stack */
@@ -2526,7 +2607,7 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   .step-node { position: absolute; left: 0; top: 0; margin: 0; width: 64px; height: 64px; }
   .step-copy { margin-inline: 0; max-width: none; }
 
-  .hero-slide { padding-block: calc(var(--header-h) + 26px) 124px; }
+  .hero-slide { padding-block: calc(var(--header-h) + clamp(12px, 3.5svh, 26px)) clamp(44px, 12svh, 124px); }
   .hero-title { margin-bottom: 20px; }
   .hero-cta { margin-top: 30px; }
   .hero-tagline { margin-top: 22px; font-size: .93rem; }
@@ -2706,7 +2787,17 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   margin: 0; overflow: hidden;
   min-height: clamp(230px, 26vw, 366px);
 }
+/* the photo bleeds past the section's own top/bottom padding so it
+   reaches the header's bottom edge and the section's true bottom edge —
+   safe here (full bleed, like Clientele) because this grid is the last
+   thing in the section, with no trailing block for it to run into. */
+@media (min-width: 901px) {
+  .global-talent-page .gt-hero__media {
+    margin-block: calc(-1 * clamp(8px, 1.1vw, 16px)) calc(-1 * clamp(20px, 2.2vw, 32px));
+  }
+}
 .global-talent-page .gt-hero__media img {
+  position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover;
   object-position: 50% 42%;
@@ -3087,6 +3178,7 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
   min-height: clamp(222px, 25vw, 352px);
 }
 .careers-page .car-hero__media img {
+  position: absolute; inset: 0;
   width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; display: block;
 }
 .careers-page .car-hero__media::after {
@@ -3459,6 +3551,7 @@ html[data-theme="dark"] .careers-page .car-connect { background: var(--bg-soft);
   min-height: clamp(222px, 25vw, 352px);
 }
 .bizcon-page .bc-hero__media img {
+  position: absolute; inset: 0;
   width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; display: block;
 }
 .bizcon-page .bc-hero__media::after {
@@ -3745,6 +3838,7 @@ html[data-theme="dark"] .bizcon-page .bc-row__dots { color: var(--hairline); }
   min-height: clamp(222px, 25vw, 352px);
 }
 .letsconnect-page .lc-hero__media img {
+  position: absolute; inset: 0;
   width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; display: block;
 }
 .letsconnect-page .lc-hero__media::after {
@@ -4114,6 +4208,7 @@ html[data-theme="dark"] .letsconnect-page .lc-form-section { background: var(--b
   min-height: clamp(222px, 25vw, 358px);
 }
 .dbi-page .dbi-hero__media img {
+  position: absolute; inset: 0;
   width: 100%; height: 100%; object-fit: cover; object-position: 50% 34%;
   display: block;
   transform: scale(1.035);
@@ -4579,7 +4674,7 @@ html[data-theme="dark"] .global-talent-page .gt-hero__media img {
   margin: 0; overflow: hidden;
   min-height: clamp(222px, 25vw, 358px);
 }
-.techdelivery-page .td-hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 32%; display: block; }
+.techdelivery-page .td-hero__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 32%; display: block; }
 .techdelivery-page .td-hero__media::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background:
@@ -4591,9 +4686,14 @@ html[data-theme="dark"] .global-talent-page .gt-hero__media img {
 /* the photo bleeds past the section's own padding so it fills the band
    edge to edge instead of leaving a blank strip above/below — text
    keeps its normal padding; only the photo (which clips via
-   overflow:hidden + object-fit:cover) extends and zooms to cover it */
+   overflow:hidden + object-fit:cover) extends and zooms to cover it.
+   align-self:stretch overrides the grid's own align-items:center: since
+   the img above is absolutely positioned it no longer inflates the row
+   past the text's natural height, so without stretch the photo would
+   float centered and short inside that row instead of filling it. */
 @media (min-width: 901px) {
   .techdelivery-page .td-hero__media {
+    align-self: stretch;
     margin-block: calc(-1 * clamp(14px, 2vw, 30px)) calc(-1 * clamp(18px, 2.2vw, 32px));
   }
 }
@@ -4887,7 +4987,7 @@ html[data-theme="dark"] .techdelivery-page .td-hero__media img {
   margin: 0; overflow: hidden;
   min-height: clamp(222px, 25vw, 358px);
 }
-.focusarea-page .fa-hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; display: block; }
+.focusarea-page .fa-hero__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; display: block; }
 .focusarea-page .fa-hero__media::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background:
@@ -4900,9 +5000,14 @@ html[data-theme="dark"] .techdelivery-page .td-hero__media img {
    image reaches the header's bottom edge and the section's bottom border
    instead of leaving a blank band there — it stops flush at the header
    rather than running behind it, and text keeps its normal padding; only
-   the photo (which clips via overflow:hidden + object-fit:cover) extends */
+   the photo (which clips via overflow:hidden + object-fit:cover) extends.
+   align-self:stretch overrides the grid's own align-items:center: since
+   the img above is absolutely positioned it no longer inflates the row
+   past the text's natural height, so without stretch the photo would
+   float centered and short inside that row instead of filling it. */
 @media (min-width: 901px) {
   .focusarea-page .fa-hero__media {
+    align-self: stretch;
     margin-block: calc(-1 * clamp(14px, 2vw, 30px)) calc(-1 * clamp(18px, 2.2vw, 32px));
   }
 }
@@ -5213,8 +5318,11 @@ html[data-theme="dark"] .clientele-page {
 /* ── 01 · HERO ───────────────────────────────────────────── */
 .clientele-page .clx-hero {
   background: var(--bg-cream);
-  padding-top: calc(var(--header-h) + clamp(6px, 1.4vw, 18px));
-  padding-bottom: clamp(26px, 3.4vw, 48px);
+  /* matches the Careers/Let's Connect hero exactly, so all four split
+     hero pages (About, Clientele, Careers, Let's Connect) share the
+     same top/bottom spacing and overall height */
+  padding-top: calc(var(--header-h) + clamp(14px, 2vw, 30px));
+  padding-bottom: clamp(20px, 2.4vw, 36px);
 }
 html[data-theme="dark"] .clientele-page .clx-hero { background: var(--bg-soft); }
 
@@ -5248,9 +5356,27 @@ html[data-theme="dark"] .clientele-page .clx-hero { background: var(--bg-soft); 
 }
 .clientele-page .clx-hero__media {
   position: relative; margin: 0; overflow: hidden;
-  min-height: clamp(214px, 25vw, 344px);
+  min-height: clamp(222px, 25vw, 352px);
 }
+/* the photo bleeds past the section's own top/bottom padding so it
+   reaches the header's bottom edge and the section's true bottom edge —
+   text keeps its normal padding; only the photo (which clips via
+   overflow:hidden + object-fit:cover) extends. Safe here because the
+   grid is the last thing in this section (unlike About's hero, which
+   has a paragraph block right after it that the bleed would run into). */
+@media (min-width: 901px) {
+  .clientele-page .clx-hero__media {
+    margin-block: calc(-1 * clamp(14px, 2vw, 30px)) calc(-1 * clamp(20px, 2.4vw, 36px));
+  }
+}
+/* absolutely positioning the img keeps its intrinsic aspect-ratio height
+   out of the grid row's auto sizing — otherwise the photo forces the row
+   taller than the copy beside it, leaving that copy (align-self: center)
+   floating with blank space above and below. With the img out of the
+   sizing equation, the row is sized by the text alone, exactly as the
+   min-height:0/stretch rule below already intends. */
 .clientele-page .clx-hero__media img {
+  position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover; object-position: 38% 46%;
   display: block;
