@@ -5109,14 +5109,15 @@ html[data-theme="dark"] .focusarea-page .fa-hero__media img {
   --clx-gutter:   clamp(34px, 5.5vw, 86px);   /* the dark bands' rule column */
 
   --clx-tile:     #FFFFFF;
-  --clx-wall:     #F1F5FA;
-  --clx-wall-line: var(--hairline);
+  --clx-wall:     #EEF3F9;       /* the wall's wash — faded out on every side */
+  --clx-tile-py:  9px;           /* logo breathing room inside each card */
+  --clx-grid-gap: clamp(14px, 1.7vw, 24px);  /* static grid (reduced motion) — JS never rewrites it */
+  --clx-tile-px:  14px;
 }
 html[data-theme="dark"] .clientele-page {
   /* a pale plate, not a white card — soft enough to sit on navy */
   --clx-tile:     #E7ECF4;
-  --clx-wall:     #0E1A2E;
-  --clx-wall-line: var(--hairline);
+  --clx-wall:     #101E34;
 }
 
 .clientele-page #main { overflow-x: clip; }
@@ -5234,10 +5235,10 @@ html:not(.js) .clientele-page .clx-band__slash { transform: rotate(var(--tilt));
 /* ── 03 · REPRESENTATIVE EXPERIENCE ──────────────────────── */
 .clientele-page .clx-logos {
   background: var(--bg);
-  /* The caption that used to sit under the wall is gone, so the section
-     closes right beneath the last row — just enough to keep the tinted
-     band from butting into the section below it. */
-  padding-block: clamp(44px, 5.2vw, 84px) clamp(20px, 2.3vw, 32px);
+  /* The wall's own padding carries its fade, so the section only needs a
+     sliver below it — the wash has already dissolved into the background
+     before the next section begins. */
+  padding-block: clamp(44px, 5.2vw, 84px) clamp(4px, .8vw, 12px);
   overflow: hidden;
 }
 .clientele-page .clx-logos__head { text-align: left; max-width: 76rem; }
@@ -5258,12 +5259,37 @@ html:not(.js) .clientele-page .clx-band__slash { transform: rotate(var(--tilt));
 
 
 /* ── the marquee ─────────────────────────────────────────── */
+/* No box, no rules above or below. The tint is painted on a pseudo-layer
+   and masked out on all four sides, so the wall rises out of the page
+   background and sinks back into it without a single visible edge.
+   Where masks are unsupported the tint simply shows as a flat, borderless
+   band — still no lines. */
 .clientele-page .clx-wall {
-  margin-top: clamp(30px, 3.8vw, 52px);
-  padding-block: clamp(24px, 2.9vw, 44px);
+  position: relative;
+  isolation: isolate;
+  --clx-wall-pad: clamp(40px, 4.6vw, 72px);
+  --clx-wall-side: 18%;            /* how far in the wash fades from each side */
+  margin-top: clamp(10px, 1.6vw, 24px);
+  padding-block: var(--clx-wall-pad);
+}
+/* without scripting the rows are never built — the plain logo list below
+   takes over, so the empty wall and its wash step aside */
+html:not(.js) .clientele-page .clx-wall { display: none; }
+
+.clientele-page .clx-wall::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  pointer-events: none;
   background: var(--clx-wall);
-  border-top: 1px solid var(--clx-wall-line);
-  border-bottom: 1px solid var(--clx-wall-line);
+  /* vertical: the fade lives entirely in the wall's padding, so every card
+     row sits on the full tint; horizontal: a wide, gentle falloff */
+  -webkit-mask-image:
+    linear-gradient(180deg, transparent 0, #000 var(--clx-wall-pad), #000 calc(100% - var(--clx-wall-pad)), transparent 100%),
+    linear-gradient(90deg,  transparent 0, #000 var(--clx-wall-side), #000 calc(100% - var(--clx-wall-side)), transparent 100%);
+  -webkit-mask-composite: source-in;
+          mask-image:
+    linear-gradient(180deg, transparent 0, #000 var(--clx-wall-pad), #000 calc(100% - var(--clx-wall-pad)), transparent 100%),
+    linear-gradient(90deg,  transparent 0, #000 var(--clx-wall-side), #000 calc(100% - var(--clx-wall-side)), transparent 100%);
+          mask-composite: intersect;
 }
 
 .clientele-page .clx-marquee {
@@ -5313,21 +5339,34 @@ html:not(.js) .clientele-page .clx-band__slash { transform: rotate(var(--tilt));
 /* ── logo tiles ──────────────────────────────────────────── */
 /* Flat card — no border, no shadow, no hover state. Exactly the shape the
    Cloudinary marquee uses; the surface stays light in both themes because
-   most of these client logos are dark monochrome wordmarks. */
+   most of these client logos are dark monochrome wordmarks.
+
+   CENTRING. Every logo file is a 660x220 canvas with its artwork already
+   centred on it. The card's single grid cell is given a definite size
+   (minmax(0,1fr) on both axes), so the image fills exactly the padded
+   content box and object-fit: contain centres the canvas inside it on
+   both axes. Previously the cell was content-sized, the image's height
+   fell back to width / 3, and it overflowed the bottom padding — so every
+   logo sat low and the tall marks touched the card's lower edge. */
 .clientele-page .clx-tile {
   flex: 0 0 auto;
   width: var(--clx-tile-w);
   height: var(--clx-tile-h);
   margin-right: var(--clx-gap);
-  display: grid; place-items: center;
-  padding: 7px 14px;
+  display: grid;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+  place-items: stretch;
+  padding: var(--clx-tile-py) var(--clx-tile-px);
   background: var(--clx-tile);
   border-radius: var(--clx-radius);
+  overflow: hidden;
 }
 .clientele-page .clx-logo {
+  display: block;
   width: 100%; height: 100%;
-  aspect-ratio: auto;
+  min-width: 0; min-height: 0; max-width: none;
   object-fit: contain;
+  object-position: 50% 50%;
 }
 
 
@@ -5359,14 +5398,20 @@ html.js .clientele-page .clx-marquee.is-ready .clx-rail { opacity: 1; }
   margin-inline: var(--gutter);
 }
 .clientele-page .clientele-logo-list li {
-  display: grid; place-items: center;
+  display: grid;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+  place-items: stretch;
   height: var(--clx-tile-h);
-  padding: 7px 14px;
+  padding: var(--clx-tile-py) var(--clx-tile-px);
   background: var(--clx-tile);
   border-radius: var(--clx-radius);
+  overflow: hidden;
 }
 .clientele-page .clientele-logo-list img {
-  width: 100%; height: 100%; object-fit: contain;
+  display: block;
+  width: 100%; height: 100%;
+  min-width: 0; min-height: 0; max-width: none;
+  object-fit: contain; object-position: 50% 50%;
 }
 
 
@@ -5374,6 +5419,9 @@ html.js .clientele-page .clx-marquee.is-ready .clx-rail { opacity: 1; }
 .clientele-page .clx-contribute {
   position: relative; overflow: hidden;
   background: var(--bg-sky);
+  /* rises softly out of the logo section's background instead of starting
+     on a hard edge right beneath the wall */
+  background: linear-gradient(180deg, var(--bg) 0, var(--bg-sky) clamp(56px, 7vw, 110px));
   padding-block: clamp(44px, 5.4vw, 88px);
 }
 .clientele-page .clx-contribute__inner {
@@ -5397,6 +5445,20 @@ html.js .clientele-page .clx-marquee.is-ready .clx-rail { opacity: 1; }
   line-height: 1.72; max-width: 46ch;
   text-wrap: pretty;
 }
+
+/* Dark mode: in light mode this section is a pale sky panel between white
+   and navy, so it separates itself. In dark mode --bg-sky lands within a
+   shade of the closing navy band and the two read as one block. Here it
+   becomes a lifted slate surface — a touch lighter and less saturated
+   than the band's deep blue — with a faint cool light behind the headline.
+   The closing band keeps its deeper navy and gold rule, so the page steps
+   down: page → raised slate → deep navy close. Light mode is untouched. */
+html[data-theme="dark"] .clientele-page .clx-contribute {
+  background:
+    radial-gradient(62% 78% at 22% 46%, rgba(140, 172, 216, .075) 0%, transparent 72%),
+    linear-gradient(180deg, var(--bg) 0, #16243A clamp(56px, 7vw, 110px), #132035 100%);
+}
+html[data-theme="dark"] .clientele-page .clx-contribute__body { color: #B3C0D2; }
 /* ── RESPONSIVE ──────────────────────────────────────────── */
 /* Same rule the About hero uses: above 900px the photo stretches to the
    full height of the copy beside it rather than sitting at a fixed cap. */
@@ -5431,6 +5493,9 @@ html.js .clientele-page .clx-marquee.is-ready .clx-rail { opacity: 1; }
   .clientele-page .clx-contribute__body { max-width: none; }
 }
 @media (max-width: 620px) {
+  /* a narrow screen has no room for a wide side fade — keep the wash under
+     the edge cards so they never float on bare background */
+  .clientele-page .clx-wall { --clx-wall-side: 6%; }
   .clientele-page .clx-marquee {
     -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 13%, #000 87%, transparent 100%);
             mask-image: linear-gradient(90deg, transparent 0, #000 13%, #000 87%, transparent 100%);
@@ -5439,7 +5504,7 @@ html.js .clientele-page .clx-marquee.is-ready .clx-rail { opacity: 1; }
 @media (max-width: 520px) {
   /* On a phone the tiles shrink past the point where a logo stays readable,
      so the row holds fewer, larger tiles instead and simply travels further. */
-  .clientele-page { --clx-tile-w: clamp(150px, 44vw, 196px); --clx-tile-h: 60px; --clx-gap: 12px; }
+  .clientele-page { --clx-tile-w: clamp(150px, 44vw, 196px); --clx-tile-h: 60px; --clx-gap: 12px; --clx-tile-py: 7px; --clx-tile-px: 12px; --clx-grid-gap: 12px; }
   .clientele-page .clx-marquee:not(.is-built) { min-height: 216px; }
   .clientele-page .clientele-logo-list ul { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
 }
@@ -5458,7 +5523,9 @@ html.js .clientele-page .clx-marquee.is-ready .clx-rail { opacity: 1; }
   .clientele-page .clx-marquee {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(178px, 1fr));
-    gap: var(--clx-gap);
+    /* not --clx-gap: the script snaps that to the card's margin, which is
+       0 in this grid, and the cards ended up touching */
+    gap: var(--clx-grid-gap);
     margin-inline: var(--gutter);
     -webkit-mask-image: none; mask-image: none;
     min-height: 0 !important;
