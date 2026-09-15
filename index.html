@@ -11,7 +11,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="GSS — Business-Led Technology Consulting &amp; Specialized Talent">
 <meta property="og:description" content="Global Soft Systems (GSS) combines 25+ years of proven experience, certified diversity, business-led technology consulting and specialized talent to help organizations move forward with confidence.">
-<meta property="og:image" content="images/hero-skyline-1200.webp">
+<meta property="og:image" content="images/hero-skyline-day-1200.jpg">
 <meta property="og:site_name" content="Global Soft Systems">
 <meta name="twitter:card" content="summary_large_image">
 
@@ -22,8 +22,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap">
 
-<!-- Above-the-fold hero art: preload the first two slides, never lazy-load any -->
-<link rel="preload" as="image" href="images/hero-skyline-1672.webp" imagesrcset="images/hero-skyline-800.webp 800w, images/hero-skyline-1200.webp 1200w, images/hero-skyline-1672.webp 1672w" imagesizes="100vw" fetchpriority="high">
+<!-- Above-the-fold hero art: preload the first two slides, never lazy-load any.
+     Only the day photo is preloaded — every fresh session starts on the light
+     theme (see script.js), so that's what actually paints first; the night
+     photo loads normally if a stored dark preference swaps it in after. -->
+<link rel="preload" as="image" href="images/hero-skyline-day-1672.jpg" imagesrcset="images/hero-skyline-day-800.jpg 800w, images/hero-skyline-day-1200.jpg 1200w, images/hero-skyline-day-1672.jpg 1672w" imagesizes="100vw" fetchpriority="high">
 <link rel="preload" as="image" href="images/hero-datahall-1672.webp" imagesrcset="images/hero-datahall-800.webp 800w, images/hero-datahall-1200.webp 1200w, images/hero-datahall-1672.webp 1672w" imagesizes="100vw">
 
 <link rel="stylesheet" href="style.css">
@@ -213,9 +216,14 @@
     <!-- ---------- SLIDE 1 ---------- -->
     <article class="hero-slide is-active" data-slide="0" aria-roledescription="slide" aria-label="Slide 1 of 4: 25+ Years of Trust">
       <div class="hero-media">
-        <img src="images/hero-skyline-1672.webp"
-             srcset="images/hero-skyline-560.webp 560w, images/hero-skyline-800.webp 800w, images/hero-skyline-1200.webp 1200w, images/hero-skyline-1672.webp 1672w"
+        <img class="hero-media-img hero-media-img--day"
+             src="images/hero-skyline-day-1672.jpg"
+             srcset="images/hero-skyline-day-560.jpg 560w, images/hero-skyline-day-800.jpg 800w, images/hero-skyline-day-1200.jpg 1200w, images/hero-skyline-day-1672.jpg 1672w"
              sizes="100vw" fetchpriority="high" alt="Waterfront city skyline of glass towers mirrored in still blue water, seen from an open terrace" decoding="async">
+        <img class="hero-media-img hero-media-img--night"
+             src="images/hero-skyline-night-1672.jpg"
+             srcset="images/hero-skyline-night-560.jpg 560w, images/hero-skyline-night-800.jpg 800w, images/hero-skyline-night-1200.jpg 1200w, images/hero-skyline-night-1672.jpg 1672w"
+             sizes="100vw" alt="" aria-hidden="true" decoding="async">
         <span class="hero-tint tint-3" aria-hidden="true"></span>
       </div>
       <div class="container hero-content">
