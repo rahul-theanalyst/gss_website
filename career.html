@@ -291,7 +291,7 @@
       <p class="car-connect__text reveal">The right opportunity may not be open today. Share your profile and r&eacute;sum&eacute;, and we&rsquo;ll keep your experience in mind when relevant work becomes available.</p>
     </div>
 
-    <form class="car-form reveal" aria-label="Stay connected">
+    <form class="car-form reveal" aria-label="Stay connected" data-privacy-form="careers">
       <div class="car-form__row">
         <div class="car-field">
           <label for="f-first">First name</label>
@@ -330,11 +330,9 @@
           <input type="file" id="f-resume" name="resume" accept=".pdf,.doc,.docx">
         </div>
       </div>
-      <label class="car-consent">
-        <input type="checkbox" name="consent" required>
-        <span>I agree that GSS may contact me about relevant opportunities and process my information according to the <a href="contact.html">Privacy Policy</a>.</span>
-      </label>
+      <p class="form-legal-note">Before submitting your profile, please review our <button type="button" data-legal-open="privacy" aria-haspopup="dialog" aria-controls="legalDialog">Privacy Policy</button> and <button type="button" data-legal-open="disclaimer" aria-haspopup="dialog" aria-controls="legalDialog">Disclaimer</button>.</p>
       <button class="btn btn-primary car-form__submit" type="submit">Submit Profile <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      <p class="form-submission-note" data-submission-status role="status" hidden></p>
     </form>
   </div>
 </section>
@@ -364,8 +362,8 @@
     <p class="footer-copy">&copy; <span id="year">2026</span> GSS</p>
 
     <nav class="footer-links" aria-label="Legal">
-      <a href="contact.html">Disclaimer</a>
-      <a href="contact.html">Privacy</a>
+      <button type="button" data-legal-open="disclaimer" aria-haspopup="dialog" aria-controls="legalDialog">Disclaimer</button>
+      <button type="button" data-legal-open="privacy" aria-haspopup="dialog" aria-controls="legalDialog">Privacy Policy</button>
     </nav>
 
     <ul class="footer-social">
@@ -393,12 +391,16 @@
     if (fi && fn) fi.addEventListener('change', function () {
       fn.textContent = fi.files && fi.files.length ? fi.files[0].name : 'Upload résumé';
     });
-    document.querySelectorAll('.car-search, .car-form').forEach(function (f) {
+    document.querySelectorAll('.car-search').forEach(function (f) {
       f.addEventListener('submit', function (e) { e.preventDefault(); });
+    });
+    document.querySelector('.car-form').addEventListener('submit', function (event) {
+      if (!this.getAttribute('action')) event.preventDefault();
     });
   }());
 </script>
 <script src="script.js"></script>
 <script src="careers.js"></script>
+<script src="legal.js"></script>
 </body>
 </html>

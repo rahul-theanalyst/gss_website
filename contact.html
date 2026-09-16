@@ -199,7 +199,7 @@
       <p class="lc-form-section__text reveal">Share what you&rsquo;re considering, where things stand and what would be most useful. We&rsquo;ll route your message to the right GSS team.</p>
     </div>
 
-    <form class="lc-form reveal" aria-label="Contact GSS">
+    <form class="lc-form reveal" aria-label="Contact GSS" data-privacy-form="contact">
       <div class="lc-form__row">
         <div class="lc-field">
           <label for="lc-first">First name</label>
@@ -278,10 +278,11 @@
         <label for="lc-message">Message</label>
         <textarea id="lc-message" name="message" placeholder="Message" rows="4"></textarea>
       </div>
+      <p class="form-legal-note">Before submitting, please review our <button type="button" data-legal-open="privacy" aria-haspopup="dialog" aria-controls="legalDialog">Privacy Policy</button> and <button type="button" data-legal-open="disclaimer" aria-haspopup="dialog" aria-controls="legalDialog">Disclaimer</button>.</p>
       <p class="lc-form__act">
         <button class="btn btn-primary" type="submit">Send Message <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
       </p>
-      <p class="lc-form__fine">By submitting this form, you agree that GSS may contact you regarding your inquiry. Please review our <a href="contact.html">Privacy Policy</a> for information about how we handle your data.</p>
+      <p class="form-submission-note" data-submission-status role="status" hidden></p>
     </form>
   </div>
 </section>
@@ -373,8 +374,8 @@
     <p class="footer-copy">&copy; <span id="year">2026</span> GSS</p>
 
     <nav class="footer-links" aria-label="Legal">
-      <a href="contact.html">Disclaimer</a>
-      <a href="contact.html">Privacy</a>
+      <button type="button" data-legal-open="disclaimer" aria-haspopup="dialog" aria-controls="legalDialog">Disclaimer</button>
+      <button type="button" data-legal-open="privacy" aria-haspopup="dialog" aria-controls="legalDialog">Privacy Policy</button>
     </nav>
 
     <ul class="footer-social">
@@ -396,11 +397,12 @@
 </footer>
 
 <script>
-  (function () {
-    var f = document.querySelector('.lc-form');
-    if (f) f.addEventListener('submit', function (e) { e.preventDefault(); });
-  }());
+  // Keep this unconnected form from putting personal information in the URL.
+  document.querySelector('.lc-form').addEventListener('submit', function (event) {
+    if (!this.getAttribute('action')) event.preventDefault();
+  });
 </script>
 <script src="script.js"></script>
+<script src="legal.js"></script>
 </body>
 </html>
