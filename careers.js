@@ -2,10 +2,10 @@
    GSS — Careers page
    careers.js
    ------------------------------------------------------------
-   Renders the "Current Opportunities" board from jobs.json.
+   Renders the "Current Opportunities" board from careers-jobs.php.
 
    NOTHING IN THIS FILE NEEDS TO CHANGE WHEN OPENINGS CHANGE.
-   Job openings live in jobs.json — see EDITING-JOBS.md.
+   Job openings are managed in Ceipal — see CEIPAL-INTEGRATION.md.
 
    Scope: this file is loaded only by career.html and touches
    only elements inside #opportunities. It does not modify any
@@ -63,6 +63,41 @@
       .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);
   }
   function norm(s) { return String(s == null ? '' : s).toLowerCase().trim(); }
+
+  /* Validates careers-jobs.php's optional structured description (headings,
+     label/value lines, paragraphs, bullet lists — see htmlToBlocks() in
+     careers-jobs.php) so a malformed or missing entry just falls back to
+     the plain-text description instead of breaking the row. */
+  function sanitizeBlocks(raw) {
+    if (!Array.isArray(raw)) return [];
+    var out = [];
+    raw.forEach(function (b) {
+      if (!b || typeof b !== 'object') return;
+      if (b.type === 'heading' || b.type === 'para') {
+        var text = String(b.text || '').trim();
+        if (text) out.push({ type: b.type, text: text });
+      } else if (b.type === 'label') {
+        var label = String(b.label || '').trim();
+        var value = String(b.value || '').trim();
+        if (label && value) out.push({ type: 'label', label: label, value: value });
+      } else if (b.type === 'list' && Array.isArray(b.items)) {
+        var items = b.items.map(function (it) {
+          return { text: String((it && it.text) || '').trim(), sub: !!(it && it.sub) };
+        }).filter(function (it) { return it.text; });
+        if (items.length) out.push({ type: 'list', items: items });
+      }
+    });
+    return out;
+  }
+
+  function safeApplyLink(value) {
+    var link = String(value || '').trim();
+    if (!link) return 'contact.html';
+    try {
+      var url = new URL(link, window.location.href);
+      return /^(https?:|mailto:)$/.test(url.protocol) ? url.href : 'contact.html';
+    } catch (e) { return 'contact.html'; }
+  }
 
   function debounce(fn, wait) {
     var t;
@@ -122,9 +157,10 @@
         experience:  String(j.experience || '').trim(),
         department:  String(j.department || '').trim(),
         description: String(j.description || '').trim(),
+        descriptionBlocks: sanitizeBlocks(j.descriptionBlocks),
         skills:      skills.map(function (s) { return String(s).trim(); })
                            .filter(Boolean),
-        applyLink:   String(j.applyLink || 'contact.html').trim() || 'contact.html',
+        applyLink:   safeApplyLink(j.applyLink),
         featured:    j.featured === true || j.featured === 'true',
         haystack:    norm([j.title, j.location, j.type, j.department,
                            j.experience, j.description,
@@ -292,8 +328,32 @@
       var remaining = VISIBLE.length - shown.length;
       moreEl.hidden = remaining <= 0;
       var label = moreEl.querySelector('[data-jobs-more-label]');
-      if (label) label.textContent = 'View All Openings (' + VISIBLE.length + ')';
+      if (label) label.textContent = remaining > 0
+        ? 'View ' + remaining + ' more ' + (remaining === 1 ? 'opening' : 'openings')
+        : 'All openings shown';
     }
+  }
+
+  /* Rich description when careers-jobs.php could structure it, otherwise
+     the plain-text fallback (unstyled, but still a description). */
+  function renderDescription(j) {
+    if (j.descriptionBlocks.length) {
+      return '<div class="car-job__desc">' + j.descriptionBlocks.map(renderBlock).join('') + '</div>';
+    }
+    return j.description ? '<p class="car-job__desc">' + esc(j.description) + '</p>' : '';
+  }
+
+  function renderBlock(b) {
+    if (b.type === 'heading') return '<p class="car-jd-h">' + esc(b.text) + '</p>';
+    if (b.type === 'label') {
+      return '<p class="car-jd-label"><span class="car-jd-label__k">' + esc(b.label) + '</span>' + esc(b.value) + '</p>';
+    }
+    if (b.type === 'list') {
+      return '<ul class="car-jd-list">' + b.items.map(function (it) {
+        return '<li' + (it.sub ? ' class="is-sub"' : '') + '>' + esc(it.text) + '</li>';
+      }).join('') + '</ul>';
+    }
+    return '<p class="car-jd-p">' + esc(b.text) + '</p>';
   }
 
   function row(j) {
@@ -315,7 +375,7 @@
         '<button class="car-job__cta" type="button" aria-expanded="false" ' +
                 'aria-controls="panel-' + esc(j.id) + '" data-job-toggle="' + esc(j.id) + '">' +
           'View Role' +
-          '<span class="car-sr">: ' + esc(j.title) + '</span>' +
+          '<span class="sr-only">: ' + esc(j.title) + '</span>' +
           '<svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>' +
         '</button>' +
       '</div>' +
@@ -327,14 +387,14 @@
             '<dl class="car-job__meta">' + meta.map(function (m) {
               return '<div><dt>' + esc(m[0]) + '</dt><dd>' + esc(m[1]) + '</dd></div>';
             }).join('') + '</dl>' : '') +
-          (j.description ? '<p class="car-job__desc">' + esc(j.description) + '</p>' : '') +
+          renderDescription(j) +
           (j.skills.length ?
             '<ul class="car-skills">' + j.skills.map(function (s) {
               return '<li>' + esc(s) + '</li>';
             }).join('') + '</ul>' : '') +
           '<div class="car-job__actions">' +
             '<a class="btn btn-primary btn-sm" href="' + esc(j.applyLink) + '">' +
-              'Apply for this role<span class="car-sr">: ' + esc(j.title) + '</span> ' +
+              'Apply for this role<span class="sr-only">: ' + esc(j.title) + '</span> ' +
               '<svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>' +
             '</a>' +
           '</div>' +
@@ -436,7 +496,9 @@
     listEl.hidden = true;
     listEl.innerHTML = '';
     if (moreEl) moreEl.hidden = true;
-    if (countEl) countEl.textContent = '';
+    if (countEl) countEl.textContent = kind === 'filtered'
+      ? 'Showing 0 matching openings of ' + ALL.length + ' current ' + (ALL.length === 1 ? 'opening.' : 'openings.')
+      : '0 current openings.';
     if (!stateEl) return;
 
     stateEl.className = 'car-state';

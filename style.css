@@ -3501,12 +3501,20 @@ html[data-theme="dark"] .careers-page .car-roles__dots { color: var(--hairline);
 .careers-page .car-search {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  /* same column ratios as .car-job below, so each field sits directly
+     above the job-list column it filters (title/location/model + a
+     trailing action column for the button/CTA). The trailing column is a
+     fixed width, not auto, in both grids: .car-search and every .car-job
+     row are separate grids, and an auto column sizes to its own content
+     ("Search" pill button vs. plain "VIEW ROLE" link have different
+     natural widths) — that alone was enough to throw columns 1-3 out of
+     alignment between the two even with matching fr ratios. */
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.2fr) minmax(0, .9fr) 140px;
   gap: clamp(16px, 2vw, 28px);
   align-items: end;
   margin-top: clamp(26px, 3.2vw, 44px);
 }
-.careers-page .car-search__btn { align-self: end; }
+.careers-page .car-search__btn { align-self: end; justify-self: end; }
 
 .careers-page .car-field { display: flex; flex-direction: column; }
 .careers-page .car-field > label {
@@ -3527,6 +3535,8 @@ html[data-theme="dark"] .careers-page .car-roles__dots { color: var(--hairline);
 .careers-page .car-field input:focus { outline: none; border-bottom-color: var(--gold); }
 
 /* jobs list — live board, populated by careers.js from careers-jobs.php */
+.careers-page #opportunities [hidden] { display: none !important; }
+.careers-page .car-roles__foot:has([data-jobs-more][hidden]) { display: none; }
 .careers-page .car-roles__count { margin: clamp(18px, 2.2vw, 26px) 0 0; color: var(--muted-2); font-size: .84rem; }
 .careers-page .car-clear {
   background: none; border: 0; padding: 0; margin-left: 6px;
@@ -3548,12 +3558,15 @@ html[data-theme="dark"] .careers-page .car-roles__dots { color: var(--hairline);
 
 .careers-page .car-job {
   display: grid;
-  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.2fr) minmax(0, .9fr) auto;
-  gap: clamp(12px, 2vw, 28px);
+  /* fixed 140px trailing column must match .car-search's exactly — see the
+     comment on .car-search above */
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.2fr) minmax(0, .9fr) 140px;
+  gap: clamp(16px, 2vw, 28px);
   align-items: center;
   padding: clamp(15px, 1.7vw, 21px) 0;
 }
 .careers-page .car-job__title { font-weight: 600; color: var(--navy); font-size: .98rem; }
+.careers-page .car-job > span { min-width: 0; overflow-wrap: anywhere; }
 .careers-page .car-job__loc,
 .careers-page .car-job__model { color: var(--muted); font-size: .9rem; }
 .careers-page .car-job__flag {
@@ -3567,6 +3580,7 @@ html[data-theme="dark"] .careers-page .car-roles__dots { color: var(--hairline);
 }
 .careers-page .car-job__cta {
   display: inline-flex; align-items: center; gap: 8px;
+  justify-self: end;
   font-family: var(--sans); font-size: .72rem; font-weight: 700;
   letter-spacing: .09em; text-transform: uppercase;
   color: var(--navy); white-space: nowrap;
@@ -3590,14 +3604,37 @@ html[data-theme="dark"] .careers-page .car-roles__dots { color: var(--hairline);
   transition: grid-template-rows .35s var(--ease);
 }
 .careers-page .car-job__panel[data-open="true"] { grid-template-rows: 1fr; }
-.careers-page .car-job__panel-in { overflow: hidden; min-height: 0; }
+
+/* the role-details card itself — sits on the section's --bg-sky background,
+   so it gets the same soft surface + gold accent treatment as the rest of
+   the site's cards (see .sol-card) rather than looking like plain text */
+.careers-page .car-job__panel-in {
+  overflow: hidden; min-height: 0;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  padding: 0 clamp(20px, 2.6vw, 30px);
+  transition: padding .35s var(--ease), background-color .35s var(--ease),
+              border-color .35s var(--ease), box-shadow .35s var(--ease);
+}
+/* border/background only when open — otherwise the collapsed (0-height)
+   row would still render a stray hairline from the border itself */
+.careers-page .car-job__panel[data-open="true"] .car-job__panel-in {
+  background: var(--card-soft);
+  border-color: var(--hairline);
+  border-left-color: var(--gold);
+  border-left-width: 3px;
+  box-shadow: var(--sh-sm);
+  padding-top: clamp(18px, 2.2vw, 26px);
+  padding-bottom: clamp(20px, 2.4vw, 28px);
+  margin: 0 0 clamp(10px, 1.4vw, 18px);
+}
 .careers-page .car-job__meta {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: clamp(10px, 1.6vw, 18px);
-  margin: 0 0 clamp(14px, 1.6vw, 20px);
-  padding: clamp(14px, 1.6vw, 20px) 0 0;
-  border-top: 1px solid var(--hairline);
+  margin: 0 0 clamp(16px, 1.8vw, 22px);
+  padding: 0 0 clamp(16px, 1.8vw, 22px);
+  border-bottom: 1px solid var(--hairline);
 }
 .careers-page .car-job__meta dt {
   font-family: var(--sans); font-size: .66rem; font-weight: 700;
@@ -3606,21 +3643,64 @@ html[data-theme="dark"] .careers-page .car-roles__dots { color: var(--hairline);
 }
 .careers-page .car-job__meta dd { margin: 0; color: var(--navy); font-size: .92rem; font-weight: 500; }
 .careers-page .car-job__desc {
-  margin: 0 0 clamp(14px, 1.6vw, 20px);
-  color: var(--muted); font-size: .92rem; line-height: 1.65;
+  margin: 0 0 clamp(16px, 1.8vw, 22px);
+  color: var(--muted); font-size: .92rem; line-height: 1.7;
   white-space: pre-line; max-width: 68ch;
 }
+/* structured description (careers-jobs.php's htmlToBlocks()) — the plain-
+   text fallback above stays pre-line; these are real block elements, so
+   reset that and trim the leading/trailing block's own spacing */
+.careers-page .car-job__desc:has(.car-jd-h, .car-jd-label, .car-jd-p, .car-jd-list) {
+  white-space: normal;
+}
+.careers-page .car-job__desc > :first-child { margin-top: 0; }
+.careers-page .car-job__desc > :last-child { margin-bottom: 0; }
+.careers-page .car-jd-h {
+  margin: 18px 0 4px;
+  font-family: var(--sans); font-size: .72rem; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase;
+  color: var(--gold-2);
+}
+.careers-page .car-jd-label {
+  margin: 3px 0;
+  color: var(--muted); font-size: .9rem; line-height: 1.6;
+}
+.careers-page .car-jd-label__k {
+  color: var(--navy); font-weight: 700; margin-right: 5px;
+}
+.careers-page .car-jd-label__k::after { content: ":"; }
+.careers-page .car-jd-p {
+  margin: 0 0 10px;
+  color: var(--muted); font-size: .92rem; line-height: 1.7;
+}
+.careers-page .car-jd-list {
+  /* the site-wide reset (ul, ol { list-style: none }) strips markers by
+     default — this is real bullet-point content, so put them back */
+  list-style: disc;
+  margin: 2px 0 14px;
+  padding-left: 1.2em;
+  color: var(--muted); font-size: .92rem; line-height: 1.6;
+}
+.careers-page .car-jd-list li { margin: 4px 0; }
+.careers-page .car-jd-list li::marker { color: var(--gold); }
+.careers-page .car-jd-list li.is-sub {
+  list-style-type: circle;
+  margin-left: 1.3em;
+  color: var(--muted-2); font-size: .89rem;
+}
+.careers-page .car-jd-list li.is-sub::marker { color: var(--line); }
 .careers-page .car-skills {
   list-style: none; display: flex; flex-wrap: wrap; gap: 8px;
-  margin: 0 0 clamp(16px, 1.8vw, 22px); padding: 0;
+  margin: 0 0 clamp(18px, 2vw, 24px); padding: 0;
 }
 .careers-page .car-skills li {
   padding: 5px 13px;
   border-radius: var(--radius-pill);
   border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--gold) 7%, transparent);
   color: var(--navy); font-size: .78rem; font-weight: 500;
 }
-.careers-page .car-job__actions { display: flex; padding-bottom: clamp(4px, .6vw, 8px); }
+.careers-page .car-job__actions { display: flex; padding-bottom: clamp(16px, 2vw, 24px); }
 
 /* loading / empty / error states */
 .careers-page .car-state { margin: clamp(14px, 1.8vw, 20px) 0 0; }

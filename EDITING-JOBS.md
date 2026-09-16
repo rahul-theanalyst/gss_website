@@ -1,5 +1,11 @@
 # How to update job openings on the GSS Careers page
 
+> **Live integration:** The careers page now loads Ceipal through
+> `careers-jobs.php`. Manage live openings in Ceipal; see
+> [CEIPAL-INTEGRATION.md](CEIPAL-INTEGRATION.md) for deployment and troubleshooting.
+> The instructions below apply only to the optional manual `jobs.json` feed.
+> To use that feed instead, explicitly set `DATA_URL` in `careers.js` to `jobs.json`.
+
 You only ever edit **one file: `jobs.json`**.
 
 You never need to touch the design, the layout, the colours, or any HTML.

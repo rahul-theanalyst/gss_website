@@ -1,4 +1,9 @@
 {
+    "liveServer.settings.proxy": {
+        "enable": true,
+        "baseUri": "/",
+        "proxyUri": "http://127.0.0.1:8080"
+    },
     "workbench.colorCustomizations": {
         "terminal.foreground": "#d29ccb",
         "activityBar.background": "#24292e",
