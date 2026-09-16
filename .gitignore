@@ -1,0 +1,4 @@
+# Ceipal integration — never commit real credentials or runtime files
+careers-config.php
+careers-cache.json
+careers-errors.log

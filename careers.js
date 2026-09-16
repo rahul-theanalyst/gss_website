@@ -16,7 +16,7 @@
   'use strict';
 
   /* ── Settings a developer may tune (editors never need these) ── */
-  var DATA_URL  = 'jobs.json';  // where the openings live
+  var DATA_URL  = 'careers-jobs.php';  // server-side proxy that fetches live Ceipal postings
   var PAGE_SIZE = 8;            // rows shown before "View All Openings"
 
   var root = document.getElementById('opportunities');
@@ -32,6 +32,17 @@
   var modelEl  = document.getElementById('role-model');
   var locList  = document.getElementById('role-loc-options');
   if (!listEl) return;
+
+  /* modelEl (#role-model) is the trigger button of a custom .gss-select
+     widget (button + listbox), not a native <select> — script.js's
+     generic .gss-select init only wires click/keyboard handling to
+     whatever <li> options exist at page load. Since the Work Model list
+     has to be rebuilt from live job data after that init already ran,
+     the rebuilt options need their own lightweight click handling here. */
+  var modelRoot  = modelEl && modelEl.closest('.gss-select');
+  var modelMenu  = modelRoot && modelRoot.querySelector('.gss-select__menu');
+  var modelValue = modelRoot && modelRoot.querySelector('.gss-select__value');
+  var modelInput = modelRoot && modelRoot.querySelector('.gss-select__input');
 
   var reduceMotion = window.matchMedia &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -127,18 +138,79 @@
 
   /* ── 2. Filter controls, built from the data itself ────── */
   function buildFilterOptions() {
-    if (modelEl) {
-      var models = unique(ALL.map(function (j) { return j.type; }));
-      var keep = modelEl.querySelector('option[value=""]');
-      modelEl.innerHTML = '';
-      modelEl.appendChild(keep || new Option('Work model', ''));
-      models.forEach(function (m) { modelEl.appendChild(new Option(m, m)); });
-    }
+    if (modelRoot && modelMenu) rebuildModelOptions();
     if (locList) {
       locList.innerHTML = unique(ALL.map(function (j) { return j.location; }))
         .map(function (l) { return '<option value="' + esc(l) + '"></option>'; })
         .join('');
     }
+  }
+
+  function rebuildModelOptions() {
+    var current = modelInput ? modelInput.value : '';
+    var models = unique(ALL.map(function (j) { return j.type; }));
+
+    modelMenu.innerHTML =
+      '<li class="gss-select__opt' + (current ? '' : ' is-selected') + '" role="option" ' +
+        'aria-selected="' + (current ? 'false' : 'true') + '" data-value="">Work model</li>' +
+      models.map(function (m) {
+        var sel = m === current;
+        return '<li class="gss-select__opt' + (sel ? ' is-selected' : '') + '" role="option" ' +
+          'aria-selected="' + (sel ? 'true' : 'false') + '" data-value="' + esc(m) + '">' + esc(m) + '</li>';
+      }).join('');
+
+    modelMenu.querySelectorAll('.gss-select__opt').forEach(function (opt, i) {
+      opt.id = 'role-model-opt-' + i;
+      opt.addEventListener('click', function (e) {
+        e.stopPropagation();
+        selectModelOption(opt);
+        closeModelMenu();
+      });
+    });
+
+    var selectedOpt = modelMenu.querySelector('.gss-select__opt.is-selected');
+    if (modelValue && selectedOpt) modelValue.textContent = selectedOpt.textContent;
+    modelRoot.classList.toggle('has-value', !!current);
+  }
+
+  function selectModelOption(opt) {
+    modelMenu.querySelectorAll('.gss-select__opt').forEach(function (o) {
+      o.classList.remove('is-selected'); o.setAttribute('aria-selected', 'false');
+    });
+    opt.classList.add('is-selected');
+    opt.setAttribute('aria-selected', 'true');
+    if (modelValue) modelValue.textContent = opt.textContent;
+    if (modelInput) modelInput.value = opt.getAttribute('data-value') || '';
+    modelRoot.classList.toggle('has-value', !!opt.getAttribute('data-value'));
+    expanded = false;
+    apply();
+  }
+
+  function closeModelMenu() {
+    modelRoot.classList.remove('is-open');
+    if (modelEl) modelEl.setAttribute('aria-expanded', 'false');
+    window.setTimeout(function () {
+      if (!modelRoot.classList.contains('is-open')) modelMenu.hidden = true;
+    }, reduceMotion ? 0 : 220);
+  }
+
+  function resetModelSelect() {
+    if (!modelInput) return;
+    modelInput.value = '';
+    var placeholder = modelMenu && modelMenu.querySelector('.gss-select__opt[data-value=""]');
+    if (placeholder) selectModelOptionSilently(placeholder);
+  }
+
+  // same visual reset as selectModelOption, without re-triggering apply()
+  // (clearFilters() calls apply() itself right after)
+  function selectModelOptionSilently(opt) {
+    modelMenu.querySelectorAll('.gss-select__opt').forEach(function (o) {
+      o.classList.remove('is-selected'); o.setAttribute('aria-selected', 'false');
+    });
+    opt.classList.add('is-selected');
+    opt.setAttribute('aria-selected', 'true');
+    if (modelValue) modelValue.textContent = opt.textContent;
+    modelRoot.classList.remove('has-value');
   }
 
   function unique(arr) {
@@ -153,7 +225,8 @@
   function bindFilters() {
     var run = debounce(function () { expanded = false; apply(); }, 160);
     [qEl, locEl].forEach(function (el) { if (el) el.addEventListener('input', run); });
-    if (modelEl) modelEl.addEventListener('change', function () { expanded = false; apply(); });
+    // the model dropdown applies its own filter immediately on selection
+    // (see selectModelOption above) — no separate change listener needed
     if (formEl) formEl.addEventListener('submit', function (e) {
       e.preventDefault(); expanded = false; apply();
     });
@@ -163,7 +236,7 @@
     return {
       q:     norm(qEl && qEl.value),
       loc:   norm(locEl && locEl.value),
-      model: norm(modelEl && modelEl.value)
+      model: norm(modelInput && modelInput.value)
     };
   }
   function isFiltered() {
@@ -173,7 +246,7 @@
   function clearFilters() {
     if (qEl) qEl.value = '';
     if (locEl) locEl.value = '';
-    if (modelEl) modelEl.value = '';
+    resetModelSelect();
     expanded = false;
     apply();
   }

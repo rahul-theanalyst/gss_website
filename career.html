@@ -240,14 +240,15 @@
       <p class="car-roles__lede reveal">Explore current opportunities and choose the work that feels right for your next step.</p>
     </div>
 
-    <form class="car-search reveal" role="search" aria-label="Search opportunities">
+    <form class="car-search reveal" role="search" aria-label="Search opportunities" data-jobs-filters>
       <div class="car-field">
         <label for="role-q">Search by title or skill</label>
         <input type="text" id="role-q" name="q" placeholder="Search by title or skill">
       </div>
       <div class="car-field">
         <label for="role-loc">Location</label>
-        <input type="text" id="role-loc" name="location" placeholder="Location">
+        <input type="text" id="role-loc" name="location" placeholder="Location" list="role-loc-options">
+        <datalist id="role-loc-options"></datalist>
       </div>
       <div class="car-field">
         <label for="role-model">Work model</label>
@@ -258,10 +259,6 @@
           </button>
           <ul class="gss-select__menu" role="listbox" aria-label="Work model" hidden>
             <li class="gss-select__opt is-selected" role="option" aria-selected="true" data-value="">Work model</li>
-            <li class="gss-select__opt" role="option" aria-selected="false" data-value="On-site">On-site</li>
-            <li class="gss-select__opt" role="option" aria-selected="false" data-value="Hybrid">Hybrid</li>
-            <li class="gss-select__opt" role="option" aria-selected="false" data-value="Remote">Remote</li>
-            <li class="gss-select__opt" role="option" aria-selected="false" data-value="Contract">Contract</li>
           </ul>
           <input type="hidden" class="gss-select__input" name="model" value="">
         </div>
@@ -269,55 +266,24 @@
       <button class="btn btn-outline btn-sm car-search__btn" type="submit">Search <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
     </form>
 
-    <ul class="car-jobs reveal">
-      <li class="car-job">
-        <span class="car-job__title">iOS Developer (Java)</span>
-        <span class="car-job__loc">San Leandro, CA</span>
-        <span class="car-job__model">On-site</span>
-        <a class="car-job__cta" href="contact.html">View Role <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </li>
-      <li class="car-job">
-        <span class="car-job__title">CyberArk Migration Lead</span>
-        <span class="car-job__loc">Remote</span>
-        <span class="car-job__model">Contract</span>
-        <a class="car-job__cta" href="contact.html">View Role <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </li>
-      <li class="car-job">
-        <span class="car-job__title">VMware Cloud Foundation Engineer</span>
-        <span class="car-job__loc">Lakeland, FL</span>
-        <span class="car-job__model">On-site</span>
-        <a class="car-job__cta" href="contact.html">View Role <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </li>
-      <li class="car-job">
-        <span class="car-job__title">Senior Power BI Developer</span>
-        <span class="car-job__loc">Houston, TX</span>
-        <span class="car-job__model">Hybrid</span>
-        <a class="car-job__cta" href="contact.html">View Role <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </li>
-      <li class="car-job">
-        <span class="car-job__title">SQL / Python Developer</span>
-        <span class="car-job__loc">New York, NY</span>
-        <span class="car-job__model">Hybrid</span>
-        <a class="car-job__cta" href="contact.html">View Role <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </li>
-      <li class="car-job">
-        <span class="car-job__title">Full Stack Developer (Java / React)</span>
-        <span class="car-job__loc">Remote</span>
-        <span class="car-job__model">Contract</span>
-        <a class="car-job__cta" href="contact.html">View Role <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </li>
-    </ul>
+    <p class="car-roles__count reveal" data-jobs-count></p>
+
+    <div class="car-state" data-jobs-state hidden></div>
+
+    <ul class="car-jobs reveal" data-jobs-list hidden></ul>
 
     <div class="car-roles__foot reveal">
-      <p class="car-roles__note">Sample openings shown for layout presentation.</p>
-      <a class="btn btn-outline car-roles__all" href="contact.html">View All Openings <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <button type="button" class="btn btn-outline car-roles__all" data-jobs-more hidden>
+        <span data-jobs-more-label>View All Openings</span>
+        <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>
+      </button>
     </div>
   </div>
 </section>
 
 
 <!-- ══════════ 05 · STAY CONNECTED ═══════════════════════════ -->
-<section class="car-connect">
+<section class="car-connect" id="stay-connected">
   <div class="container car-connect__grid">
     <div class="car-connect__aside">
       <p class="abx-eyebrow reveal">Not Seeing the Right Role?</p>
@@ -433,5 +399,6 @@
   }());
 </script>
 <script src="script.js"></script>
+<script src="careers.js"></script>
 </body>
 </html>

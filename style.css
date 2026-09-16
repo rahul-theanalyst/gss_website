@@ -3316,35 +3316,140 @@ html[data-theme="dark"] .careers-page .car-roles__dots { color: var(--hairline);
 .careers-page .car-field input::placeholder { color: var(--muted-2); }
 .careers-page .car-field input:focus { outline: none; border-bottom-color: var(--gold); }
 
-/* jobs list */
+/* jobs list — live board, populated by careers.js from careers-jobs.php */
+.careers-page .car-roles__count { margin: clamp(18px, 2.2vw, 26px) 0 0; color: var(--muted-2); font-size: .84rem; }
+.careers-page .car-clear {
+  background: none; border: 0; padding: 0; margin-left: 6px;
+  color: var(--gold-2); font-weight: 600; font-size: inherit; font-family: inherit;
+  text-decoration: underline; text-underline-offset: 2px; cursor: pointer;
+}
+.careers-page .car-clear:hover { color: var(--gold); }
+
 .careers-page .car-jobs {
-  list-style: none; margin: clamp(26px, 3.2vw, 42px) 0 0; padding: 0;
+  list-style: none; margin: clamp(14px, 1.8vw, 20px) 0 0; padding: 0;
   border-top: 1px solid var(--line);
 }
+.careers-page .car-job-item { border-bottom: 1px solid var(--line); }
+.careers-page .car-job-item.car-in {
+  opacity: 0; transform: translateY(10px);
+  transition: opacity .4s var(--ease), transform .4s var(--ease);
+}
+.careers-page .car-job-item.car-in.is-in { opacity: 1; transform: none; }
+
 .careers-page .car-job {
   display: grid;
   grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.2fr) minmax(0, .9fr) auto;
   gap: clamp(12px, 2vw, 28px);
   align-items: center;
   padding: clamp(15px, 1.7vw, 21px) 0;
-  border-bottom: 1px solid var(--line);
 }
 .careers-page .car-job__title { font-weight: 600; color: var(--navy); font-size: .98rem; }
 .careers-page .car-job__loc,
 .careers-page .car-job__model { color: var(--muted); font-size: .9rem; }
+.careers-page .car-job__flag {
+  display: inline-block; margin-left: 8px; vertical-align: middle;
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--gold) 16%, transparent);
+  color: var(--gold-2);
+  font-family: var(--sans); font-size: .62rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+}
 .careers-page .car-job__cta {
   display: inline-flex; align-items: center; gap: 8px;
   font-family: var(--sans); font-size: .72rem; font-weight: 700;
   letter-spacing: .09em; text-transform: uppercase;
   color: var(--navy); white-space: nowrap;
+  background: none; border: 0; padding: 0; cursor: pointer;
   transition: color .2s var(--ease);
 }
 .careers-page .car-job__cta .ico {
   width: 13px; height: 13px; color: var(--gold);
-  transition: transform .2s var(--ease);
+  transition: transform .25s var(--ease);
 }
-.careers-page .car-job__cta:hover { color: var(--gold-2); }
+.careers-page .car-job__cta:hover,
+.careers-page .car-job__cta[aria-expanded="true"] { color: var(--gold-2); }
 .careers-page .car-job__cta:hover .ico { transform: translateX(3px); }
+.careers-page .car-job__cta[aria-expanded="true"] .ico { transform: rotate(90deg); }
+
+/* expandable detail panel — a 0fr/1fr grid row is a pure-CSS way to
+   animate to/from "auto" height without measuring anything in JS */
+.careers-page .car-job__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .35s var(--ease);
+}
+.careers-page .car-job__panel[data-open="true"] { grid-template-rows: 1fr; }
+.careers-page .car-job__panel-in { overflow: hidden; min-height: 0; }
+.careers-page .car-job__meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: clamp(10px, 1.6vw, 18px);
+  margin: 0 0 clamp(14px, 1.6vw, 20px);
+  padding: clamp(14px, 1.6vw, 20px) 0 0;
+  border-top: 1px solid var(--hairline);
+}
+.careers-page .car-job__meta dt {
+  font-family: var(--sans); font-size: .66rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--muted-2); margin: 0 0 4px;
+}
+.careers-page .car-job__meta dd { margin: 0; color: var(--navy); font-size: .92rem; font-weight: 500; }
+.careers-page .car-job__desc {
+  margin: 0 0 clamp(14px, 1.6vw, 20px);
+  color: var(--muted); font-size: .92rem; line-height: 1.65;
+  white-space: pre-line; max-width: 68ch;
+}
+.careers-page .car-skills {
+  list-style: none; display: flex; flex-wrap: wrap; gap: 8px;
+  margin: 0 0 clamp(16px, 1.8vw, 22px); padding: 0;
+}
+.careers-page .car-skills li {
+  padding: 5px 13px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  color: var(--navy); font-size: .78rem; font-weight: 500;
+}
+.careers-page .car-job__actions { display: flex; padding-bottom: clamp(4px, .6vw, 8px); }
+
+/* loading / empty / error states */
+.careers-page .car-state { margin: clamp(14px, 1.8vw, 20px) 0 0; }
+.careers-page .car-state--loading { border-top: 1px solid var(--line); }
+.careers-page .car-skel {
+  display: grid;
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.2fr) minmax(0, .9fr);
+  gap: clamp(12px, 2vw, 28px);
+  align-items: center;
+  padding: clamp(15px, 1.7vw, 21px) 0;
+  border-bottom: 1px solid var(--line);
+}
+.careers-page .car-skel span {
+  height: 14px; border-radius: 4px;
+  background: linear-gradient(90deg, var(--hairline) 25%, var(--line) 50%, var(--hairline) 75%);
+  background-size: 200% 100%;
+  animation: car-shimmer 1.4s ease-in-out infinite;
+}
+.careers-page .car-skel span:last-child { max-width: 90px; }
+@keyframes car-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .careers-page .car-skel span { animation: none; }
+}
+
+.careers-page .car-state:not(.car-state--loading) {
+  text-align: center;
+  max-width: 46ch; margin-inline: auto;
+  padding: clamp(36px, 6vw, 56px) clamp(16px, 3vw, 24px) clamp(20px, 3vw, 28px);
+  border-top: 1px solid var(--line);
+}
+.careers-page .car-state__ico { width: 40px; height: 40px; margin: 0 auto clamp(14px, 1.6vw, 18px); color: var(--muted-2); }
+.careers-page .car-state__title {
+  font-family: var(--serif); font-weight: 500; font-size: 1.2rem;
+  color: var(--navy); margin: 0 0 8px;
+}
+.careers-page .car-state__text {
+  color: var(--muted); font-size: .92rem; line-height: 1.6;
+  margin: 0 0 clamp(16px, 1.8vw, 22px);
+}
 
 .careers-page .car-roles__foot {
   display: flex; align-items: center; justify-content: space-between;
