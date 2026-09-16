@@ -1,5 +1,24 @@
 [
   {
+    "slug": "3m",
+    "file": "3m.webp",
+    "name": "3M",
+    "source": "3M.png",
+    "src_size": [
+      190,
+      99
+    ],
+    "ratio": 1.92,
+    "placed": [
+      353,
+      184
+    ],
+    "treatment": "stripped",
+    "lum": 0.268,
+    "sat": 0.928,
+    "upscale": 1.86
+  },
+  {
     "slug": "accumatch-consulting",
     "file": "accumatch-consulting.webp",
     "name": "Accumatch Consulting",
@@ -17,6 +36,158 @@
     "lum": 0.224,
     "sat": 0.778,
     "upscale": 0.65
+  },
+  {
+    "slug": "adecco",
+    "file": "adecco.webp",
+    "name": "Adecco",
+    "source": "Adecco.png",
+    "src_size": [
+      760,
+      760
+    ],
+    "ratio": 1.0,
+    "placed": [
+      198,
+      198
+    ],
+    "treatment": "plate",
+    "lum": 0.343,
+    "sat": 0.823,
+    "upscale": 0.26
+  },
+  {
+    "slug": "advanced-auto-parts",
+    "file": "advanced-auto-parts.webp",
+    "name": "Advance Auto Parts",
+    "source": "Advanced Auto Parts.png",
+    "src_size": [
+      554,
+      177
+    ],
+    "ratio": 3.13,
+    "placed": [
+      436,
+      139
+    ],
+    "treatment": "plate",
+    "lum": 0.214,
+    "sat": 0.896,
+    "upscale": 0.79
+  },
+  {
+    "slug": "amc-theaters",
+    "file": "amc-theaters.webp",
+    "name": "AMC Theatres",
+    "source": "AMC Theaters.png",
+    "src_size": [
+      699,
+      267
+    ],
+    "ratio": 2.62,
+    "placed": [
+      404,
+      154
+    ],
+    "treatment": "stripped",
+    "lum": 0.282,
+    "sat": 0.914,
+    "upscale": 0.58
+  },
+  {
+    "slug": "amdocs",
+    "file": "amdocs.webp",
+    "name": "amdocs",
+    "source": "amdocs.png",
+    "src_size": [
+      300,
+      181
+    ],
+    "ratio": 1.66,
+    "placed": [
+      328,
+      198
+    ],
+    "treatment": "stripped",
+    "lum": 0.481,
+    "sat": 0.442,
+    "upscale": 1.09
+  },
+  {
+    "slug": "american-airlines",
+    "file": "american-airlines.webp",
+    "name": "American Airlines",
+    "source": "American Airlines.jpg",
+    "src_size": [
+      735,
+      272
+    ],
+    "ratio": 2.7,
+    "placed": [
+      409,
+      151
+    ],
+    "treatment": "stripped",
+    "lum": 0.416,
+    "sat": 0.445,
+    "upscale": 0.56
+  },
+  {
+    "slug": "american-century-investments",
+    "file": "american-century-investments.webp",
+    "name": "American Century Investments",
+    "source": "American Century Investments.png",
+    "src_size": [
+      558,
+      128
+    ],
+    "ratio": 4.36,
+    "placed": [
+      503,
+      115
+    ],
+    "treatment": "stripped",
+    "lum": 0.475,
+    "sat": 0.154,
+    "upscale": 0.9
+  },
+  {
+    "slug": "american-eagle-outfitters",
+    "file": "american-eagle-outfitters.webp",
+    "name": "American Eagle Outfitters",
+    "source": "American Eagle outfitters.png",
+    "src_size": [
+      290,
+      124
+    ],
+    "ratio": 2.34,
+    "placed": [
+      385,
+      164
+    ],
+    "treatment": "stripped",
+    "lum": 0.435,
+    "sat": 0.404,
+    "upscale": 1.33
+  },
+  {
+    "slug": "apex-2000-inc",
+    "file": "apex-2000-inc.webp",
+    "name": "Apex 2000 Inc.",
+    "source": "apex-2000-inc.png",
+    "src_size": [
+      266,
+      36
+    ],
+    "ratio": 7.39,
+    "placed": [
+      620,
+      84
+    ],
+    "treatment": "transparent",
+    "lum": 0.444,
+    "sat": 0.493,
+    "upscale": 2.33
   },
   {
     "slug": "apex-systems",
@@ -38,6 +209,196 @@
     "upscale": 0.41
   },
   {
+    "slug": "ascension-health",
+    "file": "ascension-health.webp",
+    "name": "Ascension Health",
+    "source": "Ascension Health.png",
+    "src_size": [
+      615,
+      157
+    ],
+    "ratio": 3.92,
+    "placed": [
+      480,
+      123
+    ],
+    "treatment": "stripped",
+    "lum": 0.545,
+    "sat": 0.498,
+    "upscale": 0.78
+  },
+  {
+    "slug": "bank-of-america",
+    "file": "bank-of-america.webp",
+    "name": "Bank of America",
+    "source": "Bank of America.png",
+    "src_size": [
+      537,
+      58
+    ],
+    "ratio": 9.26,
+    "placed": [
+      620,
+      67
+    ],
+    "treatment": "stripped",
+    "lum": 0.328,
+    "sat": 0.631,
+    "upscale": 1.15
+  },
+  {
+    "slug": "bcbs",
+    "file": "bcbs.webp",
+    "name": "Blue Cross Blue Shield",
+    "source": "BCBS.png",
+    "src_size": [
+      738,
+      145
+    ],
+    "ratio": 5.09,
+    "placed": [
+      537,
+      106
+    ],
+    "treatment": "stripped",
+    "lum": 0.438,
+    "sat": 0.351,
+    "upscale": 0.73
+  },
+  {
+    "slug": "beeline",
+    "file": "beeline.webp",
+    "name": "Beeline",
+    "source": "Beeline.webp",
+    "src_size": [
+      420,
+      90
+    ],
+    "ratio": 4.67,
+    "placed": [
+      518,
+      111
+    ],
+    "treatment": "transparent",
+    "lum": 0.544,
+    "sat": 0.99,
+    "upscale": 1.23
+  },
+  {
+    "slug": "cai",
+    "file": "cai.webp",
+    "name": "CAI",
+    "source": "CAI.png",
+    "src_size": [
+      528,
+      194
+    ],
+    "ratio": 2.72,
+    "placed": [
+      410,
+      151
+    ],
+    "treatment": "plate",
+    "lum": 0.25,
+    "sat": 0.627,
+    "upscale": 0.78
+  },
+  {
+    "slug": "capital-one",
+    "file": "capital-one.webp",
+    "name": "Capital One",
+    "source": "Capital One.png",
+    "src_size": [
+      738,
+      264
+    ],
+    "ratio": 2.8,
+    "placed": [
+      415,
+      149
+    ],
+    "treatment": "stripped",
+    "lum": 0.373,
+    "sat": 0.699,
+    "upscale": 0.56
+  },
+  {
+    "slug": "capone-iron-corp",
+    "file": "capone-iron-corp.webp",
+    "name": "Capone Iron Corp",
+    "source": "Capone Iron Corp.png",
+    "src_size": [
+      200,
+      47
+    ],
+    "ratio": 4.26,
+    "placed": [
+      497,
+      117
+    ],
+    "treatment": "stripped",
+    "lum": 0.476,
+    "sat": 0.588,
+    "upscale": 2.48
+  },
+  {
+    "slug": "centene-corporation",
+    "file": "centene-corporation.webp",
+    "name": "Centene Corporation",
+    "source": "Centene Corporation.png",
+    "src_size": [
+      253,
+      64
+    ],
+    "ratio": 3.95,
+    "placed": [
+      482,
+      122
+    ],
+    "treatment": "stripped",
+    "lum": 0.423,
+    "sat": 0.687,
+    "upscale": 1.91
+  },
+  {
+    "slug": "cerner",
+    "file": "cerner.webp",
+    "name": "Cerner",
+    "source": "Cerner.jpg",
+    "src_size": [
+      728,
+      187
+    ],
+    "ratio": 3.89,
+    "placed": [
+      479,
+      123
+    ],
+    "treatment": "stripped",
+    "lum": 0.602,
+    "sat": 0.752,
+    "upscale": 0.66
+  },
+  {
+    "slug": "charter-communications",
+    "file": "charter-communications.webp",
+    "name": "Charter Communications",
+    "source": "Charter Communications.png",
+    "src_size": [
+      738,
+      223
+    ],
+    "ratio": 3.31,
+    "placed": [
+      446,
+      135
+    ],
+    "treatment": "stripped",
+    "lum": 0.287,
+    "sat": 0.708,
+    "upscale": 0.6
+  },
+  {
     "slug": "cloudq",
     "file": "cloudq.webp",
     "name": "CloudQ",
@@ -55,6 +416,44 @@
     "lum": 0.61,
     "sat": 0.672,
     "upscale": 1.27
+  },
+  {
+    "slug": "cognitive-medical-systems",
+    "file": "cognitive-medical-systems.webp",
+    "name": "Cognitive Medical Systems",
+    "source": "Cognitive Medical Systems.png",
+    "src_size": [
+      738,
+      186
+    ],
+    "ratio": 3.97,
+    "placed": [
+      483,
+      122
+    ],
+    "treatment": "stripped",
+    "lum": 0.426,
+    "sat": 0.558,
+    "upscale": 0.65
+  },
+  {
+    "slug": "cognizant",
+    "file": "cognizant.webp",
+    "name": "Cognizant",
+    "source": "Cognizant.png",
+    "src_size": [
+      274,
+      52
+    ],
+    "ratio": 5.27,
+    "placed": [
+      545,
+      103
+    ],
+    "treatment": "stripped",
+    "lum": 0.483,
+    "sat": 0.461,
+    "upscale": 1.99
   },
   {
     "slug": "concentrix-catalyst",
@@ -76,6 +475,44 @@
     "upscale": 1.4
   },
   {
+    "slug": "corteve-agriscience",
+    "file": "corteve-agriscience.webp",
+    "name": "Corteva Agriscience",
+    "source": "Corteve Agriscience.png",
+    "src_size": [
+      308,
+      274
+    ],
+    "ratio": 1.12,
+    "placed": [
+      223,
+      198
+    ],
+    "treatment": "stripped",
+    "lum": 0.345,
+    "sat": 0.48,
+    "upscale": 0.72
+  },
+  {
+    "slug": "cvs-pharmacy",
+    "file": "cvs-pharmacy.webp",
+    "name": "CVS Pharmacy",
+    "source": "CVS Pharmacy.png",
+    "src_size": [
+      730,
+      336
+    ],
+    "ratio": 2.17,
+    "placed": [
+      373,
+      171
+    ],
+    "treatment": "stripped",
+    "lum": 0.287,
+    "sat": 0.888,
+    "upscale": 0.51
+  },
+  {
     "slug": "data-concepts",
     "file": "data-concepts.webp",
     "name": "Data Concepts",
@@ -93,6 +530,44 @@
     "lum": 0.325,
     "sat": 0.25,
     "upscale": 3.23
+  },
+  {
+    "slug": "deloitte",
+    "file": "deloitte.webp",
+    "name": "Deloitte",
+    "source": "Deloitte.png",
+    "src_size": [
+      270,
+      148
+    ],
+    "ratio": 1.82,
+    "placed": [
+      346,
+      189
+    ],
+    "treatment": "plate",
+    "lum": 0.168,
+    "sat": 0.006,
+    "upscale": 1.28
+  },
+  {
+    "slug": "dir-texas-state-agency",
+    "file": "dir-texas-state-agency.webp",
+    "name": "Texas Department of Information Resources",
+    "source": "DIR, Texas State Agency.jpg",
+    "src_size": [
+      296,
+      145
+    ],
+    "ratio": 2.04,
+    "placed": [
+      363,
+      178
+    ],
+    "treatment": "stripped",
+    "lum": 0.422,
+    "sat": 0.682,
+    "upscale": 1.23
   },
   {
     "slug": "ecloud-labs",
@@ -114,6 +589,177 @@
     "upscale": 1.6
   },
   {
+    "slug": "employers-insurance-group",
+    "file": "employers-insurance-group.webp",
+    "name": "Employers Insurance Group",
+    "source": "Employers Insurance Group.png",
+    "src_size": [
+      712,
+      206
+    ],
+    "ratio": 3.46,
+    "placed": [
+      455,
+      132
+    ],
+    "treatment": "transparent",
+    "lum": 0.226,
+    "sat": 0.666,
+    "upscale": 0.64
+  },
+  {
+    "slug": "enterprise-fleet-management",
+    "file": "enterprise-fleet-management.webp",
+    "name": "Enterprise Fleet Management",
+    "source": "Enterprise Fleet Management.png",
+    "src_size": [
+      737,
+      212
+    ],
+    "ratio": 3.48,
+    "placed": [
+      456,
+      131
+    ],
+    "treatment": "stripped",
+    "lum": 0.34,
+    "sat": 0.407,
+    "upscale": 0.62
+  },
+  {
+    "slug": "enterprise-holdings",
+    "file": "enterprise-holdings.webp",
+    "name": "Enterprise Holdings",
+    "source": "Enterprise Holdings.jpg",
+    "src_size": [
+      712,
+      205
+    ],
+    "ratio": 3.47,
+    "placed": [
+      456,
+      131
+    ],
+    "treatment": "stripped",
+    "lum": 0.611,
+    "sat": 0.218,
+    "upscale": 0.64
+  },
+  {
+    "slug": "equifax",
+    "file": "equifax.webp",
+    "name": "Equifax",
+    "source": "Equifax.png",
+    "src_size": [
+      580,
+      107
+    ],
+    "ratio": 5.42,
+    "placed": [
+      552,
+      102
+    ],
+    "treatment": "stripped",
+    "lum": 0.314,
+    "sat": 0.717,
+    "upscale": 0.95
+  },
+  {
+    "slug": "fidelity-guarantee-life",
+    "file": "fidelity-guarantee-life.webp",
+    "name": "Fidelity & Guaranty Life",
+    "source": "Fidelity Guarantee Life.png",
+    "src_size": [
+      813,
+      320
+    ],
+    "ratio": 2.54,
+    "placed": [
+      398,
+      157
+    ],
+    "treatment": "stripped",
+    "lum": 0.537,
+    "sat": 0.563,
+    "upscale": 0.49
+  },
+  {
+    "slug": "fidelity-investment",
+    "file": "fidelity-investment.webp",
+    "name": "Fidelity Investments",
+    "source": "Fidelity Investment.png",
+    "src_size": [
+      500,
+      111
+    ],
+    "ratio": 4.5,
+    "placed": [
+      510,
+      113
+    ],
+    "treatment": "stripped",
+    "lum": 0.486,
+    "sat": 0.745,
+    "upscale": 1.02
+  },
+  {
+    "slug": "fidelity-talent-source-investment",
+    "file": "fidelity-talent-source-investment.webp",
+    "name": "Fidelity TalentSource",
+    "source": "Fidelity Talent Source Investment.jpg",
+    "src_size": [
+      194,
+      187
+    ],
+    "ratio": 1.04,
+    "placed": [
+      205,
+      198
+    ],
+    "treatment": "stripped",
+    "lum": 0.511,
+    "sat": 0.487,
+    "upscale": 1.06
+  },
+  {
+    "slug": "finra",
+    "file": "finra.webp",
+    "name": "FINRA",
+    "source": "FINRA.png",
+    "src_size": [
+      240,
+      61
+    ],
+    "ratio": 3.93,
+    "placed": [
+      481,
+      122
+    ],
+    "treatment": "transparent",
+    "lum": 0.233,
+    "sat": 0.658,
+    "upscale": 2.0
+  },
+  {
+    "slug": "fis-global",
+    "file": "fis-global.webp",
+    "name": "FIS Global",
+    "source": "FIS Global.png",
+    "src_size": [
+      691,
+      289
+    ],
+    "ratio": 2.39,
+    "placed": [
+      388,
+      162
+    ],
+    "treatment": "stripped",
+    "lum": 0.692,
+    "sat": 0.624,
+    "upscale": 0.56
+  },
+  {
     "slug": "gac-solutions",
     "file": "gac-solutions.webp",
     "name": "GAC Solutions",
@@ -131,6 +777,101 @@
     "lum": 0.451,
     "sat": 0.075,
     "upscale": 1.05
+  },
+  {
+    "slug": "geha",
+    "file": "geha.webp",
+    "name": "GEHA",
+    "source": "GEHA.png",
+    "src_size": [
+      1200,
+      140
+    ],
+    "ratio": 8.57,
+    "placed": [
+      620,
+      72
+    ],
+    "treatment": "transparent",
+    "lum": 0.078,
+    "sat": 1.0,
+    "upscale": 0.52
+  },
+  {
+    "slug": "general-motors",
+    "file": "general-motors.webp",
+    "name": "General Motors",
+    "source": "General Motors.png",
+    "src_size": [
+      309,
+      300
+    ],
+    "ratio": 1.03,
+    "placed": [
+      204,
+      198
+    ],
+    "treatment": "plate",
+    "lum": 0.41,
+    "sat": 0.638,
+    "upscale": 0.66
+  },
+  {
+    "slug": "green-resources",
+    "file": "green-resources.webp",
+    "name": "Green Resource",
+    "source": "Green Resources.png",
+    "src_size": [
+      572,
+      249
+    ],
+    "ratio": 2.3,
+    "placed": [
+      382,
+      166
+    ],
+    "treatment": "stripped",
+    "lum": 0.541,
+    "sat": 0.781,
+    "upscale": 0.67
+  },
+  {
+    "slug": "h-r-block",
+    "file": "h-r-block.webp",
+    "name": "H&R Block",
+    "source": "H&R block.png",
+    "src_size": [
+      372,
+      365
+    ],
+    "ratio": 1.02,
+    "placed": [
+      202,
+      198
+    ],
+    "treatment": "stripped",
+    "lum": 0.587,
+    "sat": 0.733,
+    "upscale": 0.54
+  },
+  {
+    "slug": "hallmark",
+    "file": "hallmark.webp",
+    "name": "Hallmark",
+    "source": "Hallmark.png",
+    "src_size": [
+      365,
+      138
+    ],
+    "ratio": 2.64,
+    "placed": [
+      405,
+      153
+    ],
+    "treatment": "stripped",
+    "lum": 0.444,
+    "sat": 0.438,
+    "upscale": 1.11
   },
   {
     "slug": "hcl-global",
@@ -171,6 +912,44 @@
     "upscale": 1.93
   },
   {
+    "slug": "infosys",
+    "file": "infosys.webp",
+    "name": "Infosys",
+    "source": "Infosys.jpg",
+    "src_size": [
+      538,
+      201
+    ],
+    "ratio": 2.68,
+    "placed": [
+      407,
+      152
+    ],
+    "treatment": "stripped",
+    "lum": 0.569,
+    "sat": 0.673,
+    "upscale": 0.76
+  },
+  {
+    "slug": "infusystems",
+    "file": "infusystems.webp",
+    "name": "InfuSystem",
+    "source": "InfuSystems.png",
+    "src_size": [
+      735,
+      231
+    ],
+    "ratio": 3.18,
+    "placed": [
+      439,
+      138
+    ],
+    "treatment": "stripped",
+    "lum": 0.529,
+    "sat": 0.422,
+    "upscale": 0.6
+  },
+  {
     "slug": "insight-global",
     "file": "insight-global.webp",
     "name": "Insight Global",
@@ -188,6 +967,44 @@
     "lum": 0.259,
     "sat": 0.839,
     "upscale": 0.53
+  },
+  {
+    "slug": "labcorp",
+    "file": "labcorp.webp",
+    "name": "Labcorp",
+    "source": "Labcorp.png",
+    "src_size": [
+      710,
+      191
+    ],
+    "ratio": 3.72,
+    "placed": [
+      469,
+      126
+    ],
+    "treatment": "stripped",
+    "lum": 0.448,
+    "sat": 0.384,
+    "upscale": 0.66
+  },
+  {
+    "slug": "mckesson-corp",
+    "file": "mckesson-corp.webp",
+    "name": "McKesson",
+    "source": "Mckesson Corp.png",
+    "src_size": [
+      738,
+      103
+    ],
+    "ratio": 7.17,
+    "placed": [
+      620,
+      87
+    ],
+    "treatment": "stripped",
+    "lum": 0.422,
+    "sat": 0.858,
+    "upscale": 0.84
   },
   {
     "slug": "medsure-systems",
@@ -209,6 +1026,44 @@
     "upscale": 1.52
   },
   {
+    "slug": "moonshot-innovation",
+    "file": "moonshot-innovation.webp",
+    "name": "Moonshot Innovation",
+    "source": "Moonshot Innovation.png",
+    "src_size": [
+      343,
+      159
+    ],
+    "ratio": 2.16,
+    "placed": [
+      371,
+      172
+    ],
+    "treatment": "stripped",
+    "lum": 0.678,
+    "sat": 0.185,
+    "upscale": 1.08
+  },
+  {
+    "slug": "morgan-stanley",
+    "file": "morgan-stanley.webp",
+    "name": "Morgan Stanley",
+    "source": "Morgan Stanley.png",
+    "src_size": [
+      554,
+      554
+    ],
+    "ratio": 1.0,
+    "placed": [
+      198,
+      198
+    ],
+    "treatment": "plate",
+    "lum": 0.231,
+    "sat": 0.875,
+    "upscale": 0.36
+  },
+  {
     "slug": "mphasis",
     "file": "mphasis.webp",
     "name": "Mphasis",
@@ -226,6 +1081,44 @@
     "lum": 0.232,
     "sat": 0.297,
     "upscale": 0.95
+  },
+  {
+    "slug": "mtm-health",
+    "file": "mtm-health.webp",
+    "name": "MTM Health",
+    "source": "MTM Health.png",
+    "src_size": [
+      1048,
+      241
+    ],
+    "ratio": 4.35,
+    "placed": [
+      502,
+      115
+    ],
+    "treatment": "stripped",
+    "lum": 0.362,
+    "sat": 0.404,
+    "upscale": 0.48
+  },
+  {
+    "slug": "naic",
+    "file": "naic.webp",
+    "name": "NAIC",
+    "source": "NAIC.png",
+    "src_size": [
+      632,
+      316
+    ],
+    "ratio": 2.0,
+    "placed": [
+      359,
+      180
+    ],
+    "treatment": "plate",
+    "lum": 0.535,
+    "sat": 0.762,
+    "upscale": 0.57
   },
   {
     "slug": "next-source-staffing",
@@ -264,6 +1157,25 @@
     "lum": 0.501,
     "sat": 0.537,
     "upscale": 0.63
+  },
+  {
+    "slug": "northmark-strategies-group",
+    "file": "northmark-strategies-group.webp",
+    "name": "NorthMark Strategies Group",
+    "source": "NorthMark Strategies Group.jpeg",
+    "src_size": [
+      712,
+      159
+    ],
+    "ratio": 4.48,
+    "placed": [
+      508,
+      114
+    ],
+    "treatment": "stripped",
+    "lum": 0.264,
+    "sat": 0.0,
+    "upscale": 0.71
   },
   {
     "slug": "p3-uplift",
@@ -340,6 +1252,139 @@
     "lum": 0.547,
     "sat": 0.11,
     "upscale": 1.3
+  },
+  {
+    "slug": "ppg-industries",
+    "file": "ppg-industries.webp",
+    "name": "PPG Industries",
+    "source": "PPG Industries.png",
+    "src_size": [
+      411,
+      197
+    ],
+    "ratio": 2.09,
+    "placed": [
+      366,
+      175
+    ],
+    "treatment": "stripped",
+    "lum": 0.368,
+    "sat": 0.384,
+    "upscale": 0.89
+  },
+  {
+    "slug": "prolifics",
+    "file": "prolifics.webp",
+    "name": "Prolifics",
+    "source": "Prolifics.png",
+    "src_size": [
+      543,
+      170
+    ],
+    "ratio": 3.19,
+    "placed": [
+      440,
+      138
+    ],
+    "treatment": "plate",
+    "lum": 0.341,
+    "sat": 0.681,
+    "upscale": 0.81
+  },
+  {
+    "slug": "proof-point",
+    "file": "proof-point.webp",
+    "name": "Proofpoint",
+    "source": "Proof Point.png",
+    "src_size": [
+      624,
+      119
+    ],
+    "ratio": 5.24,
+    "placed": [
+      544,
+      104
+    ],
+    "treatment": "stripped",
+    "lum": 0.234,
+    "sat": 0.371,
+    "upscale": 0.87
+  },
+  {
+    "slug": "pryor-learning",
+    "file": "pryor-learning.webp",
+    "name": "Pryor Learning",
+    "source": "Pryor Learning.png",
+    "src_size": [
+      330,
+      97
+    ],
+    "ratio": 3.4,
+    "placed": [
+      452,
+      133
+    ],
+    "treatment": "stripped",
+    "lum": 0.531,
+    "sat": 0.486,
+    "upscale": 1.37
+  },
+  {
+    "slug": "psi",
+    "file": "psi.webp",
+    "name": "PSI",
+    "source": "PSI.png",
+    "src_size": [
+      596,
+      338
+    ],
+    "ratio": 1.76,
+    "placed": [
+      341,
+      193
+    ],
+    "treatment": "stripped",
+    "lum": 0.256,
+    "sat": 0.315,
+    "upscale": 0.57
+  },
+  {
+    "slug": "quest-diagnostics",
+    "file": "quest-diagnostics.webp",
+    "name": "Quest Diagnostics",
+    "source": "Quest Diagnostics.jpg",
+    "src_size": [
+      309,
+      99
+    ],
+    "ratio": 3.12,
+    "placed": [
+      435,
+      139
+    ],
+    "treatment": "stripped",
+    "lum": 0.62,
+    "sat": 0.383,
+    "upscale": 1.41
+  },
+  {
+    "slug": "sei-investments",
+    "file": "sei-investments.webp",
+    "name": "SEI Investments",
+    "source": "SEI Investments.png",
+    "src_size": [
+      237,
+      213
+    ],
+    "ratio": 1.11,
+    "placed": [
+      220,
+      198
+    ],
+    "treatment": "plate",
+    "lum": 0.433,
+    "sat": 0.096,
+    "upscale": 0.93
   },
   {
     "slug": "sidmans",
@@ -437,6 +1482,25 @@
     "upscale": 0.75
   },
   {
+    "slug": "state-of-oklahoma",
+    "file": "state-of-oklahoma.webp",
+    "name": "State of Oklahoma",
+    "source": "State of Oklahoma.png",
+    "src_size": [
+      937,
+      260
+    ],
+    "ratio": 3.6,
+    "placed": [
+      463,
+      128
+    ],
+    "treatment": "stripped",
+    "lum": 0.433,
+    "sat": 0.38,
+    "upscale": 0.49
+  },
+  {
     "slug": "stellar-gis",
     "file": "stellar-gis.webp",
     "name": "Stellar GIS Corp",
@@ -454,6 +1518,25 @@
     "lum": 0.33,
     "sat": 0.835,
     "upscale": 1.58
+  },
+  {
+    "slug": "sun-life-insurance",
+    "file": "sun-life-insurance.webp",
+    "name": "Sun Life Insurance",
+    "source": "Sun Life Insurance.png",
+    "src_size": [
+      195,
+      49
+    ],
+    "ratio": 3.98,
+    "placed": [
+      483,
+      121
+    ],
+    "treatment": "stripped",
+    "lum": 0.488,
+    "sat": 0.63,
+    "upscale": 2.48
   },
   {
     "slug": "synapse-tech-services",
@@ -475,23 +1558,137 @@
     "upscale": 0.47
   },
   {
-    "slug": "apex-2000-inc",
-    "file": "apex-2000-inc.webp",
-    "name": "Apex 2000 Inc.",
-    "source": "apex-2000-inc.png",
+    "slug": "t-mobile",
+    "file": "t-mobile.webp",
+    "name": "T-Mobile",
+    "source": "T-Mobile.png",
     "src_size": [
-      266,
-      36
+      688,
+      144
     ],
-    "ratio": 7.39,
+    "ratio": 4.78,
     "placed": [
-      620,
-      84
+      523,
+      109
     ],
-    "treatment": "transparent",
-    "lum": 0.444,
-    "sat": 0.493,
-    "upscale": 2.33
+    "treatment": "stripped",
+    "lum": 0.402,
+    "sat": 0.759,
+    "upscale": 0.76
+  },
+  {
+    "slug": "tech-mahindra",
+    "file": "tech-mahindra.webp",
+    "name": "Tech Mahindra",
+    "source": "Tech Mahindra.jpg",
+    "src_size": [
+      660,
+      167
+    ],
+    "ratio": 3.95,
+    "placed": [
+      482,
+      122
+    ],
+    "treatment": "stripped",
+    "lum": 0.359,
+    "sat": 0.673,
+    "upscale": 0.73
+  },
+  {
+    "slug": "toyoto-group-dallas",
+    "file": "toyoto-group-dallas.webp",
+    "name": "Toyota of Dallas",
+    "source": "Toyoto Group dallas.png",
+    "src_size": [
+      445,
+      149
+    ],
+    "ratio": 2.99,
+    "placed": [
+      427,
+      143
+    ],
+    "treatment": "plate",
+    "lum": 0.38,
+    "sat": 0.488,
+    "upscale": 0.96
+  },
+  {
+    "slug": "toyoto-north-america",
+    "file": "toyoto-north-america.webp",
+    "name": "Toyota North America",
+    "source": "Toyoto North America.png",
+    "src_size": [
+      330,
+      331
+    ],
+    "ratio": 1.0,
+    "placed": [
+      197,
+      198
+    ],
+    "treatment": "stripped",
+    "lum": 0.327,
+    "sat": 0.657,
+    "upscale": 0.6
+  },
+  {
+    "slug": "united-airlines",
+    "file": "united-airlines.webp",
+    "name": "United Airlines",
+    "source": "United Airlines.png",
+    "src_size": [
+      738,
+      131
+    ],
+    "ratio": 5.63,
+    "placed": [
+      561,
+      100
+    ],
+    "treatment": "stripped",
+    "lum": 0.45,
+    "sat": 0.741,
+    "upscale": 0.76
+  },
+  {
+    "slug": "united-health-group",
+    "file": "united-health-group.webp",
+    "name": "UnitedHealth Group",
+    "source": "United Health Group.png",
+    "src_size": [
+      500,
+      246
+    ],
+    "ratio": 2.03,
+    "placed": [
+      362,
+      178
+    ],
+    "treatment": "stripped",
+    "lum": 0.506,
+    "sat": 0.457,
+    "upscale": 0.72
+  },
+  {
+    "slug": "usda",
+    "file": "usda.webp",
+    "name": "USDA",
+    "source": "USDA.png",
+    "src_size": [
+      267,
+      77
+    ],
+    "ratio": 3.47,
+    "placed": [
+      455,
+      131
+    ],
+    "treatment": "stripped",
+    "lum": 0.467,
+    "sat": 0.564,
+    "upscale": 1.7
   },
   {
     "slug": "vkore-solutions",
@@ -511,5 +1708,62 @@
     "lum": 0.664,
     "sat": 0.616,
     "upscale": 2.18
+  },
+  {
+    "slug": "walmart",
+    "file": "walmart.webp",
+    "name": "Walmart",
+    "source": "Walmart.png",
+    "src_size": [
+      717,
+      238
+    ],
+    "ratio": 3.01,
+    "placed": [
+      429,
+      142
+    ],
+    "treatment": "stripped",
+    "lum": 0.544,
+    "sat": 0.84,
+    "upscale": 0.6
+  },
+  {
+    "slug": "wellmark",
+    "file": "wellmark.webp",
+    "name": "Wellmark",
+    "source": "Wellmark.png",
+    "src_size": [
+      335,
+      184
+    ],
+    "ratio": 1.82,
+    "placed": [
+      345,
+      190
+    ],
+    "treatment": "stripped",
+    "lum": 0.555,
+    "sat": 0.744,
+    "upscale": 1.03
+  },
+  {
+    "slug": "yrc-freight",
+    "file": "yrc-freight.webp",
+    "name": "YRC Freight",
+    "source": "YRC Freight.png",
+    "src_size": [
+      478,
+      325
+    ],
+    "ratio": 1.47,
+    "placed": [
+      291,
+      198
+    ],
+    "treatment": "stripped",
+    "lum": 0.418,
+    "sat": 0.809,
+    "upscale": 0.61
   }
 ]

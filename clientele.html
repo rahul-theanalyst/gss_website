@@ -248,15 +248,17 @@
     <p class="clx-logos__lede reveal">GSS teams and consultants have contributed to work for recognized organizations through direct engagements and through delivery relationships with prime vendors, systems integrators, partners and alliances.</p>
   </div>
 
-  <!-- Three-row marquee. Rows are built at runtime from the logo list below:
-       row 1 scrolls right-to-left, row 2 left-to-right, row 3 right-to-left.
+  <!-- Five-row marquee. Rows are built at runtime from the logo list below:
+       odd rows scroll right-to-left and even rows scroll left-to-right.
        The rows here are empty on purpose — do not hand-edit them. -->
   <div class="clx-wall">
   <div class="clx-marquee" data-clx-marquee role="region"
        aria-label="Organizations our teams have supported">
-    <div class="clx-rail" data-clx-rail="1" data-dir="rtl" aria-hidden="true"></div>
-    <div class="clx-rail" data-clx-rail="2" data-dir="ltr" aria-hidden="true"></div>
-    <div class="clx-rail" data-clx-rail="3" data-dir="rtl" aria-hidden="true"></div>
+    <div class="clx-rail" data-clx-rail="1" data-dir="rtl"></div>
+    <div class="clx-rail" data-clx-rail="2" data-dir="ltr"></div>
+    <div class="clx-rail" data-clx-rail="3" data-dir="rtl"></div>
+    <div class="clx-rail" data-clx-rail="4" data-dir="ltr"></div>
+    <div class="clx-rail" data-clx-rail="5" data-dir="rtl"></div>
   </div>
   </div>
 
@@ -269,21 +271,16 @@
                            the src. Keep the same file name to change nothing
                            else.
        To REORDER logos  : move the <li> lines up or down. They are dealt out
-                           across the three rows in the order they appear here.
+                           across the five rows in the order they appear here.
 
        Every logo is one line and looks like this:
 
          <li><img src="images/clients/NAME.webp" alt="COMPANY NAME"
-                  width="W" height="H" loading="lazy" decoding="async"></li>
+                  width="660" height="220" loading="lazy" decoding="async"></li>
 
-       width / height are the file's real pixel size — they keep the row from
-       jumping while images load, and they are what balances a wide wordmark
-       against a square mark, so please keep them accurate.
-
-       Optional class on the <img>, only if a logo looks wrong in one theme:
-         class="clx-logo--lift"   a very dark logo: lightened in dark mode
-         class="clx-logo--ink"    a white/light logo: darkened in light mode
-         class="clx-logo--keep"   never touched in either theme
+       Prepare every file with images/clients/_normalize-logos.py first.
+       Each logo uses the same 660 x 220 canvas with centered artwork;
+       keep these dimensions so the cards stay balanced while images load.
        ════════════════════════════════════════════════════════════════════ -->
   <div class="clientele-logo-list" id="clienteleLogos" data-clx-source>
     <ul>
@@ -314,6 +311,72 @@
       <li><img src="images/clients/synapse-tech-services.webp" alt="Synapse Tech Services" width="660" height="220" loading="lazy" decoding="async"></li>
       <li><img src="images/clients/hcl-global.webp" alt="HCL Global Systems" width="660" height="220" loading="lazy" decoding="async"></li>
       <li><img src="images/clients/apex-2000-inc.webp" alt="Apex 2000 Inc." width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/3m.webp" alt="3M" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/adecco.webp" alt="Adecco" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/advanced-auto-parts.webp" alt="Advance Auto Parts" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/amc-theaters.webp" alt="AMC Theatres" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/amdocs.webp" alt="amdocs" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/american-airlines.webp" alt="American Airlines" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/american-century-investments.webp" alt="American Century Investments" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/american-eagle-outfitters.webp" alt="American Eagle Outfitters" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/ascension-health.webp" alt="Ascension Health" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/bank-of-america.webp" alt="Bank of America" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/bcbs.webp" alt="Blue Cross Blue Shield" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/beeline.webp" alt="Beeline" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/cai.webp" alt="CAI" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/capital-one.webp" alt="Capital One" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/capone-iron-corp.webp" alt="Capone Iron Corp" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/centene-corporation.webp" alt="Centene Corporation" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/cerner.webp" alt="Cerner" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/charter-communications.webp" alt="Charter Communications" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/cognitive-medical-systems.webp" alt="Cognitive Medical Systems" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/cognizant.webp" alt="Cognizant" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/corteve-agriscience.webp" alt="Corteva Agriscience" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/cvs-pharmacy.webp" alt="CVS Pharmacy" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/deloitte.webp" alt="Deloitte" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/dir-texas-state-agency.webp" alt="Texas Department of Information Resources" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/employers-insurance-group.webp" alt="Employers Insurance Group" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/enterprise-fleet-management.webp" alt="Enterprise Fleet Management" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/enterprise-holdings.webp" alt="Enterprise Holdings" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/equifax.webp" alt="Equifax" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/fidelity-guarantee-life.webp" alt="Fidelity &amp; Guaranty Life" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/fidelity-investment.webp" alt="Fidelity Investments" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/fidelity-talent-source-investment.webp" alt="Fidelity TalentSource" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/finra.webp" alt="FINRA" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/fis-global.webp" alt="FIS Global" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/geha.webp" alt="GEHA" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/general-motors.webp" alt="General Motors" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/green-resources.webp" alt="Green Resource" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/h-r-block.webp" alt="H&amp;R Block" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/hallmark.webp" alt="Hallmark" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/infosys.webp" alt="Infosys" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/infusystems.webp" alt="InfuSystem" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/labcorp.webp" alt="Labcorp" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/mckesson-corp.webp" alt="McKesson" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/moonshot-innovation.webp" alt="Moonshot Innovation" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/morgan-stanley.webp" alt="Morgan Stanley" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/mtm-health.webp" alt="MTM Health" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/naic.webp" alt="NAIC" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/northmark-strategies-group.webp" alt="NorthMark Strategies Group" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/ppg-industries.webp" alt="PPG Industries" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/prolifics.webp" alt="Prolifics" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/proof-point.webp" alt="Proofpoint" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/pryor-learning.webp" alt="Pryor Learning" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/psi.webp" alt="PSI" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/quest-diagnostics.webp" alt="Quest Diagnostics" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/sei-investments.webp" alt="SEI Investments" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/state-of-oklahoma.webp" alt="State of Oklahoma" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/sun-life-insurance.webp" alt="Sun Life Insurance" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/t-mobile.webp" alt="T-Mobile" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/tech-mahindra.webp" alt="Tech Mahindra" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/toyoto-group-dallas.webp" alt="Toyota of Dallas" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/toyoto-north-america.webp" alt="Toyota North America" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/united-airlines.webp" alt="United Airlines" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/united-health-group.webp" alt="UnitedHealth Group" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/usda.webp" alt="USDA" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/walmart.webp" alt="Walmart" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/wellmark.webp" alt="Wellmark" width="660" height="220" loading="lazy" decoding="async"></li>
+      <li><img src="images/clients/yrc-freight.webp" alt="YRC Freight" width="660" height="220" loading="lazy" decoding="async"></li>
     </ul>
   </div>
 

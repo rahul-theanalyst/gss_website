@@ -5913,7 +5913,7 @@ html:not(.js) .clientele-page .clx-wall { display: none; }
       transparent 0, #000 30%, #000 70%, transparent 100%);
 }
 /* hold the height before JS builds the rows, so nothing shifts on load */
-.clientele-page .clx-marquee:not(.is-built) { min-height: calc((var(--clx-tile-h) + var(--clx-rowpad) * 2) * 3); }
+.clientele-page .clx-marquee:not(.is-built) { min-height: calc((var(--clx-tile-h) + var(--clx-rowpad) * 2) * 5); }
 
 .clientele-page .clx-rail { overflow: hidden; padding-block: var(--clx-rowpad); }
 .clientele-page .clx-track {
@@ -5932,7 +5932,7 @@ html:not(.js) .clientele-page .clx-wall { display: none; }
   animation-play-state: paused;
 }
 .clientele-page .clx-marquee.is-running .clx-track { animation-play-state: running; }
-/* row 1 right-to-left, row 2 left-to-right, row 3 right-to-left */
+/* Odd rows move right-to-left; even rows move left-to-right. */
 .clientele-page .clx-rail[data-dir="ltr"] .clx-track { animation-direction: reverse; }
 
 /* The rows never stop: no hover pause, no pointer, nothing clickable —
@@ -5955,13 +5955,14 @@ html:not(.js) .clientele-page .clx-wall { display: none; }
    fell back to width / 3, and it overflowed the bottom padding — so every
    logo sat low and the tall marks touched the card's lower edge. */
 .clientele-page .clx-tile {
+  box-sizing: border-box;
   flex: 0 0 auto;
   width: var(--clx-tile-w);
   height: var(--clx-tile-h);
   margin-right: var(--clx-gap);
   display: grid;
   grid-template: minmax(0, 1fr) / minmax(0, 1fr);
-  place-items: stretch;
+  place-items: center;
   padding: var(--clx-tile-py) var(--clx-tile-px);
   background: var(--clx-tile);
   border-radius: var(--clx-radius);
@@ -5989,6 +5990,8 @@ html.js .clientele-page .clx-marquee.is-built .clx-rail {
 html.js .clientele-page .clx-rail[data-clx-rail="1"] { transition-delay: 0s; }
 html.js .clientele-page .clx-rail[data-clx-rail="2"] { transition-delay: .12s; }
 html.js .clientele-page .clx-rail[data-clx-rail="3"] { transition-delay: .24s; }
+html.js .clientele-page .clx-rail[data-clx-rail="4"] { transition-delay: .36s; }
+html.js .clientele-page .clx-rail[data-clx-rail="5"] { transition-delay: .48s; }
 html.js .clientele-page .clx-marquee.is-ready .clx-rail { opacity: 1; }
 
 
@@ -6111,7 +6114,6 @@ html[data-theme="dark"] .clientele-page .clx-contribute__body { color: #B3C0D2; 
   /* On a phone the tiles shrink past the point where a logo stays readable,
      so the row holds fewer, larger tiles instead and simply travels further. */
   .clientele-page { --clx-tile-w: clamp(150px, 44vw, 196px); --clx-tile-h: 60px; --clx-gap: 12px; --clx-tile-py: 7px; --clx-tile-px: 12px; --clx-grid-gap: 12px; }
-  .clientele-page .clx-marquee:not(.is-built) { min-height: 216px; }
   .clientele-page .clientele-logo-list ul { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
 }
 @media (max-width: 380px) {

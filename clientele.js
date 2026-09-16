@@ -1,11 +1,11 @@
 /* ============================================================
    GSS — Clientele page
-   Three-row infinite logo marquee.
+   Five-row infinite logo marquee.
 
    The logo list lives in plain HTML (#clienteleLogos). This file only
-   arranges it: it deals the logos across three rails, clones each rail
+   arranges it: it deals the logos across five rails, clones each rail
    enough times to cover the screen with no gap, and drives one shared
-   scroll speed so all three rows move at the same pace regardless of
+   scroll speed so all five rows move at the same pace regardless of
    how many logos each one holds.
 
    Nothing here needs editing when logos are added or removed.
@@ -13,13 +13,13 @@
 (function () {
   'use strict';
 
-  var ROWS        = 3;
+  var ROWS        = 5;
   var MIN_COVER   = 2.6;   // clone the set until it is this many screens wide
   var MAX_CLONES  = 16;    // hard stop, just in case
 
   /* Scroll speed in pixels per second. It lives in the stylesheet as
      --clx-speed so it can be tuned next to the rest of the design; this is
-     only the fallback if the property is missing. Lower is slower. All three
+     only the fallback if the property is missing. Lower is slower. All five
      rows always share it, whatever each row's length. */
   function speed() {
     var v = parseFloat(getComputedStyle(document.documentElement)
@@ -109,6 +109,13 @@
     // here keeps the artwork crisp and makes the wrap land exactly on a pixel.
     root.style.removeProperty('--clx-tile-w');
     root.style.removeProperty('--clx-gap');
+    if (motion.matches) {
+      rails.forEach(function (rail) {
+        var track = rail._clxTrack;
+        while (track.children.length > 1) track.removeChild(track.lastChild);
+      });
+      return;
+    }
     var probe = root.querySelector('.clx-tile');
     if (probe) {
       var cs = window.getComputedStyle(probe);
@@ -152,12 +159,11 @@
         if (b.left - a.left > 0) cycle = b.left - a.left;
       }
       if (!cycle) cycle = setWidth;
-      // tile and gap are whole pixels now, so the true pitch is a whole number
-      // too — round off the sub-micron float residue so the wrap lands exactly
-      if (Math.abs(cycle - Math.round(cycle)) < 0.5) cycle = Math.round(cycle);
+      // Browser zoom can still produce a fractional layout pitch. Keep the
+      // measured distance so the next copy lands exactly at the loop seam.
 
       track.style.setProperty('--clx-cycle', cycle + 'px');
-      track.style.setProperty('--clx-duration', (cycle / speed()).toFixed(2) + 's');
+      track.style.setProperty('--clx-duration', (cycle / speed()).toFixed(4) + 's');
     });
   }
 
@@ -185,8 +191,8 @@
   /* The rows move by transform, not by scrolling, so a logo that drifts into
      view is never "scrolled to" — the browser's own lazy-loading heuristic can
      leave it blank. So as soon as the section comes near, every logo is
-     promoted to an eager load. The clones all share one src, so this costs 27
-     small requests once, and every later copy comes from cache. */
+     promoted to an eager load. Clones share their original's src, so each
+     logo is fetched once and every later copy comes from cache. */
   var warmed = false;
   function warmLogos() {
     if (warmed) return;
@@ -226,15 +232,7 @@
   /* ── 5. reduced motion ───────────────────────────────────── */
   function syncMotion() {
     root.classList.toggle('is-static', motion.matches);
-    if (motion.matches) {
-      // drop the clones so the reduced-motion grid shows each logo once
-      rails.forEach(function (rail) {
-        var track = rail._clxTrack;
-        while (track.children.length > 1) track.removeChild(track.lastChild);
-      });
-    } else {
-      measure();
-    }
+    measure();
   }
   syncMotion();
   if (motion.addEventListener) motion.addEventListener('change', syncMotion);

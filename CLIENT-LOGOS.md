@@ -7,7 +7,7 @@ bottom of `clientele.html` marked
 <div class="clientele-logo-list" id="clienteleLogos">
 ```
 
-Each logo is a single line. Nothing else on the page needs touching — the three
+Each logo is a single line. Nothing else on the page needs touching — the five
 scrolling rows are built from this list automatically, and they re-balance
 themselves whenever you add or remove a line.
 
@@ -39,9 +39,10 @@ in the HTML changes.
 
 ## Reorder
 
-Move the `<li>` lines up or down. They are dealt across the three rows in the
-order they appear — line 1 → row 1, line 2 → row 2, line 3 → row 3, line 4 →
-row 1, and so on.
+Move the `<li>` lines up or down. They are dealt across the five rows in the
+order they appear — lines 1–5 → rows 1–5, line 6 → row 1, and so on.
+The current list contains 93 unique clients; MedSure Systems was already in
+the original set and is listed only once.
 
 ---
 
@@ -66,14 +67,19 @@ It does four things to each file:
   square mark end up looking the same size
 - centres it on the standard 660×220 transparent canvas
 
+The manifest keeps existing entries when you prepare an additional batch.
+Use one list entry per client, even if a later batch includes their logo again.
+
 If one logo still looks a touch big or small next to its neighbours, add it to
 the `MANUAL_SCALE` table near the top of that script (`0.9` = a little smaller,
 `1.1` = a little larger) and run it again.
 
-Logos that arrive printed on their own dark plate — Concentrix, Insight Global,
-nextSource, p3+uplift and Paige are the current examples — keep the plate,
+Logos that arrive printed on their own dark or coloured plate — Concentrix,
+Insight Global, Deloitte and NAIC, for example — keep the plate,
 because their artwork is white and would vanish without it. The script detects
 these and rounds the plate corners so it reads as a deliberate brand chip.
+`KEEP_BACKGROUND` also preserves white letters that meet the edge of a dark
+mark, such as SEI, so removing the outer white margin cannot erase the letters.
 
 ### Source file quality
 
@@ -107,7 +113,7 @@ design tokens:
 --clx-speed: 32;   /* pixels per second */
 ```
 
-Lower is slower. All three rows always move at the same speed regardless of how
+Lower is slower. All five rows always move at the same speed regardless of how
 many logos each holds. The rows never pause — not on hover, and the cards are
 not clickable.
 
@@ -115,8 +121,9 @@ not clickable.
 with a 24px gap, 8px radius, flat fill, no border and no shadow. The edge fade
 runs a full 30% in from each side.
 
-**Row count.** Also in `clientele.js`, `var ROWS = 3`. If you drop below about
-12 logos, consider 2 rows so each one stays full.
+**Row count.** In `clientele.js`, `var ROWS = 5`, paired with the five
+`data-clx-rail` elements in `clientele.html`. Rows alternate direction and
+receive 19, 19, 19, 18 and 18 logos respectively.
 
 **Accessibility.** With "reduce motion" turned on in the operating system, the
 rows stop and the logos are laid out as a plain static grid instead — each one

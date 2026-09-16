@@ -28,7 +28,7 @@ import math
 import json
 from collections import deque
 
-from PIL import Image
+from PIL import Image, ImageChops
 
 # ── output canvas ────────────────────────────────────────────────────────
 CANVAS_W, CANVAS_H = 660, 220          # 3:1, @2x of the ~330x110 display box
@@ -62,6 +62,7 @@ PLATE_RADIUS = 10                      # soften baked-on brand plates into chips
 
 BG_TOLERANCE = 30                      # how close to the corner colour counts as background
 DARK_PLATE_MAX_LUM = 0.42              # below this the background is a deliberate brand plate
+KEEP_BACKGROUND = {'sei-investments'}  # white letters meet the edge of the black artwork
 
 
 def luminance(rgb):
@@ -182,6 +183,25 @@ def slugify(name):
 # Display names: filenames are inconsistent / contain typos, so the alt text
 # and the marquee label come from this table rather than from the file name.
 DISPLAY_NAMES = {
+    '3m':                    '3M',
+    'advanced-auto-parts':    'Advance Auto Parts',
+    'amc-theaters':           'AMC Theatres',
+    'american-eagle-outfitters': 'American Eagle Outfitters',
+    'bcbs':                  'Blue Cross Blue Shield',
+    'corteve-agriscience':     'Corteva Agriscience',
+    'dir-texas-state-agency': 'Texas Department of Information Resources',
+    'fidelity-guarantee-life': 'Fidelity & Guaranty Life',
+    'fidelity-investment':    'Fidelity Investments',
+    'fidelity-talent-source-investment': 'Fidelity TalentSource',
+    'green-resources':        'Green Resource',
+    'h-r-block':             'H&R Block',
+    'infusystems':           'InfuSystem',
+    'mckesson-corp':          'McKesson',
+    'northmark-strategies-group': 'NorthMark Strategies Group',
+    'proof-point':           'Proofpoint',
+    'toyoto-group-dallas':   'Toyota of Dallas',
+    'toyoto-north-america':   'Toyota North America',
+    'united-health-group':   'UnitedHealth Group',
     'accumatch-consulting':    'Accumatch Consulting',
     'apex-systems':            'Apex Systems',
     'apex-2000-inc':           'Apex 2000 Inc.',
@@ -219,7 +239,12 @@ def main(src_dir, out_dir):
         if os.path.splitext(f)[1].lower() in ('.png', '.jpg', '.jpeg', '.webp', '.gif')
     )
 
-    manifest = []
+    # Keep metadata for existing logos when importing an additional batch.
+    manifest_path = os.path.join(out_dir, '_manifest.json')
+    manifest = {}
+    if os.path.exists(manifest_path):
+        with open(manifest_path, encoding='utf-8') as fh:
+            manifest = {item['slug']: item for item in json.load(fh)}
     for path in files:
         base = os.path.splitext(os.path.basename(path))[0]
         slug = slugify(base)
@@ -228,14 +253,17 @@ def main(src_dir, out_dir):
         bg, _ = edge_background_colour(im)
         bg_lum = luminance(bg)
         bg_is_transparent = len(bg) == 4 and bg[3] < 12
-        plate = (not bg_is_transparent) and bg_lum < DARK_PLATE_MAX_LUM
+        coloured_bg = max(bg[:3]) - min(bg[:3]) > BG_TOLERANCE
+        plate = ((not bg_is_transparent)
+                 and (bg_lum < DARK_PLATE_MAX_LUM or coloured_bg
+                      or slug in KEEP_BACKGROUND))
 
         if bg_is_transparent:
             treatment = 'transparent'
         elif plate:
             # A deliberate dark brand plate (white artwork printed on navy).
-            # Keep the plate — the artwork cannot survive without it — and just
-            # trim the excess so the chip sits tight.
+            # Keep dark and coloured plates: their white artwork depends on
+            # the background, even when the plate is a bright blue or green.
             treatment = 'plate'
         else:
             im = strip_background(im, bg)
@@ -246,8 +274,21 @@ def main(src_dir, out_dir):
         if bbox:
             im = im.crop(bbox)
         elif treatment == 'plate':
-            # trim uniform plate margin: crop to where the plate colour ends
-            im = im.crop(im.convert('RGB').getbbox() or (0, 0, im.width, im.height))
+            if slug in KEEP_BACKGROUND:
+                # Trim only the outer margin; retain white inside the artwork,
+                # including letters that connect to the surrounding white.
+                delta = ImageChops.difference(im.convert('RGB'),
+                                             Image.new('RGB', im.size, bg[:3]))
+                bounds = delta.convert('L').point(
+                    lambda v: 255 if v > BG_TOLERANCE else 0).getbbox()
+                if bounds:
+                    pad = max(3, round(max(bounds[2]-bounds[0], bounds[3]-bounds[1]) * .025))
+                    im = im.crop((max(0, bounds[0]-pad), max(0, bounds[1]-pad),
+                                  min(im.width, bounds[2]+pad), min(im.height, bounds[3]+pad)))
+            else:
+                # Alpha, not RGB: an RGB bounding box treats pure black as
+                # empty and crops black plates right through their lettering.
+                im = im.crop(im.getchannel('A').getbbox() or (0, 0, im.width, im.height))
 
         if treatment == 'plate' and PLATE_RADIUS:
             im = round_corners(im, PLATE_RADIUS)
@@ -273,7 +314,7 @@ def main(src_dir, out_dir):
         out_name = f'{slug}.webp'
         canvas.save(os.path.join(out_dir, out_name), 'WEBP', quality=94, method=6)
 
-        manifest.append({
+        manifest[slug] = {
             'slug': slug,
             'file': out_name,
             'name': DISPLAY_NAMES.get(slug, base),
@@ -285,14 +326,15 @@ def main(src_dir, out_dir):
             'lum': round(lum, 3),
             'sat': round(sat, 3),
             'upscale': round(tw / w, 2),
-        })
+        }
         flag = '  << LOW-RES SOURCE' if tw / w > 1.6 else ''
         print(f'{slug:26} {treatment:12} {w}x{h} r={ratio:5.2f} -> {tw}x{th}'
               f'  x{tw / w:.2f}{flag}')
 
-    with open(os.path.join(out_dir, '_manifest.json'), 'w') as fh:
-        json.dump(manifest, fh, indent=2)
-    print(f'\n{len(manifest)} logos written to {out_dir}')
+    with open(manifest_path, 'w', encoding='utf-8') as fh:
+        json.dump(sorted(manifest.values(), key=lambda item: item['slug']), fh, indent=2)
+        fh.write('\n')
+    print(f'\n{len(files)} logos written to {out_dir}; {len(manifest)} total in manifest')
 
 
 if __name__ == '__main__':
