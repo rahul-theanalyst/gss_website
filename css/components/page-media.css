@@ -1,0 +1,88 @@
+/* ══════════ 16j. INTERNAL-PAGE SPACING & MEDIA REFINEMENTS ══════
+   Two small adjustments that belong to the internal pages only. The
+   homepage is deliberately untouched: every selector below names a
+   class that exists solely on an inner page (verified against
+   index.html), so nothing here can reach the approved homepage
+   layout. ──────────────────────────────────────────────────────── */
+
+/* Inner-page hero photographs sit against a near-black surface in dark
+   mode; the homepage already dims its hero art via --hero-dim, so the
+   inner heroes follow the same idea at a gentler strength and stop
+   reading as a bright cut-out. */
+html[data-theme="dark"] .dbi-page .dbi-hero__media img,
+html[data-theme="dark"] .bizcon-page .bc-hero__media img,
+html[data-theme="dark"] .careers-page .car-hero__media img,
+html[data-theme="dark"] .letsconnect-page .lc-hero__media img,
+html[data-theme="dark"] .global-talent-page .gt-hero__media img {
+  filter: brightness(.86) saturate(.92);
+}
+
+
+/* ══════════ 16k. INTERNAL-PAGE FIGURE SCALE ═══════════════════
+   One scale for every photograph on the inner pages, so they read as
+   a system rather than ten boxes tuned in isolation. Three roles:
+
+     hero    the image that opens a page — the largest, 16:9
+     band    the photo inside a dark closing CTA — a wider 9:4 strip
+     inset   a supporting image beside body copy — 2:1
+
+   Every ratio sits between 16:9 and 9:4, the range a photograph of
+   people survives without the crop running through faces. Width is
+   the grid column the figure occupies; height is the cap below.
+   Change a role here and every page that uses it follows.
+
+   Why a cap at all: these grids are align-items:center with the
+   figure set to stretch, so without one a long paragraph drags the
+   photo past 500px and it dominates the section.
+
+   The homepage is not part of this system and names none of these
+   classes, so nothing here can reach it. ─────────────────────────── */
+:root {
+  --fig-hero-w:  clamp(320px, 44vw, 640px);
+  --fig-hero-h:  clamp(250px, 24.6vw, 356px);
+  --fig-band-w:  clamp(320px, 42vw, 608px);
+  --fig-band-h:  clamp(198px, 18.6vw, 272px);
+  --fig-inset-w: clamp(300px, 40vw, 576px);
+  --fig-inset-h: clamp(215px, 20vw, 288px);
+}
+
+@media (min-width: 901px) {
+  /* hero — stretch to fill the grid row so the image covers the full
+     height of the text column beside it; no fixed height cap. */
+  .abx-intro__media,
+  .global-talent-page .gt-hero__media,
+  .careers-page .car-hero__media,
+  .letsconnect-page .lc-hero__media,
+  .bizcon-page .bc-hero__media,
+  .dbi-page .dbi-hero__media {
+    align-self: stretch;
+    min-height: 0;
+  }
+
+  /* band — .pnr-final__media is excluded on purpose: its angled cut is a
+     percentage of width, so it needs a fixed aspect-ratio, not a height */
+  .global-talent-page .gt-cta__media {
+    align-self: stretch;
+    min-height: 0;
+  }
+
+  /* inset */
+  .abx-work__media,
+  .pnr-position__media {
+    align-self: stretch;
+    min-height: 0;
+  }
+}
+
+/* Inner-page hero photographs sit against a near-black surface in dark
+   mode; the homepage already dims its hero art via --hero-dim, so the
+   inner figures follow the same idea at a gentler strength and stop
+   reading as a bright cut-out. */
+html[data-theme="dark"] .dbi-page .dbi-hero__media img,
+html[data-theme="dark"] .bizcon-page .bc-hero__media img,
+html[data-theme="dark"] .careers-page .car-hero__media img,
+html[data-theme="dark"] .letsconnect-page .lc-hero__media img,
+html[data-theme="dark"] .global-talent-page .gt-hero__media img {
+  filter: brightness(.86) saturate(.92);
+}
+

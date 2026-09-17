@@ -1,0 +1,561 @@
+/* ══════════ 16f. CAREERS PAGE ═════════════════════════════════
+   Candidate-facing careers page — a split hero on the gutter's gold
+   rule, a dark "right fit" band, a four-column "what to expect" row,
+   a light opportunities board with a search bar and sample listings,
+   a cream "stay connected" band with a profile form, and a dark
+   closing promise. Scoped under .careers-page; every value comes
+   from the existing tokens (navy / cream / sky / gold, Playfair +
+   Inter, .container, .btn, .abx-eyebrow, .reveal). ────────────── */
+
+.careers-page #main { overflow-x: clip; }
+.careers-page .car-nb { display: none; }
+@media (min-width: 861px) { .careers-page .car-nb { display: inline; } }
+
+.careers-page .car-hero__title,
+.careers-page .car-fit__title,
+.careers-page .car-expect__title,
+.careers-page .car-roles__title,
+.careers-page .car-connect__title,
+.careers-page .car-promise__title {
+  font-variant-numeric: lining-nums;
+  -webkit-font-feature-settings: "lnum" 1;
+  font-feature-settings: "lnum" 1;
+}
+
+/* ── 01 · HERO ───────────────────────────────────────────── */
+.careers-page .car-hero {
+  background: var(--bg);
+  padding-top: calc(var(--header-h) + clamp(14px, 2vw, 30px));
+  padding-bottom: clamp(20px, 2.4vw, 36px);
+  border-bottom: 1px solid var(--hairline);
+}
+.careers-page .car-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--fig-hero-w);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: center;
+}
+.careers-page .car-hero__text {
+  align-self: center;
+  margin-left: var(--gutter);
+  border-left: 2px solid var(--gold);
+  padding-inline-start: clamp(20px, 2.2vw, 34px);
+  max-width: 34rem;
+}
+.careers-page .car-hero__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.95rem, 3.6vw, 3.3rem);
+  line-height: 1.14; letter-spacing: -.012em;
+  color: var(--navy); margin: 0 0 clamp(18px, 2.4vw, 30px);
+  text-wrap: balance;
+}
+.careers-page .car-hero__lede {
+  color: var(--muted); font-size: clamp(.95rem, 1.05vw, 1.08rem);
+  line-height: 1.7; max-width: 32rem; margin: 0; text-wrap: pretty;
+}
+.careers-page .car-hero__media {
+  position: relative; align-self: stretch;
+  margin: 0; overflow: hidden;
+  min-height: clamp(222px, 25vw, 352px);
+}
+.careers-page .car-hero__media img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; display: block;
+}
+.careers-page .car-hero__media::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg,
+      var(--bg) 0%,
+      color-mix(in srgb, var(--bg) 50%, transparent) 17%,
+      transparent 44%);
+}
+/* the photo column bleeds past the section's own top/bottom padding so the
+   image reaches the header's bottom edge and the section's bottom border
+   instead of leaving a blank band there — it stops flush at the header
+   rather than running behind it, and text keeps its normal padding; only
+   the photo (which clips via overflow:hidden + object-fit:cover) extends */
+@media (min-width: 901px) {
+  .careers-page .car-hero__media {
+    margin-block: calc(-1 * clamp(14px, 2vw, 30px)) calc(-1 * clamp(20px, 2.4vw, 36px));
+  }
+}
+
+/* ── 02 · THE RIGHT FIT (dark band) ──────────────────────── */
+.careers-page .car-fit {
+  position: relative; overflow: hidden;
+  background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
+  padding-block: clamp(28px, 3.2vw, 46px);
+  text-align: center;
+}
+.careers-page .car-fit__slash {
+  position: absolute; top: -20%; right: 9%;
+  width: 2px; height: 140%;
+  background: linear-gradient(180deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
+  transform: rotate(20deg); transform-origin: top;
+  opacity: .8; pointer-events: none;
+}
+.careers-page .car-fit__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.7rem, 3.4vw, 2.9rem);
+  line-height: 1.16; color: #fff;
+  margin: 0 auto; max-width: 18ch; text-wrap: balance;
+}
+.careers-page .car-fit__text {
+  margin: clamp(16px, 2vw, 26px) auto 0;
+  color: rgba(255,255,255,.72);
+  font-size: clamp(.95rem, 1.05vw, 1.05rem);
+  line-height: 1.65; max-width: 54ch;
+}
+
+/* ── 03 · WHAT YOU CAN EXPECT ────────────────────────────── */
+.careers-page .car-expect {
+  background: var(--bg);
+  padding-block: clamp(24px, 2.8vw, 40px);
+}
+.careers-page .car-expect__head {
+  text-align: center; max-width: 42ch;
+  margin: 0 auto clamp(20px, 2.4vw, 32px);
+}
+.careers-page .car-expect__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.55rem, 2.9vw, 2.5rem);
+  line-height: 1.16; color: var(--navy);
+  margin: clamp(12px, 1.6vw, 18px) auto 0; max-width: 24ch; text-wrap: balance;
+}
+.careers-page .car-expect__grid {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.careers-page .car-expect__grid li {
+  padding: 2px clamp(16px, 2vw, 28px);
+  border-left: 1px solid var(--hairline);
+}
+.careers-page .car-expect__grid li:first-child { border-left: 0; padding-left: 0; }
+.careers-page .car-expect__label {
+  font-family: var(--sans); font-size: .72rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--gold); margin: 0 0 10px;
+}
+.careers-page .car-expect__copy {
+  margin: 0; color: var(--muted);
+  font-size: clamp(.88rem, .98vw, .95rem); line-height: 1.62;
+}
+
+/* ── 04 · CURRENT OPPORTUNITIES ──────────────────────────── */
+.careers-page .car-roles {
+  position: relative; overflow: hidden;
+  background: var(--bg-sky);
+  padding-block: clamp(24px, 2.8vw, 40px);
+}
+.careers-page .car-roles__dots {
+  position: absolute; top: clamp(30px, 4vw, 64px); right: clamp(20px, 4vw, 72px);
+  width: clamp(90px, 10vw, 150px); height: clamp(56px, 6vw, 92px);
+  background-image: radial-gradient(currentColor 1.4px, transparent 1.4px);
+  background-size: 16px 16px; color: var(--line);
+  opacity: .85; pointer-events: none;
+}
+html[data-theme="dark"] .careers-page .car-roles__dots { color: var(--hairline); }
+.careers-page .car-roles__head { position: relative; max-width: 46ch; }
+.careers-page .car-roles__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.55rem, 2.9vw, 2.5rem);
+  line-height: 1.16; color: var(--navy);
+  margin: clamp(10px, 1.4vw, 16px) 0 0; text-wrap: balance;
+}
+.careers-page .car-roles__lede {
+  margin: clamp(10px, 1.4vw, 16px) 0 0; color: var(--muted);
+  font-size: clamp(.95rem, 1.05vw, 1.05rem); line-height: 1.6;
+}
+
+/* search bar + shared underline fields */
+.careers-page .car-search {
+  position: relative;
+  display: grid;
+  /* same column ratios as .car-job below, so each field sits directly
+     above the job-list column it filters (title/location/model + a
+     trailing action column for the button/CTA). The trailing column is a
+     fixed width, not auto, in both grids: .car-search and every .car-job
+     row are separate grids, and an auto column sizes to its own content
+     ("Search" pill button vs. plain "VIEW ROLE" link have different
+     natural widths) — that alone was enough to throw columns 1-3 out of
+     alignment between the two even with matching fr ratios. */
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.2fr) minmax(0, .9fr) 140px;
+  gap: clamp(16px, 2vw, 28px);
+  align-items: end;
+  margin-top: clamp(26px, 3.2vw, 44px);
+}
+.careers-page .car-search__btn { align-self: end; justify-self: end; }
+
+.careers-page .car-field { display: flex; flex-direction: column; }
+.careers-page .car-field > label {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+.careers-page .car-field input {
+  width: 100%;
+  padding: 10px 2px;
+  border: 0; border-bottom: 1px solid var(--line);
+  background: transparent;
+  font-family: var(--sans); font-size: .95rem;
+  color: var(--navy);
+  border-radius: 0;
+  transition: border-color .2s var(--ease);
+}
+.careers-page .car-field input::placeholder { color: var(--muted-2); }
+.careers-page .car-field input:focus { outline: none; border-bottom-color: var(--gold); }
+
+/* jobs list — live board, populated by careers.js from careers-jobs.php */
+.careers-page #opportunities [hidden] { display: none !important; }
+.careers-page .car-roles__foot:has([data-jobs-more][hidden]) { display: none; }
+.careers-page .car-roles__count { margin: clamp(18px, 2.2vw, 26px) 0 0; color: var(--muted-2); font-size: .84rem; }
+.careers-page .car-clear {
+  background: none; border: 0; padding: 0; margin-left: 6px;
+  color: var(--gold-2); font-weight: 600; font-size: inherit; font-family: inherit;
+  text-decoration: underline; text-underline-offset: 2px; cursor: pointer;
+}
+.careers-page .car-clear:hover { color: var(--gold); }
+
+.careers-page .car-jobs {
+  list-style: none; margin: clamp(14px, 1.8vw, 20px) 0 0; padding: 0;
+  border-top: 1px solid var(--line);
+}
+.careers-page .car-job-item { border-bottom: 1px solid var(--line); }
+.careers-page .car-job-item.car-in {
+  opacity: 0; transform: translateY(10px);
+  transition: opacity .4s var(--ease), transform .4s var(--ease);
+}
+.careers-page .car-job-item.car-in.is-in { opacity: 1; transform: none; }
+
+.careers-page .car-job {
+  display: grid;
+  /* fixed 140px trailing column must match .car-search's exactly — see the
+     comment on .car-search above */
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.2fr) minmax(0, .9fr) 140px;
+  gap: clamp(16px, 2vw, 28px);
+  align-items: center;
+  padding: clamp(15px, 1.7vw, 21px) 0;
+}
+.careers-page .car-job__title { font-weight: 600; color: var(--navy); font-size: .98rem; }
+.careers-page .car-job > span { min-width: 0; overflow-wrap: anywhere; }
+.careers-page .car-job__loc,
+.careers-page .car-job__model { color: var(--muted); font-size: .9rem; }
+.careers-page .car-job__flag {
+  display: inline-block; margin-left: 8px; vertical-align: middle;
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--gold) 16%, transparent);
+  color: var(--gold-2);
+  font-family: var(--sans); font-size: .62rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+}
+.careers-page .car-job__cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  justify-self: end;
+  font-family: var(--sans); font-size: .72rem; font-weight: 700;
+  letter-spacing: .09em; text-transform: uppercase;
+  color: var(--navy); white-space: nowrap;
+  background: none; border: 0; padding: 0; cursor: pointer;
+  transition: color .2s var(--ease);
+}
+.careers-page .car-job__cta .ico {
+  width: 13px; height: 13px; color: var(--gold);
+  transition: transform .25s var(--ease);
+}
+.careers-page .car-job__cta:hover,
+.careers-page .car-job__cta[aria-expanded="true"] { color: var(--gold-2); }
+.careers-page .car-job__cta:hover .ico { transform: translateX(3px); }
+.careers-page .car-job__cta[aria-expanded="true"] .ico { transform: rotate(90deg); }
+
+/* expandable detail panel — a 0fr/1fr grid row is a pure-CSS way to
+   animate to/from "auto" height without measuring anything in JS */
+.careers-page .car-job__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .35s var(--ease);
+}
+.careers-page .car-job__panel[data-open="true"] { grid-template-rows: 1fr; }
+
+/* the role-details card itself — sits on the section's --bg-sky background,
+   so it gets the same soft surface + gold accent treatment as the rest of
+   the site's cards (see .sol-card) rather than looking like plain text */
+.careers-page .car-job__panel-in {
+  overflow: hidden; min-height: 0;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  padding: 0 clamp(20px, 2.6vw, 30px);
+  transition: padding .35s var(--ease), background-color .35s var(--ease),
+              border-color .35s var(--ease), box-shadow .35s var(--ease);
+}
+/* border/background only when open — otherwise the collapsed (0-height)
+   row would still render a stray hairline from the border itself */
+.careers-page .car-job__panel[data-open="true"] .car-job__panel-in {
+  background: var(--card-soft);
+  border-color: var(--hairline);
+  border-left-color: var(--gold);
+  border-left-width: 3px;
+  box-shadow: var(--sh-sm);
+  padding-top: clamp(18px, 2.2vw, 26px);
+  padding-bottom: clamp(20px, 2.4vw, 28px);
+  margin: 0 0 clamp(10px, 1.4vw, 18px);
+}
+.careers-page .car-job__meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: clamp(10px, 1.6vw, 18px);
+  margin: 0 0 clamp(16px, 1.8vw, 22px);
+  padding: 0 0 clamp(16px, 1.8vw, 22px);
+  border-bottom: 1px solid var(--hairline);
+}
+.careers-page .car-job__meta dt {
+  font-family: var(--sans); font-size: .66rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--muted-2); margin: 0 0 4px;
+}
+.careers-page .car-job__meta dd { margin: 0; color: var(--navy); font-size: .92rem; font-weight: 500; }
+.careers-page .car-job__desc {
+  margin: 0 0 clamp(16px, 1.8vw, 22px);
+  color: var(--muted); font-size: .92rem; line-height: 1.7;
+  white-space: pre-line; max-width: 68ch;
+}
+/* structured description (careers-jobs.php's htmlToBlocks()) — the plain-
+   text fallback above stays pre-line; these are real block elements, so
+   reset that and trim the leading/trailing block's own spacing */
+.careers-page .car-job__desc:has(.car-jd-h, .car-jd-label, .car-jd-p, .car-jd-list) {
+  white-space: normal;
+}
+.careers-page .car-job__desc > :first-child { margin-top: 0; }
+.careers-page .car-job__desc > :last-child { margin-bottom: 0; }
+.careers-page .car-jd-h {
+  margin: 18px 0 4px;
+  font-family: var(--sans); font-size: .72rem; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase;
+  color: var(--gold-2);
+}
+.careers-page .car-jd-label {
+  margin: 3px 0;
+  color: var(--muted); font-size: .9rem; line-height: 1.6;
+}
+.careers-page .car-jd-label__k {
+  color: var(--navy); font-weight: 700; margin-right: 5px;
+}
+.careers-page .car-jd-label__k::after { content: ":"; }
+.careers-page .car-jd-p {
+  margin: 0 0 10px;
+  color: var(--muted); font-size: .92rem; line-height: 1.7;
+}
+.careers-page .car-jd-list {
+  /* the site-wide reset (ul, ol { list-style: none }) strips markers by
+     default — this is real bullet-point content, so put them back */
+  list-style: disc;
+  margin: 2px 0 14px;
+  padding-left: 1.2em;
+  color: var(--muted); font-size: .92rem; line-height: 1.6;
+}
+.careers-page .car-jd-list li { margin: 4px 0; }
+.careers-page .car-jd-list li::marker { color: var(--gold); }
+.careers-page .car-jd-list li.is-sub {
+  list-style-type: circle;
+  margin-left: 1.3em;
+  color: var(--muted-2); font-size: .89rem;
+}
+.careers-page .car-jd-list li.is-sub::marker { color: var(--line); }
+.careers-page .car-skills {
+  list-style: none; display: flex; flex-wrap: wrap; gap: 8px;
+  margin: 0 0 clamp(18px, 2vw, 24px); padding: 0;
+}
+.careers-page .car-skills li {
+  padding: 5px 13px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--gold) 7%, transparent);
+  color: var(--navy); font-size: .78rem; font-weight: 500;
+}
+.careers-page .car-job__actions { display: flex; padding-bottom: clamp(16px, 2vw, 24px); }
+
+/* loading / empty / error states */
+.careers-page .car-state { margin: clamp(14px, 1.8vw, 20px) 0 0; }
+.careers-page .car-state--loading { border-top: 1px solid var(--line); }
+.careers-page .car-skel {
+  display: grid;
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.2fr) minmax(0, .9fr);
+  gap: clamp(12px, 2vw, 28px);
+  align-items: center;
+  padding: clamp(15px, 1.7vw, 21px) 0;
+  border-bottom: 1px solid var(--line);
+}
+.careers-page .car-skel span {
+  height: 14px; border-radius: 4px;
+  background: linear-gradient(90deg, var(--hairline) 25%, var(--line) 50%, var(--hairline) 75%);
+  background-size: 200% 100%;
+  animation: car-shimmer 1.4s ease-in-out infinite;
+}
+.careers-page .car-skel span:last-child { max-width: 90px; }
+@keyframes car-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .careers-page .car-skel span { animation: none; }
+}
+
+.careers-page .car-state:not(.car-state--loading) {
+  text-align: center;
+  max-width: 46ch; margin-inline: auto;
+  padding: clamp(36px, 6vw, 56px) clamp(16px, 3vw, 24px) clamp(20px, 3vw, 28px);
+  border-top: 1px solid var(--line);
+}
+.careers-page .car-state__ico { width: 40px; height: 40px; margin: 0 auto clamp(14px, 1.6vw, 18px); color: var(--muted-2); }
+.careers-page .car-state__title {
+  font-family: var(--serif); font-weight: 500; font-size: 1.2rem;
+  color: var(--navy); margin: 0 0 8px;
+}
+.careers-page .car-state__text {
+  color: var(--muted); font-size: .92rem; line-height: 1.6;
+  margin: 0 0 clamp(16px, 1.8vw, 22px);
+}
+
+.careers-page .car-roles__foot {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 14px 24px;
+  margin-top: clamp(18px, 2.2vw, 28px);
+}
+.careers-page .car-roles__note { margin: 0; color: var(--muted-2); font-size: .82rem; }
+
+/* ── 05 · STAY CONNECTED (cream band) ────────────────────── */
+.careers-page .car-connect {
+  background: var(--bg-cream);
+  padding-block: clamp(24px, 2.8vw, 40px);
+}
+html[data-theme="dark"] .careers-page .car-connect { background: var(--bg-soft); }
+.careers-page .car-connect__grid {
+  display: grid;
+  grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
+  gap: clamp(32px, 5vw, 84px);
+  align-items: start;
+}
+.careers-page .car-connect__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.55rem, 2.8vw, 2.4rem);
+  line-height: 1.16; color: var(--navy);
+  margin: clamp(10px, 1.4vw, 16px) 0 0; max-width: 16ch; text-wrap: balance;
+}
+.careers-page .car-connect__text {
+  margin: clamp(16px, 2vw, 24px) 0 0; color: var(--muted);
+  font-size: clamp(.95rem, 1.05vw, 1.04rem); line-height: 1.7; max-width: 40ch;
+}
+.careers-page .car-form { display: flex; flex-direction: column; gap: clamp(18px, 2.2vw, 26px); }
+.careers-page .car-form__row {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+}
+.careers-page .car-file {
+  display: flex; align-items: center; gap: 14px;
+  border-bottom: 1px solid var(--line); padding: 6px 2px;
+}
+.careers-page .car-file__name {
+  flex: 1; min-width: 0; color: var(--muted-2); font-size: .95rem;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.careers-page .car-file__btn {
+  flex: 0 0 auto; cursor: pointer;
+  padding: 9px 18px; border: 1px solid var(--line); border-radius: var(--radius-pill);
+  font-family: var(--sans); font-size: .72rem; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--navy);
+  transition: border-color .2s var(--ease), background-color .2s var(--ease);
+}
+.careers-page .car-file__btn:hover { border-color: var(--gold); background: rgba(199,154,75,.08); }
+.careers-page .car-file input[type="file"] {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+}
+.careers-page .car-consent {
+  display: flex; gap: 12px; align-items: flex-start;
+  color: var(--muted); font-size: .82rem; line-height: 1.55;
+}
+.careers-page .car-consent input {
+  margin-top: 2px; flex: 0 0 auto;
+  width: 16px; height: 16px; accent-color: var(--gold);
+}
+.careers-page .car-consent a { color: var(--navy); text-decoration: underline; text-underline-offset: 2px; }
+.careers-page .car-form__submit { align-self: flex-start; margin-top: 2px; }
+
+/* ── 06 · THE PROMISE (dark band) ────────────────────────── */
+.careers-page .car-promise {
+  position: relative; overflow: hidden;
+  background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
+  padding-block: clamp(28px, 3.2vw, 46px);
+}
+.careers-page .car-promise__slash {
+  position: absolute; top: -20%; right: 12%;
+  width: 2px; height: 140%;
+  background: linear-gradient(180deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
+  transform: rotate(20deg); transform-origin: top;
+  opacity: .7; pointer-events: none;
+}
+.careers-page .car-promise__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  line-height: 1.2; color: #fff;
+  margin: 0; max-width: 30ch; text-wrap: balance;
+}
+.careers-page .car-promise__text {
+  margin: clamp(16px, 2vw, 24px) 0 0;
+  color: rgba(255,255,255,.72);
+  font-size: clamp(.92rem, 1vw, 1rem); line-height: 1.6; max-width: 56ch;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 1000px) {
+  .careers-page .car-hero__text { max-width: none; }
+}
+@media (max-width: 900px) {
+  .careers-page .car-hero__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(24px, 6vw, 40px); }
+  .careers-page .car-hero__text {
+    margin-inline: var(--gutter);
+    padding-inline-start: clamp(16px, 4vw, 24px);
+    max-width: none;
+  }
+  .careers-page .car-hero__lede { max-width: 46ch; }
+  .careers-page .car-hero__media { min-height: 0; aspect-ratio: 16 / 9; }
+  .careers-page .car-hero__media::after { background: none; }
+  .careers-page .car-expect__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: clamp(26px, 5vw, 36px); }
+  .careers-page .car-expect__grid li:nth-child(odd) { border-left: 0; padding-left: 0; }
+  .careers-page .car-expect__grid li:nth-child(n+3) {
+    padding-top: clamp(24px, 5vw, 32px);
+    border-top: 1px solid var(--hairline);
+  }
+  .careers-page .car-search { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .careers-page .car-search__btn { grid-column: 1 / -1; justify-self: start; }
+  .careers-page .car-connect__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 6vw, 44px); }
+  .careers-page .car-connect__title { max-width: none; }
+  .careers-page .car-fit__slash,
+  .careers-page .car-promise__slash { display: none; }
+}
+@media (max-width: 700px) {
+  .careers-page .car-job {
+    display: flex; flex-wrap: wrap; align-items: baseline;
+    gap: 4px 14px;
+    position: relative;
+    padding-right: 96px;
+  }
+  .careers-page .car-job__title { flex-basis: 100%; }
+  .careers-page .car-job__cta {
+    position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+  }
+  .careers-page .car-job__cta:hover .ico { transform: none; }
+}
+@media (max-width: 560px) {
+  .careers-page .car-search { grid-template-columns: minmax(0, 1fr); }
+  .careers-page .car-form__row { grid-template-columns: minmax(0, 1fr); }
+  .careers-page .car-roles__foot { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 380px) {
+  .careers-page .car-hero__title { font-size: 1.78rem; }
+  .careers-page .car-fit__title,
+  .careers-page .car-promise__title { font-size: 1.5rem; }
+}
+
+/* ── REDUCED MOTION ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .careers-page .car-hero__media img { transform: none; }
+}
+
+

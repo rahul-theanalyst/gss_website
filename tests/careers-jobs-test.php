@@ -1,6 +1,6 @@
 <?php
 define('CEIPAL_JOBS_TEST_MODE', true);
-require __DIR__ . '/../careers-jobs.php';
+require __DIR__ . '/../server/careers-jobs.php';
 
 function check($condition, $message) {
     if (!$condition) throw new RuntimeException($message);

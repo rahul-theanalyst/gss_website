@@ -1,0 +1,422 @@
+/* ══════════ 16e. GLOBAL TALENT PAGE ════════════════════════════
+   Editorial talent page — a split hero on the gutter's gold rule, a
+   centered intro, four two-column "solution" bands that alternate
+   white / cream, and the dark closing CTA with a melted photo. Both photos
+   run to the viewport edge and dissolve on the copy side, the same gesture
+   the About and Alliances pages use. Every value
+   comes from the existing tokens (navy / cream / white / gold, Playfair
+   + Inter, .container, .btn, .abx-eyebrow, .reveal); nothing here is a
+   new palette. Everything is scoped under .global-talent-page so it
+   cannot reach the homepage, About, Solutions, Alliances or any other
+   page. Structure is deliberately flat — one <section> per band, one
+   grid inside — so each band maps 1:1 onto an Elementor container
+   later. ─────────────────────────────────────────────────────────── */
+
+.global-talent-page #main { overflow-x: clip; }
+
+/* desktop-only line breaks — below 860px the headings wrap on their own */
+.global-talent-page .gt-nb { display: none; }
+@media (min-width: 861px) { .global-talent-page .gt-nb { display: inline; } }
+
+/* Playfair ships old-style figures; keep lining figures on this page's
+   serif headings so "60–70%" and the titles sit on the baseline */
+.global-talent-page .gt-hero__title,
+.global-talent-page .gt-intro__title,
+.global-talent-page .gt-solution__title,
+.global-talent-page .gt-solution__lead,
+.global-talent-page .gt-cta__title {
+  font-variant-numeric: lining-nums;
+  -webkit-font-feature-settings: "lnum" 1;
+  font-feature-settings: "lnum" 1;
+}
+
+/* the Talk to Us pills sit a touch wider than the header's btn-sm */
+.global-talent-page .gt-btn {
+  min-height: 54px;
+  padding: 15px clamp(24px, 2.2vw, 38px);
+  font-size: .8rem;
+  letter-spacing: .075em;
+}
+
+
+/* ── 01 · HERO ───────────────────────────────────────────── */
+.global-talent-page .gt-hero {
+  background: var(--bg);
+  padding-top: calc(var(--header-h) + clamp(8px, 1.1vw, 16px));
+  padding-bottom: clamp(20px, 2.2vw, 32px);
+  border-bottom: 1px solid var(--hairline);
+}
+.global-talent-page .gt-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--fig-hero-w);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: center;
+}
+
+/* the thin gold rule is the text column's own left border, so it always
+   lands exactly on the container gutter no matter the viewport */
+.global-talent-page .gt-hero__text {
+  align-self: center;
+  margin-left: var(--gutter);
+  border-left: 2px solid var(--gold);
+  padding-inline-start: clamp(20px, 2.2vw, 34px);
+  max-width: 44rem;
+}
+.global-talent-page .gt-hero__title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.95rem, 3.65vw, 3.35rem);
+  line-height: 1.14;
+  letter-spacing: .028em;
+  color: var(--navy);
+  margin: 0 0 clamp(20px, 2.6vw, 36px);
+  text-wrap: balance;
+}
+.global-talent-page .gt-hero__lede,
+.global-talent-page .gt-hero__tail {
+  color: var(--muted);
+  font-size: clamp(.95rem, 1.05vw, 1.08rem);
+  line-height: 1.68;
+  max-width: 30rem;
+  margin: 0;
+  text-wrap: pretty;
+}
+.global-talent-page .gt-hero__tail { margin-top: clamp(14px, 1.6vw, 22px); }
+.global-talent-page .gt-hero__act { margin: clamp(24px, 2.8vw, 36px) 0 0; }
+
+.global-talent-page .gt-hero__media {
+  position: relative;
+  align-self: stretch;
+  margin: 0; overflow: hidden;
+  min-height: clamp(230px, 26vw, 366px);
+}
+/* the photo bleeds past the section's own top/bottom padding so it
+   reaches the header's bottom edge and the section's true bottom edge —
+   safe here (full bleed, like Clientele) because this grid is the last
+   thing in the section, with no trailing block for it to run into. */
+@media (min-width: 901px) {
+  .global-talent-page .gt-hero__media {
+    margin-block: calc(-1 * clamp(8px, 1.1vw, 16px)) calc(-1 * clamp(20px, 2.2vw, 32px));
+  }
+}
+.global-talent-page .gt-hero__media img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: 50% 42%;
+  display: block;
+}
+/* melt the photo into the section — it fades left toward the copy and softly
+   at the top/bottom so there is no hard rectangle. Same recipe as the About
+   page's split photos and the Alliances position photo. */
+/* a touch lighter than the shared inner-page melt — the hero photo is the
+   one image on this page people actually look at, so it keeps more of
+   itself while still dissolving into the copy on the left */
+.global-talent-page .gt-hero__media::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg,
+      var(--bg) 0%,
+      color-mix(in srgb, var(--bg) 50%, transparent) 17%,
+      transparent 44%);
+}
+
+
+/* ── 02 · WAYS WE HELP YOU BUILD ─────────────────────────── */
+.global-talent-page .gt-intro {
+  position: relative;
+  background: var(--bg);
+  padding-block: clamp(18px, 1.9vw, 27px) clamp(15px, 1.6vw, 23px);
+  border-bottom: 1px solid var(--hairline);
+}
+/* a quiet dotted plate out in the left margin — same recipe as the
+   Alliances hero dots, deliberately low-contrast so it stays decoration */
+.global-talent-page .gt-intro__dots {
+  position: absolute;
+  top: clamp(38px, 4.6vw, 76px);
+  left: clamp(8px, 1.6vw, 42px);
+  width: clamp(84px, 9vw, 140px);
+  height: clamp(68px, 7vw, 112px);
+  background-image: radial-gradient(currentColor 1.4px, transparent 1.4px);
+  background-size: 16px 16px;
+  color: var(--line);
+  opacity: .85;
+  pointer-events: none;
+}
+.global-talent-page .gt-intro__inner { text-align: center; }
+.global-talent-page .gt-intro__eyebrow {
+  color: var(--muted);
+  font-size: clamp(.78rem, .95vw, 1.06rem);
+  font-weight: 600;
+  letter-spacing: .28em;
+  margin-bottom: clamp(8px, .9vw, 12px);
+}
+.global-talent-page .gt-intro__title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.3rem, 2.1vw, 1.88rem);
+  line-height: 1.16;
+  letter-spacing: 0;
+  color: var(--navy);
+  margin: 0 auto;
+  max-width: 32ch;
+  text-wrap: balance;
+}
+.global-talent-page .gt-intro__lede {
+  color: var(--muted);
+  font-size: clamp(.9rem, .98vw, .98rem);
+  line-height: 1.58;
+  max-width: 68rem;
+  margin: clamp(8px, .9vw, 12px) auto 0;
+}
+
+
+/* ── 03–06 · TALENT SOLUTION BANDS ───────────────────────── */
+.global-talent-page .gt-solution {
+  background: var(--bg);
+  padding-block: clamp(26px, 2.6vw, 38px);
+}
+.global-talent-page .gt-solution--cream { background: var(--bg-cream); }
+/* in dark theme --bg-cream sits almost on top of --bg, so the alternating
+   band borrows the same soft surface About Us uses for its cream section */
+html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: var(--bg-soft); }
+
+.global-talent-page .gt-solution__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.45fr);
+  gap: clamp(26px, 6vw, 108px);
+  align-items: start;
+}
+
+/* left editorial column ---------------------------------------- */
+.global-talent-page .gt-solution__aside .abx-eyebrow,
+.global-talent-page .gt-cta .abx-eyebrow {
+  font-size: .78rem;
+}
+/* the shared eyebrow drop is tuned for full-height bands */
+.global-talent-page .gt-cta .abx-eyebrow { margin-bottom: clamp(8px, 1vw, 13px); }
+.global-talent-page .gt-solution__aside .abx-eyebrow {
+  margin-bottom: clamp(12px, 1.4vw, 18px);
+}
+.global-talent-page .gt-solution__title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.35rem, 1.9vw, 1.8rem);
+  line-height: 1.2;
+  letter-spacing: -.004em;
+  color: var(--navy);
+  margin: 0;
+}
+.global-talent-page .gt-solution__descriptor {
+  margin: clamp(16px, 1.9vw, 24px) 0 0;
+  padding-top: clamp(14px, 1.7vw, 22px);
+  border-top: 1px solid var(--line);
+  font-size: .75rem;
+  font-weight: 600;
+  line-height: 1.7;
+  letter-spacing: .155em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+
+/* right explanation column ------------------------------------- */
+.global-talent-page .gt-solution__body { max-width: 38.5rem; }
+.global-talent-page .gt-solution__lead {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.15rem, 1.5vw, 1.48rem);
+  line-height: 1.3;
+  letter-spacing: -.01em;
+  color: var(--navy);
+  margin: 0 0 clamp(20px, 2.4vw, 32px);
+  text-wrap: balance;
+}
+.global-talent-page .gt-list {
+  display: grid;
+  gap: clamp(15px, 1.7vw, 24px);
+  margin: 0;
+}
+.global-talent-page .gt-list li {
+  position: relative;
+  padding-left: clamp(18px, 1.6vw, 24px);
+  color: var(--muted);
+  font-size: clamp(.95rem, 1.02vw, 1.05rem);
+  line-height: 1.66;
+  text-wrap: pretty;
+}
+.global-talent-page .gt-list li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: .62em;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+
+/* ── 07 · CLOSING CTA (dark band) ────────────────────────── */
+/* literal navy in both themes, exactly like the About Us closing band,
+   so the CTA reads the same and melts into the navy footer beneath it */
+.global-talent-page .gt-cta {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
+  padding-block: clamp(16px, 1.8vw, 26px) clamp(14px, 1.5vw, 22px);
+}
+.global-talent-page .gt-cta__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--fig-band-w);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: center;
+}
+.global-talent-page .gt-cta__lead { align-self: center; margin-left: var(--gutter); max-width: 34rem; }
+.global-talent-page .gt-cta__title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.3rem, 2.2vw, 1.85rem);
+  line-height: 1.16;
+  letter-spacing: .012em;
+  color: #fff;
+  margin: 0;
+  max-width: 38ch;
+  text-wrap: balance;
+}
+.global-talent-page .gt-cta__act { margin: clamp(9px, 1vw, 13px) 0 0; }
+
+/* outlined pill — the filled navy button would disappear on this band */
+.global-talent-page .gt-cta__btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.38);
+  color: #fff;
+  min-height: 44px;
+  padding: 11px clamp(22px, 2vw, 32px);
+  font-size: .8rem;
+  letter-spacing: .075em;
+}
+.global-talent-page .gt-cta__btn .ico { color: var(--gold-2); }
+.global-talent-page .gt-cta__btn:hover {
+  background: #fff;
+  border-color: #fff;
+  color: #0F2247;
+}
+.global-talent-page .gt-cta__btn:hover .ico { color: #0F2247; }
+
+/* the band is a fixed navy gradient in both themes, so the photo melts into
+   a literal navy rather than a theme token — this value is the band's colour
+   across the vertical span the photo occupies */
+.global-talent-page .gt-cta__media {
+  --gt-melt: #0B1B35;
+  position: relative;
+  align-self: stretch;
+  margin: 0; overflow: hidden;
+  min-height: clamp(148px, 12.6vw, 182px);
+}
+.global-talent-page .gt-cta__media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: 50% 42%;
+  display: block;
+}
+.global-talent-page .gt-cta__media::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg,
+      var(--gt-melt) 0%,
+      color-mix(in srgb, var(--gt-melt) 50%, transparent) 17%,
+      transparent 44%);
+}
+/* the photo bleeds past the section's own top/bottom padding so it fills
+   the band edge to edge instead of leaving a blank strip above/below —
+   text keeps its normal padding; only the photo (which clips via
+   overflow:hidden + object-fit:cover) extends and zooms to cover it */
+@media (min-width: 901px) {
+  .global-talent-page .gt-cta__media {
+    margin-block: calc(-1 * clamp(16px, 1.8vw, 26px)) calc(-1 * clamp(14px, 1.5vw, 22px));
+  }
+}
+
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+
+/* ≤1100px — tighten the two-column rhythm before collapsing anything */
+@media (max-width: 1100px) {
+  .global-talent-page .gt-solution__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.9fr);
+  }
+  .global-talent-page .gt-hero__text { max-width: none; }
+}
+
+/* ≤900px — hero and CTA stack: copy first, photo below */
+@media (max-width: 900px) {
+  .global-talent-page .gt-hero {
+    padding-top: calc(var(--header-h) + clamp(24px, 6vw, 44px));
+  }
+  .global-talent-page .gt-hero__grid,
+  .global-talent-page .gt-cta__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(28px, 6vw, 44px);
+  }
+  /* the grid is no longer inside .container, so the copy carries the gutter
+     itself once the photo stops sharing the row */
+  .global-talent-page .gt-hero__text,
+  .global-talent-page .gt-cta__lead {
+    margin-inline: var(--gutter);
+    max-width: none;
+  }
+  .global-talent-page .gt-hero__text { padding-inline-start: clamp(16px, 4vw, 24px); }
+  .global-talent-page .gt-hero__lede,
+  .global-talent-page .gt-hero__tail { max-width: 46ch; }
+  .global-talent-page .gt-hero__media,
+  .global-talent-page .gt-cta__media { min-height: 0; aspect-ratio: 16 / 9; }
+  /* stacked — the photos now run full-width under the copy, so they fill
+     edge to edge instead of fading top/bottom */
+  .global-talent-page .gt-hero__media::after,
+  .global-talent-page .gt-cta__media::after {
+    background: none;
+  }
+  .global-talent-page .gt-intro__dots { opacity: .6; }
+}
+
+/* ≤860px — solution bands go single column: title block, then the list */
+@media (max-width: 860px) {
+  .global-talent-page .gt-solution__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(22px, 5vw, 32px);
+  }
+  .global-talent-page .gt-solution__descriptor { max-width: 44ch; }
+  .global-talent-page .gt-solution__body { max-width: none; }
+  .global-talent-page .gt-intro__title { max-width: 20ch; }
+}
+
+/* ≤620px — phone rhythm: shorter bands, decoration steps aside */
+@media (max-width: 620px) {
+  .global-talent-page .gt-intro__dots { display: none; }
+  .global-talent-page .gt-hero__text {
+    border-left-width: 3px;
+    padding-inline-start: 16px;
+  }
+  .global-talent-page .gt-hero__media,
+  .global-talent-page .gt-cta__media { aspect-ratio: 3 / 2; }
+  .global-talent-page .gt-solution { padding-block: clamp(32px, 8vw, 42px); }
+  .global-talent-page .gt-intro { padding-block: clamp(32px, 8.4vw, 44px); }
+  .global-talent-page .gt-cta { padding-block: clamp(34px, 9vw, 46px) clamp(30px, 8vw, 40px); }
+  /* .btn goes full-width below 560px site-wide; these two are page CTAs,
+     so let them keep that behaviour but stay comfortably tappable */
+  .global-talent-page .gt-cta__title { max-width: 22ch; }
+}
+
+/* ≤380px — smallest phones */
+@media (max-width: 380px) {
+  .global-talent-page .gt-hero__title { font-size: 1.78rem; }
+  .global-talent-page .gt-intro__title { font-size: 1.42rem; }
+  .global-talent-page .gt-cta__title { font-size: 1.55rem; }
+  .global-talent-page .gt-solution__descriptor { letter-spacing: .12em; }
+}
+
+/* ── REDUCED MOTION ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .global-talent-page .gt-hero__media img,
+  .global-talent-page .gt-cta__media img { transform: none; }
+}
+
+

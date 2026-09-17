@@ -1,0 +1,658 @@
+/* ── 05. BUTTONS & ICONS ─────────────────────────────────── */
+.ico { width: 1.15em; height: 1.15em; flex: 0 0 auto; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 14px 30px;
+  border-radius: var(--radius-pill);
+  font-size: .795rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color .25s var(--ease), color .25s var(--ease),
+              border-color .25s var(--ease), box-shadow .25s var(--ease),
+              transform .25s var(--ease);
+}
+.btn .ico { transition: transform .25s var(--ease); }
+.btn:hover .ico { transform: translateX(4px); }
+
+.btn-primary {
+  background: var(--navy);
+  color: #fff;
+  box-shadow: var(--sh-sm);
+}
+.btn-primary .ico { color: var(--gold-2); }
+.btn-primary:hover { background: #0A1A38; box-shadow: var(--sh-md); }
+html[data-theme="dark"] .btn-primary { background: var(--gold); color: #0B1424; }
+html[data-theme="dark"] .btn-primary .ico { color: #0B1424; }
+html[data-theme="dark"] .btn-primary:hover { background: #E9C275; }
+
+.btn-outline {
+  border: 1px solid var(--navy);
+  color: var(--navy);
+  background: transparent;
+}
+.btn-outline:hover { background: rgba(15,34,71,.06); }
+html[data-theme="dark"] .btn-outline { border-color: var(--gold); color: var(--gold); }
+html[data-theme="dark"] .btn-outline:hover { background: rgba(216,169,78,.12); }
+
+.btn-sm { min-height: 44px; padding: 11px 22px; font-size: .74rem; letter-spacing: .07em; text-transform: none; }
+.btn-lg { min-height: 58px; padding: 17px 40px; font-size: .84rem; }
+
+.icon-btn {
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  color: var(--navy);
+  background: rgba(255,255,255,.6);
+  transition: transform .25s var(--ease), background-color .25s var(--ease), border-color .25s var(--ease);
+}
+.icon-btn .ico { width: 19px; height: 19px; }
+.icon-btn:hover { transform: scale(1.08); border-color: var(--gold); }
+html[data-theme="dark"] .icon-btn { background: rgba(255,255,255,.05); }
+.ico-dark { display: none; }
+html[data-theme="dark"] .ico-light { display: none; }
+html[data-theme="dark"] .ico-dark { display: block; }
+
+
+/* ── 06. LOGO MARK ───────────────────────────────────────── */
+.logo { display: inline-flex; align-items: center; gap: 11px; }
+.logo-img { width: auto; display: block; flex: 0 0 auto; }
+/* the two logo files have different internal padding (the light art fills ~60% of
+   its canvas height, the dark art ~75%), so the light one needs a taller box to
+   land at the same optical size as the dark one */
+.logo-img--light { height: 55px; }
+.logo-img--dark { height: 44px; display: none; }
+html[data-theme="dark"] .logo-img--light { display: none; }
+html[data-theme="dark"] .logo-img--dark { display: block; }
+.logo-mark { width: 38px; height: 38px; flex: 0 0 auto; }
+.logo-mark svg { width: 100%; height: 100%; }
+.face-top   { fill: #1E3A63; }
+.face-left  { fill: #4F6D8C; }
+.face-right { fill: #C8983C; }
+.notch, .notch-gap { fill: var(--bg); }
+html[data-theme="dark"] .face-top { fill: #6E8FBC; }
+html[data-theme="dark"] .face-left { fill: #8AA5C2; }
+
+.logo-text { display: block; line-height: 1; }
+.logo-word {
+  display: block;
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: 1.68rem;
+  letter-spacing: -.005em;
+  color: var(--navy);
+}
+.logo-tag {
+  display: block;
+  font-size: .535rem;
+  font-weight: 500;
+  letter-spacing: .045em;
+  color: var(--muted-2);
+  margin-top: 3px;
+  white-space: nowrap;
+}
+.logo-tag span { color: var(--gold); margin-inline: 2px; }
+
+
+/* ── 07. HEADER & NAVIGATION ─────────────────────────────── */
+.site-header {
+  position: fixed; inset: 0 0 auto 0;
+  z-index: 120;
+  height: var(--header-h);
+  display: flex; align-items: center;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background-color .28s var(--ease), box-shadow .28s var(--ease),
+              border-color .28s var(--ease), backdrop-filter .28s var(--ease);
+}
+.site-header.is-stuck {
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+  -webkit-backdrop-filter: saturate(1.6) blur(14px);
+  backdrop-filter: saturate(1.6) blur(14px);
+  border-bottom-color: var(--hairline);
+  box-shadow: 0 1px 24px rgba(15,34,71,.07);
+}
+html[data-theme="dark"] .site-header.is-stuck { box-shadow: 0 1px 24px rgba(0,0,0,.5); }
+
+.header-inner {
+  display: flex; align-items: center; gap: clamp(14px, 1.6vw, 26px);
+}
+
+.nav-desktop { margin-left: clamp(14px, 2vw, 32px); margin-right: auto; }
+.nav-desktop ul { display: flex; align-items: center; gap: clamp(12px, 1.4vw, 24px); }
+.nav-desktop a {
+  position: relative;
+  display: block;
+  padding: 10px 2px;
+  font-size: .89rem;
+  white-space: nowrap;
+  font-weight: 500;
+  color: var(--navy);
+  opacity: .88;
+  transition: opacity .2s var(--ease);
+}
+.nav-desktop a::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 4px;
+  height: 1px; background: var(--gold);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .28s var(--ease);
+}
+.nav-desktop a:hover { opacity: 1; }
+.nav-desktop a:hover::after,
+.nav-desktop a.is-current::after { transform: scaleX(1); }
+
+/* ── 07a. SOLUTIONS CARD — shared component ──────────────────────────────
+   One card design, reused in two places: the header's Solutions mega menu
+   (below) and the "How We Help" grid on solutions.html (#how-we-help).
+   Keeping it as a single, self-contained, class-scoped component (rather
+   than one-off styles in each place) is deliberate: it's the block that
+   should map 1:1 onto a repeater / reusable block when this site moves to
+   WordPress (e.g. an ACF repeater + a template part, or an Elementor saved
+   "Solutions Card" widget) — nothing here depends on the static-file
+   structure. ───────────────────────────────────────────────────────── */
+.solutions-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.solutions-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px 28px;
+  border-left: 1px solid var(--hairline);
+  text-align: left;
+  color: inherit;
+}
+.solutions-cards > .solutions-card:first-child { border-left: none; padding-left: 0; }
+
+/* When this card is the header link itself (a.solutions-card inside the
+   mega menu) it also matches ".nav-desktop a", which is more specific than
+   the bare ".solutions-card" rule above and would otherwise collapse it
+   back to an inline, nowrap, block link. Restate what that rule clobbers. */
+.nav-megamenu a.solutions-card {
+  position: static;
+  display: flex;
+  padding: 6px 18px;
+  border-radius: 10px;
+  font-size: inherit;
+  font-weight: 400;
+  white-space: normal;
+  opacity: 1;
+  transition: background-color .2s var(--ease);
+}
+.nav-megamenu a.solutions-card::after { content: none; }
+.nav-megamenu a.solutions-card:hover,
+.nav-megamenu a.solutions-card:focus-visible { background: var(--bg-soft); }
+/* .solutions-cards > .solutions-card:first-child (used by the on-page grid
+   to drop its divider) is more specific than the rule above and would zero
+   out Business Consulting's left padding, leaving its hover fill flush
+   against the panel edge instead of inset like the other three cards */
+.nav-megamenu a.solutions-card:first-child { padding-left: 18px; border-left: 0; }
+
+.solutions-card-num {
+  font-family: var(--sans);
+  font-size: .78rem; font-weight: 700;
+  letter-spacing: .08em;
+  color: var(--gold);
+}
+.solutions-card-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.08rem, 1.3vw, 1.28rem);
+  line-height: 1.25;
+  color: var(--navy);
+  transition: color .2s var(--ease);
+}
+.solutions-card-desc {
+  font-family: var(--sans);
+  font-size: .875rem; line-height: 1.55;
+  color: var(--muted);
+}
+.solutions-card-explore {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: auto; padding-top: 6px;
+  font-family: var(--sans);
+  font-size: .72rem; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase;
+  color: var(--navy);
+  width: fit-content;
+}
+.solutions-card-explore .ico { width: 13px; height: 13px; transition: transform .2s var(--ease); }
+
+a.solutions-card:hover .solutions-card-title,
+a.solutions-card:focus-visible .solutions-card-title,
+.solutions-card-explore:hover,
+.solutions-card-explore:focus-visible { color: var(--gold-2); }
+a.solutions-card:hover .solutions-card-explore .ico,
+a.solutions-card:focus-visible .solutions-card-explore .ico,
+.solutions-card-explore:hover .ico,
+.solutions-card-explore:focus-visible .ico { transform: translateX(4px); }
+a.solutions-card:focus-visible,
+.solutions-card-explore:focus-visible {
+  outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px;
+}
+
+/* ≤900px — 4 columns become 2, dividers move to sit between rows */
+@media (max-width: 900px) {
+  .solutions-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 30px; }
+  .solutions-cards > .solutions-card:nth-child(2n+1) { border-left: none; padding-left: 0; }
+  .solutions-cards > .solutions-card:nth-child(n+3) {
+    padding-top: 26px; border-top: 1px solid var(--hairline);
+  }
+}
+/* ≤560px — single column, all dividers become top rules */
+@media (max-width: 560px) {
+  .solutions-cards { grid-template-columns: minmax(0, 1fr); row-gap: 26px; }
+  .solutions-cards > .solutions-card {
+    border-left: none !important; padding-left: 0;
+    padding-top: 24px; border-top: 1px solid var(--hairline);
+  }
+  .solutions-cards > .solutions-card:first-child { padding-top: 0; border-top: none; }
+}
+
+
+/* ── 07b. NAV MEGA MENU (Solutions, hover / focus — desktop only) ────────
+   Below 1024px .nav-desktop is display:none (see RESPONSIVE), which takes
+   this panel out with it; the mobile-subnav accordion further down covers
+   small screens instead.
+
+   Trigger: opening/closing is driven by JS (script.js → navMegaMenu), not
+   bare CSS :hover. The panel is position:fixed, centered under the header
+   with a small gap below it — with plain :hover, the instant the pointer
+   crosses that gap over neither element, hover is lost and the menu shuts
+   before the cursor arrives. JS
+   adds a short close-delay so the panel survives that transit; CSS only
+   reflects the resulting ".is-open" class. :focus-within stays CSS-only
+   since keyboard tabbing has no such gap to cross. ───────────────────── */
+.nav-desktop li.has-dropdown { position: relative; }
+
+.nav-desktop li.has-dropdown > a {
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.nav-caret {
+  width: 12px; height: 12px; flex: 0 0 auto;
+  color: var(--muted-2);
+  transition: transform .25s var(--ease), color .2s var(--ease);
+}
+.nav-desktop li.has-dropdown.is-open .nav-caret,
+.nav-desktop li.has-dropdown:focus-within .nav-caret { transform: rotate(180deg); color: var(--gold); }
+
+.nav-megamenu {
+  position: fixed;
+  top: calc(var(--header-h) + 14px); left: 50%;
+  z-index: 90;
+  width: min(860px, 92vw);
+  background: var(--card);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  box-shadow: var(--sh-lg);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transform-origin: top center;
+  transform: translateX(-50%) translateY(-10px) scale(.97);
+  transition: opacity .22s var(--ease), transform .28s var(--ease), visibility .28s var(--ease);
+}
+html[data-theme="dark"] .nav-megamenu { box-shadow: 0 24px 48px rgba(0,0,0,.55); }
+
+.nav-desktop li.has-dropdown.is-open .nav-megamenu,
+.nav-desktop li.has-dropdown:focus-within .nav-megamenu {
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+.nav-megamenu .container {
+  max-width: none; margin-inline: 0; padding-inline: 0;
+}
+.nav-megamenu .nav-megamenu-head {
+  padding: clamp(22px, 2.6vw, 34px) clamp(22px, 2.6vw, 34px) 14px;
+}
+.nav-megamenu-eyebrow {
+  font-family: var(--sans);
+  font-size: .68rem; font-weight: 600;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.nav-megamenu-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.35;
+  color: var(--muted);
+  margin: 0;
+}
+.nav-megamenu .solutions-cards {
+  padding: 6px clamp(22px, 2.6vw, 34px) clamp(22px, 2.6vw, 34px);
+}
+
+
+.header-actions { display: flex; align-items: center; gap: 9px; margin-left: auto; }
+
+.hamburger {
+  display: none;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  padding: 0;
+  position: relative;
+}
+.hamburger span {
+  position: absolute; left: 13px; width: 18px; height: 1.5px;
+  background: var(--navy); border-radius: 2px;
+  transition: transform .3s var(--ease), opacity .2s var(--ease);
+}
+.hamburger span:nth-child(1) { top: 16px; }
+.hamburger span:nth-child(2) { top: 21.5px; }
+.hamburger span:nth-child(3) { top: 27px; }
+.hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+.hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+
+/* ── 07b. SOCIAL / CONNECT MENU ──────────────────────────── */
+.social-menu { position: relative; display: flex; }
+
+.social-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 44px; padding: 0 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.6);
+  color: var(--navy);
+  font-size: .8rem; font-weight: 600; letter-spacing: .01em;
+  white-space: nowrap;
+  transition: border-color .2s var(--ease), background-color .2s var(--ease), color .2s var(--ease);
+}
+html[data-theme="dark"] .social-btn { background: rgba(255,255,255,.05); }
+/* the button stays icon-only in the bar — the labels live in the dropdown */
+.social-btn-label { display: none; }
+.social-btn .social-glyph { width: 18px; height: 18px; flex: 0 0 auto; }
+.social-btn .social-caret {
+  width: 14px; height: 14px; color: var(--muted-2);
+  transition: transform .25s var(--ease), color .2s var(--ease);
+}
+.social-btn:hover { border-color: var(--gold); }
+.social-menu.is-open .social-btn {
+  border-color: var(--gold);
+  background: color-mix(in srgb, var(--gold) 9%, var(--card));
+}
+.social-menu.is-open .social-caret { transform: rotate(180deg); color: var(--gold); }
+
+.social-dropdown {
+  position: absolute; top: calc(100% + 12px); right: 0;
+  z-index: 60;
+  width: 216px; max-width: calc(100vw - 24px);
+  padding: 7px;
+  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--gold) 20%, var(--hairline));
+  background: color-mix(in srgb, var(--card) 95%, transparent);
+  -webkit-backdrop-filter: saturate(1.5) blur(18px);
+  backdrop-filter: saturate(1.5) blur(18px);
+  box-shadow: 0 4px 12px rgba(15,34,71,.09), 0 20px 44px rgba(15,34,71,.15);
+  opacity: 0; visibility: hidden;
+  transform: translateY(-8px) scale(.97);
+  transform-origin: top right;
+  transition: opacity .22s var(--ease), transform .24s var(--ease), visibility .24s var(--ease);
+}
+html[data-theme="dark"] .social-dropdown {
+  background: color-mix(in srgb, var(--card) 98%, transparent);
+  box-shadow: 0 4px 12px rgba(0,0,0,.45), 0 20px 44px rgba(0,0,0,.6);
+}
+.social-dropdown[hidden] { display: none; }
+.social-menu.is-open .social-dropdown {
+  opacity: 1; visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.social-item {
+  display: flex; align-items: center; gap: 11px;
+  padding: 9px 10px;
+  border-radius: 10px;
+  color: var(--navy);
+  font-size: .875rem; font-weight: 500;
+  transition: background-color .18s var(--ease), transform .18s var(--ease);
+}
+.social-item + .social-item { margin-top: 1px; }
+.social-item-ico {
+  display: grid; place-items: center;
+  width: 30px; height: 30px; flex: 0 0 auto;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--navy) 8%, transparent);
+  color: var(--navy);
+  transition: background-color .18s var(--ease), color .18s var(--ease);
+}
+html[data-theme="dark"] .social-item-ico { background: rgba(255,255,255,.08); }
+.social-item-ico svg { width: 16px; height: 16px; fill: currentColor; }
+.social-item:hover,
+.social-item:focus-visible {
+  background: color-mix(in srgb, var(--gold) 12%, transparent);
+  transform: translateX(2px);
+  outline: none;
+}
+.social-item:focus-visible { box-shadow: inset 0 0 0 1.5px var(--gold); }
+.social-item:hover .social-item-ico,
+.social-item:focus-visible .social-item-ico { background: var(--navy); color: #fff; }
+html[data-theme="dark"] .social-item:hover .social-item-ico,
+html[data-theme="dark"] .social-item:focus-visible .social-item-ico { background: var(--gold); color: #0B1424; }
+
+
+/* ── 07b. CUSTOM SELECT (form dropdown menus — Work Model,
+   Select an Area, …) ─────────────────────────────────────
+   Native <select> popups can't be styled cross-browser (no radius,
+   border, hover states), so form dropdowns that need a styled menu
+   use this button + listbox pattern instead — mirrors the header's
+   social-menu component. A hidden input carries the value for the
+   form's name/value pair. Shared across pages via this one block. */
+.gss-select { position: relative; width: 100%; }
+.gss-select__btn {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  width: 100%;
+  padding: 10px 2px;
+  border: 0; border-bottom: 1px solid var(--line);
+  background: transparent;
+  font-family: var(--sans); font-size: .95rem; text-align: left;
+  color: var(--muted-2);
+  cursor: pointer;
+  transition: border-color .2s var(--ease);
+}
+.gss-select__btn:hover { border-bottom-color: var(--gold); }
+.gss-select.is-open .gss-select__btn,
+.gss-select__btn:focus-visible { outline: none; border-bottom-color: var(--gold); }
+.gss-select.has-value .gss-select__value { color: var(--navy); }
+.gss-select__caret {
+  width: 15px; height: 15px; flex: 0 0 auto; color: var(--muted-2);
+  transition: transform .22s var(--ease), color .2s var(--ease);
+}
+.gss-select.is-open .gss-select__caret { transform: rotate(180deg); color: var(--gold); }
+
+.gss-select__menu {
+  position: absolute; top: calc(100% + 8px); left: 0; right: 0;
+  z-index: 40;
+  max-height: 260px; overflow-y: auto;
+  margin: 0; padding: 7px;
+  list-style: none;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--gold) 20%, var(--hairline));
+  background: color-mix(in srgb, var(--card) 97%, transparent);
+  -webkit-backdrop-filter: saturate(1.5) blur(18px);
+  backdrop-filter: saturate(1.5) blur(18px);
+  box-shadow: 0 4px 12px rgba(15,34,71,.09), 0 20px 44px rgba(15,34,71,.15);
+  opacity: 0; visibility: hidden;
+  transform: translateY(-6px) scale(.98);
+  transform-origin: top;
+  transition: opacity .2s var(--ease), transform .22s var(--ease), visibility .22s var(--ease);
+}
+html[data-theme="dark"] .gss-select__menu {
+  background: color-mix(in srgb, var(--card) 98%, transparent);
+  box-shadow: 0 4px 12px rgba(0,0,0,.45), 0 20px 44px rgba(0,0,0,.6);
+}
+.gss-select__menu[hidden] { display: none; }
+.gss-select.is-open .gss-select__menu {
+  opacity: 1; visibility: visible;
+  transform: translateY(0) scale(1);
+}
+.gss-select__opt {
+  padding: 9px 12px;
+  border-radius: 9px;
+  color: var(--navy);
+  font-size: .9rem;
+  cursor: pointer;
+  transition: background-color .16s var(--ease);
+}
+.gss-select__opt + .gss-select__opt { margin-top: 1px; }
+.gss-select__opt.is-active { background: color-mix(in srgb, var(--gold) 12%, transparent); }
+.gss-select__opt.is-selected { color: var(--gold-2); font-weight: 600; }
+
+
+/* ── 08. MOBILE OVERLAY MENU ─────────────────────────────── */
+.mobile-nav {
+  position: fixed; inset: 0;
+  z-index: 110;
+  background: var(--bg);
+  padding: calc(var(--header-h) + 28px) clamp(20px, 6vw, 48px) 40px;
+  display: flex; flex-direction: column; align-items: stretch;
+  opacity: 0;
+  transition: opacity .3s var(--ease);
+  overflow-y: auto;
+}
+.mobile-nav[hidden] { display: none; }
+.mobile-nav.is-open { opacity: 1; }
+.mobile-nav ul { display: flex; flex-direction: column; gap: 4px; }
+.mobile-nav nav a {
+  display: block;
+  padding: 15px 0;
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 6vw, 2rem);
+  font-weight: 400;
+  color: var(--navy);
+  border-bottom: 1px solid var(--hairline);
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .4s var(--ease), transform .4s var(--ease);
+}
+.mobile-nav.is-open nav a { opacity: 1; transform: none; }
+.mobile-nav.is-open nav li:nth-child(1) a { transition-delay: .06s; }
+.mobile-nav.is-open nav li:nth-child(2) a { transition-delay: .10s; }
+.mobile-nav.is-open nav li:nth-child(3) a { transition-delay: .14s; }
+.mobile-nav.is-open nav li:nth-child(4) a { transition-delay: .18s; }
+.mobile-nav.is-open nav li:nth-child(5) a { transition-delay: .22s; }
+.mobile-nav.is-open nav li:nth-child(6) a { transition-delay: .26s; }
+.mobile-nav-foot {
+  display: flex; align-items: center; gap: 14px;
+  margin-top: auto;
+  padding-top: 32px;
+}
+.mobile-nav-foot .btn { flex: 1; }
+body.nav-open { overflow: hidden; }
+
+/* Connect With Us — collapsible section inside the overlay (mobile only) */
+.mobile-connect { display: none; padding-top: 30px; }
+.mobile-connect-toggle {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; padding: 2px 0 16px;
+  font-family: var(--sans);
+  font-size: .74rem; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--muted-2);
+}
+.mobile-connect-toggle .ico {
+  width: 17px; height: 17px; color: var(--gold);
+  transition: transform .25s var(--ease);
+}
+.mobile-connect-toggle[aria-expanded="false"] .ico { transform: rotate(-90deg); }
+
+.mobile-connect-wrap {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows .3s var(--ease);
+}
+.mobile-connect.is-collapsed .mobile-connect-wrap { grid-template-rows: 0fr; }
+.mobile-nav ul.mobile-connect-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+  gap: 10px;
+  min-height: 0;
+  overflow: hidden;
+  transition: opacity .24s var(--ease), visibility .24s var(--ease);
+}
+.mobile-connect.is-collapsed .mobile-connect-panel { opacity: 0; visibility: hidden; }
+.mobile-social {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--hairline);
+  background: var(--card-soft);
+  color: var(--navy);
+  min-height: 62px;
+  transition: border-color .2s var(--ease), background-color .2s var(--ease), transform .2s var(--ease);
+}
+.mobile-social:hover { border-color: var(--gold); }
+.mobile-social:focus-visible {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 40%, transparent);
+}
+.mobile-social:active { transform: scale(.98); }
+.mobile-social-ico {
+  display: grid; place-items: center;
+  width: 36px; height: 36px; flex: 0 0 auto;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--navy) 8%, transparent);
+  color: var(--navy);
+}
+html[data-theme="dark"] .mobile-social-ico { background: rgba(255,255,255,.08); }
+.mobile-social-ico svg { width: 19px; height: 19px; fill: currentColor; }
+.mobile-social > span:last-child { font-size: .98rem; font-weight: 500; }
+
+/* Solutions submenu — collapsible, inside the primary list (mobile only).
+   Same disclosure mechanism as "Connect With Us" above (grid-rows trick,
+   no JS height math); .mobile-subnav is a generic pattern any future nav
+   item with children can reuse. */
+.mobile-nav .mobile-subnav-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  border-bottom: 1px solid var(--hairline);
+}
+.mobile-nav .mobile-subnav-row a {
+  flex: 1 1 auto;
+  border-bottom: none;
+}
+.mobile-subnav-toggle {
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; flex: 0 0 auto;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: transparent;
+}
+.mobile-subnav-toggle .ico {
+  width: 15px; height: 15px; color: var(--navy);
+  transition: transform .25s var(--ease);
+}
+.mobile-subnav-toggle[aria-expanded="true"] .ico { transform: rotate(180deg); }
+
+.mobile-subnav-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .3s var(--ease);
+}
+.mobile-subnav-wrap.is-open { grid-template-rows: 1fr; }
+.mobile-nav .mobile-subnav-panel {
+  overflow: hidden; min-height: 0;
+  display: flex; flex-direction: column;
+  padding-left: 6px;
+}
+.mobile-nav .mobile-subnav-panel a {
+  display: block;
+  padding: 13px 6px;
+  font-family: var(--sans);
+  font-size: .96rem; font-weight: 500;
+  color: var(--muted);
+  border-bottom: 1px solid var(--hairline);
+}
+.mobile-nav .mobile-subnav-panel li:last-child a { border-bottom: none; }
+.mobile-nav .mobile-subnav-panel a:hover,
+.mobile-nav .mobile-subnav-panel a:focus-visible { color: var(--gold-2); }
+
+

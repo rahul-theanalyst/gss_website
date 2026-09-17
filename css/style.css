@@ -1,0 +1,22 @@
+/* GSS stylesheet entry. Preserve this order: shared rules and page overrides
+   retain the existing cascade. Edit the named modules below; no build step. */
+
+@import url("base/global.css");
+@import url("components/interface.css");
+@import url("pages/home.css");
+@import url("pages/blog.css");
+@import url("components/sections.css");
+@import url("pages/about.css");
+@import url("pages/partner.css");
+@import url("components/footer.css");
+@import url("components/legal.css");
+@import url("base/responsive.css");
+@import url("pages/global-talent.css");
+@import url("pages/career.css");
+@import url("pages/business-consulting.css");
+@import url("pages/contact.css");
+@import url("pages/data-business-insight.css");
+@import url("components/page-media.css");
+@import url("pages/technology-delivery.css");
+@import url("pages/our-focus-area.css");
+@import url("pages/clientele.css");

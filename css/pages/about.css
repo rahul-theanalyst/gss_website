@@ -1,0 +1,424 @@
+/* ══════════ 16c. ABOUT PAGE ══════════════════════════════════
+   Editorial About page — an opening split with a bleeding photo, a
+   dark "point of view" pause, a reversed split, a horizontal process
+   flow, a company band with a certification logo wall, and a dark
+   closing CTA. Palette unchanged (navy / cream / white / gold). Light
+   sections follow the theme tokens; dark bands use literal navy so
+   they read the same in either theme. Scoped to .about-page / .abx-*. */
+
+:root { --gutter: clamp(20px, 5.2vw, 88px); }
+
+/* shared -------------------------------------------------------- */
+.abx-eyebrow {
+  font-size: .72rem; font-weight: 700;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 clamp(16px, 2vw, 24px);
+}
+.abx-eyebrow--onDark { color: var(--gold-2); }
+
+.abx-display {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(2.3rem, 5vw, 4rem);
+  line-height: 1.07; letter-spacing: -.02em;
+  color: var(--navy); margin: 0;
+  text-wrap: balance;
+}
+.abx-h2 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.9rem, 4vw, 3.1rem);
+  line-height: 1.1; letter-spacing: -.018em;
+  color: var(--navy); margin: 0;
+  text-wrap: balance;
+}
+.abx-body {
+  color: var(--muted);
+  font-size: clamp(1rem, 1.1vw, 1.12rem);
+  line-height: 1.72; text-wrap: pretty;
+  margin: 0;
+}
+.abx-body + .abx-body { margin-top: clamp(14px, 1.6vw, 20px); }
+
+/* the fixed header sits over a light section at the top of this
+   page — no photo hero — so it just needs the normal stuck styling */
+.about-page #main { overflow-x: clip; }
+
+/* ── 01 · WHO WE ARE ─────────────────────────────────────── */
+.abx-intro {
+  background: var(--bg);
+  /* matches the Careers/Let's Connect hero exactly, so all four split
+     hero pages (About, Clientele, Careers, Let's Connect) share the
+     same top/bottom spacing and overall height */
+  padding-top: calc(var(--header-h) + clamp(14px, 2vw, 30px));
+  padding-bottom: clamp(20px, 2.4vw, 36px);
+}
+.abx-intro__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--fig-hero-w);
+  align-items: stretch;
+  gap: clamp(28px, 4vw, 64px);
+}
+.abx-intro__text {
+  align-self: center;
+  margin-left: var(--gutter);
+  padding: clamp(6px, 1.4vw, 16px) clamp(20px, 3vw, 44px);
+  border-left: 2px solid var(--gold);
+  max-width: 46rem;
+}
+.abx-intro__text .abx-display { margin-bottom: clamp(20px, 2.6vw, 32px); }
+.abx-lede {
+  color: var(--muted);
+  font-size: clamp(1.08rem, 1.4vw, 1.3rem);
+  line-height: 1.6; max-width: 40ch; margin: 0;
+}
+.abx-lede__accent { color: var(--navy); font-weight: 600; white-space: nowrap; }
+.abx-intro__media {
+  position: relative;
+  margin: 0; overflow: hidden;
+  min-height: clamp(222px, 25vw, 352px);
+}
+/* the photo bleeds past the section's own top padding so it reaches the
+   header's bottom edge, same as Clientele. The bottom bleed is capped at
+   .abx-intro__more's own margin-top (not the section's full bottom
+   padding) — that paragraph block sits directly below this grid, so
+   this stops the photo exactly at its divider line instead of running
+   past it into the text, which is what happened last time. */
+@media (min-width: 901px) {
+  .abx-intro__media {
+    margin-block: calc(-1 * clamp(14px, 2vw, 30px)) calc(-1 * clamp(12px, 1.4vw, 20px));
+  }
+}
+/* absolutely positioning the img takes it out of normal flow, so it no
+   longer contributes its own intrinsic (aspect-ratio-driven) height to
+   the grid row's auto sizing — otherwise a wide/short photo forces the
+   row taller than the copy beside it, leaving that copy (align-self:
+   center) visibly floating with blank space above and below it. With
+   the img out of the sizing equation, the row is sized by the text
+   alone, exactly as the min-height:0/stretch rule below already intends. */
+.abx-intro__media img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: 100% 42%;
+  display: block;
+}
+/* melt the photo into the section — it fades left toward the copy and
+   softly at the top/bottom so there is no hard rectangle */
+.abx-intro__media::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg,
+      var(--bg) 0%,
+      color-mix(in srgb, var(--bg) 50%, transparent) 17%,
+      transparent 44%);
+}
+.abx-intro__more {
+  margin-top: clamp(12px, 1.4vw, 20px);
+  padding-top: clamp(12px, 1.4vw, 18px);
+  border-top: 1px solid var(--hairline);
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: clamp(20px, 4vw, 72px);
+  align-items: start;
+}
+.abx-intro__more p {
+  margin: 0; color: var(--muted);
+  font-size: clamp(.96rem, 1.05vw, 1.06rem); line-height: 1.72;
+}
+.abx-intro__more-tail { color: var(--navy); }
+
+/* ── OUR POINT OF VIEW (dark band) ───────────────────────── */
+.abx-pov {
+  position: relative; overflow: hidden;
+  background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
+  padding-block: clamp(18px, 2.3vw, 33px);
+}
+/* the rule sits in the gap between the statement and its italic answer.
+   At the band's old height it crossed the italic line; now that the band
+   is half as tall that overlap reads as a mistake, so it moves clear. */
+.abx-pov__slash {
+  position: absolute; top: -20%; right: 36%;
+  width: 2px; height: 140%;
+  background: linear-gradient(180deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
+  transform: rotate(20deg); transform-origin: top;
+  opacity: .8; pointer-events: none;
+}
+.abx-pov__lead {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.25rem, 2.7vw, 2.05rem);
+  line-height: 1.12; letter-spacing: -.018em;
+  color: #fff; max-width: 26ch; margin: 0;
+}
+.abx-pov__tail {
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: clamp(1rem, 2.05vw, 1.6rem);
+  line-height: 1.18; color: var(--gold-2);
+  text-align: right; max-width: 24ch;
+  margin: clamp(8px, 1.1vw, 13px) 0 0 auto;
+}
+
+/* ── 01 · HOW WE WORK ────────────────────────────────────── */
+.abx-work { background: var(--bg-cream); padding-bottom: clamp(16px, 1.6vw, 21px); }
+html[data-theme="dark"] .abx-work { background: var(--bg-soft); }
+.abx-work__grid {
+  display: grid;
+  grid-template-columns: var(--fig-inset-w) minmax(0, 1fr);
+  align-items: stretch;
+}
+.abx-work__media {
+  position: relative;
+  margin: 0; overflow: hidden;
+  min-height: clamp(226px, 26vw, 366px);
+}
+.abx-work__media img { width: 100%; height: 100%; object-fit: cover; object-position: 40% 50%; display: block; }
+/* mirror of the intro fade — this photo bleeds from the left, so it
+   melts right toward the copy and softly at the top/bottom */
+.abx-work__media::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  --melt: var(--bg-cream);
+  background:
+    linear-gradient(270deg,
+      var(--melt) 0%,
+      color-mix(in srgb, var(--melt) 50%, transparent) 17%,
+      transparent 44%);
+}
+html[data-theme="dark"] .abx-work__media::after { --melt: var(--bg-soft); }
+.abx-work__text {
+  align-self: center;
+  padding: clamp(13px, 1.3vw, 18px) var(--gutter) clamp(13px, 1.3vw, 18px) clamp(20px, 2.6vw, 40px);
+  max-width: 43rem;
+}
+.abx-work__text .abx-h2 {
+  font-size: clamp(1.4rem, 2.4vw, 2.05rem);
+  line-height: 1.13;
+  margin-bottom: clamp(9px, 1.1vw, 13px);
+}
+.abx-work__text .abx-body { font-size: clamp(.9rem, .98vw, .98rem); line-height: 1.6; }
+.abx-work__foot { margin-top: clamp(9px, .9vw, 12px); text-align: center; }
+.abx-process__lead {
+  max-width: 88ch; margin: 0 auto;
+  color: var(--muted); font-size: clamp(.9rem, .98vw, .98rem);
+  line-height: 1.6;
+}
+.abx-process__rule {
+  max-width: 104ch; margin: clamp(6px, .75vw, 9px) auto 0;
+  color: var(--navy); font-weight: 600;
+  font-size: clamp(.88rem, .95vw, .95rem); letter-spacing: .01em;
+}
+
+/* horizontal process flow */
+.abx-flow {
+  list-style: none; margin: clamp(10px, 1.1vw, 14px) auto 0; padding: 21px 0 0;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: clamp(14px, 2vw, 30px);
+  max-width: 1040px;
+  position: relative; text-align: left;
+}
+.abx-flow::before {
+  content: ""; position: absolute; top: 8px;
+  left: 8px; right: calc(25% - 8px);
+  height: 1px; background: var(--gold); opacity: .75;
+}
+.abx-flow__step { position: relative; padding-right: clamp(6px, 1.4vw, 16px); }
+.abx-flow__dot {
+  position: absolute; top: -21px; left: 0;
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 2px solid var(--gold); background: var(--bg-cream);
+}
+html[data-theme="dark"] .abx-flow__dot { background: var(--bg-soft); }
+.abx-flow__step--end .abx-flow__dot { background: var(--navy); border-color: var(--navy); }
+.abx-flow__step--end::after {
+  content: ""; position: absolute; top: -17px; left: 23px;
+  border-top: 4px solid transparent; border-bottom: 4px solid transparent;
+  border-left: 7px solid var(--gold);
+}
+.abx-flow__label {
+  display: block; font-family: var(--serif); font-weight: 500;
+  font-size: clamp(.95rem, 1.12vw, 1.08rem); color: var(--navy);
+}
+.abx-flow__desc {
+  display: block; margin-top: 4px;
+  font-size: .78rem; line-height: 1.45; color: var(--muted); max-width: 32ch;
+}
+
+/* ── 02 · ABOUT THE COMPANY ──────────────────────────────── */
+.abx-company { background: var(--bg-sky); padding-block: clamp(28px, 3.6vw, 50px); }
+html[data-theme="dark"] .abx-company { background: var(--bg-sky); }
+.abx-company__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 88px);
+  align-items: start;
+}
+.abx-company__text .abx-h2 { margin: clamp(6px, 1vw, 12px) 0 clamp(18px, 2.2vw, 28px); }
+
+/* certification / recognition logo wall — transparent marks sit straight on
+   the tinted section in light mode; dark mode gets a minimal white plate so
+   the black/navy logo artwork stays legible */
+.abx-company__proof {
+  list-style: none; margin: 0; padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(18px, 2.6vw, 34px) clamp(20px, 3vw, 40px);
+  align-items: center;
+}
+.abx-cred {
+  display: flex; align-items: center; justify-content: center;
+  padding: clamp(6px, 1vw, 12px);
+  border-radius: 12px;
+}
+html[data-theme="dark"] .abx-cred {
+  background: #fff;
+  padding: clamp(14px, 2vw, 22px);
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+.abx-cred--wide { grid-column: 1 / -1; }
+.abx-cred img { display: block; width: auto; height: auto; max-width: 100%; }
+.abx-cred:not(.abx-cred--wide) img { max-height: clamp(118px, 14vw, 156px); }
+.abx-cred--wide img { max-height: clamp(60px, 8vw, 88px); }
+
+.abx-approach {
+  margin-top: clamp(28px, 3.6vw, 50px);
+  padding-top: clamp(20px, 2.4vw, 32px);
+  border-top: 1px solid var(--hairline);
+}
+.abx-approach__row {
+  list-style: none; margin: clamp(10px, 1.6vw, 18px) 0 0; padding: 0;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 3vw, 40px);
+}
+.abx-approach__row li {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.1rem, 1.7vw, 1.5rem); color: var(--navy);
+  position: relative; padding-left: 22px;
+}
+.abx-approach__row li::before {
+  content: ""; position: absolute; left: 0; top: .5em;
+  width: 8px; height: 8px; border-radius: 50%; background: var(--gold);
+}
+
+/* ── CLOSING CTA (dark band) ─────────────────────────────── */
+.abx-cta {
+  position: relative; overflow: hidden;
+  background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
+  padding-block: clamp(18px, 1.9vw, 27px);
+}
+/* the eyebrow's shared 24px drop is tuned for full-height sections */
+.abx-cta .abx-eyebrow { margin-bottom: clamp(8px, 1vw, 13px); }
+.abx-pov__slash--cta { right: 40%; opacity: .6; }
+/* right:40% is measured against this full-bleed section, but the grid
+   beside it is capped at the shared 1400px container — past the width
+   where that container stops growing, 40%-of-section keeps drifting
+   rightward while the actual column gap does not, walking the line into
+   the "Let's Talk" copy. Past that point, anchor it to the viewport
+   center with a fixed offset instead so it tracks the (now-static) gap. */
+@media (min-width: 1500px) {
+  .abx-pov__slash--cta { right: calc(50% - 86px); }
+}
+.abx-cta__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 72px);
+  align-items: center;
+}
+.abx-cta__title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.3rem, 2.2vw, 1.85rem);
+  line-height: 1.16; letter-spacing: -.016em;
+  color: #fff; margin: 0; max-width: 42ch; text-wrap: balance;
+}
+.abx-cta__act { display: flex; flex-direction: column; align-items: flex-start; gap: clamp(10px, 1.1vw, 15px); }
+.abx-cta__sub {
+  margin: 0; color: rgba(255,255,255,.72);
+  font-size: clamp(.88rem, .95vw, .95rem); line-height: 1.55; max-width: 46ch;
+}
+/* .btn-lg is shared site-wide, so the shorter button is scoped to this band */
+.abx-cta .btn-lg { min-height: 46px; padding: 13px 30px; }
+.abx-cta .btn-primary { background: var(--gold); color: #0B1424; box-shadow: 0 12px 40px rgba(0,0,0,.32); }
+.abx-cta .btn-primary .ico { color: #0B1424; }
+.abx-cta .btn-primary:hover { background: #E9C275; }
+
+/* ── HEADER OVER DARK / NAVY SECTIONS ────────────────────── */
+.site-header.hdr-on-media {
+  background: linear-gradient(180deg, rgba(9,17,33,.82) 0%, rgba(9,17,33,.36) 55%, rgba(9,17,33,0) 100%);
+  border-bottom-color: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+}
+.hdr-on-media .nav-desktop a { color: #fff; opacity: .9; }
+.hdr-on-media .nav-desktop a:hover,
+.hdr-on-media .nav-desktop a.is-current { opacity: 1; }
+.hdr-on-media .logo-img--light { display: none; }
+.hdr-on-media .logo-img--dark { display: block; }
+.hdr-on-media .hamburger span { background: #fff; }
+.hdr-on-media .icon-btn,
+.hdr-on-media .social-btn {
+  color: #fff;
+  background: rgba(255,255,255,.09);
+  border-color: rgba(255,255,255,.26);
+}
+.hdr-on-media .social-btn .social-caret { color: rgba(255,255,255,.7); }
+.hdr-on-media .btn-primary.btn-sm { background: #fff; color: #0B1424; }
+.hdr-on-media .btn-primary.btn-sm .ico { color: #0B1424; }
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 1000px) {
+  .abx-intro__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 42vw); }
+  .abx-work__grid { grid-template-columns: minmax(0, 42vw) minmax(0, 1fr); }
+}
+@media (max-width: 860px) {
+  .abx-intro__grid,
+  .abx-work__grid { grid-template-columns: minmax(0, 1fr); }
+  .abx-intro__text {
+    margin-left: 0; grid-row: 1;
+    padding-inline: var(--gutter);
+    border-left: 0;
+    box-shadow: inset 3px 0 0 var(--gold);
+  }
+  .abx-intro__media { grid-row: 2; }
+  .abx-intro__media,
+  .abx-work__media { min-height: 0; aspect-ratio: 16 / 9; }
+  .abx-work__media { grid-row: 1; }
+  .abx-work__text { grid-row: 2; align-self: start; padding: clamp(28px, 6vw, 44px) var(--gutter); max-width: none; }
+  /* stacked — the photos now run full-width between blocks of copy, so
+     they fill edge to edge instead of fading top/bottom */
+  .abx-intro__media::after,
+  .abx-work__media::after {
+    background: none;
+  }
+  .abx-intro__more { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .abx-company__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 6vw, 40px); }
+  .abx-approach__row { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .abx-cta__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(22px, 5vw, 32px); }
+  .abx-pov__tail { text-align: left; margin-left: 0; }
+}
+@media (max-width: 620px) {
+  .abx-pov__slash { display: none; }
+  /* process flow goes vertical */
+  /* the rail, dot and arrow are re-centred on the smaller 16px dot */
+  .abx-flow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0; padding: 0 0 0 26px;
+  }
+  .abx-flow::before {
+    top: 6px; bottom: 6px; left: 8px; right: auto;
+    width: 1px; height: auto;
+  }
+  .abx-flow__step { padding: 0 0 clamp(15px, 3.6vw, 22px); }
+  .abx-flow__step:last-child { padding-bottom: 0; }
+  .abx-flow__dot { top: 5px; left: -26px; }
+  /* the arrow marks the end of a left-to-right rail; with the flow running
+     vertically it only collides with the final label, so it steps out */
+  .abx-flow__step--end::after { display: none; }
+  .abx-flow__desc { max-width: none; }
+  .abx-work__foot { text-align: left; }
+  .abx-process__lead, .abx-process__rule { margin-inline: 0; }
+  .abx-company__proof { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ── REDUCED MOTION ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .abx-intro__media img,
+  .abx-work__media img { transform: none; }
+}
+
+

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data &amp; Business Insight — GSS</title>
+<meta name="description" content="Data & Business Insight from GSS: start with the business question, then organize, connect and present the data required to make the answer clear.">
+<meta name="theme-color" content="#0F2247">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Data &amp; Business Insight — GSS">
+<meta property="og:description" content="Data & Business Insight from GSS: start with the business question, then organize, connect and present the data required to make the answer clear.">
+<meta property="og:image" content="../images/pages/dbi-hero-1280.jpg">
+<meta property="og:site_name" content="Global Soft Systems">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="../images/brand/gss_logo.png" type="image/png">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap">
+
+<link rel="stylesheet" href="../css/style.css">
+
+<!-- Flag JS support so scroll-reveal never hides content when scripting is off -->
+<script src="../js/core/init.js"></script>
+</head>
+<body class="dbi-page">
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h14.5"/><path d="m13.4 6.6 5.4 5.4-5.4 5.4"/></g></symbol>
+
+  <symbol id="i-chevron" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 9 7 7 7-7"/></g></symbol>
+
+  <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.6v2.2M12 19.2v2.2M21.4 12h-2.2M4.8 12H2.6M18.6 5.4l-1.6 1.6M7 17l-1.6 1.6M18.6 18.6 17 17M7 7 5.4 5.4"/></g></symbol>
+
+  <symbol id="i-moon" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5a8.6 8.6 0 1 0 10.7 10.7z"/></g></symbol>
+
+  <symbol id="i-globe" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3.3 12h17.4"/><path d="M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"/></g></symbol>
+
+  <symbol id="i-x" viewBox="0 0 24 24"><path fill="currentColor" d="M18.9 2.6h3.1l-6.8 7.8 8 10.6h-6.3l-4.9-6.4-5.6 6.4H3.3l7.3-8.3-7.7-10.1h6.4l4.4 5.9zM17.8 19.1h1.7L7.7 4.3H5.9z"/></symbol>
+</svg>
+
+<header class="site-header" id="siteHeader">
+  <div class="container header-inner">
+
+    <a class="logo" href="index.html" aria-label="GSS — Global Soft Systems, home">
+      <img class="logo-img logo-img--light" src="../images/brand/gss_logo.png" alt="GSS — Global Soft Systems: Results Driven | Delivery Focused" width="190" height="76">
+      <img class="logo-img logo-img--dark" src="../images/brand/gss_logo_dark.png" alt="" aria-hidden="true" width="190" height="76">
+    </a>
+
+        <nav class="nav-desktop" aria-label="Primary">
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li class="has-dropdown">
+              <a href="#" class="is-current" aria-current="page" aria-haspopup="true" aria-expanded="false">Solutions <svg class="ico nav-caret" aria-hidden="true"><use href="#i-chevron"/></svg></a>
+              <!-- Solutions mega menu (reusable "solutions-card" component; each item links to its own page) -->
+              <div class="nav-megamenu" role="menu" aria-label="Solutions menu">
+              <div class="container nav-megamenu-head">
+                <p class="nav-megamenu-eyebrow">How We Help</p>
+                <h3 class="nav-megamenu-title">Start with the business. Choose the right path forward.</h3>
+              </div>
+              <div class="container solutions-cards">
+                <a class="solutions-card" role="menuitem" href="business-consulting.html">
+                  <span class="solutions-card-num">01</span>
+                  <span class="solutions-card-title">Business Consulting</span>
+                  <span class="solutions-card-desc">Understand the challenge first. Then build the right path forward.</span>
+                  <span class="solutions-card-explore">Explore <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+                </a>
+                <a class="solutions-card" role="menuitem" href="data-business-insight.html">
+                  <span class="solutions-card-num">02</span>
+                  <span class="solutions-card-title">Data &amp; Business Insight</span>
+                  <span class="solutions-card-desc">Turn the information you have into better business decisions.</span>
+                  <span class="solutions-card-explore">Explore <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+                </a>
+                <a class="solutions-card" role="menuitem" href="technology-delivery.html">
+                  <span class="solutions-card-num">03</span>
+                  <span class="solutions-card-title">Technology &amp; Delivery</span>
+                  <span class="solutions-card-desc">Make the technology your business depends on work better.</span>
+                  <span class="solutions-card-explore">Explore <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+                </a>
+                <a class="solutions-card" role="menuitem" href="our-focus-area.html">
+                  <span class="solutions-card-num">04</span>
+                  <span class="solutions-card-title">Our Focus Area</span>
+                  <span class="solutions-card-desc">See where we&rsquo;re bringing added focus to the challenges shaping what comes next.</span>
+                  <span class="solutions-card-explore">Explore <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+                </a>
+              </div>
+              </div>
+            </li>
+            <li><a href="global-talent.html">Global Talent</a></li>
+            <li><a href="clientele.html">Clientele</a></li>
+            <li><a href="partner.html">Alliances</a></li>
+            <li><a href="career.html">Careers</a></li>
+            <li><a href="contact.html">Let's Connect</a></li>
+          </ul>
+        </nav>
+
+    <div class="header-actions">
+      <button class="icon-btn" id="themeToggle" type="button" aria-label="Switch to dark theme" aria-pressed="false">
+        <svg class="ico ico-light" aria-hidden="true"><use href="#i-sun"/></svg>
+        <svg class="ico ico-dark" aria-hidden="true"><use href="#i-moon"/></svg>
+      </button>
+      <div class="social-menu" id="socialMenu">
+        <button class="social-btn" id="socialToggle" type="button" aria-label="Connect with GSS on social media" title="Connect with GSS" aria-haspopup="true" aria-expanded="false" aria-controls="socialDropdown">
+          <svg class="social-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.2" r="2.4"/><circle cx="5.8" cy="12" r="2.4"/><circle cx="18" cy="18.8" r="2.4"/><path d="m8 10.9 7.5-4.5M8 13.1l7.5 4.5"/></svg>
+          <span class="social-btn-label">Connect</span>
+          <svg class="ico social-caret" aria-hidden="true"><use href="#i-chevron"/></svg>
+        </button>
+        <div class="social-dropdown" id="socialDropdown" role="menu" aria-label="Connect with GSS" hidden>
+          <a class="social-item" role="menuitem" href="https://www.facebook.com/profile.php?id=100065179203337" target="_blank" rel="noopener"><span class="social-item-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H17V3.6c-.3 0-1.3-.13-2.5-.13-2.47 0-4.16 1.5-4.16 4.27v2.16H7.6V13h2.74v8z"/></svg></span><span>Facebook</span></a>
+          <a class="social-item" role="menuitem" href="https://www.linkedin.com/company/global-soft-systems/" target="_blank" rel="noopener"><span class="social-item-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5A1.94 1.94 0 1 1 3.06 5a1.94 1.94 0 0 1 3.88 0zM3.3 8.48h3.28V21H3.3zm5.5 0h3.15v1.71h.05c.44-.83 1.5-1.71 3.1-1.71 3.32 0 3.93 2.18 3.93 5.02V21h-3.28v-5.55c0-1.32-.02-3.02-1.84-3.02-1.84 0-2.12 1.44-2.12 2.93V21H8.8z"/></svg></span><span>LinkedIn</span></a>
+          <a class="social-item" role="menuitem" href="https://www.instagram.com/globalsoftsystemsinc/" target="_blank" rel="noopener"><span class="social-item-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.21 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.5.01-4.74.07-.9.04-1.38.19-1.7.32-.43.16-.74.36-1.06.68-.32.32-.52.63-.68 1.06-.13.32-.28.8-.32 1.7C3.21 8.5 3.2 8.85 3.2 12s.01 3.5.07 4.74c.04.9.19 1.38.32 1.7.16.43.36.74.68 1.06.32.32.63.52 1.06.68.32.13.8.28 1.7.32 1.24.06 1.59.07 4.74.07s3.5-.01 4.74-.07c.9-.04 1.38-.19 1.7-.32.43-.16.74-.36 1.06-.68.32-.32.52-.63.68-1.06.13-.32.28-.8.32-1.7.06-1.24.07-1.59.07-4.74s-.01-3.5-.07-4.74c-.04-.9-.19-1.38-.32-1.7-.16-.43-.36-.74-.68-1.06-.32-.32-.63-.52-1.06-.68-.32-.13-.8-.28-1.7-.32C15.5 4.01 15.15 4 12 4zm0 3.06A4.94 4.94 0 1 1 12 16.94 4.94 4.94 0 0 1 12 7.06zm0 1.8a3.14 3.14 0 1 0 0 6.28 3.14 3.14 0 0 0 0-6.28zm5.02-.9a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0z"/></svg></span><span>Instagram</span></a>
+          <a class="social-item" role="menuitem" href="https://twitter.com/gssglobalsoft" target="_blank" rel="noopener"><span class="social-item-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></span><span>X</span></a>
+        </div>
+      </div>
+      <a class="btn btn-primary btn-sm" href="contact.html">Talk to Us <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <button class="hamburger" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile overlay menu -->
+<div class="mobile-nav" id="mobileNav" hidden>
+    <nav aria-label="Mobile">
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li class="mobile-subnav">
+          <div class="mobile-subnav-row">
+          <a href="#" class="is-current" aria-current="page">Solutions</a>
+          <button class="mobile-subnav-toggle" type="button" aria-expanded="false" aria-controls="mobileSolutionsPanel" aria-label="Toggle Solutions submenu"><svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></button>
+          </div>
+          <div class="mobile-subnav-wrap">
+          <ul class="mobile-subnav-panel" id="mobileSolutionsPanel">
+            <li><a href="business-consulting.html">Business Consulting</a></li>
+            <li><a href="data-business-insight.html" class="is-current" aria-current="page">Data &amp; Business Insight</a></li>
+            <li><a href="technology-delivery.html">Technology &amp; Delivery</a></li>
+            <li><a href="our-focus-area.html">Our Focus Area</a></li>
+          </ul>
+          </div>
+        </li>
+        <li><a href="global-talent.html">Global Talent</a></li>
+        <li><a href="clientele.html">Clientele</a></li>
+        <li><a href="partner.html">Alliances</a></li>
+        <li><a href="career.html">Careers</a></li>
+        <li><a href="contact.html">Let's Connect</a></li>
+      </ul>
+    </nav>
+  <div class="mobile-connect" id="mobileConnect">
+    <button class="mobile-connect-toggle" id="mobileConnectToggle" type="button" aria-expanded="true" aria-controls="mobileConnectPanel">Connect With Us <svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></button>
+    <div class="mobile-connect-wrap">
+      <ul class="mobile-connect-panel" id="mobileConnectPanel">
+        <li><a class="mobile-social" href="https://www.facebook.com/profile.php?id=100065179203337" target="_blank" rel="noopener"><span class="mobile-social-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H17V3.6c-.3 0-1.3-.13-2.5-.13-2.47 0-4.16 1.5-4.16 4.27v2.16H7.6V13h2.74v8z"/></svg></span><span>Facebook</span></a></li>
+        <li><a class="mobile-social" href="https://www.linkedin.com/company/global-soft-systems/" target="_blank" rel="noopener"><span class="mobile-social-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5A1.94 1.94 0 1 1 3.06 5a1.94 1.94 0 0 1 3.88 0zM3.3 8.48h3.28V21H3.3zm5.5 0h3.15v1.71h.05c.44-.83 1.5-1.71 3.1-1.71 3.32 0 3.93 2.18 3.93 5.02V21h-3.28v-5.55c0-1.32-.02-3.02-1.84-3.02-1.84 0-2.12 1.44-2.12 2.93V21H8.8z"/></svg></span><span>LinkedIn</span></a></li>
+        <li><a class="mobile-social" href="https://www.instagram.com/globalsoftsystemsinc/" target="_blank" rel="noopener"><span class="mobile-social-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.21 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.5.01-4.74.07-.9.04-1.38.19-1.7.32-.43.16-.74.36-1.06.68-.32.32-.52.63-.68 1.06-.13.32-.28.8-.32 1.7C3.21 8.5 3.2 8.85 3.2 12s.01 3.5.07 4.74c.04.9.19 1.38.32 1.7.16.43.36.74.68 1.06.32.32.63.52 1.06.68.32.13.8.28 1.7.32 1.24.06 1.59.07 4.74.07s3.5-.01 4.74-.07c.9-.04 1.38-.19 1.7-.32.43-.16.74-.36 1.06-.68.32-.32.52-.63.68-1.06.13-.32.28-.8.32-1.7.06-1.24.07-1.59.07-4.74s-.01-3.5-.07-4.74c-.04-.9-.19-1.38-.32-1.7-.16-.43-.36-.74-.68-1.06-.32-.32-.63-.52-1.06-.68-.32-.13-.8-.28-1.7-.32C15.5 4.01 15.15 4 12 4zm0 3.06A4.94 4.94 0 1 1 12 16.94 4.94 4.94 0 0 1 12 7.06zm0 1.8a3.14 3.14 0 1 0 0 6.28 3.14 3.14 0 0 0 0-6.28zm5.02-.9a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0z"/></svg></span><span>Instagram</span></a></li>
+        <li><a class="mobile-social" href="https://twitter.com/gssglobalsoft" target="_blank" rel="noopener"><span class="mobile-social-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></span><span>X</span></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="mobile-nav-foot">
+    <a class="btn btn-primary" href="contact.html">Talk to Us <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- ══════════ 01 · HERO ══════════════════════════════════════ -->
+<section class="dbi-hero" id="data-business-insight">
+  <div class="dbi-hero__grid">
+    <div class="dbi-hero__text">
+      <p class="abx-eyebrow reveal">Data &amp; Business Insight</p>
+      <h1 class="dbi-hero__title reveal">Your data should help you decide what to do next.</h1>
+      <p class="dbi-hero__lede reveal">Most businesses already have more information than they can comfortably use. We begin with the questions your business needs answered, then organize and connect the data required to make those answers clear.</p>
+    </div>
+    <figure class="dbi-hero__media reveal">
+      <img src="../images/pages/dbi-hero-1280.jpg"
+           srcset="../images/pages/dbi-hero-560.jpg 560w, ../images/pages/dbi-hero-900.jpg 900w, ../images/pages/dbi-hero-1280.jpg 1280w"
+           sizes="(max-width: 900px) 100vw, 50vw"
+           width="1280" height="720" fetchpriority="high" decoding="async"
+           alt="A GSS consultant presenting business performance data and revenue insights to a client team on a screen and laptop in a meeting room">
+    </figure>
+  </div>
+</section>
+
+
+<!-- ══════════ 02 · START WITH THE DECISION (dark band) ═══════ -->
+<section class="dbi-focus">
+  <span class="sunburst sunburst-left sunburst--onDark" aria-hidden="true"></span>
+  <span class="dbi-focus__slash" aria-hidden="true"></span>
+  <div class="container dbi-focus__inner">
+    <p class="abx-eyebrow abx-eyebrow--onDark reveal">Start With the Decision</p>
+    <h2 class="dbi-focus__title reveal">The goal isn&rsquo;t another dashboard. It&rsquo;s a clearer business decision.</h2>
+    <p class="dbi-focus__text reveal">We focus on the decisions, risks, and priorities that matter&mdash;then shape the data, reporting, and insight around them.</p>
+  </div>
+</section>
+
+
+<!-- ══════════ 03 · WHERE WE HELP (intro) ═════════════════════ -->
+<section class="dbi-ways">
+  <span class="dbi-ways__dots" aria-hidden="true"></span>
+  <div class="container">
+    <p class="abx-eyebrow reveal text-center">Where We Help</p>
+    <h2 class="dbi-ways__title reveal">Turn the information you already have into insight you can use.</h2>
+    <p class="dbi-ways__lede reveal">From scattered reports to shared measures, each engagement begins with the business question.</p>
+  </div>
+</section>
+
+
+<!-- ══════════ 04 · FIVE WAYS (alternating rows) ══════════════ -->
+<section class="dbi-row" id="business-questions-success-measures">
+  <div class="container dbi-row__grid">
+    <div class="dbi-row__aside reveal">
+      <p class="dbi-row__label">Begin With the Question</p>
+      <h3 class="dbi-row__title">Business Questions &amp; Success Measures</h3>
+      <p class="dbi-row__text">Define what leaders and teams need to know before deciding what to measure.</p>
+    </div>
+    <ul class="dbi-list">
+      <li class="reveal">Clarify the decisions the information must support</li>
+      <li class="reveal">Identify the measures that genuinely matter</li>
+      <li class="reveal">Align definitions across teams</li>
+      <li class="reveal">Establish a practical view of success</li>
+    </ul>
+  </div>
+</section>
+
+<section class="dbi-row dbi-row--cream dbi-row--reverse" id="data-quality-readiness">
+  <span class="dbi-row__nodes" aria-hidden="true"></span>
+  <div class="container dbi-row__grid">
+    <ul class="dbi-list">
+      <li class="reveal">Locate important data across systems and files</li>
+      <li class="reveal">Find gaps, duplication, and inconsistencies</li>
+      <li class="reveal">Agree on ownership and business definitions</li>
+      <li class="reveal">Improve readiness without unnecessary disruption</li>
+    </ul>
+    <div class="dbi-row__aside reveal">
+      <p class="dbi-row__label">Build Trust in the Information</p>
+      <h3 class="dbi-row__title">Data Quality &amp; Readiness</h3>
+      <p class="dbi-row__text">Make the information more reliable before asking it to guide the business.</p>
+    </div>
+  </div>
+</section>
+
+<section class="dbi-row dbi-row--sky" id="data-integration-accessibility">
+  <div class="container dbi-row__grid">
+    <div class="dbi-row__aside reveal">
+      <p class="dbi-row__label">Connect the Picture</p>
+      <h3 class="dbi-row__title">Data Integration &amp; Accessibility</h3>
+      <p class="dbi-row__text">Bring relevant information together so teams are not working from different versions of the same information.</p>
+    </div>
+    <ul class="dbi-list">
+      <li class="reveal">Connect useful sources around the business need</li>
+      <li class="reveal">Reduce manual collection and reconciliation</li>
+      <li class="reveal">Make approved information easier to find and use</li>
+      <li class="reveal">Protect access according to roles and responsibilities</li>
+    </ul>
+  </div>
+</section>
+
+<section class="dbi-row dbi-row--cream dbi-row--reverse" id="reporting-dashboards-visualization">
+  <span class="dbi-row__bars" aria-hidden="true"></span>
+  <div class="container dbi-row__grid">
+    <ul class="dbi-list">
+      <li class="reveal">Design reporting around real users and decisions</li>
+      <li class="reveal">Replace clutter with meaningful measures</li>
+      <li class="reveal">Give each audience the right level of detail</li>
+      <li class="reveal">Make recurring reporting easier to maintain</li>
+    </ul>
+    <div class="dbi-row__aside reveal">
+      <p class="dbi-row__label">Make the Meaning Visible</p>
+      <h3 class="dbi-row__title">Reporting, Dashboards &amp; Visualization</h3>
+      <p class="dbi-row__text">Present information so patterns, exceptions, and priorities are easier to see.</p>
+    </div>
+  </div>
+</section>
+
+<section class="dbi-row dbi-row--sky" id="analytics-decision-support">
+  <span class="dbi-row__dots" aria-hidden="true"></span>
+  <div class="container dbi-row__grid">
+    <div class="dbi-row__aside reveal">
+      <p class="dbi-row__label">Move From Insight to Action</p>
+      <h3 class="dbi-row__title">Analytics &amp; Decision Support</h3>
+      <p class="dbi-row__text">Understand what changed, why it matters, and what to consider next.</p>
+    </div>
+    <ul class="dbi-list">
+      <li class="reveal">Identify trends, risks, and performance drivers</li>
+      <li class="reveal">Compare scenarios and likely impact</li>
+      <li class="reveal">Support forecasting and planning</li>
+      <li class="reveal">Turn findings into practical actions</li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- ══════════ 05 · A CLEARER PATH TO A DECISION ══════════════ -->
+<section class="dbi-path">
+  <div class="container">
+    <div class="dbi-path__head">
+      <p class="abx-eyebrow reveal text-center">A Clearer Path to a Decision</p>
+      <h2 class="dbi-path__title reveal">Ask better questions. Build trustworthy data. Act with confidence.</h2>
+    </div>
+    <ol class="dbi-path__grid">
+      <li class="reveal">
+        <p class="dbi-path__label">Business Question</p>
+        <p class="dbi-path__copy">Start with the decision that needs to be made.</p>
+      </li>
+      <li class="reveal">
+        <p class="dbi-path__label">Trusted Information</p>
+        <p class="dbi-path__copy">Bring together the data required to answer it.</p>
+      </li>
+      <li class="reveal">
+        <p class="dbi-path__label">Clear Insight</p>
+        <p class="dbi-path__copy">Present what matters in a form people can understand.</p>
+      </li>
+      <li class="reveal">
+        <p class="dbi-path__label">Practical Action</p>
+        <p class="dbi-path__copy">Use the evidence to decide what happens next.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+
+<!-- ══════════ 06 · CTA (dark band) ═══════════════════════════ -->
+<section class="dbi-final">
+  <span class="sunburst sunburst-left sunburst--onDark" aria-hidden="true"></span>
+  <div class="container dbi-final__grid">
+    <div class="dbi-final__lead">
+      <p class="abx-eyebrow abx-eyebrow--onDark reveal">A Complimentary Starting Point</p>
+      <h2 class="dbi-final__title reveal">Bring us the question. We&rsquo;ll help make the answer clearer.</h2>
+      <p class="dbi-final__text reveal">You do not need a data strategy or a new platform. Tell us what you are trying to understand, measure, improve, or decide.</p>
+    </div>
+    <span class="dbi-final__accent" aria-hidden="true"></span>
+    <p class="dbi-final__act reveal">
+      <a class="btn btn-outline dbi-final__btn" href="contact.html">Start a Conversation <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-insights">
+      <p class="footer-insights-text"><span class="footer-insights-label">Insights</span><span class="footer-insights-desc">Explore our latest perspectives, technology insights, and ideas shaping the digital world.</span></p>
+      <a class="footer-insights-cta" href="blog.html">Explore Insights <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+
+    <div class="footer-bar">
+    <p class="footer-copy">&copy; <span id="year">2026</span> GSS</p>
+
+    <nav class="footer-links" aria-label="Legal">
+      <button type="button" data-legal-open="disclaimer" aria-haspopup="dialog" aria-controls="legalDialog">Disclaimer</button>
+      <button type="button" data-legal-open="privacy" aria-haspopup="dialog" aria-controls="legalDialog">Privacy Policy</button>
+    </nav>
+
+    <ul class="footer-social">
+      <li><a href="https://www.facebook.com/profile.php?id=100065179203337" target="_blank" rel="noopener" aria-label="GSS on Facebook">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H17V3.6c-.3 0-1.3-.13-2.5-.13-2.47 0-4.16 1.5-4.16 4.27v2.16H7.6V13h2.74v8z"/></svg>
+      </a></li>
+      <li><a href="https://www.instagram.com/globalsoftsystemsinc/" target="_blank" rel="noopener" aria-label="GSS on Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.21 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.5.01-4.74.07-.9.04-1.38.19-1.7.32-.43.16-.74.36-1.06.68-.32.32-.52.63-.68 1.06-.13.32-.28.8-.32 1.7C3.21 8.5 3.2 8.85 3.2 12s.01 3.5.07 4.74c.04.9.19 1.38.32 1.7.16.43.36.74.68 1.06.32.32.63.52 1.06.68.32.13.8.28 1.7.32 1.24.06 1.59.07 4.74.07s3.5-.01 4.74-.07c.9-.04 1.38-.19 1.7-.32.43-.16.74-.36 1.06-.68.32-.32.52-.63.68-1.06.13-.32.28-.8.32-1.7.06-1.24.07-1.59.07-4.74s-.01-3.5-.07-4.74c-.04-.9-.19-1.38-.32-1.7-.16-.43-.36-.74-.68-1.06-.32-.32-.63-.52-1.06-.68-.32-.13-.8-.28-1.7-.32C15.5 4.01 15.15 4 12 4zm0 3.06A4.94 4.94 0 1 1 12 16.94 4.94 4.94 0 0 1 12 7.06zm0 1.8a3.14 3.14 0 1 0 0 6.28 3.14 3.14 0 0 0 0-6.28zm5.02-.9a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0z"/></svg>
+      </a></li>
+      <li><a href="https://www.linkedin.com/company/global-soft-systems/" target="_blank" rel="noopener" aria-label="GSS on LinkedIn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5A1.94 1.94 0 1 1 3.06 5a1.94 1.94 0 0 1 3.88 0zM3.3 8.48h3.28V21H3.3zm5.5 0h3.15v1.71h.05c.44-.83 1.5-1.71 3.1-1.71 3.32 0 3.93 2.18 3.93 5.02V21h-3.28v-5.55c0-1.32-.02-3.02-1.84-3.02-1.84 0-2.12 1.44-2.12 2.93V21H8.8z"/></svg>
+      </a></li>
+      <li><a href="https://twitter.com/gssglobalsoft" target="_blank" rel="noopener" aria-label="GSS on X">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg>
+      </a></li>
+    </ul>
+  </div>
+  </div>
+</footer>
+
+<script src="../js/core/site.js"></script>
+<script src="../js/core/legal.js"></script>
+</body>
+</html>

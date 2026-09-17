@@ -1,0 +1,197 @@
+/* ── 18. SCROLL REVEAL ───────────────────────────────────── */
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .7s var(--ease), transform .7s var(--ease);
+}
+html.js .reveal.is-in { opacity: 1; transform: none; }
+
+
+/* ── 18b. PAGE TRANSITION ────────────────────────────────── */
+/* Same feel as the hero carousel: a soft crossfade with the content easing up,
+   each section arriving a beat after the one above it. */
+@keyframes page-in-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes page-in-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+html.js #main { animation: page-in-fade .7s var(--ease) both; }
+
+/* the hero already carries this exact motion on its own slides, so only the
+   remaining sections need the staggered rise (longhands so the per-section
+   animation-delay below isn't reset by the shorthand) */
+html.js #main > section:not(.hero) {
+  animation-name: page-in-rise;
+  animation-duration: .72s;
+  animation-timing-function: var(--ease);
+  animation-fill-mode: both;
+}
+html.js #main > section:nth-of-type(1) { animation-delay: .05s; }
+html.js #main > section:nth-of-type(2) { animation-delay: .13s; }
+html.js #main > section:nth-of-type(3) { animation-delay: .21s; }
+html.js #main > section:nth-of-type(4) { animation-delay: .29s; }
+html.js #main > section:nth-of-type(5) { animation-delay: .37s; }
+html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
+
+
+/* ── 19. RESPONSIVE ──────────────────────────────────────── */
+
+/* ≤1200px — tighten nav for the last stretch before it collapses */
+@media (max-width: 1200px) {
+  .nav-desktop ul { gap: 13px; }
+  .nav-desktop a { font-size: .82rem; }
+  .logo-tag { display: none; }
+  .header-actions { gap: 8px; }
+}
+
+/* ≤1100px — seven nav links: shave the gap so the header bar never overflows */
+@media (max-width: 1100px) {
+  .nav-desktop ul { gap: 9px; }
+  .nav-desktop a { font-size: .8rem; }
+}
+
+/* ≤1024px — nav links collapse into the hamburger; Connect + CTA stay in the bar */
+@media (max-width: 1024px) {
+  :root { --header-h: 78px; }
+  .nav-desktop { display: none; }
+  .hamburger { display: block; }
+  .logo-tag { display: block; }
+
+  .staff-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .cred-row.cols-5,
+  .cred-row.cols-4 {
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    max-width: min(100%, clamp(420px, 82vw, 820px));
+  }
+  .cred-card.is-stacked {
+    flex-direction: row; text-align: left;
+    padding: clamp(12px, 1.7vw, 17px) clamp(12px, 1.7vw, 18px);
+    gap: clamp(10px, 1.4vw, 14px);
+  }
+  .cred-txt strong { font-size: clamp(.66rem, .9vw, .77rem); }
+  .cred-txt small  { font-size: clamp(.6rem, .8vw, .69rem); }
+  .cred-ico .ico   { width: clamp(20px, 2.6vw, 26px); height: clamp(20px, 2.6vw, 26px); }
+  .hero-viewport { min-height: max(100svh, 460px); }
+}
+
+/* ≤900px — solutions & panels stack */
+@media (max-width: 900px) {
+  .solutions-grid { grid-template-columns: minmax(0,1fr); }
+  .panels { grid-template-columns: minmax(0,1fr); }
+  .client-item { min-height: 120px; padding: 20px clamp(22px, 6vw, 40px); }
+  .insights-grid { grid-template-columns: minmax(0,1fr); }
+  .post-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+
+@media (max-width: 620px) {
+  .post-grid { grid-template-columns: minmax(0,1fr); }
+}
+
+/* ≤768px — process goes vertical */
+@media (max-width: 768px) {
+  body { font-size: 16px; }
+  .process { grid-template-columns: minmax(0,1fr); gap: 34px; text-align: left; padding-left: 6px; }
+  .process::before {
+    top: 12px; bottom: 12px; left: 32px; right: auto;
+    width: 1px; height: auto;
+  }
+  .step { text-align: left; padding-left: 88px; padding-inline-end: 0; }
+  .step:not(:last-child)::after {
+    top: auto; bottom: -20px; left: 32px;
+    transform: translate(-50%, 0);
+  }
+  .step-node { position: absolute; left: 0; top: 0; margin: 0; width: 64px; height: 64px; }
+  .step-copy { margin-inline: 0; max-width: none; }
+
+  .hero-slide { padding-block: calc(var(--header-h) + clamp(12px, 3.5svh, 26px)) clamp(44px, 12svh, 124px); }
+  .hero-title { margin-bottom: 20px; }
+  .hero-cta { margin-top: 30px; }
+  .hero-tagline { margin-top: 22px; font-size: .93rem; }
+
+}
+
+/* <768px — full mobile navigation: nav, Connect and CTA move into the overlay */
+@media (max-width: 767.98px) {
+  .social-menu { display: none; }
+  .header-actions .btn-sm { display: none; }
+  .mobile-connect { display: block; }
+}
+
+/* ≤680px — credibility cards drop to two columns */
+@media (max-width: 680px) {
+  .cred-row.cols-4,
+  .cred-row.cols-5 {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    max-width: 100%;
+  }
+}
+
+/* ≤560px */
+@media (max-width: 560px) {
+  .hero-viewport { min-height: max(100svh, 620px); }
+
+  .staff-grid { grid-template-columns: minmax(0,1fr); }
+  .client-item { min-height: 104px; }
+  .btn { width: 100%; max-width: 340px; }
+  .btn-sm { width: auto; }
+  .mobile-nav-foot .btn { max-width: none; }
+  .attrib { flex-direction: column; gap: 12px; }
+  .attrib figcaption { text-align: center; }
+  .footer-bar { gap: 9px 18px; }
+  .footer-social { margin-left: 0; }
+  .footer-insights { flex-direction: column; align-items: flex-start; }
+  .footer-insights-cta { width: auto; }
+}
+
+/* ≤380px — smallest phones */
+@media (max-width: 380px) {
+  .logo-word { font-size: 1.42rem; }
+  .logo-img--light { height: 43px; }
+  .logo-img--dark { height: 34px; }
+  .logo-mark { width: 32px; height: 32px; }
+  .logo-tag { font-size: .48rem; }
+  .hero-title { font-size: 2rem; }
+  .section-title { font-size: 1.6rem; }
+  .cred-row.cols-4,
+  .cred-row.cols-5 { grid-template-columns: minmax(0,1fr); }
+  .btn { white-space: normal; padding-inline: 20px; font-size: .715rem; letter-spacing: .09em; }
+  .panel { padding: 26px 20px; }
+  .mobile-nav ul.mobile-connect-panel { grid-template-columns: minmax(0,1fr); }
+}
+
+/* short landscape phones — don't let 100svh squeeze the hero */
+@media (max-height: 640px) and (min-width: 700px) {
+  .hero-viewport { min-height: 700px; }
+}
+
+
+/* ── 20. REDUCED MOTION & PRINT ──────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+  html.js .reveal { opacity: 1; transform: none; }
+  .hero-content > * { opacity: 1; transform: none; }
+  .scroll-cue { animation: none; }
+  .btn:hover .ico, .sol-card:hover, .staff-card:hover, .cred-card:hover { transform: none; }
+  .client-marquee { overflow-x: auto; }
+  .client-marquee-track { animation: none; transform: none; }
+  .client-marquee-track .client-row[aria-hidden="true"] { display: none; }
+}
+
+@media print {
+  .site-header, .hero-chrome, .mobile-nav, .sunburst, .skip-link { display: none !important; }
+  .hero-slide { opacity: 1 !important; visibility: visible !important; }
+  html.js .reveal { opacity: 1 !important; transform: none !important; }
+  body { background: #fff; }
+}
+
+

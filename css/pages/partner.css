@@ -1,0 +1,223 @@
+/* ══════════ 16d. ALLIANCES / PARTNER PAGE ══════════════════════
+   Reuses page-hero/eyebrow/btn/divider-gold from the shared page
+   header kit; everything below is specific to this page. ────── */
+
+/* dotted accent in the hero's top-right corner */
+.pnr-hero-dots {
+  position: absolute; top: clamp(18px, 4vw, 54px); right: clamp(18px, 4vw, 64px);
+  width: 132px; height: 92px;
+  background-image: radial-gradient(currentColor 1.4px, transparent 1.4px);
+  background-size: 16px 16px;
+  color: var(--line);
+  opacity: .8;
+  pointer-events: none;
+}
+html[data-theme="dark"] .pnr-hero-dots { color: var(--hairline); }
+
+/* ── OUR POSITION (image + text split) ───────────────────── */
+.pnr-position { background: var(--bg); padding-block: clamp(22px, 2.6vw, 38px); }
+.pnr-position__grid {
+  display: grid;
+  /* wider than the shared --fig-inset-w: this box stretches tall to match
+     the copy's height (below), and a narrower column at that height was
+     cropping most of the photo's width away — the extra room keeps both
+     people and the office behind them in frame instead of a tight zoom */
+  grid-template-columns: minmax(0, 1fr) clamp(380px, 52vw, 900px);
+  align-items: center;
+  gap: clamp(28px, 4vw, 64px);
+}
+/* the photo bleeds to the right edge and melts into the section on its left
+   and top/bottom rather than sitting in a hard frame — same treatment as the
+   About page's split photos. It stretches to the row so it reads level with
+   the copy beside it rather than as a short band. */
+.pnr-position__media {
+  position: relative;
+  align-self: stretch;
+  margin: 0; overflow: hidden;
+  min-height: clamp(230px, 26vw, 366px);
+}
+.pnr-position__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; display: block; }
+/* a long, eased fade (0→55% of the photo's width) rather than a short
+   linear ramp — enough color stops that the rate of change itself changes
+   smoothly, so there's no kink where the fade meets full transparency.
+   var(--bg) carries both themes, so the same rule serves light and dark. */
+.pnr-position__media::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg,
+      var(--bg) 0%,
+      color-mix(in srgb, var(--bg) 94%, transparent) 5%,
+      color-mix(in srgb, var(--bg) 84%, transparent) 10%,
+      color-mix(in srgb, var(--bg) 70%, transparent) 16%,
+      color-mix(in srgb, var(--bg) 54%, transparent) 23%,
+      color-mix(in srgb, var(--bg) 38%, transparent) 30%,
+      color-mix(in srgb, var(--bg) 24%, transparent) 38%,
+      color-mix(in srgb, var(--bg) 13%, transparent) 46%,
+      color-mix(in srgb, var(--bg) 5%, transparent) 51%,
+      transparent 55%);
+}
+/* the photo bleeds past the section's own top/bottom padding so it fills
+   the section edge to edge instead of leaving a blank band above/below —
+   text keeps its normal padding; only the photo (which clips via
+   overflow:hidden + object-fit:cover) extends and zooms to cover it */
+@media (min-width: 901px) {
+  .pnr-position__media { margin-block: calc(-1 * clamp(22px, 2.6vw, 38px)); }
+}
+.pnr-position__text { align-self: center; margin-left: var(--gutter); max-width: 34rem; }
+.pnr-position__text .abx-h2 { margin-bottom: clamp(18px, 2.2vw, 26px); }
+.pnr-position__text p { margin: 0; color: var(--muted); font-size: clamp(.98rem, 1.1vw, 1.06rem); line-height: 1.72; }
+.pnr-position__text p + p { margin-top: 16px; }
+.pnr-position__line {
+  margin-top: clamp(22px, 3vw, 34px);
+  font-family: var(--sans);
+  font-size: .8rem; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  color: var(--gold-2);
+  line-height: 1.6;
+}
+
+/* ── STRATEGIC PARTNERSHIPS (model cards) ─────────────────── */
+.pnr-models { background: var(--bg-cream); padding-block: clamp(20px, 2.2vw, 32px); }
+html[data-theme="dark"] .pnr-models { background: var(--bg-soft); }
+.pnr-models__head { text-align: center; max-width: 80ch; margin: 0 auto clamp(16px, 1.9vw, 26px); }
+/* .abx-h2 is shared with the About page, so the smaller size is scoped */
+.pnr-models__head .abx-h2, .pnr-roster .abx-h2 { font-size: clamp(1.35rem, 2.2vw, 1.95rem); line-height: 1.16; }
+.pnr-models__head .abx-h2 { text-align: center; margin-inline: auto; }
+.pnr-models__head p { margin: clamp(8px, 1vw, 12px) 0 0; color: var(--muted); font-size: clamp(.9rem, .98vw, .98rem); line-height: 1.6; }
+
+.pnr-model-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.6vw, 22px);
+}
+.pnr-model {
+  background: var(--card);
+  border: 1px solid var(--hairline);
+  border-radius: clamp(14px, 1.6vw, 20px);
+  padding: clamp(18px, 2vw, 26px);
+  display: flex; flex-direction: column;
+}
+.pnr-model--wide { grid-column: 1 / -1; }
+.pnr-model-label {
+  font-family: var(--sans); font-size: .74rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 10px;
+}
+.pnr-model h3 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+  line-height: 1.22; color: var(--navy);
+  margin: 0 0 8px;
+}
+.pnr-model > p { margin: 0 0 clamp(11px, 1.3vw, 15px); color: var(--muted); font-size: .91rem; line-height: 1.58; }
+
+.pnr-model-check { list-style: none; margin: 0 0 clamp(11px, 1.3vw, 15px); padding: 0; display: flex; flex-direction: column; gap: 9px; }
+.pnr-model-check li { display: flex; gap: 10px; align-items: flex-start; color: var(--muted); font-size: .88rem; line-height: 1.5; }
+.pnr-model-check .ico { width: 18px; height: 18px; flex: 0 0 auto; margin-top: 1px; color: var(--gold); }
+.pnr-model-check strong { color: var(--navy); font-weight: 700; }
+
+.pnr-model-rule { height: 1px; background: var(--hairline); margin: 0 0 clamp(10px, 1.2vw, 14px); }
+.pnr-model-line {
+  font-family: var(--sans); font-size: .78rem; font-weight: 700;
+  letter-spacing: .05em; text-transform: uppercase; color: var(--gold-2);
+  margin: 0 0 clamp(10px, 1.2vw, 14px); line-height: 1.45;
+}
+.pnr-model .btn { align-self: flex-start; margin-bottom: 8px; }
+.pnr-model-note { margin: 8px 0 0; color: var(--muted-2); font-size: .79rem; line-height: 1.5; }
+
+.pnr-model--wide .pnr-model-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) 1px minmax(0, 1fr);
+  gap: clamp(28px, 3.5vw, 48px);
+  align-items: start;
+}
+.pnr-model--wide .pnr-model-divider { background: var(--hairline); height: 100%; }
+.pnr-model--wide .pnr-model-act { display: flex; flex-direction: column; align-self: center; }
+.pnr-model--wide .pnr-model-line { margin-bottom: clamp(11px, 1.3vw, 15px); }
+
+/* ── HOW WE WORK WITH PARTNERS (light band) ──────────────── */
+.pnr-roster { background: var(--bg-sky); padding-block: clamp(18px, 2vw, 30px); text-align: center; }
+.pnr-roster .container { max-width: 94ch; }
+.pnr-roster .abx-h2 { text-align: center; margin-inline: auto; }
+.pnr-roster p { margin: clamp(8px, 1vw, 12px) 0 0; color: var(--muted); font-size: clamp(.9rem, .98vw, .98rem); line-height: 1.6; }
+
+/* ── FINAL CTA (image + dark band) ───────────────────────── */
+.pnr-final { position: relative; overflow: hidden; background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%); padding-block: clamp(16px, 1.8vw, 26px); }
+.pnr-final__grid { display: grid; grid-template-columns: minmax(0, 1fr) var(--fig-band-w); gap: clamp(32px, 5vw, 72px); align-items: center; }
+.pnr-final__text { grid-column: 1; grid-row: 1; }
+.pnr-final__title { font-family: var(--serif); font-weight: 500; font-size: clamp(1.3rem, 2.2vw, 1.85rem); line-height: 1.16; letter-spacing: -.016em; color: #fff; margin: 0 0 clamp(10px, 1.2vw, 15px); max-width: 26ch; text-wrap: balance; }
+
+/* An unclipped wrapper around the photo: the photo itself needs overflow:hidden
+   + clip-path to take its angled cut, which would also swallow the gold line —
+   so the line lives on this frame instead and stays visible in the gap. */
+.pnr-final__frame { grid-column: 2; grid-row: 1; position: relative; }
+.pnr-final__frame::before {
+  content: "";
+  position: absolute; top: -7%; bottom: -7%;
+  /* the cut's midpoint sits at half of 4.95%; back off from it to leave an
+     even band of navy between the line and the photo edge */
+  left: calc(3.52% - 26px);
+  width: 2px;
+  background: linear-gradient(180deg, transparent, var(--gold) 22%, var(--gold) 78%, transparent);
+  transform: rotate(9deg);
+  opacity: .9; pointer-events: none;
+}
+/* the left edge is cut to the same 9° the gold line is rotated to, so the two
+   run parallel — height × tan(9°) is 7.04% of the width at this 9:4 box.
+   The right two corners are rounded instead of dissolving into the band, via
+   an SVG clip-path (#pnrFinalClip in the page's sprite svg) since a plain
+   polygon() can only give straight edges — objectBoundingBox units mean it
+   scales with the box. Recompute the 0.0704 start point (and the gold line's
+   offset below) if the aspect ratio changes or the cut stops matching it. */
+.pnr-final__media {
+  position: relative; margin: 0; overflow: hidden;
+  aspect-ratio: 9 / 4;
+  clip-path: url(#pnrFinalClip);
+}
+/* the 16:5 crop takes a narrow slice of a 3:2 source, so the focal point
+   moves up to keep faces in frame rather than centring on torsos */
+.pnr-final__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 36%; display: block; }
+/* this band is always a dark navy gradient regardless of site theme, so
+   its outline button needs light colors unconditionally */
+.pnr-final__btn { border-color: rgba(255,255,255,.4); color: #fff; }
+
+@media (max-width: 900px) {
+  .pnr-position__grid { grid-template-columns: minmax(0, 1fr); }
+  .pnr-position__text { margin-left: 0; padding-inline: var(--gutter); order: 1; }
+  .pnr-position__media { order: -1; min-height: 0; aspect-ratio: 16 / 9; }
+  /* stacked — the photo now runs full-width above the copy, so it fills
+     edge to edge instead of fading top/bottom */
+  .pnr-position__media::after {
+    background: none;
+  }
+  .pnr-model-grid { grid-template-columns: minmax(0, 1fr); }
+  .pnr-model--wide .pnr-model-inner { grid-template-columns: minmax(0, 1fr); }
+  .pnr-model--wide .pnr-model-divider { display: none; }
+  .pnr-final__grid { grid-template-columns: minmax(0, 1fr); }
+  .pnr-final__text, .pnr-final__frame { grid-column: auto; grid-row: auto; }
+  .pnr-final__frame { order: -1; }
+  .pnr-final__frame::before { display: none; }
+  .pnr-final__media { aspect-ratio: 16 / 9; clip-path: none; }
+  .pnr-hero-dots { display: none; }
+}
+
+/* every button on this page fills gold on hover, same recipe as the
+   footer's "Explore Insights" pill — just slowed and eased further so
+   the fill reads as a smooth wash rather than a snap */
+.alliances-page .btn {
+  transition: background-color .45s var(--ease), border-color .45s var(--ease),
+              color .45s var(--ease), box-shadow .45s var(--ease),
+              transform .45s var(--ease);
+}
+.alliances-page .btn .ico { transition: transform .45s var(--ease), color .45s var(--ease); }
+.alliances-page .btn:hover {
+  background: var(--gold-2);
+  border-color: var(--gold-2);
+  color: #0F2247;
+  box-shadow: none;
+}
+.alliances-page .btn:hover .ico { color: #0F2247; }
+html[data-theme="dark"] .alliances-page .btn:hover { background: var(--gold-2); border-color: var(--gold-2); color: #0F2247; }
+html[data-theme="dark"] .alliances-page .btn:hover .ico { color: #0F2247; }
+
+

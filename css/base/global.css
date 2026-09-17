@@ -1,0 +1,296 @@
+/* ============================================================
+   GSS — Global Soft Systems
+   style.css
+   ------------------------------------------------------------
+   01. Tokens & theme
+   02. Reset & base
+   03. Layout primitives
+   04. Typography helpers (eyebrow, titles, dividers)
+   05. Buttons & icons
+   06. Logo mark
+   07. Header & navigation
+   08. Mobile overlay menu
+   09. Hero carousel
+   10. About / process timeline
+   11. Solutions & services
+   12. Talent & staffing
+   13. Clientele
+   14. Testimonial
+   15. Career / partner panels
+   16. Final CTA & sunbursts
+   17. Footer
+   18. Scroll reveal
+   19. Responsive
+   20. Reduced motion & print
+   ============================================================ */
+
+/* Shared alignment used by page markup. */
+.text-center { text-align: center; }
+
+
+/* ── 01. TOKENS & THEME ──────────────────────────────────── */
+:root {
+  /* surfaces */
+  --bg:            #FFFFFF;
+  --bg-soft:       #F7FAFC;
+  --bg-sky:        #EFF4F9;
+  --bg-cream:      #F5F1EA;
+  --bg-cream-2:    #F2EEE5;
+  --card:          #FFFFFF;
+  --card-soft:     #F5F8FB;
+
+  /* ink */
+  --navy:          #0F2247;
+  --navy-2:        #16284A;
+  --navy-3:        #1B2A4A;
+  --ink:           #0F2247;
+  --muted:         #4C5A70;
+  --muted-2:       #6B7688;
+
+  /* accent */
+  --gold:          #C79A4B;
+  --gold-2:        #D8A94E;
+
+  /* lines */
+  --line:          #D8E2EC;
+  --hairline:      #E4EBF2;
+  --ray:           rgba(15, 34, 71, .16);
+
+  /* hero veils — cool, not white, so they calm the photo instead of
+     brightening it further; brightness is handled on the image itself */
+  --veil-core:     rgba(226,236,247,.40);
+  --veil-edge:     rgba(210,224,240,.14);
+  --veil-wash:     rgba(196,212,231,.30);
+  --hero-dim:      .84;   /* default photo brightness */
+
+  /* shadow */
+  --sh-sm: 0 1px 2px rgba(15,34,71,.05), 0 4px 12px rgba(15,34,71,.05);
+  --sh-md: 0 2px 4px rgba(15,34,71,.06), 0 14px 34px rgba(15,34,71,.10);
+  --sh-lg: 0 4px 10px rgba(15,34,71,.07), 0 26px 60px rgba(15,34,71,.13);
+
+  /* type */
+  --serif: "Playfair Display", "Lora", Georgia, "Times New Roman", serif;
+  --sans:  "Inter", "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  /* metrics */
+  --header-h: 92px;
+  --radius:   14px;
+  --radius-sm: 10px;
+  --radius-pill: 999px;
+
+  /* spacing scale */
+  --s-1: 8px;   --s-2: 14px;  --s-3: 22px;  --s-4: 32px;
+  --s-5: 48px;  --s-6: 68px;  --s-7: 96px;  --s-8: 130px;
+  --section-y: clamp(48px, 5vw, 84px);
+
+  --ease: cubic-bezier(.22,.61,.36,1);
+}
+
+html[data-theme="dark"] {
+  --bg:            #0B1424;
+  --bg-soft:       #0E1A2E;
+  --bg-sky:        #101E36;
+  --bg-cream:      #0D1727;
+  --bg-cream-2:    #101B2D;
+  --card:          #13223A;
+  --card-soft:     #142440;
+
+  --navy:          #E8EEF6;
+  --navy-2:        #DCE5F0;
+  --navy-3:        #C9D6E6;
+  --ink:           #EAF0F8;
+  --muted:         #A3B2C6;
+  --muted-2:       #8C9BB0;
+
+  --gold:          #D8A94E;
+  --gold-2:        #E4BB68;
+
+  --line:          #24344F;
+  --hairline:      #1D2C44;
+  --ray:           rgba(216,169,78,.16);
+
+  --veil-core:     rgba(11,20,36,.62);
+  --veil-edge:     rgba(11,20,36,.34);
+  --veil-wash:     rgba(11,20,36,.46);
+  --hero-dim:      .50;
+
+  --sh-sm: 0 1px 2px rgba(0,0,0,.30), 0 4px 12px rgba(0,0,0,.28);
+  --sh-md: 0 2px 4px rgba(0,0,0,.32), 0 14px 34px rgba(0,0,0,.36);
+  --sh-lg: 0 4px 10px rgba(0,0,0,.34), 0 26px 60px rgba(0,0,0,.44);
+
+  color-scheme: dark;
+}
+
+
+/* ── 02. RESET & BASE ────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 12px);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.65;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  transition: background-color .35s var(--ease), color .35s var(--ease);
+}
+
+img, svg { max-width: 100%; display: block; }
+h1, h2, h3, h4, p, figure, blockquote, ul, ol { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; border: 0; background: none; cursor: pointer; }
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.skip-link {
+  position: absolute; left: 50%; top: 0; transform: translate(-50%, -140%);
+  z-index: 300; background: var(--navy); color: #fff;
+  padding: 12px 22px; border-radius: 0 0 10px 10px;
+  font-size: .8rem; letter-spacing: .06em; text-transform: uppercase;
+  transition: transform .2s var(--ease);
+}
+html[data-theme="dark"] .skip-link { background: var(--gold); color: #0B1424; }
+.skip-link:focus { transform: translate(-50%, 0); }
+
+
+/* ── 03. LAYOUT PRIMITIVES ───────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5.2vw, 88px);
+}
+.container.narrow { max-width: 940px; }
+
+.section {
+  position: relative;
+  padding-block: var(--section-y);
+}
+.section-about     { background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg-sky) 100%); }
+.section-solutions { background: var(--bg); }
+.section-staffing  { background: var(--bg-soft); overflow: hidden; }
+.section-clientele { background: var(--bg); padding-bottom: clamp(30px, 3.2vw, 48px); }
+.section-testimonial { background: var(--bg-sky); }
+.section-panels    { background: var(--bg); padding-block: clamp(56px, 6vw, 96px); }
+.section-final     { background: linear-gradient(180deg, var(--bg-sky) 0%, var(--bg-soft) 100%); overflow: hidden; }
+
+
+/* ── 04. TYPOGRAPHY HELPERS ──────────────────────────────── */
+.eyebrow {
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px;
+  font-size: .705rem;
+  font-weight: 600;
+  letter-spacing: .195em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+.eyebrow .rule {
+  display: block; height: 1px; width: clamp(28px, 5vw, 62px);
+  background: currentColor; opacity: .55; flex: 0 0 auto;
+}
+.eyebrow-navy { color: var(--muted-2); }
+.eyebrow-navy .rule { background: var(--gold); opacity: .8; }
+
+/* Playfair Display ships old-style figures by default, which drops 3/4/5/7/9
+   below the baseline and sets 0/1/2 at x-height — so "25+" and "500" read as
+   undersized next to capitals. Force lining figures wherever the serif is
+   used, and tabular ones on the timeline so 01/02/03 align. */
+.hero-title,
+.section-title,
+.page-title,
+.final-title,
+.closing-line,
+.pull-quote p,
+.stat-num,
+.step-node,
+.panel h2,
+.sol-card h3,
+.abx-display,
+.abx-h2,
+.abx-pov__lead,
+.abx-pov__tail,
+.abx-cta__title,
+.abx-flow__label,
+.abx-approach__row li {
+  font-variant-numeric: lining-nums;
+  -webkit-font-feature-settings: "lnum" 1;
+  font-feature-settings: "lnum" 1;
+}
+.step-node {
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+  line-height: 1.12;
+  letter-spacing: -.012em;
+  text-align: center;
+  color: var(--navy);
+  max-width: 34ch;
+  margin-inline: auto;
+  text-wrap: balance;
+}
+
+.section-lede {
+  text-align: center;
+  max-width: 66ch;
+  margin: 22px auto 0;
+  color: var(--muted);
+  font-size: 1.0125rem;
+  line-height: 1.68;
+  text-wrap: pretty;
+}
+
+.divider-gold {
+  position: relative;
+  height: 1px;
+  width: min(420px, 60%);
+  margin: clamp(36px, 4.5vw, 56px) auto clamp(24px, 2.6vw, 34px);
+  background: var(--line);
+}
+.divider-gold::after {
+  content: ""; position: absolute; left: 50%; top: -1px;
+  transform: translateX(-50%);
+  width: 74px; height: 3px; border-radius: 2px;
+  background: var(--gold);
+}
+
+.closing-line {
+  font-family: var(--serif);
+  font-size: clamp(1.1rem, 1.9vw, 1.5rem);
+  font-weight: 400;
+  text-align: center;
+  color: var(--navy);
+  letter-spacing: -.005em;
+}
+
+.center-cta { text-align: center; margin-top: clamp(38px, 4.5vw, 58px); }
+
+

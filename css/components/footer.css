@@ -1,0 +1,83 @@
+/* ── 17. FOOTER ──────────────────────────────────────────── */
+/* the footer is a dark band in both themes — a deliberate full-stop under the page */
+.site-footer {
+  background: #0F2247;
+  border-top: 1px solid color-mix(in srgb, var(--gold) 42%, transparent);
+  padding-block: clamp(14px, 1.9vw, 20px);
+}
+html[data-theme="dark"] .site-footer { background: #0B1526; }
+
+/* Insights callout — sits above the utility bar, same dark band, a hairline
+   apart. Deliberately just a label + one line + a CTA, so it stays a quiet
+   footer feature rather than turning the footer into a promo section. */
+.footer-insights {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+  gap: 12px 24px;
+  padding-bottom: clamp(14px, 1.9vw, 20px);
+  margin-bottom: clamp(14px, 1.9vw, 20px);
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+.footer-insights-text {
+  display: flex; align-items: baseline; flex-wrap: wrap;
+  gap: 4px 10px;
+  max-width: 640px;
+}
+.footer-insights-label {
+  font-size: .8rem; font-weight: 700; color: #fff; flex: 0 0 auto;
+}
+.footer-insights-desc {
+  font-size: .8rem; line-height: 1.55; color: rgba(255,255,255,.58);
+}
+.footer-insights-cta {
+  display: inline-flex; align-items: center; gap: 9px; flex: 0 0 auto;
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255,255,255,.35);
+  font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  color: #fff; white-space: nowrap;
+  transition: background-color .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease);
+}
+.footer-insights-cta .ico { width: 1em; height: 1em; color: var(--gold-2); transition: transform .25s var(--ease), color .2s var(--ease); }
+.footer-insights-cta:hover { background: var(--gold-2); border-color: var(--gold-2); color: #0F2247; }
+.footer-insights-cta:hover .ico { transform: translateX(3px); color: #0F2247; }
+
+.footer-bar {
+  display: flex; align-items: center; flex-wrap: wrap;
+  gap: 10px 26px;
+}
+.footer-copy { font-size: .8rem; color: rgba(255,255,255,.5); }
+.footer-feature {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: .8rem; font-weight: 600; color: #fff;
+  transition: color .2s var(--ease);
+}
+.footer-feature::before {
+  content: ""; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--gold-2); flex: 0 0 auto;
+}
+.footer-feature:hover { color: var(--gold-2); }
+.footer-links { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+.footer-links a,
+.footer-links button {
+  padding: 0;
+  font-size: .8rem; color: rgba(255,255,255,.66);
+  text-align: left;
+  transition: color .2s var(--ease);
+}
+.footer-links a:hover,
+.footer-links button:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.footer-social {
+  display: flex; gap: 8px;
+  margin-left: auto;
+}
+.footer-social a {
+  display: grid; place-items: center;
+  width: 31px; height: 31px; border-radius: 50%;
+  color: rgba(255,255,255,.7);
+  border: 1px solid rgba(255,255,255,.2);
+  transition: color .2s var(--ease), border-color .2s var(--ease), background-color .2s var(--ease);
+}
+.footer-social a:hover { color: #0F2247; background: var(--gold-2); border-color: var(--gold-2); }
+.footer-social svg { width: 16px; height: 16px; fill: currentColor; }
+
+
