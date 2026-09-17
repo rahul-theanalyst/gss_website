@@ -130,6 +130,10 @@ html[data-theme="dark"] .clientele-page .clx-hero__media img { filter: brightnes
   background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
   padding-block: clamp(30px, 3.6vw, 52px);
 }
+.clientele-page .clx-band--close::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent 0, rgba(255,255,255,.14) 20%, rgba(255,255,255,.14) 80%, transparent 100%);
+}
 .clientele-page .clx-band__rule { position: relative; align-self: stretch; }
 .clientele-page .clx-band__slash {
   --tilt: 14deg;
@@ -366,7 +370,7 @@ html.js .clientele-page .clx-marquee.is-ready .clx-rail { opacity: 1; }
   /* rises softly out of the logo section's background instead of starting
      on a hard edge right beneath the wall */
   background: linear-gradient(180deg, var(--bg) 0, var(--bg-sky) clamp(56px, 7vw, 110px));
-  padding-block: clamp(44px, 5.4vw, 88px);
+  padding-block: clamp(28px, 3.2vw, 52px);
 }
 .clientele-page .clx-contribute__inner {
   position: relative; z-index: 1; max-width: 1400px;

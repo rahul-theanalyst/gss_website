@@ -54,7 +54,7 @@ skills/experience — the whole feed never fails because of it.
   requested; exceeding that limit fails instead of publishing an incomplete list.
 - On failure, a valid previous cache less than one hour old may be used.
   Otherwise the endpoint returns HTTP 503 and the page displays its load-error
-  message. Sample jobs from `data/jobs.json` are never silently shown as live jobs.
+  message. Stale or sample data is never silently shown as live jobs.
 - `X-Careers-Source` identifies `ceipal`, `cache`, or `stale-cache` responses.
 - Errors are recorded in `server/careers-errors.log`. Restrict public access to runtime
   logs using your host's configuration. Keep PHP error display disabled in

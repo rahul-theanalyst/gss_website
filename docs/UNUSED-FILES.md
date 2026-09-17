@@ -46,7 +46,6 @@ This audit checks all 12 website pages, the root entry and every stylesheet, inc
 - `server/careers-jobs.php` and the private server configuration for the live careers feed.
 - `.local-tools/php/`: the current VS Code preview task uses this installed runtime.
 - `tests/careers-jobs-test.php` and `tools/check-site.py`: useful regression and reference checks.
-- `data/jobs.json`: optional manual feed. It is not used by the live Ceipal integration, but it remains a documented fallback.
 
 Link-preview images use full addresses (`https://globalsoftsystems.com/images/...`). `tools/check-site.py` skips full addresses, so it does not check those files; keep every image named in a page's `og:image` tag.
 

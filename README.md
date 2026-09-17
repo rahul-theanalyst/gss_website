@@ -61,10 +61,9 @@ php tests/careers-jobs-test.php
 
 Deploy `index.html`, `html/`, `css/`, `js/`, the referenced images, and `server/`
 together. The careers endpoint is `/server/careers-jobs.php`; provision its
-ignored config on the host. `data/` is needed only for the optional manual feed.
-Guides, previews, source artwork, tools and tests do not need publishing.
+ignored config on the host. Guides, previews, source artwork, tools and tests
+do not need publishing.
 
 - [Careers integration](docs/CEIPAL-INTEGRATION.md)
 - [Editing client logos](docs/CLIENT-LOGOS.md)
-- [Manual job feed](docs/EDITING-JOBS.md)
 - [Unused files audit](docs/UNUSED-FILES.md)

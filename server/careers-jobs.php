@@ -7,8 +7,8 @@
  * The browser never talks to Ceipal directly — it only ever calls this
  * endpoint, on our own domain. See docs/CEIPAL-INTEGRATION.md for setup.
  *
- * Output shape matches jobs.json exactly (see docs/EDITING-JOBS.md), so
- * careers.js needs no changes beyond pointing DATA_URL at this file.
+ * Output shape matches what careers.js expects, so no front-end changes
+ * are needed beyond pointing DATA_URL at this file.
  */
 
 header('Content-Type: application/json; charset=utf-8');
@@ -389,7 +389,7 @@ function payLineFor($raw) {
         . ($freq ? ' / ' . strtolower($freq) : '');
 }
 
-/** Ceipal's raw job object -> the exact shape jobs.json / careers.js expect.
+/** Ceipal's raw job object -> the exact shape careers.js expects.
  *  The list feed only ever returns a ~190-character teaser description with
  *  no skills or experience — applyJobDetail() fills those in afterwards from
  *  the per-job detail endpoint. This function stays a pure, offline transform

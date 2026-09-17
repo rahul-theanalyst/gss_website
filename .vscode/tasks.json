@@ -4,7 +4,7 @@
         {
             "label": "Start website (PHP + live careers)",
             "type": "process",
-            "command": "${workspaceFolder}/.local-tools/php/php.exe",
+            "command": "php",
             "args": ["-S", "127.0.0.1:8080", "-t", "${workspaceFolder}"],
             "options": { "cwd": "${workspaceFolder}" },
             "isBackground": true,
