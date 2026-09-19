@@ -159,7 +159,9 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   .cred-row.cols-5 { grid-template-columns: minmax(0,1fr); }
   .btn { white-space: normal; padding-inline: 20px; font-size: .715rem; letter-spacing: .09em; }
   .panel { padding: 26px 20px; }
-  .mobile-nav ul.mobile-connect-panel { grid-template-columns: minmax(0,1fr); }
+  .mobile-nav { padding-inline: 16px; }
+  .mobile-nav nav a { font-size: 1.15rem; padding-block: 5px; }
+  .mobile-nav ul.mobile-connect-panel { grid-template-columns: repeat(4, 1fr); gap: 6px; }
 }
 
 /* short landscape phones — don't let 100svh squeeze the hero */

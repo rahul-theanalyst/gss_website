@@ -115,16 +115,13 @@ html[data-theme="dark"] .face-left { fill: #8AA5C2; }
   z-index: 120;
   height: var(--header-h);
   display: flex; align-items: center;
-  background: transparent;
-  border-bottom: 1px solid transparent;
-  transition: background-color .28s var(--ease), box-shadow .28s var(--ease),
-              border-color .28s var(--ease), backdrop-filter .28s var(--ease);
+  /* solid at every scroll position — white in the light theme (--bg),
+     the theme's own navy in dark mode so the light nav text stays legible */
+  background: var(--bg);
+  border-bottom: 1px solid var(--hairline);
+  transition: box-shadow .28s var(--ease);
 }
 .site-header.is-stuck {
-  background: color-mix(in srgb, var(--bg) 86%, transparent);
-  -webkit-backdrop-filter: saturate(1.6) blur(14px);
-  backdrop-filter: saturate(1.6) blur(14px);
-  border-bottom-color: var(--hairline);
   box-shadow: 0 1px 24px rgba(15,34,71,.07);
 }
 html[data-theme="dark"] .site-header.is-stuck { box-shadow: 0 1px 24px rgba(0,0,0,.5); }
@@ -520,56 +517,72 @@ html[data-theme="dark"] .gss-select__menu {
 /* ── 08. MOBILE OVERLAY MENU ─────────────────────────────── */
 .mobile-nav {
   position: fixed; inset: 0;
+  height: 100dvh;
+  max-height: 100dvh;
   z-index: 110;
   background: var(--bg);
-  padding: calc(var(--header-h) + 28px) clamp(20px, 6vw, 48px) 40px;
+  padding: calc(var(--header-h) + clamp(6px, 1.2svh, 12px)) clamp(20px, 5vw, 40px) clamp(14px, 2svh, 20px);
   display: flex; flex-direction: column; align-items: stretch;
   opacity: 0;
   transition: opacity .3s var(--ease);
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
 }
 .mobile-nav[hidden] { display: none; }
 .mobile-nav.is-open { opacity: 1; }
-.mobile-nav ul { display: flex; flex-direction: column; gap: 4px; }
+.mobile-nav nav {
+  flex: 0 0 auto;
+}
+.mobile-nav ul { display: flex; flex-direction: column; gap: 0; }
 .mobile-nav nav a {
   display: block;
-  padding: 15px 0;
+  padding: clamp(6px, 1.1svh, 9px) 0;
   font-family: var(--serif);
-  font-size: clamp(1.4rem, 6vw, 2rem);
+  font-size: clamp(1.15rem, 3.8vw, 1.45rem);
   font-weight: 400;
   color: var(--navy);
   border-bottom: 1px solid var(--hairline);
   opacity: 0;
-  transform: translateY(14px);
-  transition: opacity .4s var(--ease), transform .4s var(--ease);
+  transform: translateY(10px);
+  transition: opacity .35s var(--ease), transform .35s var(--ease);
 }
 .mobile-nav.is-open nav a { opacity: 1; transform: none; }
-.mobile-nav.is-open nav li:nth-child(1) a { transition-delay: .06s; }
-.mobile-nav.is-open nav li:nth-child(2) a { transition-delay: .10s; }
-.mobile-nav.is-open nav li:nth-child(3) a { transition-delay: .14s; }
-.mobile-nav.is-open nav li:nth-child(4) a { transition-delay: .18s; }
-.mobile-nav.is-open nav li:nth-child(5) a { transition-delay: .22s; }
-.mobile-nav.is-open nav li:nth-child(6) a { transition-delay: .26s; }
+.mobile-nav.is-open nav li:nth-child(1) a { transition-delay: .05s; }
+.mobile-nav.is-open nav li:nth-child(2) a { transition-delay: .08s; }
+.mobile-nav.is-open nav li:nth-child(3) a { transition-delay: .11s; }
+.mobile-nav.is-open nav li:nth-child(4) a { transition-delay: .14s; }
+.mobile-nav.is-open nav li:nth-child(5) a { transition-delay: .17s; }
+.mobile-nav.is-open nav li:nth-child(6) a { transition-delay: .20s; }
+.mobile-nav.is-open nav li:nth-child(7) a { transition-delay: .23s; }
 .mobile-nav-foot {
   display: flex; align-items: center; gap: 14px;
   margin-top: auto;
-  padding-top: 32px;
+  padding-top: clamp(8px, 1.6svh, 14px);
+  flex: 0 0 auto;
 }
-.mobile-nav-foot .btn { flex: 1; }
-body.nav-open { overflow: hidden; }
+.mobile-nav-foot .btn { flex: 1; min-height: 44px; padding: 11px 20px; font-size: .82rem; }
+html.nav-open,
+body.nav-open {
+  overflow: hidden;
+  height: 100%;
+  overscroll-behavior: none;
+}
 
 /* Connect With Us — collapsible section inside the overlay (mobile only) */
-.mobile-connect { display: none; padding-top: 30px; }
+.mobile-connect { display: none; padding-top: clamp(8px, 1.5svh, 14px); flex: 0 0 auto; }
 .mobile-connect-toggle {
   display: flex; align-items: center; justify-content: space-between;
-  width: 100%; padding: 2px 0 16px;
+  width: 100%; padding: 2px 0 clamp(6px, 1svh, 9px);
   font-family: var(--sans);
-  font-size: .74rem; font-weight: 700;
+  font-size: .7rem; font-weight: 700;
   letter-spacing: .18em; text-transform: uppercase;
   color: var(--muted-2);
+  background: transparent; border: none; cursor: pointer;
 }
 .mobile-connect-toggle .ico {
-  width: 17px; height: 17px; color: var(--gold);
+  width: 15px; height: 15px; color: var(--gold);
   transition: transform .25s var(--ease);
 }
 .mobile-connect-toggle[aria-expanded="false"] .ico { transform: rotate(-90deg); }
@@ -582,21 +595,22 @@ body.nav-open { overflow: hidden; }
 .mobile-connect.is-collapsed .mobile-connect-wrap { grid-template-rows: 0fr; }
 .mobile-nav ul.mobile-connect-panel {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
   min-height: 0;
   overflow: hidden;
   transition: opacity .24s var(--ease), visibility .24s var(--ease);
+  margin: 0; padding: 0; list-style: none;
 }
 .mobile-connect.is-collapsed .mobile-connect-panel { opacity: 0; visibility: hidden; }
 .mobile-social {
-  display: flex; align-items: center; gap: 12px;
-  padding: 14px;
-  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center; gap: 0;
+  padding: 8px 4px;
+  border-radius: 10px;
   border: 1px solid var(--hairline);
   background: var(--card-soft);
   color: var(--navy);
-  min-height: 62px;
+  min-height: 42px;
   transition: border-color .2s var(--ease), background-color .2s var(--ease), transform .2s var(--ease);
 }
 .mobile-social:hover { border-color: var(--gold); }
@@ -608,21 +622,23 @@ body.nav-open { overflow: hidden; }
 .mobile-social:active { transform: scale(.98); }
 .mobile-social-ico {
   display: grid; place-items: center;
-  width: 36px; height: 36px; flex: 0 0 auto;
-  border-radius: 10px;
+  width: 28px; height: 28px; flex: 0 0 auto;
+  border-radius: 8px;
   background: color-mix(in srgb, var(--navy) 8%, transparent);
   color: var(--navy);
 }
 html[data-theme="dark"] .mobile-social-ico { background: rgba(255,255,255,.08); }
-.mobile-social-ico svg { width: 19px; height: 19px; fill: currentColor; }
-.mobile-social > span:last-child { font-size: .98rem; font-weight: 500; }
+.mobile-social-ico svg { width: 16px; height: 16px; fill: currentColor; }
+.mobile-social > span:last-child {
+  display: none;
+}
 
 /* Solutions submenu — collapsible, inside the primary list (mobile only).
    Same disclosure mechanism as "Connect With Us" above (grid-rows trick,
    no JS height math); .mobile-subnav is a generic pattern any future nav
    item with children can reuse. */
 .mobile-nav .mobile-subnav-row {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
   border-bottom: 1px solid var(--hairline);
 }
 .mobile-nav .mobile-subnav-row a {
@@ -631,13 +647,14 @@ html[data-theme="dark"] .mobile-social-ico { background: rgba(255,255,255,.08); 
 }
 .mobile-subnav-toggle {
   display: flex; align-items: center; justify-content: center;
-  width: 40px; height: 40px; flex: 0 0 auto;
+  width: 32px; height: 32px; flex: 0 0 auto;
   border-radius: 50%;
   border: 1px solid var(--line);
   background: transparent;
+  cursor: pointer;
 }
 .mobile-subnav-toggle .ico {
-  width: 15px; height: 15px; color: var(--navy);
+  width: 14px; height: 14px; color: var(--navy);
   transition: transform .25s var(--ease);
 }
 .mobile-subnav-toggle[aria-expanded="true"] .ico { transform: rotate(180deg); }
@@ -655,9 +672,9 @@ html[data-theme="dark"] .mobile-social-ico { background: rgba(255,255,255,.08); 
 }
 .mobile-nav .mobile-subnav-panel a {
   display: block;
-  padding: 13px 6px;
+  padding: 8px 6px;
   font-family: var(--sans);
-  font-size: .96rem; font-weight: 500;
+  font-size: .88rem; font-weight: 500;
   color: var(--muted);
   border-bottom: 1px solid var(--hairline);
 }

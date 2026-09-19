@@ -111,6 +111,7 @@
       window.requestAnimationFrame(function () { panel.classList.add('is-open'); });
       toggle.setAttribute('aria-expanded', 'true');
       toggle.setAttribute('aria-label', 'Close menu');
+      document.documentElement.classList.add('nav-open');
       document.body.classList.add('nav-open');
     }
 
@@ -118,6 +119,7 @@
       panel.classList.remove('is-open');
       toggle.setAttribute('aria-expanded', 'false');
       toggle.setAttribute('aria-label', 'Open menu');
+      document.documentElement.classList.remove('nav-open');
       document.body.classList.remove('nav-open');
       window.setTimeout(function () {
         if (!panel.classList.contains('is-open')) panel.hidden = true;
