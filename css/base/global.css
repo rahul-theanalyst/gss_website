@@ -188,7 +188,7 @@ html[data-theme="dark"] .skip-link { background: var(--gold); color: #0B1424; }
   position: relative;
   padding-block: var(--section-y);
 }
-.section-about     { background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg-sky) 100%); }
+.section-about     { background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg-sky) 100%); padding-bottom: clamp(24px, 2.5vw, 40px); }
 .section-solutions { background: var(--bg); }
 .section-staffing  { background: var(--bg-soft); overflow: hidden; }
 .section-clientele { background: var(--bg); padding-bottom: clamp(30px, 3.2vw, 48px); }

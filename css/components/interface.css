@@ -61,14 +61,24 @@ html[data-theme="dark"] .ico-dark { display: block; }
 
 /* ── 06. LOGO MARK ───────────────────────────────────────── */
 .logo { display: inline-flex; align-items: center; gap: 11px; }
-.logo-img { width: auto; display: block; flex: 0 0 auto; }
-/* the two logo files have different internal padding (the light art fills ~60% of
-   its canvas height, the dark art ~75%), so the light one needs a taller box to
-   land at the same optical size as the dark one */
-.logo-img--light { height: 55px; }
-.logo-img--dark { height: 44px; display: none; }
+.logo-img {
+  width: auto;
+  display: block;
+  flex: 0 0 auto;
+  height: 68px;              /* ← change this value to resize the logo */
+  filter: drop-shadow(0 1px 3px rgba(15, 34, 71, .12));
+  transition: filter .25s var(--ease);
+}
+.logo:hover .logo-img { filter: drop-shadow(0 2px 6px rgba(15, 34, 71, .18)); }
+.logo-img--dark { display: none; }
 html[data-theme="dark"] .logo-img--light { display: none; }
 html[data-theme="dark"] .logo-img--dark { display: block; }
+html[data-theme="dark"] .logo-img {
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, .35));
+}
+html[data-theme="dark"] .logo:hover .logo-img {
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, .45));
+}
 .logo-mark { width: 38px; height: 38px; flex: 0 0 auto; }
 .logo-mark svg { width: 100%; height: 100%; }
 .face-top   { fill: #1E3A63; }
