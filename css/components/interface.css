@@ -65,7 +65,7 @@ html[data-theme="dark"] .ico-dark { display: block; }
   width: auto;
   display: block;
   flex: 0 0 auto;
-  height: 68px;              /* ← change this value to resize the logo */
+  height: 75px;              /* ← change this value to resize the logo */
   filter: drop-shadow(0 1px 3px rgba(15, 34, 71, .12));
   transition: filter .25s var(--ease);
 }

@@ -150,7 +150,7 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
 /* ≤380px — smallest phones */
 @media (max-width: 380px) {
   .logo-word { font-size: 1.42rem; }
-  .logo-img { height: 54px; }
+  .logo-img { height: 59px; }
   .logo-mark { width: 32px; height: 32px; }
   .logo-tag { font-size: .48rem; }
   .hero-title { font-size: 2rem; }
