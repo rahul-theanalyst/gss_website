@@ -21,7 +21,6 @@
 /* Playfair ships old-style figures; keep lining figures on this page's
    serif headings so "60–70%" and the titles sit on the baseline */
 .global-talent-page .gt-hero__title,
-.global-talent-page .gt-intro__title,
 .global-talent-page .gt-solution__title,
 .global-talent-page .gt-solution__lead,
 .global-talent-page .gt-cta__title {
@@ -72,7 +71,6 @@
   margin: 0 0 clamp(20px, 2.6vw, 36px);
   text-wrap: balance;
 }
-.global-talent-page .gt-hero__lede,
 .global-talent-page .gt-hero__tail {
   color: var(--muted);
   font-size: clamp(.95rem, 1.05vw, 1.08rem);
@@ -150,24 +148,6 @@
   font-weight: 600;
   letter-spacing: .28em;
   margin-bottom: clamp(8px, .9vw, 12px);
-}
-.global-talent-page .gt-intro__title {
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: clamp(1.3rem, 2.1vw, 1.88rem);
-  line-height: 1.16;
-  letter-spacing: 0;
-  color: var(--navy);
-  margin: 0 auto;
-  max-width: 32ch;
-  text-wrap: balance;
-}
-.global-talent-page .gt-intro__lede {
-  color: var(--muted);
-  font-size: clamp(.9rem, .98vw, .98rem);
-  line-height: 1.58;
-  max-width: 68rem;
-  margin: clamp(8px, .9vw, 12px) auto 0;
 }
 
 
@@ -364,7 +344,6 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
     max-width: none;
   }
   .global-talent-page .gt-hero__text { padding-inline-start: clamp(16px, 4vw, 24px); }
-  .global-talent-page .gt-hero__lede,
   .global-talent-page .gt-hero__tail { max-width: 46ch; }
   .global-talent-page .gt-hero__media,
   .global-talent-page .gt-cta__media { min-height: 0; aspect-ratio: 16 / 9; }
@@ -385,7 +364,6 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
   }
   .global-talent-page .gt-solution__descriptor { max-width: 44ch; }
   .global-talent-page .gt-solution__body { max-width: none; }
-  .global-talent-page .gt-intro__title { max-width: 20ch; }
 }
 
 /* ≤620px — phone rhythm: shorter bands, decoration steps aside */
@@ -408,7 +386,6 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
 /* ≤380px — smallest phones */
 @media (max-width: 380px) {
   .global-talent-page .gt-hero__title { font-size: 1.78rem; }
-  .global-talent-page .gt-intro__title { font-size: 1.42rem; }
   .global-talent-page .gt-cta__title { font-size: 1.55rem; }
   .global-talent-page .gt-solution__descriptor { letter-spacing: .12em; }
 }
