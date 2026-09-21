@@ -313,26 +313,8 @@ html[data-theme="dark"] .nav-megamenu { box-shadow: 0 24px 48px rgba(0,0,0,.55);
 .nav-megamenu .container {
   max-width: none; margin-inline: 0; padding-inline: 0;
 }
-.nav-megamenu .nav-megamenu-head {
-  padding: clamp(22px, 2.6vw, 34px) clamp(22px, 2.6vw, 34px) 14px;
-}
-.nav-megamenu-eyebrow {
-  font-family: var(--sans);
-  font-size: .68rem; font-weight: 600;
-  letter-spacing: .18em; text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 8px;
-}
-.nav-megamenu-title {
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: 1rem;
-  line-height: 1.35;
-  color: var(--muted);
-  margin: 0;
-}
 .nav-megamenu .solutions-cards {
-  padding: 6px clamp(22px, 2.6vw, 34px) clamp(22px, 2.6vw, 34px);
+  padding: clamp(22px, 2.6vw, 34px);
 }
 
 
