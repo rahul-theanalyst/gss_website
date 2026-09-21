@@ -40,7 +40,52 @@ html[data-theme="dark"] .btn-outline { border-color: var(--gold); color: var(--g
 html[data-theme="dark"] .btn-outline:hover { background: rgba(216,169,78,.12); }
 
 .btn-sm { min-height: 44px; padding: 11px 22px; font-size: .74rem; letter-spacing: .07em; text-transform: none; }
-.btn-lg { min-height: 58px; padding: 17px 40px; font-size: .84rem; }
+
+/* Navbar "Talk to Us": ink-splatter reveal. Two stacked copies of the label:
+   the button itself is gold with navy text (the revealed state), and a
+   navy cover with white text sits on top of it, masked by a 30-frame
+   splatter sprite. On hover the sprite steps through its frames, so the
+   navy dissolves away in a splatter pattern and the gold shows through;
+   on leave it steps back. Each label lives in its own layer, so the text
+   flips colour exactly where the cover is removed. Transitions (not
+   keyframes) drive it, so nothing plays on page load. */
+.btn-primary.btn-splash {
+  position: relative; overflow: hidden; isolation: isolate;
+  background: var(--gold-2); color: var(--navy);
+}
+.btn-splash__label {
+  position: relative;
+  display: inline-flex; align-items: center; gap: 12px;
+}
+.btn-primary .btn-splash__label .ico { color: var(--navy); }
+.btn-splash__cover {
+  position: absolute; inset: 0; z-index: 1;
+  display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+  background: var(--navy); color: #fff;
+  pointer-events: none;
+  -webkit-mask-image: url("../../images/backgrounds/btn-splash-sprite.webp");
+  mask-image: url("../../images/backgrounds/btn-splash-sprite.webp");
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-size: 3000% 100%; mask-size: 3000% 100%;
+  -webkit-mask-position: 0 0; mask-position: 0 0;
+  transition: -webkit-mask-position .7s steps(29), mask-position .7s steps(29);
+}
+.btn-primary .btn-splash__cover .ico { color: var(--gold-2); }
+.btn-primary.btn-splash:hover { background: var(--gold-2); }
+.btn-splash:hover .btn-splash__cover,
+.btn-splash:focus-visible .btn-splash__cover {
+  -webkit-mask-position: 100% 0; mask-position: 100% 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-splash__cover { transition: none; }
+}
+/* dark theme: the button is gold with dark text, so it dissolves the gold
+   cover to reveal the pale navy token beneath, with dark text throughout */
+html[data-theme="dark"] .btn-primary.btn-splash,
+html[data-theme="dark"] .btn-primary.btn-splash:hover { background: var(--navy); color: #0B1424; }
+html[data-theme="dark"] .btn-primary .btn-splash__label .ico { color: #0B1424; }
+html[data-theme="dark"] .btn-splash__cover { background: var(--gold); color: #0B1424; }
+html[data-theme="dark"] .btn-primary .btn-splash__cover .ico { color: #0B1424; }
 
 .icon-btn {
   width: 44px; height: 44px;
