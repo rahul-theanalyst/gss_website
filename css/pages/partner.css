@@ -14,17 +14,29 @@
 }
 html[data-theme="dark"] .pnr-hero-dots { color: var(--hairline); }
 
+/* ── HERO: tighter vertical rhythm ───────────────────────── */
+/* .page-hero is shared with the Blog page, so this is scoped to Alliances.
+   Trims the top/bottom padding and the gaps between eyebrow, headline,
+   paragraph and button that made the banner feel airy. */
+.alliances-page .page-hero {
+  padding-top: calc(var(--header-h) + clamp(6px, 1vw, 14px));
+  padding-bottom: clamp(14px, 1.6vw, 22px);
+}
+.alliances-page .page-hero .eyebrow { margin-bottom: clamp(8px, 1vw, 12px); }
+.alliances-page .page-hero .page-lede { margin-top: clamp(10px, 1.2vw, 16px); }
+.alliances-page .page-hero .center-cta { margin-top: clamp(16px, 1.8vw, 24px); }
+
 /* ── OUR POSITION (image + text split) ───────────────────── */
-.pnr-position { background: var(--bg); padding-block: clamp(22px, 2.6vw, 38px); }
+.pnr-position { background: var(--bg); padding-block: clamp(14px, 2vw, 30px); }
 .pnr-position__grid {
   display: grid;
   /* wider than the shared --fig-inset-w: this box stretches tall to match
      the copy's height (below), and a narrower column at that height was
      cropping most of the photo's width away — the extra room keeps both
      people and the office behind them in frame instead of a tight zoom */
-  grid-template-columns: minmax(0, 1fr) clamp(380px, 52vw, 900px);
+  grid-template-columns: minmax(0, 1fr) clamp(340px, 42vw, 720px);
   align-items: center;
-  gap: clamp(28px, 4vw, 64px);
+  gap: clamp(24px, 3.4vw, 56px);
 }
 /* the photo bleeds to the right edge and melts into the section on its left
    and top/bottom rather than sitting in a hard frame — same treatment as the
@@ -61,14 +73,15 @@ html[data-theme="dark"] .pnr-hero-dots { color: var(--hairline); }
    text keeps its normal padding; only the photo (which clips via
    overflow:hidden + object-fit:cover) extends and zooms to cover it */
 @media (min-width: 901px) {
-  .pnr-position__media { margin-block: calc(-1 * clamp(22px, 2.6vw, 38px)); }
+  .pnr-position__media { margin-block: calc(-1 * clamp(14px, 2vw, 30px)); }
 }
-.pnr-position__text { align-self: center; margin-left: var(--gutter); max-width: 34rem; }
-.pnr-position__text .abx-h2 { margin-bottom: clamp(18px, 2.2vw, 26px); }
-.pnr-position__text p { margin: 0; color: var(--muted); font-size: clamp(.98rem, 1.1vw, 1.06rem); line-height: 1.72; }
-.pnr-position__text p + p { margin-top: 16px; }
+.pnr-position__text { align-self: center; margin-left: var(--gutter); max-width: 46rem; }
+.pnr-position__text .abx-eyebrow { margin-bottom: clamp(8px, 1vw, 12px); }
+.pnr-position__text .abx-h2 { font-size: clamp(1.7rem, 3vw, 2.7rem); margin-bottom: clamp(10px, 1.2vw, 16px); }
+.pnr-position__text p { margin: 0; color: var(--muted); font-size: clamp(.98rem, 1.1vw, 1.06rem); line-height: 1.68; }
+.pnr-position__text p + p { margin-top: 12px; }
 .pnr-position__line {
-  margin-top: clamp(22px, 3vw, 34px);
+  margin-top: clamp(14px, 1.8vw, 22px);
   font-family: var(--sans);
   font-size: .8rem; font-weight: 700;
   letter-spacing: .06em; text-transform: uppercase;
@@ -184,7 +197,7 @@ html[data-theme="dark"] .pnr-models { background: var(--bg-soft); }
 @media (max-width: 900px) {
   .pnr-position__grid { grid-template-columns: minmax(0, 1fr); }
   .pnr-position__text { margin-left: 0; padding-inline: var(--gutter); order: 1; }
-  .pnr-position__media { order: -1; min-height: 0; aspect-ratio: 16 / 9; }
+  .pnr-position__media { order: -1; min-height: 0; aspect-ratio: 21 / 9; }
   /* stacked — the photo now runs full-width above the copy, so it fills
      edge to edge instead of fading top/bottom */
   .pnr-position__media::after {
