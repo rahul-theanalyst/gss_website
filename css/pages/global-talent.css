@@ -67,7 +67,7 @@
   font-weight: 500;
   font-size: clamp(1.95rem, 3.65vw, 3.35rem);
   line-height: 1.14;
-  letter-spacing: .028em;
+  letter-spacing: -.012em;
   color: var(--navy);
   margin: 0 0 clamp(20px, 2.6vw, 36px);
   text-wrap: balance;
