@@ -65,5 +65,6 @@ ignored config on the host. Guides, previews, source artwork, tools and tests
 do not need publishing.
 
 - [Careers integration](docs/CEIPAL-INTEGRATION.md)
+- [Careers and Let's Connect email setup](docs/EMAIL-SETUP.md)
 - [Editing client logos](docs/CLIENT-LOGOS.md)
 - [Unused files audit](docs/UNUSED-FILES.md)

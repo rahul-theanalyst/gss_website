@@ -354,6 +354,13 @@
         </div>
 
         <form class="car-form reveal" aria-label="Stay connected" data-privacy-form="careers" action="../server/careers-submit.php" method="POST" enctype="multipart/form-data">
+          <!-- Honeypot: invisible to real visitors, irresistible to simple bots
+               that auto-fill every field. Left blank client-side; the server
+               rejects any submission where this arrives non-empty. -->
+          <div class="car-field" style="position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; overflow:hidden;" aria-hidden="true">
+            <label for="f-website">Leave this field blank</label>
+            <input type="text" id="f-website" name="hp_website" tabindex="-1" autocomplete="off">
+          </div>
           <div class="car-form__row">
             <div class="car-field">
               <label for="f-first">First name</label>

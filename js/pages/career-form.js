@@ -12,6 +12,21 @@
 
   var MAX_FILE_BYTES = 10 * 1024 * 1024; // 10 MB
 
+  // Basic spam-timing signal: stamp when the form became available so the
+  // server can tell a person filling it in apart from a script submitting
+  // it instantly. Added via JS (not present in the HTML at all) so a
+  // visitor with scripting disabled simply omits it — the server treats a
+  // missing timestamp as "can't check" rather than "reject".
+  var renderStamp = form.querySelector('input[name="form_rendered_at"]');
+  if (!renderStamp) {
+    renderStamp = document.createElement('input');
+    renderStamp.type = 'hidden';
+    renderStamp.name = 'form_rendered_at';
+    form.appendChild(renderStamp);
+  }
+  function stampRenderTime() { renderStamp.value = String(Date.now()); }
+  stampRenderTime();
+
   // 1. File Input Validation & Label update
   if (fileInput && fileNameDisplay) {
     fileInput.addEventListener('change', function () {
@@ -135,6 +150,7 @@
         }
 
         form.reset();
+        stampRenderTime();
         if (fileNameDisplay) {
           fileNameDisplay.textContent = 'Upload resume (PDF only)';
         }

@@ -3,12 +3,14 @@
  * contact-submit.php
  * ------------------------------------------------------------
  * Handles the "Let's Connect" inquiry form. Validates the
- * submitted fields and dispatches a styled email to the
- * recipients configured in careers-config.php ('contact_*' keys,
- * falling back to the careers recipients/from if unset).
+ * submitted fields, screens for basic spam, and dispatches a
+ * styled email to the recipients from server/.env (see
+ * lib/config.php for the full precedence chain).
  */
 
 require_once __DIR__ . '/lib/mailer.php';
+require_once __DIR__ . '/lib/config.php';
+require_once __DIR__ . '/lib/spam-guard.php';
 
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
@@ -27,33 +29,26 @@ function logSubmission($message) {
     @file_put_contents(SUBMISSIONS_LOG, $entry, FILE_APPEND);
 }
 
-function loadConfig() {
-    $path = __DIR__ . '/careers-config.php';
-    if (is_file($path)) {
-        $config = require $path;
-        if (is_array($config)) {
-            return $config;
-        }
-    }
-    return [];
-}
+$config = gss_load_mail_config();
 
-$config = loadConfig();
-
-// Contact recipients fall back to the careers recipients so a single
-// config file can drive both forms until dedicated addresses are set.
-$recipients = !empty($config['contact_recipients']) && is_array($config['contact_recipients'])
-    ? $config['contact_recipients']
-    : (!empty($config['recipients']) && is_array($config['recipients'])
-        ? $config['recipients']
-        : ['contact@globalsoftsystems.com']);
-
-$mailFrom     = !empty($config['contact_mail_from']) ? $config['contact_mail_from']
-    : (!empty($config['mail_from']) ? $config['mail_from'] : 'noreply@globalsoftsystems.com');
-$mailFromName = !empty($config['contact_mail_from_name']) ? $config['contact_mail_from_name'] : "GSS Let's Connect";
+$recipients   = $config['contact_recipients'];
+$mailFrom     = $config['contact_mail_from'];
+$mailFromName = $config['contact_mail_from_name'];
 
 function sanitizeLine($str) {
     return gss_sanitize_line($str);
+}
+
+// 0. Spam screening. Bots get a generic success response (so scripted
+// retries don't learn anything from the failure) but no email is sent.
+$spamReason = gss_is_spam_submission($_POST);
+if ($spamReason !== false) {
+    logSubmission('Blocked suspected spam submission: ' . $spamReason);
+    echo json_encode([
+        'success' => true,
+        'message' => 'Thank you! Your message has been sent — we\'ll be in touch soon.'
+    ]);
+    exit;
 }
 
 // 1. Collect and sanitize form fields

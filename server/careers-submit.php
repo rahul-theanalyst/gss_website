@@ -4,11 +4,14 @@
  * ------------------------------------------------------------
  * Handles Careers "Stay connected" profile submissions.
  * Validates candidate details, enforces valid PDF resume upload,
- * and securely dispatches email with PDF attachment to the
- * recipients configured in careers-config.php.
+ * screens for basic spam, and dispatches email with PDF
+ * attachment to the recipients from server/.env (see
+ * lib/config.php for the full precedence chain).
  */
 
 require_once __DIR__ . '/lib/mailer.php';
+require_once __DIR__ . '/lib/config.php';
+require_once __DIR__ . '/lib/spam-guard.php';
 
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
@@ -28,31 +31,27 @@ function logSubmission($message) {
     @file_put_contents(SUBMISSIONS_LOG, $entry, FILE_APPEND);
 }
 
-function loadConfig() {
-    $path = __DIR__ . '/careers-config.php';
-    if (is_file($path)) {
-        $config = require $path;
-        if (is_array($config)) {
-            return $config;
-        }
-    }
-    return [];
-}
+$config = gss_load_mail_config();
 
-$config = loadConfig();
-
-// Default recipients per requirements. Real recipients (and any test
-// addresses) belong in the gitignored careers-config.php, never here.
-$recipients = !empty($config['recipients']) && is_array($config['recipients'])
-    ? $config['recipients']
-    : ['contact@globalsoftsystems.com', 'contact@gsspros.com'];
-
-$mailFrom     = !empty($config['mail_from']) ? $config['mail_from'] : 'noreply@globalsoftsystems.com';
-$mailFromName = !empty($config['mail_from_name']) ? $config['mail_from_name'] : 'GSS Careers Portal';
+$recipients   = $config['careers_recipients'];
+$mailFrom     = $config['mail_from'];
+$mailFromName = $config['mail_from_name'];
 
 // Helper to sanitize single-line string inputs against header injection
 function sanitizeLine($str) {
     return gss_sanitize_line($str);
+}
+
+// 0. Spam screening. Bots get a generic success response (so scripted
+// retries don't learn anything from the failure) but no email is sent.
+$spamReason = gss_is_spam_submission($_POST);
+if ($spamReason !== false) {
+    logSubmission('Blocked suspected spam submission: ' . $spamReason);
+    echo json_encode([
+        'success' => true,
+        'message' => 'Thank you! Your profile and résumé have been submitted successfully to our talent team.'
+    ]);
+    exit;
 }
 
 // 1. Collect and sanitize form fields

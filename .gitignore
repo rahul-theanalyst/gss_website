@@ -7,3 +7,6 @@ careers-errors.log
 # Form submission logs contain candidate/inquiry PII — never commit
 server/careers-submissions.log
 server/contact-submissions.log
+
+# Mail credentials — never commit; see server/.env.example for the template
+server/.env

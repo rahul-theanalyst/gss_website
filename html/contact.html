@@ -192,6 +192,13 @@
     </div>
 
     <form class="lc-form reveal" aria-label="Contact GSS" data-privacy-form="contact" action="../server/contact-submit.php" method="POST">
+      <!-- Honeypot: invisible to real visitors, irresistible to simple bots
+           that auto-fill every field. Left blank client-side; the server
+           rejects any submission where this arrives non-empty. -->
+      <div class="lc-field" style="position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; overflow:hidden;" aria-hidden="true">
+        <label for="lc-website">Leave this field blank</label>
+        <input type="text" id="lc-website" name="hp_website" tabindex="-1" autocomplete="off">
+      </div>
       <div class="lc-form__row">
         <div class="lc-field">
           <label for="lc-first">First name</label>
