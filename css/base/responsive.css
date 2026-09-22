@@ -62,20 +62,29 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   .logo-tag { display: block; }
 
   .staff-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-  .cred-row.cols-5,
-  .cred-row.cols-4 {
+  .cred-row.cols-5 {
     grid-template-columns: repeat(3, minmax(0,1fr));
     max-width: min(100%, clamp(420px, 82vw, 820px));
   }
+  /* Four across, not three. Three columns left the fourth card orphaned
+     on a second row — lopsided to look at, and it cost a whole extra
+     card-height of hero, which is exactly what we're trying to win back.
+     They stay stacked (icon above text) rather than switching to side by
+     side here: at this width the label needs the full card width to
+     avoid wrapping awkwardly. Side by side starts at 680px instead. */
+  .cred-row.cols-4 {
+    grid-template-columns: repeat(4, minmax(0,1fr));
+    max-width: min(100%, clamp(460px, 94vw, 900px));
+  }
   .cred-card.is-stacked {
-    flex-direction: row; text-align: left;
-    padding: clamp(12px, 1.7vw, 17px) clamp(12px, 1.7vw, 18px);
-    gap: clamp(10px, 1.4vw, 14px);
+    padding: clamp(9px, 1.3vw, 13px) clamp(8px, 1.1vw, 12px);
+    gap: clamp(5px, .7vw, 8px);
   }
   .cred-txt strong { font-size: clamp(.66rem, .9vw, .77rem); }
   .cred-txt small  { font-size: clamp(.6rem, .8vw, .69rem); }
-  .cred-ico .ico   { width: clamp(20px, 2.6vw, 26px); height: clamp(20px, 2.6vw, 26px); }
-  .hero-viewport { min-height: max(100svh, 460px); }
+  .cred-ico .ico   { width: clamp(17px, 2.2vw, 22px); height: clamp(17px, 2.2vw, 22px); }
+  /* floor follows the hero dial in home.css rather than restating 100svh */
+  .hero { --hero-h: max(calc(100svh * var(--hero-scale)), 330px); }
 }
 
 /* ≤900px — solutions & panels stack */
@@ -107,10 +116,14 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   .step-node { position: absolute; left: 0; top: 0; margin: 0; width: 64px; height: 64px; }
   .step-copy { margin-inline: 0; max-width: none; }
 
-  .hero-slide { padding-block: calc(var(--header-h) + clamp(12px, 3.5svh, 26px)) clamp(44px, 12svh, 124px); }
-  .hero-title { margin-bottom: 20px; }
-  .hero-cta { margin-top: 30px; }
-  .hero-tagline { margin-top: 22px; font-size: .93rem; }
+  .hero-slide {
+    padding-block:
+      calc(var(--header-h) + clamp(8px, 2.3svh, 18px))
+      max(calc(var(--hero-chrome-h) + 6px), clamp(40px, 8.5svh, 88px));
+  }
+  .hero-title { margin-bottom: 14px; }
+  .hero-cta { margin-top: 20px; }
+  .hero-tagline { margin-top: 15px; font-size: .93rem; }
 
 }
 
@@ -128,11 +141,40 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
     grid-template-columns: repeat(2, minmax(0,1fr));
     max-width: 100%;
   }
+  /* Two rows of cards is the single tallest block in the hero on a phone,
+     so every pixel trimmed here is paid back twice. Compact enough to
+     keep the hero clear of the fold, still comfortably legible. */
+  .cred-row { gap: 8px; margin-top: 12px; }
+  .cred-card,
+  .cred-card.is-stacked {
+    /* side by side from here down: two columns means each card is wide
+       but short, so the icon belongs beside the label, not above it */
+    flex-direction: row; text-align: left;
+    padding: clamp(8px, 2vw, 11px) clamp(9px, 2.4vw, 13px);
+    gap: 9px;
+    border-radius: 14px;
+  }
+  .cred-ico .ico { width: 18px; height: 18px; }
 }
 
 /* ≤560px */
 @media (max-width: 560px) {
-  .hero-viewport { min-height: max(100svh, 620px); }
+  /* the old 620px floor was sized for a full-screen hero and would now
+     override the dial on most phones; scaled to match --hero-scale */
+  .hero { --hero-h: max(calc(100svh * var(--hero-scale)), 430px); }
+
+  /* a phone screen is short in absolute terms however tall the window
+     reports, so the hero's rhythm tightens on width here the same way it
+     does on height in home.css — and the chrome slims with it */
+  .hero { --hero-chrome-h: 68px; }
+  .hero-chrome { bottom: 10px; gap: 4px; }
+  .scroll-cue { width: 44px; height: 32px; }
+  .scroll-cue .ico { width: 20px; height: 20px; }
+
+  .hero-sub { font-size: .94rem; line-height: 1.46; }
+  .hero-tagline { margin-top: 10px; font-size: .85rem; }
+  .hero-cta { margin-top: 14px; }
+  .hero-slide[data-slide="0"] .hero-cta { margin-bottom: 0; }
 
   .staff-grid { grid-template-columns: minmax(0,1fr); }
   .client-item { min-height: 104px; }
@@ -153,10 +195,15 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   .logo-img { height: 59px; }
   .logo-mark { width: 32px; height: 32px; }
   .logo-tag { font-size: .48rem; }
-  .hero-title { font-size: 2rem; }
+  .hero-title { font-size: 1.75rem; }
   .section-title { font-size: 1.6rem; }
-  .cred-row.cols-4,
+  /* the four homepage cards stay two-up here. Dropping them to a single
+     column stacked four card-heights of hero on the smallest phones —
+     the exact thing pushing the next section off the screen. */
   .cred-row.cols-5 { grid-template-columns: minmax(0,1fr); }
+  .cred-row.cols-4 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .cred-txt strong { font-size: .62rem; letter-spacing: .05em; }
+  .cred-txt small  { font-size: .57rem; }
   .btn { white-space: normal; padding-inline: 20px; font-size: .715rem; letter-spacing: .09em; }
   .panel { padding: 26px 20px; }
   .mobile-nav { padding-inline: 16px; }
@@ -164,13 +211,109 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   .mobile-nav ul.mobile-connect-panel { grid-template-columns: repeat(4, 1fr); gap: 6px; }
 }
 
-/* short landscape phones — don't let 100svh squeeze the hero */
-@media (max-height: 640px) and (min-width: 700px) {
-  .hero-viewport { min-height: 700px; }
+/* Short landscape phones. The old 700px floor was there to stop 100svh
+   squeezing the hero, but it forced the hero to nearly twice the screen
+   height — the next section never had a chance. The hero already grows
+   to hold its content on its own, so a modest floor is enough now and
+   the box tracks the content instead of a fixed number. */
+@media (max-height: 640px) and (min-width: 640px) {
+  .hero { --hero-h: max(calc(100svh * var(--hero-scale)), 300px); }
+  /* One row, not two. A second row of cards costs ~60px, which is a sixth
+     of the screen in landscape — the width is there, so use it. Reaches
+     down to 640px now so mid-size phones held sideways are covered too. */
+  .cred-row.cols-4 {
+    grid-template-columns: repeat(4, minmax(0,1fr));
+    max-width: 100%;
+  }
 }
 
 
 /* ── 20. REDUCED MOTION & PRINT ──────────────────────────── */
+
+/* ══ HERO HEIGHT TIERS ══════════════════════════════════════════════
+   Moved here from pages/home.css. They must come after the width-based
+   blocks above, because a short screen's problem is vertical room and
+   these are the rules that solve it — a max-width block reinstating a
+   roomier margin would undo them. Ordered loosest to tightest. */
+
+/* Height-based, not width-based, because this is about usable vertical
+   room: browser chrome, taskbars and OS display scaling all eat into the
+   real 100svh, and plenty of wide laptops are genuinely short.
+
+   These thresholds moved up from 760/620 to 850/700. The hero now asks
+   for only 70% of the screen, so a window has to be taller than before
+   for that 70% to still hold slide 1's full stack — a 760px window used
+   to give the hero 760px and now gives it ~532px. Tightening has to
+   start earlier to match.
+
+   Every value here is fluid (clamp against vw) rather than a flat number.
+   These rules land after the width blocks above, so a flat number would
+   REPLACE a phone's tighter value with a roomier one — a laptop figure
+   applied to a 390px screen. Clamped, the same rule resolves to the
+   phone's tight end on a phone and the laptop's roomy end on a laptop,
+   so a tier can only ever tighten, never loosen. */
+@media (max-height: 850px) {
+  .hero-title { font-size: clamp(1.75rem, 3.6vw, 3rem); margin-bottom: clamp(12px, 1.4vw, 14px); }
+  .hero-tagline { margin-top: clamp(10px, 1.6vw, 14px); }
+  .hero-cta { margin-top: clamp(14px, 2vw, 18px); }
+  .hero-slide[data-slide="0"] .hero-cta { margin-bottom: clamp(0px, 1.5vw, 14px); }
+  .cred-row { margin-top: clamp(12px, 1.9vw, 22px); }
+  .cred-card.is-stacked { padding: clamp(8px, .9vw, 13px) clamp(7px, .7vw, 11px); }
+}
+@media (max-height: 700px) {
+  .hero-title { font-size: clamp(1.65rem, 3.1vw, 2.5rem); margin-bottom: 10px; }
+  .hero-sub { font-size: .94rem; line-height: 1.46; }
+  .hero-tagline { margin-top: 10px; font-size: clamp(.85rem, 1.1vw, .9rem); }
+  .hero-cta { margin-top: 14px; }
+  .hero-slide[data-slide="0"] .hero-cta { margin-bottom: 0; }
+  .cred-row { margin-top: clamp(10px, 1.4vw, 16px); }
+  .cred-card.is-stacked { padding: clamp(7px, .7vw, 10px) clamp(6px, .6vw, 9px); }
+  .cred-ico .ico { width: 18px; height: 18px; }
+
+  /* the chrome slims down too, so the foot of the slide can give the
+     content back some of the room it was reserving */
+  .hero { --hero-chrome-h: 74px; }
+  .hero-chrome { bottom: 12px; gap: 6px; }
+  .scroll-cue { width: 38px; height: 38px; }
+  .scroll-cue .ico { width: 18px; height: 18px; }
+}
+
+/* Landscape phones and other very short windows. The header alone takes a
+   fifth of a 390px-tall screen here, so this is the one case where the
+   full slide-1 stack can't be squeezed into 70% however hard it's packed
+   — this tier gets it down to roughly a screenful so the next section's
+   top edge still breaks the fold, instead of the hero running to nearly
+   twice the screen height as it used to. */
+@media (max-height: 480px) {
+  .hero-slide {
+    padding-block:
+      calc(var(--header-h) + 4px)
+      max(calc(var(--hero-chrome-h) + 4px), 6svh);
+  }
+  .hero-title { font-size: clamp(1.35rem, 2.6vw, 1.9rem); margin-bottom: 8px; }
+  .hero-sub { font-size: .875rem; line-height: 1.45; }
+  .hero-tagline { margin-top: 6px; font-size: .82rem; }
+  .hero-cta { margin-top: 10px; }
+  .cred-row { margin-top: 8px; gap: 7px; }
+  .cred-card,
+  .cred-card.is-stacked {
+    flex-direction: row; text-align: left;
+    padding: 6px 9px; gap: 7px; border-radius: 12px;
+  }
+  .cred-ico .ico { width: 15px; height: 15px; }
+  /* scoped to the hero so buttons everywhere else keep their 52px */
+  .hero-cta .btn { min-height: 42px; padding: 10px 22px; }
+
+  /* the bouncing arrow is a scroll hint, and on a screen this short it
+     costs more room than the hint is worth — the next section showing
+     above the fold now does that job. The dots stay, so the carousel is
+     still fully controllable. */
+  .hero { --hero-chrome-h: 46px; }
+  .hero-chrome { bottom: 10px; gap: 0; }
+  .scroll-cue { display: none; }
+}
+
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {

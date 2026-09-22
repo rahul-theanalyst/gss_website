@@ -3,6 +3,28 @@
   position: relative;
   isolation: isolate;
   background: var(--bg-sky);
+
+  /* ── HERO HEIGHT DIAL ─────────────────────────────────────────────
+     One number sets how tall the hero is, as a share of the screen.
+     .7 = 30% shorter than a full screen, which lifts the top of the
+     "How GSS Works" section into view on load instead of hiding it
+     below the fold. Put it back to 1 for the original full-screen
+     hero — the photo, the padding and the chrome all follow this
+     number on their own, so nothing else needs editing.
+
+     Worth knowing: the hero is only ever AT LEAST this tall. Slide 1
+     carries the most content (headline + sub + four cards + tagline
+     + button), so on very short screens the box still grows past the
+     dial to hold it rather than clipping any copy. The vertical
+     rhythm below is tuned so that happens as rarely as possible. */
+  --hero-scale: .7;
+  --hero-h: max(calc(100svh * var(--hero-scale)), 340px);
+
+  /* the dots + scroll cue and their offset off the bottom edge. The
+     slide reserves at least this much at its foot so the CTA button
+     can never end up sitting underneath the chrome, however short
+     the screen gets. Keep it in step with .hero-chrome below. */
+  --hero-chrome-h: 90px;
 }
 
 .hero-viewport {
@@ -11,13 +33,10 @@
      hero's height is always the tallest slide — switching never shifts layout */
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: minmax(0, auto);
-  /* svh already excludes mobile browser chrome; the old 760px floor was
-     taller than the real viewport on plenty of laptops/desktops (browser
-     chrome + OS scaling routinely leave well under 760px of 100svh), which
-     pushed the CTA and bottom cred-cards past the fold on first load. The
-     floor here only exists to stop a genuinely tiny window from collapsing
-     the hero — it no longer overrides a real, shorter viewport. */
-  min-height: max(100svh, 480px);
+  /* svh already excludes mobile browser chrome. The floor only exists to
+     stop a genuinely tiny window from collapsing the hero — it never
+     overrides a real, shorter viewport. Both come off --hero-scale. */
+  min-height: var(--hero-h);
 }
 
 .hero-slide {
@@ -29,8 +48,13 @@
   align-items: center;
   /* the extra top/bottom breathing room scales down on short viewports
      (svh) instead of staying fixed, so the hero's content fits inside
-     whatever height is actually available rather than overflowing it */
-  padding-block: calc(var(--header-h) + clamp(16px, 4svh, 34px)) clamp(56px, 14svh, 138px);
+     whatever height is actually available rather than overflowing it.
+     Both ends are ~30% of what they were, in step with --hero-scale.
+     The foot never drops below the chrome's own height, so the CTA
+     always clears the dots and scroll cue. */
+  padding-block:
+    calc(var(--header-h) + clamp(10px, 2.6svh, 24px))
+    max(calc(var(--hero-chrome-h) + 6px), clamp(48px, 10.5svh, 104px));
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -47,7 +71,19 @@
   pointer-events: auto;
 }
 
-.hero-media { position: absolute; inset: 0; overflow: hidden; z-index: -1; background: var(--bg-sky); }
+.hero-media {
+  position: absolute; inset: 0; overflow: hidden; z-index: -1;
+  background: var(--bg-sky);
+  /* Make the photo frame itself a query container. Its size comes
+     entirely from inset:0 (never from the images inside it), so
+     size containment here is safe — and it lets the cover/contain
+     rule below react to the frame's REAL shape. That matters now
+     that the hero is 30% shorter: the frame's aspect ratio no
+     longer tracks the window's, so a window-based media query
+     would be reading the wrong box. */
+  container-type: size;
+  container-name: hero-frame;
+}
 .hero-media img {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
@@ -58,15 +94,31 @@
      navy headline gains contrast instead of losing it */
   filter: brightness(var(--hero-dim)) contrast(1.04) saturate(1.06);
 }
-/* On tall/narrow viewports (portrait phones and tablets) the hero box's
-   own aspect ratio is far taller than the photos' (~16:9), so "cover"
-   has to blow the image up and cut away most of its width just to fill
-   the height — that's the left/right cropping. Switching to "contain"
-   there keeps the full image width on screen at all times (no side
-   cropping) and, anchored to the top, lands any leftover space as a
-   letterbox at the bottom instead of cropping anything. */
+/* Neither "cover" nor "contain" ever squashes the photo — both keep its
+   real proportions, so there's no distortion in either mode. The choice
+   is only about which compromise you take when the frame's shape doesn't
+   match the photo's (~16:9):
+     cover   — fills the frame, trims whatever doesn't fit
+     contain — shows the whole photo, leaves a soft band of --bg-sky
+   On a tall, narrow frame "cover" has to blow the photo up and cut away
+   most of its width, so "contain" is the better trade there.
+
+   Fallback first, for browsers without container queries — this is the
+   original window-based rule, so those browsers behave exactly as before. */
 @media (max-aspect-ratio: 4/5) {
   .hero-media img { object-fit: contain; }
+}
+/* Then the accurate version: measure the photo frame itself. A shorter
+   hero makes the frame wider relative to its height, so "cover" now
+   crops far less than it used to and stays the better choice down to
+   genuinely narrow frames — which is why this can override the
+   fallback in both directions. Anchored to the top either way, so any
+   leftover space lands at the bottom and the skyline is never clipped. */
+@container hero-frame (max-aspect-ratio: 4/5) {
+  .hero-media img { object-fit: contain; }
+}
+@container hero-frame (min-aspect-ratio: 4/5) {
+  .hero-media img { object-fit: cover; }
 }
 /* Some slides (skyline, data hall) carry two real photos — day/light and
    night/dark — instead of darkening one image for dark mode like the
@@ -122,11 +174,13 @@ html[data-theme="dark"] .hero-slide[data-slide="3"] { --hero-dim: .48; }
 .hero-title {
   font-family: var(--serif);
   font-weight: 500;
-  font-size: clamp(2.25rem, 5vw, 4.25rem);
+  /* eased down from a 4.25rem cap so two lines of headline cost ~25px
+     less height; still comfortably the dominant element on the page */
+  font-size: clamp(1.9rem, 4.1vw, 3.6rem);
   line-height: 1.1;
   letter-spacing: -.018em;
   color: var(--navy);
-  margin-bottom: 26px;
+  margin-bottom: 18px;
   text-wrap: balance;
 }
 .hero-sub {
@@ -138,19 +192,19 @@ html[data-theme="dark"] .hero-slide[data-slide="3"] { --hero-dim: .48; }
   text-wrap: pretty;
 }
 .hero-tagline {
-  margin-top: 30px;
+  margin-top: 20px;
   font-size: 1rem;
   color: var(--navy);
   font-weight: 500;
 }
-.hero-cta { margin-top: 38px; }
+.hero-cta { margin-top: 24px; }
 /* Slide 1 is the only slide carrying a 5-up cred-row, which makes its
    content block taller than the other three; since hero-content is
    vertically centered as a single unit, that extra height brings this
    slide's CTA button noticeably closer to the shared dot chrome fixed to
    the bottom of the hero. Nudging it up here restores even breathing
    room without touching the chrome or any other slide. */
-.hero-slide[data-slide="0"] .hero-cta { margin-bottom: 50px; }
+.hero-slide[data-slide="0"] .hero-cta { margin-bottom: 26px; }
 
 /* credibility card rows
    Everything here is fluid: the row width, the gaps, the card padding, the
@@ -158,8 +212,8 @@ html[data-theme="dark"] .hero-slide[data-slide="3"] { --hero-dim: .48; }
    cards track the rest of the hero instead of freezing between breakpoints. */
 .cred-row {
   display: grid;
-  gap: clamp(9px, .9vw, 16px);
-  margin: clamp(30px, 4vw, 50px) auto 0;
+  gap: clamp(8px, .8vw, 14px);
+  margin: clamp(18px, 2.6vw, 32px) auto 0;
   width: 100%;
   /* Promote the row to its own compositor layer *before* the entrance
      transition starts (not once it's already under way). Without this,
@@ -202,9 +256,9 @@ html[data-theme="dark"] .hero-slide[data-slide="3"] { --hero-dim: .48; }
   --cred-ink-soft: #0F2247;
   position: relative;
   display: flex; align-items: center;
-  gap: clamp(9px, .9vw, 13px);
-  padding: clamp(12px, 1.15vw, 18px) clamp(11px, 1.2vw, 18px);
-  border-radius: clamp(18px, 2vw, 28px);
+  gap: clamp(8px, .8vw, 12px);
+  padding: clamp(10px, .95vw, 15px) clamp(10px, 1vw, 16px);
+  border-radius: clamp(15px, 1.7vw, 23px);
   background: linear-gradient(165deg, rgba(255,255,255,.56), rgba(255,255,255,.32));
   border: 1px solid var(--glass-rim-dim);
   border-top-color: var(--glass-rim);
@@ -246,9 +300,9 @@ html[data-theme="dark"] .cred-card {
 }
 .cred-card.is-stacked {
   flex-direction: column; text-align: center;
-  gap: clamp(6px, .6vw, 9px);
-  padding: clamp(14px, 1.4vw, 21px) clamp(9px, .9vw, 15px);
-  border-radius: clamp(20px, 2.2vw, 30px);
+  gap: clamp(4px, .5vw, 7px);
+  padding: clamp(11px, 1.1vw, 17px) clamp(8px, .8vw, 13px);
+  border-radius: clamp(16px, 1.8vw, 24px);
 }
 .cred-card:hover {
   transform: translateY(-3px) translateZ(0);
@@ -258,7 +312,7 @@ html[data-theme="dark"] .cred-card {
     0 12px 30px rgba(15,34,71,.2);
 }
 .cred-ico { position: relative; color: var(--cred-ink); display: grid; place-items: center; }
-.cred-ico .ico { width: clamp(19px, 1.85vw, 26px); height: clamp(19px, 1.85vw, 26px); }
+.cred-ico .ico { width: clamp(16px, 1.55vw, 22px); height: clamp(16px, 1.55vw, 22px); }
 .cred-txt { position: relative; display: block; min-width: 0; }
 .cred-txt strong {
   display: block;
@@ -279,10 +333,12 @@ html[data-theme="dark"] .cred-card {
 }
 
 /* shared chrome: dots + chevron */
+/* Kept in step with --hero-chrome-h on .hero: 16 + 22 (dots) + 8 (gap)
+   + 44 (cue) = 90px. If any of these change, change that token too. */
 .hero-chrome {
-  position: absolute; left: 0; right: 0; bottom: 26px;
+  position: absolute; left: 0; right: 0; bottom: 16px;
   z-index: 3;
-  display: flex; flex-direction: column; align-items: center; gap: 16px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
   pointer-events: none;
 }
 .hero-dots { display: flex; gap: 10px; pointer-events: auto; }
@@ -307,32 +363,21 @@ html[data-theme="dark"] .cred-card {
   color: var(--navy);
   animation: cue-bounce 2.6s var(--ease) infinite;
 }
-.scroll-cue .ico { width: 26px; height: 26px; }
+/* the box stays 44px so the tap target does; only the glyph slims down */
+.scroll-cue .ico { width: 22px; height: 22px; }
 @keyframes cue-bounce {
   0%, 22%, 100% { transform: translateY(0); opacity: .75; }
   10%           { transform: translateY(7px); opacity: 1; }
 }
 
-/* Many laptops/desktops are wide enough to stay on the desktop nav layout
-   but shorter in usable height than the design was tuned against — browser
-   chrome, taskbars and OS display scaling all eat into the real 100svh.
-   This is a height-based query (not width) so it catches that case
-   directly and tightens the hero's vertical rhythm until everything,
-   including the CTA and cred-cards, comfortably fits without the bottom
-   of the section landing below the fold. */
-@media (max-height: 760px) {
-  .hero-title { margin-bottom: 16px; }
-  .hero-tagline { margin-top: 18px; }
-  .hero-cta { margin-top: 22px; }
-  .cred-row { margin-top: clamp(16px, 2.4vw, 28px); }
-}
-@media (max-height: 620px) {
-  .hero-title { font-size: clamp(1.9rem, 4.4vw, 3.2rem); margin-bottom: 12px; }
-  .hero-sub { font-size: .95rem; }
-  .hero-tagline { margin-top: 12px; }
-  .hero-cta { margin-top: 16px; }
-  .cred-row { margin-top: clamp(12px, 1.8vw, 20px); }
-}
+/* The hero's height tiers used to live here. They now sit at the END of
+   base/responsive.css instead: that file is imported after this one, so
+   its width-based blocks (max-width: 1024px / 768px) were overriding
+   these height-based ones on short, narrow screens — exactly the case
+   the tiers exist for. Vertical-space rules have to win, so they go last.
+   Look for "HERO HEIGHT TIERS" in base/responsive.css. */
+
+
 
 
 /* ── 10. ABOUT / PROCESS TIMELINE ────────────────────────── */
@@ -544,5 +589,3 @@ html[data-theme="dark"] .cred-card {
   text-align: center; margin-top: 22px;
   font-size: .755rem; color: var(--muted-2); letter-spacing: .02em;
 }
-
-

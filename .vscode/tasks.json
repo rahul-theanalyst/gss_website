@@ -4,8 +4,12 @@
         {
             "label": "Start website (PHP + live careers)",
             "type": "process",
-            "command": "php",
-            "args": ["-S", "127.0.0.1:8080", "-t", "${workspaceFolder}"],
+            "command": "${workspaceFolder}/.local-tools/php/php.exe",
+            "args": [
+                "-c", "${workspaceFolder}/.local-tools/php/php.ini",
+                "-S", "127.0.0.1:8080",
+                "-t", "${workspaceFolder}"
+            ],
             "options": { "cwd": "${workspaceFolder}" },
             "isBackground": true,
             "problemMatcher": [],
