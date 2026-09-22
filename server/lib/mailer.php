@@ -3,10 +3,15 @@
  * server/lib/mailer.php
  * ------------------------------------------------------------
  * Shared mail dispatch for the site's form endpoints
- * (careers-submit.php, contact-submit.php). Builds a MIME
- * message (HTML + plain-text alternative, optional attachment)
- * and sends it via SMTP when configured, falling back to PHP's
- * mail() otherwise.
+ * (careers-submit.php, contact-submit.php). Tries three
+ * transports in order, first one configured and successful wins:
+ *
+ *   1. Brevo transactional email API (gss_send_via_brevo) — the
+ *      recommended path. A service API key + one verified sender
+ *      address; no personal email account or password involved.
+ *   2. Raw-socket SMTP (gss_send_via_smtp) — optional, for a real
+ *      mailbox you control (e.g. once the company domain has one).
+ *   3. PHP's mail() — only works if the host has a local MTA.
  *
  * Kept dependency-free (no Composer/PHPMailer) so it runs as-is
  * under `php -S` locally and on shared hosting alike.
@@ -24,6 +29,75 @@ if (!function_exists('gss_log_line')) {
     function gss_log_line($logFile, $message) {
         $entry = '[' . date('c') . '] ' . $message . PHP_EOL;
         @file_put_contents($logFile, $entry, FILE_APPEND);
+    }
+}
+
+/**
+ * Sends via the Brevo (formerly Sendinblue) transactional email HTTP API.
+ * Auth is a single API key (no inbox login, no password, no app password)
+ * and the "From" address must be one verified in the Brevo dashboard —
+ * see docs/EMAIL-SETUP.md. https://api.brevo.com/v3/smtp/email
+ */
+if (!function_exists('gss_send_via_brevo')) {
+    function gss_send_via_brevo($recipients, $subject, $htmlContent, $plainText, $senderEmail, $senderName, $replyToName, $replyToEmail, $apiKey, $attachment, $logFile) {
+        if (!function_exists('curl_init')) {
+            gss_log_line($logFile, 'Brevo API skipped: the PHP curl extension is not available.');
+            return false;
+        }
+        if ($apiKey === '' || $senderEmail === '') {
+            return false;
+        }
+
+        $payload = [
+            'sender'      => ['email' => $senderEmail, 'name' => $senderName !== '' ? $senderName : $senderEmail],
+            'to'          => array_map(function ($email) { return ['email' => trim($email)]; }, $recipients),
+            'subject'     => $subject,
+            'htmlContent' => $htmlContent,
+            'textContent' => $plainText,
+        ];
+
+        if ($replyToEmail !== '') {
+            $payload['replyTo'] = ['email' => $replyToEmail, 'name' => $replyToName !== '' ? $replyToName : $replyToEmail];
+        }
+
+        if ($attachment) {
+            $payload['attachment'] = [[
+                'content' => base64_encode($attachment['data']),
+                'name'    => $attachment['filename'],
+            ]];
+        }
+
+        $ch = curl_init('https://api.brevo.com/v3/smtp/email');
+        curl_setopt_array($ch, [
+            CURLOPT_POST           => true,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER     => [
+                'accept: application/json',
+                'api-key: ' . $apiKey,
+                'content-type: application/json',
+            ],
+            CURLOPT_POSTFIELDS     => json_encode($payload),
+            CURLOPT_CONNECTTIMEOUT => 10,
+            CURLOPT_TIMEOUT        => 20,
+        ]);
+
+        $response  = curl_exec($ch);
+        $httpCode  = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $curlError = curl_error($ch);
+        // curl_close() is a no-op (deprecated) as of PHP 8.0+; the handle
+        // is freed automatically once $ch goes out of scope.
+
+        if ($response === false) {
+            gss_log_line($logFile, "Brevo API request failed: {$curlError}");
+            return false;
+        }
+
+        if ($httpCode >= 200 && $httpCode < 300) {
+            return true;
+        }
+
+        gss_log_line($logFile, "Brevo API rejected the message (HTTP {$httpCode}): " . trim($response));
+        return false;
     }
 }
 
@@ -164,7 +238,8 @@ if (!function_exists('gss_send_via_smtp')) {
  *   replyToName     string    optional
  *   replyToEmail    string    optional
  *   attachment      array|null  ['filename' => .., 'mime' => .., 'data' => raw bytes]
- *   smtpConfig      array     from config's 'smtp' block
+ *   brevoConfig     array     from config's 'brevo' block — tried first
+ *   smtpConfig      array     from config's 'smtp' block — tried second
  *   logFile         string    absolute path for delivery diagnostics
  *
  * Returns true only when the message was actually accepted for delivery.
@@ -179,6 +254,7 @@ function gss_dispatch_mail(array $args) {
     $replyToName  = gss_sanitize_line($args['replyToName'] ?? '');
     $replyToEmail = gss_sanitize_line($args['replyToEmail'] ?? '');
     $attachment   = $args['attachment'] ?? null;
+    $brevoConfig  = $args['brevoConfig'] ?? [];
     $smtpConfig   = $args['smtpConfig'] ?? [];
     $logFile      = $args['logFile'] ?? (sys_get_temp_dir() . '/gss-mail.log');
 
@@ -231,7 +307,24 @@ function gss_dispatch_mail(array $args) {
     }
 
     $sent = false;
-    if (!empty($smtpConfig['enabled']) && !empty($smtpConfig['host'])) {
+
+    if (!empty($brevoConfig['enabled'])) {
+        $sent = gss_send_via_brevo(
+            $recipients,
+            $subject,
+            $htmlContent,
+            $plainText,
+            gss_sanitize_line($brevoConfig['sender_email'] ?? ''),
+            gss_sanitize_line($brevoConfig['sender_name'] ?? $mailFromName),
+            $replyToName,
+            $replyToEmail,
+            trim((string)($brevoConfig['api_key'] ?? '')),
+            $attachment,
+            $logFile
+        );
+    }
+
+    if (!$sent && !empty($smtpConfig['enabled']) && !empty($smtpConfig['host'])) {
         $envelopeFrom = $smtpConfig['from'] ?? $mailFrom;
         $sent = gss_send_via_smtp($recipients, $envelopeFrom, $subject, $headers, $body, $smtpConfig, $logFile);
     }

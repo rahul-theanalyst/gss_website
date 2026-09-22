@@ -99,6 +99,19 @@ if (!function_exists('gss_load_mail_config')) {
             'contact_mail_from'      => gss_env('CONTACT_MAIL_FROM', $legacy['contact_mail_from'] ?? $mailFrom),
             'contact_mail_from_name' => gss_env('CONTACT_MAIL_FROM_NAME', $legacy['contact_mail_from_name'] ?? "GSS Let's Connect"),
             'log_submissions'        => gss_env_bool('LOG_SUBMISSIONS', $legacy['log_submissions'] ?? true),
+            // Brevo transactional email API — the recommended transport.
+            // No personal email account or password: a service API key
+            // plus one address verified in the Brevo dashboard. Shared by
+            // both forms, same as 'smtp' below. See docs/EMAIL-SETUP.md.
+            'brevo' => [
+                'enabled'      => gss_env_bool('BREVO_ENABLED', $legacy['brevo']['enabled'] ?? false),
+                'api_key'      => gss_env('BREVO_API_KEY', $legacy['brevo']['api_key'] ?? ''),
+                'sender_email' => gss_env('BREVO_SENDER_EMAIL', $legacy['brevo']['sender_email'] ?? $mailFrom),
+                'sender_name'  => gss_env('BREVO_SENDER_NAME', $legacy['brevo']['sender_name'] ?? $mailFromName),
+            ],
+            // Optional alternative to Brevo: your own SMTP mailbox (e.g.
+            // once the company domain has a real inbox). Never put a
+            // personal Gmail/Outlook account password here.
             'smtp' => [
                 'enabled'    => gss_env_bool('SMTP_ENABLED', $legacySmtp['enabled'] ?? false),
                 'host'       => gss_env('SMTP_HOST', $legacySmtp['host'] ?? ''),

@@ -260,6 +260,7 @@ $sent = gss_dispatch_mail([
         'mime'     => 'application/pdf',
         'data'     => $fileData,
     ],
+    'brevoConfig'  => $config['brevo'] ?? [],
     'smtpConfig'   => $config['smtp'] ?? [],
     'logFile'      => SUBMISSIONS_LOG,
 ]);
