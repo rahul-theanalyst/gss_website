@@ -9,6 +9,9 @@
 
 .techdelivery-page #main { overflow-x: clip; }
 
+.techdelivery-page .td-nb { display: none; }
+@media (min-width: 861px) { .techdelivery-page .td-nb { display: inline; } }
+
 .techdelivery-page .td-hero__title,
 .techdelivery-page .td-focus__title,
 .techdelivery-page .td-ways__title,
@@ -24,7 +27,7 @@
 .techdelivery-page .td-hero {
   background: var(--bg);
   padding-top: calc(var(--header-h) + clamp(14px, 2vw, 30px));
-  padding-bottom: clamp(18px, 2.2vw, 32px);
+  padding-bottom: clamp(20px, 2.4vw, 36px);
   border-bottom: 1px solid var(--hairline);
 }
 .techdelivery-page .td-hero__grid {
@@ -32,30 +35,31 @@
   grid-template-columns: minmax(0, 1fr) var(--fig-hero-w);
   gap: clamp(28px, 4vw, 64px);
   align-items: center;
+  min-height: clamp(180px, 16vw, 228px);
 }
 .techdelivery-page .td-hero__text {
   align-self: center;
   margin-left: var(--gutter);
   border-left: 2px solid var(--gold);
   padding-inline-start: clamp(20px, 2.2vw, 34px);
-  max-width: 34rem;
+  max-width: 38rem;
 }
 .techdelivery-page .td-hero__title {
   font-family: var(--serif); font-weight: 500;
-  font-size: clamp(1.9rem, 3.3vw, 3rem);
+  font-size: clamp(1.95rem, 3.6vw, 3.3rem);
   line-height: 1.14; letter-spacing: -.012em;
   color: var(--navy);
-  margin: clamp(10px, 1.4vw, 16px) 0 clamp(16px, 2vw, 24px);
+  margin: 0 0 clamp(18px, 2.4vw, 30px);
   text-wrap: balance;
 }
 .techdelivery-page .td-hero__lede {
   color: var(--muted); font-size: clamp(.95rem, 1.05vw, 1.08rem);
-  line-height: 1.7; max-width: 32rem; margin: 0; text-wrap: pretty;
+  line-height: 1.7; max-width: 34rem; margin: 0; text-wrap: pretty;
 }
 .techdelivery-page .td-hero__media {
   position: relative; align-self: stretch;
   margin: 0; overflow: hidden;
-  min-height: clamp(222px, 25vw, 358px);
+  min-height: 0;
 }
 .techdelivery-page .td-hero__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 32%; display: block; }
 .techdelivery-page .td-hero__media::after {
@@ -77,7 +81,7 @@
 @media (min-width: 901px) {
   .techdelivery-page .td-hero__media {
     align-self: stretch;
-    margin-block: calc(-1 * clamp(14px, 2vw, 30px)) calc(-1 * clamp(18px, 2.2vw, 32px));
+    margin-block: calc(-1 * clamp(14px, 2vw, 30px)) calc(-1 * clamp(20px, 2.4vw, 36px));
   }
 }
 

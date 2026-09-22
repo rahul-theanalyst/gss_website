@@ -54,7 +54,9 @@ html[data-theme="dark"] .global-talent-page .gt-hero__media img {
   .careers-page .car-hero__media,
   .letsconnect-page .lc-hero__media,
   .bizcon-page .bc-hero__media,
-  .dbi-page .dbi-hero__media {
+  .dbi-page .dbi-hero__media,
+  .techdelivery-page .td-hero__media,
+  .focusarea-page .fa-hero__media {
     align-self: stretch;
     min-height: 0;
   }

@@ -476,6 +476,32 @@ html[data-theme="dark"] .careers-page .car-connect { background: var(--bg-soft);
 }
 .careers-page .car-consent a { color: var(--navy); text-decoration: underline; text-underline-offset: 2px; }
 .careers-page .car-form__submit { align-self: flex-start; margin-top: 2px; }
+.careers-page .car-form__submit:disabled {
+  opacity: .65; cursor: not-allowed; pointer-events: none;
+}
+.careers-page .car-form .form-submission-note {
+  display: block; margin-top: 8px; padding: 12px 16px;
+  border-radius: 4px; font-size: .88rem; line-height: 1.6;
+  transition: all .25s var(--ease);
+}
+.careers-page .car-form .form-submission-note.is-success {
+  border-left: 3px solid #16a34a;
+  background: rgba(22, 163, 74, 0.08);
+  color: #15803d;
+}
+html[data-theme="dark"] .careers-page .car-form .form-submission-note.is-success {
+  background: rgba(22, 163, 74, 0.16);
+  color: #4ade80;
+}
+.careers-page .car-form .form-submission-note.is-error {
+  border-left: 3px solid #dc2626;
+  background: rgba(220, 38, 38, 0.08);
+  color: #b91c1c;
+}
+html[data-theme="dark"] .careers-page .car-form .form-submission-note.is-error {
+  background: rgba(220, 38, 38, 0.16);
+  color: #f87171;
+}
 
 /* ── 06 · THE PROMISE (dark band) ────────────────────────── */
 .careers-page .car-promise {

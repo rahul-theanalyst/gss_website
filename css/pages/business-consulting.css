@@ -8,6 +8,9 @@
 
 .bizcon-page #main { overflow-x: clip; }
 
+.bizcon-page .bc-nb { display: none; }
+@media (min-width: 861px) { .bizcon-page .bc-nb { display: inline; } }
+
 .bizcon-page .bc-hero__title,
 .bizcon-page .bc-fit__title,
 .bizcon-page .bc-ways__title,
@@ -31,29 +34,30 @@
   grid-template-columns: minmax(0, 1fr) var(--fig-hero-w);
   gap: clamp(28px, 4vw, 64px);
   align-items: center;
+  min-height: clamp(180px, 16vw, 228px);
 }
 .bizcon-page .bc-hero__text {
   align-self: center;
   margin-left: var(--gutter);
   border-left: 2px solid var(--gold);
   padding-inline-start: clamp(20px, 2.2vw, 34px);
-  max-width: 34rem;
+  max-width: 44rem;
 }
 .bizcon-page .bc-hero__title {
   font-family: var(--serif); font-weight: 500;
-  font-size: clamp(1.9rem, 3.4vw, 3.1rem);
-  line-height: 1.16; letter-spacing: -.012em;
-  color: var(--navy); margin: clamp(12px, 1.6vw, 18px) 0 clamp(18px, 2.4vw, 28px);
+  font-size: clamp(1.78rem, 2.8vw, 2.65rem);
+  line-height: 1.14; letter-spacing: -.012em;
+  color: var(--navy); margin: 0 0 clamp(18px, 2.4vw, 30px);
   text-wrap: balance;
 }
 .bizcon-page .bc-hero__lede {
   color: var(--muted); font-size: clamp(.95rem, 1.05vw, 1.08rem);
-  line-height: 1.7; max-width: 32rem; margin: 0; text-wrap: pretty;
+  line-height: 1.7; max-width: 38rem; margin: 0; text-wrap: pretty;
 }
 .bizcon-page .bc-hero__media {
   position: relative; align-self: stretch;
   margin: 0; overflow: hidden;
-  min-height: clamp(222px, 25vw, 352px);
+  min-height: 0;
 }
 .bizcon-page .bc-hero__media img {
   position: absolute; inset: 0;

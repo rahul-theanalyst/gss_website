@@ -41,8 +41,8 @@
 /* ── 01 · HERO ───────────────────────────────────────────── */
 .global-talent-page .gt-hero {
   background: var(--bg);
-  padding-top: calc(var(--header-h) + clamp(8px, 1.1vw, 16px));
-  padding-bottom: clamp(20px, 2.2vw, 32px);
+  padding-top: calc(var(--header-h) + clamp(14px, 2vw, 30px));
+  padding-bottom: clamp(20px, 2.4vw, 36px);
   border-bottom: 1px solid var(--hairline);
 }
 .global-talent-page .gt-hero__grid {
@@ -59,34 +59,32 @@
   margin-left: var(--gutter);
   border-left: 2px solid var(--gold);
   padding-inline-start: clamp(20px, 2.2vw, 34px);
-  max-width: 44rem;
+  max-width: 34rem;
 }
 .global-talent-page .gt-hero__title {
   font-family: var(--serif);
   font-weight: 500;
-  font-size: clamp(1.95rem, 3.65vw, 3.35rem);
+  font-size: clamp(1.95rem, 3.6vw, 3.3rem);
   line-height: 1.14;
   letter-spacing: -.012em;
   color: var(--navy);
-  margin: 0 0 clamp(20px, 2.6vw, 36px);
+  margin: 0 0 clamp(18px, 2.4vw, 30px);
   text-wrap: balance;
 }
 .global-talent-page .gt-hero__tail {
   color: var(--muted);
   font-size: clamp(.95rem, 1.05vw, 1.08rem);
-  line-height: 1.68;
-  max-width: 30rem;
+  line-height: 1.7;
+  max-width: 32rem;
   margin: 0;
   text-wrap: pretty;
 }
-.global-talent-page .gt-hero__tail { margin-top: clamp(14px, 1.6vw, 22px); }
-.global-talent-page .gt-hero__act { margin: clamp(24px, 2.8vw, 36px) 0 0; }
 
 .global-talent-page .gt-hero__media {
   position: relative;
   align-self: stretch;
   margin: 0; overflow: hidden;
-  min-height: clamp(230px, 26vw, 366px);
+  min-height: clamp(222px, 25vw, 352px);
 }
 /* the photo bleeds past the section's own top/bottom padding so it
    reaches the header's bottom edge and the section's true bottom edge —
@@ -94,7 +92,7 @@
    thing in the section, with no trailing block for it to run into. */
 @media (min-width: 901px) {
   .global-talent-page .gt-hero__media {
-    margin-block: calc(-1 * clamp(8px, 1.1vw, 16px)) calc(-1 * clamp(20px, 2.2vw, 32px));
+    margin-block: calc(-1 * clamp(14px, 2vw, 30px)) calc(-1 * clamp(20px, 2.4vw, 36px));
   }
 }
 .global-talent-page .gt-hero__media img {

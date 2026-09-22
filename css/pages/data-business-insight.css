@@ -9,6 +9,9 @@
 
 .dbi-page #main { overflow-x: clip; }
 
+.dbi-page .dbi-nb { display: none; }
+@media (min-width: 861px) { .dbi-page .dbi-nb { display: inline; } }
+
 .dbi-page .dbi-hero__title,
 .dbi-page .dbi-focus__title,
 .dbi-page .dbi-ways__title,
@@ -24,7 +27,7 @@
 .dbi-page .dbi-hero {
   background: var(--bg);
   padding-top: calc(var(--header-h) + clamp(14px, 2vw, 30px));
-  padding-bottom: clamp(18px, 2.2vw, 32px);
+  padding-bottom: clamp(20px, 2.4vw, 36px);
   border-bottom: 1px solid var(--hairline);
 }
 .dbi-page .dbi-hero__grid {
@@ -32,30 +35,31 @@
   grid-template-columns: minmax(0, 1fr) var(--fig-hero-w);
   gap: clamp(28px, 4vw, 64px);
   align-items: center;
+  min-height: clamp(180px, 16vw, 228px);
 }
 .dbi-page .dbi-hero__text {
   align-self: center;
   margin-left: var(--gutter);
   border-left: 2px solid var(--gold);
   padding-inline-start: clamp(20px, 2.2vw, 34px);
-  max-width: 34rem;
+  max-width: 41rem;
 }
 .dbi-page .dbi-hero__title {
   font-family: var(--serif); font-weight: 500;
-  font-size: clamp(1.9rem, 3.3vw, 3rem);
+  font-size: clamp(1.92rem, 3.5vw, 3.2rem);
   line-height: 1.14; letter-spacing: -.012em;
   color: var(--navy);
-  margin: clamp(10px, 1.4vw, 16px) 0 clamp(16px, 2vw, 24px);
+  margin: 0 0 clamp(18px, 2.4vw, 30px);
   text-wrap: balance;
 }
 .dbi-page .dbi-hero__lede {
   color: var(--muted); font-size: clamp(.95rem, 1.05vw, 1.08rem);
-  line-height: 1.7; max-width: 32rem; margin: 0; text-wrap: pretty;
+  line-height: 1.7; max-width: 36rem; margin: 0; text-wrap: pretty;
 }
 .dbi-page .dbi-hero__media {
   position: relative; align-self: stretch;
   margin: 0; overflow: hidden;
-  min-height: clamp(222px, 25vw, 358px);
+  min-height: 0;
 }
 .dbi-page .dbi-hero__media img {
   position: absolute; inset: 0;
@@ -80,7 +84,7 @@ html.js .dbi-page .dbi-hero__media.is-in img { transform: scale(1); }
    the photo (which clips via overflow:hidden + object-fit:cover) extends */
 @media (min-width: 901px) {
   .dbi-page .dbi-hero__media {
-    margin-block: calc(-1 * clamp(14px, 2vw, 30px)) calc(-1 * clamp(18px, 2.2vw, 32px));
+    margin-block: calc(-1 * clamp(14px, 2vw, 30px)) calc(-1 * clamp(20px, 2.4vw, 36px));
   }
 }
 

@@ -53,39 +53,40 @@ html[data-theme="dark"] .clientele-page {
      same top/bottom spacing and overall height */
   padding-top: calc(var(--header-h) + clamp(14px, 2vw, 30px));
   padding-bottom: clamp(20px, 2.4vw, 36px);
+  border-bottom: 1px solid var(--hairline);
 }
 html[data-theme="dark"] .clientele-page .clx-hero { background: var(--bg-soft); }
 
 .clientele-page .clx-hero__grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) var(--fig-hero-w);
-  align-items: stretch;
+  align-items: center;
   gap: clamp(28px, 4vw, 64px);
 }
 .clientele-page .clx-hero__text {
   align-self: center;
   margin-left: var(--gutter);
-  padding: clamp(6px, 1.4vw, 16px) clamp(20px, 3vw, 44px);
   border-left: 2px solid var(--gold);
-  max-width: 44rem;
+  padding-inline-start: clamp(20px, 2.2vw, 34px);
+  max-width: 34rem;
 }
 .clientele-page .clx-hero__title {
   font-family: var(--serif); font-weight: 500;
-  font-size: clamp(2.1rem, 4.6vw, 3.6rem);
-  line-height: 1.07; letter-spacing: -.02em;
-  color: var(--navy); margin: 0;
+  font-size: clamp(1.95rem, 3.6vw, 3.3rem);
+  line-height: 1.14; letter-spacing: -.012em;
+  color: var(--navy); margin: 0 0 clamp(18px, 2.4vw, 30px);
   text-wrap: balance;
   font-variant-numeric: lining-nums;
 }
 .clientele-page .clx-hero__lede {
-  margin: clamp(18px, 2.4vw, 30px) 0 0;
   color: var(--muted);
-  font-size: clamp(1rem, 1.12vw, 1.08rem);
-  line-height: 1.72; max-width: 48ch;
+  font-size: clamp(.95rem, 1.05vw, 1.08rem);
+  line-height: 1.7; max-width: 32rem; margin: 0;
   text-wrap: pretty;
 }
 .clientele-page .clx-hero__media {
-  position: relative; margin: 0; overflow: hidden;
+  position: relative; align-self: stretch;
+  margin: 0; overflow: hidden;
   min-height: clamp(222px, 25vw, 352px);
 }
 /* the photo bleeds past the section's own top/bottom padding so it
@@ -183,7 +184,8 @@ html:not(.js) .clientele-page .clx-band__slash { transform: rotate(var(--tilt));
   /* The wall's own padding carries its fade, so the section only needs a
      sliver below it — the wash has already dissolved into the background
      before the next section begins. */
-  padding-block: clamp(44px, 5.2vw, 84px) clamp(4px, .8vw, 12px);
+  padding-top: clamp(16px, 2vw, 28px);
+  padding-bottom: 0;
   overflow: hidden;
 }
 .clientele-page .clx-logos__head { text-align: left; max-width: 76rem; }
@@ -212,10 +214,12 @@ html:not(.js) .clientele-page .clx-band__slash { transform: rotate(var(--tilt));
 .clientele-page .clx-wall {
   position: relative;
   isolation: isolate;
-  --clx-wall-pad: clamp(40px, 4.6vw, 72px);
+  --clx-wall-pad-t: clamp(20px, 2.4vw, 36px);
+  --clx-wall-pad-b: clamp(8px, 1.1vw, 16px);
   --clx-wall-side: 18%;            /* how far in the wash fades from each side */
-  margin-top: clamp(10px, 1.6vw, 24px);
-  padding-block: var(--clx-wall-pad);
+  margin-top: clamp(6px, 1vw, 14px);
+  padding-top: var(--clx-wall-pad-t);
+  padding-bottom: var(--clx-wall-pad-b);
 }
 /* without scripting the rows are never built — the plain logo list below
    takes over, so the empty wall and its wash step aside */
@@ -228,11 +232,11 @@ html:not(.js) .clientele-page .clx-wall { display: none; }
   /* vertical: the fade lives entirely in the wall's padding, so every card
      row sits on the full tint; horizontal: a wide, gentle falloff */
   -webkit-mask-image:
-    linear-gradient(180deg, transparent 0, #000 var(--clx-wall-pad), #000 calc(100% - var(--clx-wall-pad)), transparent 100%),
+    linear-gradient(180deg, transparent 0, #000 var(--clx-wall-pad-t), #000 calc(100% - var(--clx-wall-pad-b)), transparent 100%),
     linear-gradient(90deg,  transparent 0, #000 var(--clx-wall-side), #000 calc(100% - var(--clx-wall-side)), transparent 100%);
   -webkit-mask-composite: source-in;
           mask-image:
-    linear-gradient(180deg, transparent 0, #000 var(--clx-wall-pad), #000 calc(100% - var(--clx-wall-pad)), transparent 100%),
+    linear-gradient(180deg, transparent 0, #000 var(--clx-wall-pad-t), #000 calc(100% - var(--clx-wall-pad-b)), transparent 100%),
     linear-gradient(90deg,  transparent 0, #000 var(--clx-wall-side), #000 calc(100% - var(--clx-wall-side)), transparent 100%);
           mask-composite: intersect;
 }
@@ -369,8 +373,9 @@ html.js .clientele-page .clx-marquee.is-ready .clx-rail { opacity: 1; }
   background: var(--bg-sky);
   /* rises softly out of the logo section's background instead of starting
      on a hard edge right beneath the wall */
-  background: linear-gradient(180deg, var(--bg) 0, var(--bg-sky) clamp(56px, 7vw, 110px));
-  padding-block: clamp(28px, 3.2vw, 52px);
+  background: linear-gradient(180deg, var(--bg) 0, var(--bg-sky) clamp(18px, 2.2vw, 32px));
+  padding-top: clamp(14px, 1.8vw, 22px);
+  padding-bottom: clamp(28px, 3.2vw, 48px);
 }
 .clientele-page .clx-contribute__inner {
   position: relative; z-index: 1; max-width: 1400px;
@@ -404,7 +409,7 @@ html.js .clientele-page .clx-marquee.is-ready .clx-rail { opacity: 1; }
 html[data-theme="dark"] .clientele-page .clx-contribute {
   background:
     radial-gradient(62% 78% at 22% 46%, rgba(140, 172, 216, .075) 0%, transparent 72%),
-    linear-gradient(180deg, var(--bg) 0, #16243A clamp(56px, 7vw, 110px), #132035 100%);
+    linear-gradient(180deg, var(--bg) 0, #16243A clamp(18px, 2.2vw, 32px), #132035 100%);
 }
 html[data-theme="dark"] .clientele-page .clx-contribute__body { color: #B3C0D2; }
 /* ── RESPONSIVE ──────────────────────────────────────────── */
