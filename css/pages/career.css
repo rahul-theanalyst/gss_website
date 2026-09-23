@@ -484,6 +484,9 @@ html[data-theme="dark"] .careers-page .car-connect { background: var(--bg-soft);
   border-radius: 4px; font-size: .88rem; line-height: 1.6;
   transition: all .25s var(--ease);
 }
+/* display:block above would otherwise override [hidden], leaving an empty
+   gold-edged box (and a flex gap) under the submit button */
+.careers-page .car-form .form-submission-note[hidden] { display: none; }
 .careers-page .car-form .form-submission-note.is-success {
   border-left: 3px solid #16a34a;
   background: rgba(22, 163, 74, 0.08);
