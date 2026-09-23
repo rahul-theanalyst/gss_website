@@ -57,7 +57,10 @@
 
 
 /* ── 16. FINAL CTA & SUNBURSTS ───────────────────────────── */
-.section-final { padding-top: clamp(40px, 4.5vw, 68px); padding-bottom: clamp(40px, 4.5vw, 64px); }
+/* padding-top trimmed: this section sits right after .section-about's own
+   closing-line, and the two paddings were stacking into a visibly empty
+   band between "One relationship..." and "You don't need to know...". */
+.section-final { padding-top: clamp(18px, 2.2vw, 32px); padding-bottom: clamp(40px, 4.5vw, 64px); }
 .section-final .container { text-align: center; position: relative; z-index: 1; }
 .final-title {
   font-family: var(--serif); font-weight: 500;

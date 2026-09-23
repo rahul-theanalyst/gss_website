@@ -2,7 +2,14 @@
 html.js .reveal {
   opacity: 0;
   transform: translateY(22px);
-  transition: opacity .7s var(--ease), transform .7s var(--ease);
+  /* was .7s: above-the-fold content (the About heading right below the
+     hero, in particular) was measurably still mid-fade a noticeable
+     while after load, reading as "missing until you scroll" even though
+     it was already correctly positioned and already triggered — just
+     slow to finish. Shortened so it settles quickly for anything already
+     in view on load, while still playing the same fade/rise for anything
+     genuinely discovered by scrolling further down the page. */
+  transition: opacity .4s var(--ease), transform .4s var(--ease);
 }
 html.js .reveal.is-in { opacity: 1; transform: none; }
 
@@ -252,6 +259,7 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
    applied to a 390px screen. Clamped, the same rule resolves to the
    phone's tight end on a phone and the laptop's roomy end on a laptop,
    so a tier can only ever tighten, never loosen. */
+
 @media (max-height: 850px) {
   .hero-title { font-size: clamp(1.75rem, 3.6vw, 3rem); margin-bottom: clamp(12px, 1.4vw, 14px); }
   .hero-tagline { margin-top: clamp(10px, 1.6vw, 14px); }

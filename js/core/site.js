@@ -566,7 +566,12 @@
       if (el.classList.contains('is-in')) return;
       var siblings = el.parentElement ? $$('.reveal', el.parentElement) : [];
       var order = Math.max(0, siblings.indexOf(el));
-      el.style.transitionDelay = Math.min(order, 6) * 90 + 'ms';
+      // was 90ms/step: fine for content discovered by scrolling, but it
+      // stacked with the .reveal transition duration to leave later
+      // same-parent siblings (e.g. the About heading right after its
+      // eyebrow) visibly still fading in well after they were already on
+      // screen and already triggered.
+      el.style.transitionDelay = Math.min(order, 6) * 45 + 'ms';
       el.classList.add('is-in');
       observer.unobserve(el);
     }
