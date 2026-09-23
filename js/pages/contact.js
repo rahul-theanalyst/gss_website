@@ -100,7 +100,7 @@
         // Failure: display error message while PRESERVING all user entered input values
         var errorMessage = (res.data && res.data.error)
           ? res.data.error
-          : 'Unable to send your message right now (Error ' + res.status + '). Please check your details and try again.';
+          : 'Something went wrong. Please try again or email contact@globalsoftsystems.com directly.';
 
         if (statusNote) {
           statusNote.className = 'form-submission-note is-error';
@@ -110,10 +110,10 @@
       }
     })
     .catch(function () {
-      // Network failure: preserve all inputs and allow retry
+      // Network failure (fetch threw, no response at all): preserve all inputs and allow retry
       if (statusNote) {
         statusNote.className = 'form-submission-note is-error';
-        statusNote.textContent = 'Network or connection error. Please check your connection and click Send Message to retry.';
+        statusNote.textContent = 'Something went wrong. Please try again or email contact@globalsoftsystems.com directly.';
         statusNote.hidden = false;
       }
     })

@@ -8,5 +8,7 @@ careers-errors.log
 server/careers-submissions.log
 server/contact-submissions.log
 
-# Mail credentials — never commit; see server/.env.example for the template
+# Mail/API credentials — never commit; see server/.env.example for the template
 server/.env
+server/.env.*
+!server/.env.example

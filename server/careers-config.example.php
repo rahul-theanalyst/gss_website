@@ -23,12 +23,6 @@ return [
     // 'contact_recipients'     => ['contact@globalsoftsystems.com'],
     // 'contact_mail_from'      => 'noreply@globalsoftsystems.com',
     // 'contact_mail_from_name' => "GSS Let's Connect",
-    // 'brevo' => [
-    //     'enabled'      => false,
-    //     'api_key'      => '',
-    //     'sender_email' => '',
-    //     'sender_name'  => 'GSS Website',
-    // ],
     // 'smtp' => [
     //     'enabled'    => false,
     //     'host'       => 'smtp.example.com',

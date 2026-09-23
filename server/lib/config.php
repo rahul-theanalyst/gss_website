@@ -3,7 +3,8 @@
  * server/lib/config.php
  * ------------------------------------------------------------
  * Loads mail configuration (recipients, from-address, SMTP
- * credentials) for careers-submit.php and contact-submit.php.
+ * credentials) for careers-submit.php and contact-submit.php, and
+ * the Ceipal careers API configuration for careers-jobs.php.
  *
  * Precedence, highest first:
  *   1. Real environment variables (however the host sets them —
@@ -11,10 +12,9 @@
  *      SetEnv, a process manager, etc.)
  *   2. server/.env (gitignored — see .env.example for the list
  *      of keys; this is the recommended place for local testing)
- *   3. server/careers-config.php (gitignored legacy config file;
- *      still used for the unrelated Ceipal api_key/cp_id, and
- *      kept here only as a fallback so nothing breaks if a
- *      value hasn't been migrated to .env yet)
+ *   3. server/careers-config.php (gitignored legacy config file,
+ *      kept only as a fallback so nothing breaks if a value
+ *      hasn't been migrated to .env yet)
  *   4. Hardcoded defaults below.
  *
  * Credentials never need to live in PHP source — only in .env or
@@ -99,19 +99,10 @@ if (!function_exists('gss_load_mail_config')) {
             'contact_mail_from'      => gss_env('CONTACT_MAIL_FROM', $legacy['contact_mail_from'] ?? $mailFrom),
             'contact_mail_from_name' => gss_env('CONTACT_MAIL_FROM_NAME', $legacy['contact_mail_from_name'] ?? "GSS Let's Connect"),
             'log_submissions'        => gss_env_bool('LOG_SUBMISSIONS', $legacy['log_submissions'] ?? true),
-            // Brevo transactional email API — the recommended transport.
-            // No personal email account or password: a service API key
-            // plus one address verified in the Brevo dashboard. Shared by
-            // both forms, same as 'smtp' below. See docs/EMAIL-SETUP.md.
-            'brevo' => [
-                'enabled'      => gss_env_bool('BREVO_ENABLED', $legacy['brevo']['enabled'] ?? false),
-                'api_key'      => gss_env('BREVO_API_KEY', $legacy['brevo']['api_key'] ?? ''),
-                'sender_email' => gss_env('BREVO_SENDER_EMAIL', $legacy['brevo']['sender_email'] ?? $mailFrom),
-                'sender_name'  => gss_env('BREVO_SENDER_NAME', $legacy['brevo']['sender_name'] ?? $mailFromName),
-            ],
-            // Optional alternative to Brevo: your own SMTP mailbox (e.g.
-            // once the company domain has a real inbox). Never put a
-            // personal Gmail/Outlook account password here.
+            // A real SMTP mailbox (e.g. the company domain's own inbox), or
+            // left disabled to send via the hosting server's own mail()
+            // instead — no mailbox password needed either way unless you
+            // explicitly enable SMTP.
             'smtp' => [
                 'enabled'    => gss_env_bool('SMTP_ENABLED', $legacySmtp['enabled'] ?? false),
                 'host'       => gss_env('SMTP_HOST', $legacySmtp['host'] ?? ''),
@@ -121,6 +112,21 @@ if (!function_exists('gss_load_mail_config')) {
                 'encryption' => gss_env('SMTP_ENCRYPTION', $legacySmtp['encryption'] ?? 'tls'),
                 'from'       => gss_env('SMTP_FROM', $legacySmtp['from'] ?? null),
             ],
+        ];
+    }
+}
+
+if (!function_exists('gss_load_ceipal_config')) {
+    // Same precedence as gss_load_mail_config(): env vars first (CEIPAL_API_KEY /
+    // CEIPAL_CP_ID in server/.env, or the host's own environment), falling back
+    // to the legacy server/careers-config.php only if those aren't set.
+    function gss_load_ceipal_config() {
+        gss_load_env(__DIR__ . '/../.env');
+        $legacy = gss_load_legacy_config();
+
+        return [
+            'api_key' => gss_env('CEIPAL_API_KEY', $legacy['api_key'] ?? ''),
+            'cp_id'   => gss_env('CEIPAL_CP_ID', $legacy['cp_id'] ?? ''),
         ];
     }
 }

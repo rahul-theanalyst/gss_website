@@ -227,7 +227,6 @@ $sent = gss_dispatch_mail([
     'mailFromName' => $mailFromName,
     'replyToName'  => $fullName,
     'replyToEmail' => $email,
-    'brevoConfig'  => $config['brevo'] ?? [],
     'smtpConfig'   => $config['smtp'] ?? [],
     'logFile'      => SUBMISSIONS_LOG,
 ]);

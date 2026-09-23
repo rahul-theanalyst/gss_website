@@ -11,6 +11,8 @@
  * are needed beyond pointing DATA_URL at this file.
  */
 
+require_once __DIR__ . '/lib/config.php';
+
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
 
@@ -27,15 +29,12 @@ function logError($message) {
     @file_put_contents(ERROR_LOG, $line, FILE_APPEND);
 }
 
+// Reads CEIPAL_API_KEY / CEIPAL_CP_ID via the shared config loader (env vars /
+// server/.env first, gss_load_ceipal_config() in lib/config.php).
 function loadConfig() {
-    $path = __DIR__ . '/careers-config.php';
-    if (!is_file($path)) {
-        logError('careers-config.php is missing. Copy careers-config.example.php and fill in real values.');
-        return null;
-    }
-    $config = require $path;
-    if (!is_array($config) || empty($config['api_key']) || empty($config['cp_id'])) {
-        logError('careers-config.php is missing api_key or cp_id.');
+    $config = gss_load_ceipal_config();
+    if (empty($config['api_key']) || empty($config['cp_id'])) {
+        logError('CEIPAL_API_KEY / CEIPAL_CP_ID are not set. Add them to server/.env — see server/.env.example.');
         return null;
     }
     return $config;
