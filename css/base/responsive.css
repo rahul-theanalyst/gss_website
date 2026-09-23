@@ -313,6 +313,82 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   .scroll-cue { display: none; }
 }
 
+/* ══ PHONE HERO (portrait) ══════════════════════════════════════════
+   The photo becomes a band that starts right under the fixed header.
+   Only the gold eyebrow and the headline sit on it; everything else
+   follows below. .hero-content is flattened with display:contents so
+   its children can share the photo's grid rows. Last in the file so
+   the height tiers above can't reinstate the desktop padding. */
+@media (max-width: 767.98px) and (orientation: portrait) {
+  /* the band matches the photos' 16:9, so each is shown whole, uncropped */
+  .hero { --hero-photo-h: 56.25vw; }
+  .hero-viewport { min-height: 0; }
+  .hero-slide {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    /* rows 1–4 are the photo: the flexible rows either side of the
+       eyebrow and headline rows keep that pair centred on it */
+    grid-template-rows: 1fr auto auto 1fr;
+    /* sized to its own content, not stretched to the tallest slide —
+       stretching would pour the spare height into those flexible rows */
+    align-self: start;
+    align-content: start;
+    align-items: start;
+    padding: var(--header-h) 0 calc(var(--hero-chrome-h) + 6px);
+    /* opaque, like the full-bleed photo was, so the outgoing slide's
+       copy doesn't show through mid-crossfade */
+    background: var(--bg-sky);
+  }
+  .hero-media {
+    position: relative; inset: auto; z-index: 0;
+    grid-area: 1 / 1 / 5 / 2;
+    height: var(--hero-photo-h);
+  }
+
+  .hero-content { display: contents; }
+  .hero-content > * {
+    grid-column: 1;
+    padding-inline: clamp(20px, 5.2vw, 88px);
+  }
+  .hero-content > .eyebrow,
+  .hero-content > .hero-title {
+    position: relative; z-index: 1;
+    margin: 0;
+  }
+  .hero-content > .eyebrow { grid-row: 2; margin-bottom: 10px; }
+  .hero-content > .hero-title { grid-row: 3; }
+  .hero-content > .hero-title + .hero-sub { margin-top: clamp(16px, 4.6vw, 22px); }
+
+  /* slides 2 and 3 carry less copy than the hero's tallest slide, so
+     they fill its height and centre their copy + button in the space
+     below the photo instead of leaving one big gap above the dots.
+     The photo rows here are auto (not fr) so the spare height goes only
+     to the two spacer rows; the eyebrow/headline pair stays centred on
+     the photo by hugging the row boundary between them. */
+  .hero-slide:nth-child(2),
+  .hero-slide:nth-child(3) {
+    align-self: stretch;
+    grid-template-rows: auto auto auto auto 1fr auto auto 1fr;
+  }
+  .hero-slide:nth-child(2) .eyebrow,
+  .hero-slide:nth-child(3) .eyebrow { align-self: end; }
+  .hero-slide:nth-child(2) .hero-sub,
+  .hero-slide:nth-child(3) .hero-sub { grid-row: 6; }
+  .hero-slide:nth-child(2) .hero-cta,
+  .hero-slide:nth-child(3) .hero-cta { grid-row: 7; }
+
+  /* the scroll cue should lead straight into "How GSS Works" */
+  .hero-chrome { bottom: 4px; }
+  .section-about { padding-top: 16px; }
+}
+/* the smallest phones: the photo is under 215px tall, so the overlay
+   drops the eyebrow's side rules and sets the headline small enough
+   that each of its two lines fits without re-wrapping */
+@media (max-width: 380px) and (orientation: portrait) {
+  .hero-content > .eyebrow .rule { display: none; }
+  .hero-content > h2.hero-title { font-size: 1.5rem; }
+}
+
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
