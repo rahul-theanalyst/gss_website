@@ -29,12 +29,12 @@ function logError($message) {
     @file_put_contents(ERROR_LOG, $line, FILE_APPEND);
 }
 
-// Reads CEIPAL_API_KEY / CEIPAL_CP_ID via the shared config loader (env vars /
-// server/.env first, gss_load_ceipal_config() in lib/config.php).
+// Reads CEIPAL_API_KEY / CEIPAL_CP_ID via the shared config loader
+// (server/.env.gss_newsite only — gss_load_ceipal_config() in lib/config.php).
 function loadConfig() {
     $config = gss_load_ceipal_config();
     if (empty($config['api_key']) || empty($config['cp_id'])) {
-        logError('CEIPAL_API_KEY / CEIPAL_CP_ID are not set. Add them to server/.env — see server/.env.example.');
+        logError('CEIPAL_API_KEY / CEIPAL_CP_ID are not set. Add them to server/.env.gss_newsite.');
         return null;
     }
     return $config;

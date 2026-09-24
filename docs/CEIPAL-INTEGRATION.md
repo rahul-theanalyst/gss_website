@@ -12,9 +12,10 @@ and Apply buttons use that feed. Credentials stay in PHP, outside browser code.
    `candidateportal.ceipal.com` (per-job full description/skills/experience —
    see "Role details" below). A static host or VS Code Live Server cannot
    execute this integration.
-2. Copy `server/careers-config.example.php` to `server/careers-config.php` if it does not
-   exist, and set `api_key` and `cp_id` to the supplied portal credentials.
-   This local file is gitignored; provision it separately on your server.
+2. Put the portal credentials in `server/.env.gss_newsite` (`CEIPAL_API_KEY`,
+   `CEIPAL_CP_ID`). It is the only file that holds them, the code reads it
+   directly, and it is gitignored — upload it to
+   the server's `server/` directory separately, under the same name.
 3. Upload the `html/`, `css/`, `js/` and `images/` folders, the root
    `index.html`, and the `server/` directory, preserving their folder structure.
    Allow PHP to write the cache beside the endpoint if caching is desired.
@@ -71,8 +72,5 @@ response compression with `CURLOPT_ENCODING => ''` resolved that error with
 the existing credentials, headers, and form fields. Both options are retained;
 they were tested together, so the individual cause has not been isolated.
 Retest the endpoint on the actual deployment host after uploading.
-
-The existing standalone `tools/diagnostics/ceipal.php` is a development diagnostic script and is not
-used by the careers page.
 
 Run regression checks with `php tests/careers-jobs-test.php`.

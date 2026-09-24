@@ -8,7 +8,5 @@ careers-errors.log
 server/careers-submissions.log
 server/contact-submissions.log
 
-# Mail/API credentials — never commit; see server/.env.example for the template
-server/.env
-server/.env.*
-!server/.env.example
+# Credentials live only in server/.env.gss_newsite — never commit.
+server/.env*

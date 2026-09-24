@@ -57,14 +57,15 @@ sending only happens on the hosting server.
 ## 3. Deploying to HostGator
 
 Upload the site as usual; there is nothing to configure for email.
-`server/.env` (uploaded as `.env.gss_newsite`, renamed) now only holds
-the Ceipal careers API keys — see below.
+Also upload `server/.env.gss_newsite` (gitignored, so it isn't in git)
+under that same name — it holds the Ceipal careers API keys, see below.
 
 ## 4. Ceipal careers API credentials
 
 `server/careers-jobs.php` (the live job listings on `html/career.html`)
-reads its Ceipal `api_key`/`cp_id` through `server/.env`
-(see `server/.env.example`) — nothing is hardcoded in any `.php` file:
+reads its Ceipal `api_key`/`cp_id` from `server/.env.gss_newsite` —
+the only file that holds them. Nothing is written in any `.php`, `.js`
+or `.html` file:
 
 ```ini
 CEIPAL_API_KEY=...

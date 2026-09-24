@@ -20,7 +20,7 @@ images/
   pages/               Inner-page photography
   backgrounds/         Supporting background artwork
   source/              Original source artwork
-server/                PHP careers endpoint, config example and local runtime files
+server/                PHP careers endpoint and local runtime files
 data/                  Optional manual jobs feed
 docs/                  Editing guides, setup instructions and cleanup audit
   previews/            Historical design screenshots
@@ -61,7 +61,8 @@ php tests/careers-jobs-test.php
 
 Deploy `index.html`, `html/`, `css/`, `js/`, the referenced images, and `server/`
 together. The careers endpoint is `/server/careers-jobs.php`; provision its
-ignored config on the host. Guides, previews, source artwork, tools and tests
+ignored `server/.env.gss_newsite` configuration file on the host. Guides,
+previews, source artwork, tools and tests
 do not need publishing.
 
 - [Careers integration](docs/CEIPAL-INTEGRATION.md)

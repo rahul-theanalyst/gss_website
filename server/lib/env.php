@@ -2,33 +2,28 @@
 /**
  * server/lib/env.php
  * ------------------------------------------------------------
- * Minimal .env loader — no Composer/vendor dependency, matching
- * this project's "no build step" setup (see README.md).
+ * Minimal KEY=VALUE file reader — no Composer/vendor dependency,
+ * matching this project's "no build step" setup (see README.md).
  *
- * Reads KEY=VALUE lines from server/.env (gitignored, never
- * committed) into getenv()/$_ENV. Real OS/host environment
- * variables always win — this only fills in gaps, so the exact
- * same code works locally (via .env) and on a host that sets
- * variables through its own control panel.
+ * Returns the file's values as an array; it does not touch the
+ * process environment, so nothing else can override them.
  */
 
-if (!function_exists('gss_load_env')) {
-    function gss_load_env($path) {
+if (!function_exists('gss_read_env_file')) {
+    function gss_read_env_file($path) {
+        $values = [];
         if (!is_file($path) || !is_readable($path)) {
-            return;
+            return $values;
         }
 
         $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         if ($lines === false) {
-            return;
+            return $values;
         }
 
         foreach ($lines as $line) {
             $line = trim($line);
-            if ($line === '' || $line[0] === '#') {
-                continue;
-            }
-            if (strpos($line, '=') === false) {
+            if ($line === '' || $line[0] === '#' || strpos($line, '=') === false) {
                 continue;
             }
 
@@ -42,15 +37,10 @@ if (!function_exists('gss_load_env')) {
                 $value = substr($value, 1, $len - 2);
             }
 
-            if ($key === '') {
-                continue;
-            }
-
-            // Don't clobber a variable the real environment already set.
-            if (getenv($key) === false) {
-                putenv($key . '=' . $value);
-                $_ENV[$key] = $value;
+            if ($key !== '') {
+                $values[$key] = $value;
             }
         }
+        return $values;
     }
 }

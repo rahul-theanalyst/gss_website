@@ -33,7 +33,6 @@ This audit checks all 12 website pages, the root entry and every stylesheet, inc
 
 - `docs/previews/`: 36 historical screenshots (15.76 MiB). Optional visual references.
 - `tests/fixtures/`: 2 saved third-party diagnostic responses. The PHP regression test does not load these.
-- `tools/diagnostics/ceipal.php`: standalone diagnostic; the website uses `server/careers-jobs.php`.
 - `.local-tools/clientele-review/` and `.local-tools/organization-review/`: temporary preparation and verification files.
 - `.local-tools/php.zip`: downloaded PHP archive; the installed runtime lives in `.local-tools/php/`.
 - Preview server log files in `.local-tools/`: development output.
