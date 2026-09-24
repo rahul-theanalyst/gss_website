@@ -407,6 +407,22 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
 }
 
 
+/* ══ HERO BUTTONS ═══════════════════════════════════════════════════
+   The hero's call-to-action buttons at --hero-btn-scale of the site's
+   standard button (0.55 = 55%): height, padding, gap, text and the
+   arrow icon (sized in em) all scale together. Last so it applies on
+   every screen size, overriding the full-width phone button and the
+   short-screen tier above. Buttons elsewhere on the site are unchanged. */
+.hero { --hero-btn-scale: .55; }
+.hero-cta .btn {
+  width: auto;
+  max-width: none;
+  min-height: calc(52px * var(--hero-btn-scale));
+  padding: calc(14px * var(--hero-btn-scale)) calc(30px * var(--hero-btn-scale));
+  gap: calc(12px * var(--hero-btn-scale));
+  font-size: calc(.795rem * var(--hero-btn-scale));
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
