@@ -3,18 +3,8 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home4/globalso/public_html/newsite/
     - /bin/mkdir -p "$DEPLOYPATH"
-
-    # Deploy the homepage
     - /bin/cp index.html "$DEPLOYPATH"
-
-    # Deploy CSS files
     - /bin/cp -R css "$DEPLOYPATH"
-
-    # Deploy HTML pages
     - /bin/cp -R html "$DEPLOYPATH"
-
-    # Deploy images
     - /bin/cp -R images "$DEPLOYPATH"
-
-    # Deploy JavaScript
     - /bin/cp -R js "$DEPLOYPATH"
