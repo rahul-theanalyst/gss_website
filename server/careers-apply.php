@@ -453,7 +453,8 @@ function handleSubmit($config) {
     $url = APPLY_API_BASE . rawurlencode($config['api_key']) . '/CareerPortalApplyJobWithoutRegistrationCareerPage/';
     [$code, $res] = ceipalRequest($url, $post);
 
-    if ($code === 200 && is_array($res) && (string) ($res['success'] ?? '') === '1') {
+    // Ceipal answers a successful application with HTTP 201 ("created"), not 200.
+    if ($code >= 200 && $code < 300 && is_array($res) && (string) ($res['success'] ?? '') === '1') {
         applyLog("submitted application for job {$form['jobCode']}"); // no applicant details in the log
         applyRespond(200, [
             'ok'      => true,
@@ -464,8 +465,9 @@ function handleSubmit($config) {
 
     $ceipalMessage = is_array($res) ? trim(strip_tags((string) ($res['message'] ?? ''))) : '';
     applyLog("Ceipal rejected application for job {$form['jobCode']} (HTTP $code): " . substr($ceipalMessage, 0, 200));
-    if ($code === 400 && $ceipalMessage !== '') {
-        // Ceipal's own validation messages (e.g. "already applied") are safe to show.
+    if ($ceipalMessage !== '' && $code >= 200 && $code < 500) {
+        // Ceipal's own answer — e.g. 201 {"success":0,"message":"You have already
+        // applied for this job."} or a 400 validation message — is safe to show.
         applyFail(422, $ceipalMessage);
     }
     applyFail(502, 'We couldn’t submit your application just now. Please try again in a few minutes.');
