@@ -127,6 +127,9 @@
         skills:      skills.map(function (s) { return String(s).trim(); })
                            .filter(Boolean),
         applyLink:   safeApplyLink(j.applyLink),
+        // Ceipal's job id + whether the role takes Easy Apply (easy-apply.js)
+        ceipalId:    /^[A-Za-z0-9_\-+\/]{8,200}={0,2}$/.test(String(j.ceipalId || '')) ? String(j.ceipalId) : '',
+        easyApply:   j.easyApply === true,
         featured:    j.featured === true || j.featured === 'true'
       };
     }).sort(function (a, b) {
@@ -206,22 +209,65 @@
             '<ul class="car-skills">' + j.skills.map(function (s) {
               return '<li>' + esc(s) + '</li>';
             }).join('') + '</ul>' : '') +
-          '<div class="car-job__actions">' +
-            '<a class="btn btn-primary btn-sm" href="' + esc(j.applyLink) + '">' +
-              'Apply for this role<span class="sr-only">: ' + esc(j.title) + '</span> ' +
-              '<svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>' +
-            '</a>' +
+          '<div class="car-job__actions">' + actions(j) +
+            // collapse from the bottom of a long description, no scrolling back up
+            '<button class="car-job__less" type="button" data-job-close="' + esc(j.id) + '" ' +
+                    'aria-controls="panel-' + esc(j.id) + '">Show less' +
+              '<span class="sr-only">: ' + esc(j.title) + '</span>' +
+              '<svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg>' +
+            '</button>' +
           '</div>' +
         '</div>' +
       '</div>' +
     '</li>';
   }
 
+  /* Easy Apply (our own form, submitted into Ceipal) when the role takes it,
+     alongside Apply Now (Ceipal's candidate portal, for a full profile). */
+  function actions(j) {
+    var sr = '<span class="sr-only">: ' + esc(j.title) + '</span>';
+    var arrow = '<svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>';
+    if (j.easyApply && j.ceipalId) {
+      return '' +
+        '<button class="btn btn-primary btn-sm" type="button" data-easy-apply="' + esc(j.ceipalId) + '" ' +
+                'data-job-title="' + esc(j.title) + '">Easy Apply' + sr + ' ' + arrow + '</button>' +
+        '<a class="btn btn-outline btn-sm" href="' + esc(j.applyLink) + '" target="_blank" rel="noopener">' +
+          'Apply Now' + sr + '<span class="sr-only"> (opens in a new tab)</span> ' + arrow +
+        '</a>';
+    }
+    return '<a class="btn btn-primary btn-sm" href="' + esc(j.applyLink) + '">Apply for this role' + sr + ' ' + arrow + '</a>';
+  }
+
   /* ── 4. Row interaction ────────────────────────────────── */
   function bindRows() {
-    listEl.querySelectorAll('[data-job-toggle]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
+    // the whole row is the hit area; clicks on the View Role button (and
+    // its keyboard activation) bubble up here too, so one handler covers both
+    listEl.querySelectorAll('.car-job').forEach(function (rowEl) {
+      var btn = rowEl.querySelector('[data-job-toggle]');
+      if (!btn) return;
+      rowEl.addEventListener('click', function () {
+        // don't toggle when the user is selecting text in the row
+        var sel = window.getSelection && window.getSelection();
+        if (sel && !sel.isCollapsed && rowEl.contains(sel.anchorNode)) return;
         toggle(btn.getAttribute('data-job-toggle'));
+      });
+    });
+    listEl.querySelectorAll('[data-job-close]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id = btn.getAttribute('data-job-close');
+        setOpen(id, false, false);
+        if (openId === id) openId = null;
+        var item = listEl.querySelector('#job-' + cssEsc(id));
+        if (!item) return;
+        // the panel collapses above the reader, so bring its row back into
+        // view and hand focus to the row's own toggle
+        requestAnimationFrame(function () {
+          if (item.getBoundingClientRect().top < 0) {
+            item.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
+          }
+          var toggleBtn = item.querySelector('[data-job-toggle]');
+          if (toggleBtn) toggleBtn.focus({ preventScroll: true });
+        });
       });
     });
     if (openId) setOpen(openId, true, false);
@@ -245,12 +291,14 @@
     btn.setAttribute('aria-expanded', open ? 'true' : 'false');
     panel.setAttribute('data-open', open ? 'true' : 'false');
     if (open && focusable) {
-      // keep the row in view when a tall panel opens near the fold
+      // Full descriptions are long, so keep the row's title in view rather
+      // than its bottom edge. Closing a panel above this one can also shift
+      // the row up out of sight; bring it back if so.
       requestAnimationFrame(function () {
         var r = item.getBoundingClientRect();
-        if (r.bottom > window.innerHeight) {
+        if (r.top < 0 || r.top > window.innerHeight * 0.75) {
           item.scrollIntoView({
-            block: 'nearest',
+            block: 'start',
             behavior: reduceMotion ? 'auto' : 'smooth'
           });
         }

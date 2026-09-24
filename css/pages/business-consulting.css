@@ -215,7 +215,9 @@ html[data-theme="dark"] .bizcon-page .bc-row__dots { color: var(--hairline); }
 .bizcon-page .bc-final {
   position: relative; overflow: hidden;
   background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
-  padding-block: clamp(28px, 3.2vw, 46px);
+  /* band trimmed ~30% in height: tighter padding, a smaller one-line
+     headline on desktop and a compact button */
+  padding-block: clamp(20px, 2.2vw, 32px);
 }
 .bizcon-page .bc-final__grid {
   position: relative;
@@ -238,19 +240,21 @@ html[data-theme="dark"] .bizcon-page .bc-row__dots { color: var(--hairline); }
 }
 .bizcon-page .bc-final__title {
   font-family: var(--serif); font-weight: 500;
-  font-size: clamp(1.5rem, 2.7vw, 2.3rem);
+  font-size: clamp(1.3rem, 2vw, 1.75rem);
   line-height: 1.2; color: #fff;
-  margin: clamp(10px, 1.4vw, 16px) 0 clamp(14px, 1.8vw, 20px);
-  max-width: 24ch; text-wrap: balance;
+  margin: clamp(6px, .8vw, 10px) 0 clamp(8px, 1vw, 12px);
+  max-width: 36ch; text-wrap: balance;
 }
 .bizcon-page .bc-final__text {
   margin: 0; color: rgba(255,255,255,.72);
-  font-size: clamp(.92rem, 1vw, 1rem); line-height: 1.6; max-width: 58ch;
+  font-size: clamp(.9rem, .95vw, .96rem); line-height: 1.5; max-width: 58ch;
 }
 .bizcon-page .bc-final__act { grid-column: 2; grid-row: 1; margin: 0; }
 .bizcon-page .bc-final__btn {
   border-color: rgba(255,255,255,.4); color: #fff;
   white-space: nowrap;
+  min-height: 42px; padding: 10px 24px; gap: 10px;
+  font-size: .72rem; letter-spacing: .1em;
 }
 
 /* ── RESPONSIVE ──────────────────────────────────────────── */

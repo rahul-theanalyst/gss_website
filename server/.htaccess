@@ -1,6 +1,6 @@
 # server/.htaccess
 # Blocks web access to everything in /server/ (the .env file, submission
-# logs with candidate details, cache files, lib/ code) except the three
+# logs with candidate details, cache files, lib/ code) except the four
 # endpoints the website's JavaScript calls.
 # Note: the local "php -S" test server ignores this file; HostGator applies it.
 
@@ -8,7 +8,7 @@ Options -Indexes
 
 <IfModule mod_authz_core.c>
     Require all denied
-    <FilesMatch "^(contact-submit|careers-submit|careers-jobs)\.php$">
+    <FilesMatch "^(contact-submit|careers-submit|careers-jobs|careers-apply)\.php$">
         Require all granted
     </FilesMatch>
 </IfModule>
@@ -16,7 +16,7 @@ Options -Indexes
 <IfModule !mod_authz_core.c>
     Order deny,allow
     Deny from all
-    <FilesMatch "^(contact-submit|careers-submit|careers-jobs)\.php$">
+    <FilesMatch "^(contact-submit|careers-submit|careers-jobs|careers-apply)\.php$">
         Allow from all
     </FilesMatch>
 </IfModule>

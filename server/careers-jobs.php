@@ -491,6 +491,10 @@ function transformJob($raw) {
         'description' => $description,
         'skills'      => [], // filled in by applyJobDetail() when available
         'applyLink'   => $applyLink,
+        // Ceipal's own job id, used by careers-apply.php (Easy Apply) to load
+        // the job's application form and submit to it.
+        'ceipalId'    => (string) ($raw['id'] ?? ''),
+        'easyApply'   => (string) ($raw['apply_with_out_registration'] ?? '0') === '1',
         'featured'    => false,
     ];
 }

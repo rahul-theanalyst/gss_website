@@ -43,9 +43,48 @@ job-description API, keyed by the opaque token at the end of that job's
 `campus_portal_job_details_url`. This fills in the full description, the
 skills list, and the experience range.
 
+Ceipal's list feed no longer includes `campus_portal_job_details_url` for every job. When it's missing, the detail token (and the full description, pay text and minimum experience) come from the candidate portal's public job list, matched by job code (`fetchPortalJobIndex()`).
+
 This enrichment is best-effort: if a job has no details URL, or its request
 fails or times out, that job simply keeps its teaser description with no
 skills/experience — the whole feed never fails because of it.
+
+## Easy Apply
+
+Roles that allow it in Ceipal (`apply_with_out_registration`) show two buttons
+in their `View Role` panel:
+
+- **Easy Apply** opens our own form (`js/pages/easy-apply.js`), styled like the
+  rest of the site.
+- **Apply Now** opens Ceipal's candidate portal in a new tab, for candidates
+  who want a full Ceipal profile.
+
+`server/careers-apply.php` sits between the form and Ceipal:
+
+- `?action=form&job=<id>` loads that job's application form from Ceipal
+  (`CareerPortalJobPostings/<id>/`), with its fields, required flags and
+  dropdown options (Work Authorization, Tax Terms, Country, and so on). The
+  page builds the form from this, so changes HR makes to the form in Ceipal
+  show up on the site automatically. Definitions are cached for 15 minutes in
+  the system temp directory.
+- `?action=states&country=<id>` loads the State/County/Province list for the
+  chosen country (`CareerPortalStates`), cached for a day.
+- `POST action=submit` checks the application against that same definition
+  (required fields, valid dropdown choices, email, phone, and a PDF/DOC/DOCX
+  résumé up to 10 MB checked by file signature). It then sends the application
+  to `CareerPortalApplyJobWithoutRegistrationCareerPage/`, the endpoint
+  Ceipal's own career widget uses, so it arrives in Ceipal as a normal
+  application.
+
+Ceipal's widget shows a CAPTCHA, but it is drawn and checked only in the
+browser and is never sent to Ceipal. Here it is replaced by server-side
+checks: the shared honeypot/timing guard (`lib/spam-guard.php`) and a limit of
+5 applications per IP address per 10 minutes. Applicant details are never
+written to the logs. Only the job code and Ceipal's response are logged, in
+`server/careers-errors.log`.
+
+`server/.htaccess` must allow `careers-apply.php`, as it does the other
+endpoints.
 
 ## Refresh and failures
 

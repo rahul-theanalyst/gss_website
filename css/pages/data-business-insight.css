@@ -287,7 +287,9 @@ html[data-theme="dark"] .dbi-page .dbi-row__bars { color: var(--hairline); opaci
 .dbi-page .dbi-final {
   position: relative; overflow: hidden;
   background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
-  padding-block: clamp(28px, 3.2vw, 46px);
+  /* band trimmed ~30% in height: tighter padding, a smaller one-line
+     headline on desktop and a compact button */
+  padding-block: clamp(20px, 2.2vw, 32px);
 }
 .dbi-page .dbi-final__grid {
   position: relative;
@@ -309,19 +311,21 @@ html[data-theme="dark"] .dbi-page .dbi-row__bars { color: var(--hairline); opaci
 }
 .dbi-page .dbi-final__title {
   font-family: var(--serif); font-weight: 500;
-  font-size: clamp(1.45rem, 2.6vw, 2.2rem);
+  font-size: clamp(1.3rem, 2vw, 1.75rem);
   line-height: 1.2; color: #fff;
-  margin: clamp(8px, 1.2vw, 14px) 0 clamp(12px, 1.6vw, 18px);
-  max-width: 26ch; text-wrap: balance;
+  margin: clamp(6px, .8vw, 10px) 0 clamp(8px, 1vw, 12px);
+  max-width: 36ch; text-wrap: balance;
 }
 .dbi-page .dbi-final__text {
   margin: 0; color: rgba(255,255,255,.72);
-  font-size: clamp(.92rem, 1vw, 1rem); line-height: 1.6; max-width: 58ch;
+  font-size: clamp(.9rem, .95vw, .96rem); line-height: 1.5; max-width: 58ch;
 }
 .dbi-page .dbi-final__act { grid-column: 2; grid-row: 1; margin: 0; }
 .dbi-page .dbi-final__btn {
   border-color: rgba(255,255,255,.4); color: #fff;
   white-space: nowrap;
+  min-height: 42px; padding: 10px 24px; gap: 10px;
+  font-size: .72rem; letter-spacing: .1em;
 }
 
 /* ── RESPONSIVE ──────────────────────────────────────────── */

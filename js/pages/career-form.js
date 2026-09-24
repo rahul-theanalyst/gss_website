@@ -67,7 +67,7 @@
   if (fileInput && fileNameDisplay) {
     fileInput.addEventListener('change', function () {
       if (!fileInput.files || !fileInput.files.length) {
-        fileNameDisplay.textContent = 'Upload resume (PDF only)';
+        fileNameDisplay.textContent = 'Upload resume';
         return;
       }
 
@@ -77,7 +77,7 @@
       // Enforce PDF extension
       if (!nameLower.endsWith('.pdf')) {
         fileInput.value = '';
-        fileNameDisplay.textContent = 'Upload resume (PDF only)';
+        fileNameDisplay.textContent = 'Upload resume';
         showStatus('error', 'Invalid file type. Please select a valid PDF document (.pdf).');
         return;
       }
@@ -85,7 +85,7 @@
       // Enforce 10 MB size limit
       if (file.size > MAX_FILE_BYTES) {
         fileInput.value = '';
-        fileNameDisplay.textContent = 'Upload resume (PDF only)';
+        fileNameDisplay.textContent = 'Upload resume';
         showStatus('error', 'The selected file is too large (' + (file.size / (1024 * 1024)).toFixed(1) + ' MB). Maximum allowed size is 10 MB.');
         return;
       }
@@ -168,7 +168,7 @@
         form.reset();
         stampRenderTime();
         if (fileNameDisplay) {
-          fileNameDisplay.textContent = 'Upload resume (PDF only)';
+          fileNameDisplay.textContent = 'Upload resume';
         }
         showStatus('success', SUCCESS_MESSAGE);
       } else {
