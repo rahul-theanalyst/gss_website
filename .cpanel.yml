@@ -19,6 +19,7 @@ deployment:
     - /bin/cp server/careers-jobs.php "$DEPLOYPATH/server/"
     - /bin/cp server/careers-submit.php "$DEPLOYPATH/server/"
     - /bin/cp server/contact-submit.php "$DEPLOYPATH/server/"
+    - /bin/cp server/careers-apply.php "$DEPLOYPATH/server/"
 
     # Deploy PHP library files
     - /bin/cp server/lib/config.php "$DEPLOYPATH/server/lib/"
