@@ -2,9 +2,30 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home4/globalso/public_html/newsite/
+
+    # Ensure deployment directories exist
     - /bin/mkdir -p "$DEPLOYPATH"
+    - /bin/mkdir -p "$DEPLOYPATH/server"
+    - /bin/mkdir -p "$DEPLOYPATH/server/lib"
+
+    # Deploy frontend
     - /bin/cp index.html "$DEPLOYPATH"
     - /bin/cp -R css "$DEPLOYPATH"
     - /bin/cp -R html "$DEPLOYPATH"
     - /bin/cp -R images "$DEPLOYPATH"
     - /bin/cp -R js "$DEPLOYPATH"
+
+    # Deploy public PHP endpoints
+    - /bin/cp server/careers-jobs.php "$DEPLOYPATH/server/"
+    - /bin/cp server/careers-submit.php "$DEPLOYPATH/server/"
+    - /bin/cp server/contact-submit.php "$DEPLOYPATH/server/"
+
+    # Deploy PHP library files
+    - /bin/cp server/lib/config.php "$DEPLOYPATH/server/lib/"
+    - /bin/cp server/lib/env.php "$DEPLOYPATH/server/lib/"
+    - /bin/cp server/lib/form-mail.php "$DEPLOYPATH/server/lib/"
+    - /bin/cp server/lib/spam-guard.php "$DEPLOYPATH/server/lib/"
+
+    # Deploy security and PHP configuration files
+    - /bin/cp server/.htaccess "$DEPLOYPATH/server/"
+    - /bin/cp server/.user.ini "$DEPLOYPATH/server/"

@@ -11,7 +11,7 @@
 
 require_once __DIR__ . '/env.php';
 
-const GSS_SETTINGS_FILE = __DIR__ . '/../.env.gss_newsite';
+const GSS_SETTINGS_FILE = '/home4/globalso/.env.gss_newsite';
 
 if (!function_exists('gss_load_ceipal_config')) {
     function gss_load_ceipal_config() {
