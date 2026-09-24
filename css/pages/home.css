@@ -206,7 +206,10 @@ html[data-theme="dark"] .hero-slide[data-slide="3"] { --hero-dim: .48; }
    slide's CTA button noticeably closer to the shared dot chrome fixed to
    the bottom of the hero. Nudging it up here restores even breathing
    room without touching the chrome or any other slide. */
-.hero-slide[data-slide="0"] .hero-cta { margin-bottom: 26px; }
+.hero-slide[data-slide="0"] .hero-cta { margin-bottom: 16px; }
+/* Slide 1 also carries the eyebrow now; a tighter gap under it keeps the
+   tallest slide from growing any more than it has to. */
+.hero-slide[data-slide="0"] .eyebrow { margin-bottom: clamp(10px, 1.2vw, 14px); }
 
 /* credibility card rows
    Everything here is fluid: the row width, the gaps, the card padding, the

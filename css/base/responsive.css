@@ -310,6 +310,7 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   .hero-sub { font-size: .875rem; line-height: 1.45; }
   .hero-tagline { margin-top: 6px; font-size: .82rem; }
   .hero-cta { margin-top: 10px; }
+  .hero-slide[data-slide="0"] .eyebrow { margin-bottom: 6px; }
   .cred-row { margin-top: 8px; gap: 7px; }
   .cred-card,
   .cred-card.is-stacked {
