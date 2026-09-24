@@ -192,12 +192,12 @@ html[data-theme="dark"] .skip-link { background: var(--gold); color: #0B1424; }
    reserves ~96-104px for its dots/scroll-cue chrome — stacking the full
    default top padding on top of that left too much air above "How GSS
    Works". Trimmed to match the reduced bottom padding already used here. */
-.section-about     { background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg-sky) 100%); padding-top: clamp(24px, 2.5vw, 40px); padding-bottom: clamp(16px, 1.8vw, 28px); }
+.section-about     { background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg-sky) 100%); padding-top: clamp(18px, 2.0vw, 32px); padding-bottom: clamp(16px, 1.8vw, 28px); }
 /* Trims the eyebrow/heading immediately below the hero (fold-fit goal: this
    heading should still be visible in the first viewport on load) without
    touching .eyebrow/.section-title anywhere else — .section-title is only
    ever used on this page, but scoped explicitly in case that changes. */
-.section-about .eyebrow { margin-bottom: clamp(10px, 1.4vw, 16px); }
+.section-about .eyebrow { margin-bottom: clamp(8px, 1.1vw, 14px); }
 .section-about .section-title { font-size: clamp(1.5rem, 2.7vw, 2.35rem); line-height: 1.1; }
 .section-solutions { background: var(--bg); }
 .section-staffing  { background: var(--bg-soft); overflow: hidden; }

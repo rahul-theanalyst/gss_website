@@ -2,9 +2,9 @@
 /**
  * server/lib/config.php
  * ------------------------------------------------------------
- * Loads mail configuration (recipients, from-address, SMTP
- * credentials) for careers-submit.php and contact-submit.php, and
- * the Ceipal careers API configuration for careers-jobs.php.
+ * Loads the Ceipal careers API configuration for careers-jobs.php.
+ * (The forms' email settings are not configured here — see
+ * lib/form-mail.php.)
  *
  * Precedence, highest first:
  *   1. Real environment variables (however the host sets them —
@@ -31,27 +31,6 @@ if (!function_exists('gss_env')) {
     }
 }
 
-if (!function_exists('gss_env_bool')) {
-    function gss_env_bool($key, $default = false) {
-        $value = getenv($key);
-        if ($value === false || $value === '') {
-            return $default;
-        }
-        return in_array(strtolower($value), ['1', 'true', 'yes', 'on'], true);
-    }
-}
-
-if (!function_exists('gss_env_list')) {
-    // Comma-separated env value -> trimmed, non-empty array of strings.
-    function gss_env_list($key, array $default = []) {
-        $value = getenv($key);
-        if ($value === false || trim($value) === '') {
-            return $default;
-        }
-        return array_values(array_filter(array_map('trim', explode(',', $value))));
-    }
-}
-
 if (!function_exists('gss_load_legacy_config')) {
     function gss_load_legacy_config() {
         $path = __DIR__ . '/../careers-config.php';
@@ -65,59 +44,8 @@ if (!function_exists('gss_load_legacy_config')) {
     }
 }
 
-if (!function_exists('gss_load_mail_config')) {
-    function gss_load_mail_config() {
-        gss_load_env(__DIR__ . '/../.env');
-        $legacy = gss_load_legacy_config();
-
-        $defaultRecipients = ['contact@globalsoftsystems.com', 'contact@gsspros.com'];
-
-        $careersRecipients = gss_env_list(
-            'CAREERS_RECIPIENTS',
-            (!empty($legacy['recipients']) && is_array($legacy['recipients']))
-                ? $legacy['recipients']
-                : $defaultRecipients
-        );
-
-        $contactRecipients = gss_env_list(
-            'CONTACT_RECIPIENTS',
-            (!empty($legacy['contact_recipients']) && is_array($legacy['contact_recipients']))
-                ? $legacy['contact_recipients']
-                : $careersRecipients
-        );
-
-        $mailFrom     = gss_env('MAIL_FROM', $legacy['mail_from'] ?? 'noreply@globalsoftsystems.com');
-        $mailFromName = gss_env('MAIL_FROM_NAME', $legacy['mail_from_name'] ?? 'GSS Careers Portal');
-
-        $legacySmtp = is_array($legacy['smtp'] ?? null) ? $legacy['smtp'] : [];
-
-        return [
-            'careers_recipients'     => $careersRecipients,
-            'contact_recipients'     => $contactRecipients,
-            'mail_from'              => $mailFrom,
-            'mail_from_name'         => $mailFromName,
-            'contact_mail_from'      => gss_env('CONTACT_MAIL_FROM', $legacy['contact_mail_from'] ?? $mailFrom),
-            'contact_mail_from_name' => gss_env('CONTACT_MAIL_FROM_NAME', $legacy['contact_mail_from_name'] ?? "GSS Let's Connect"),
-            'log_submissions'        => gss_env_bool('LOG_SUBMISSIONS', $legacy['log_submissions'] ?? true),
-            // A real SMTP mailbox (e.g. the company domain's own inbox), or
-            // left disabled to send via the hosting server's own mail()
-            // instead — no mailbox password needed either way unless you
-            // explicitly enable SMTP.
-            'smtp' => [
-                'enabled'    => gss_env_bool('SMTP_ENABLED', $legacySmtp['enabled'] ?? false),
-                'host'       => gss_env('SMTP_HOST', $legacySmtp['host'] ?? ''),
-                'port'       => (int)gss_env('SMTP_PORT', $legacySmtp['port'] ?? 587),
-                'username'   => gss_env('SMTP_USERNAME', $legacySmtp['username'] ?? ''),
-                'password'   => gss_env('SMTP_PASSWORD', $legacySmtp['password'] ?? ''),
-                'encryption' => gss_env('SMTP_ENCRYPTION', $legacySmtp['encryption'] ?? 'tls'),
-                'from'       => gss_env('SMTP_FROM', $legacySmtp['from'] ?? null),
-            ],
-        ];
-    }
-}
-
 if (!function_exists('gss_load_ceipal_config')) {
-    // Same precedence as gss_load_mail_config(): env vars first (CEIPAL_API_KEY /
+    // Env vars first (CEIPAL_API_KEY /
     // CEIPAL_CP_ID in server/.env, or the host's own environment), falling back
     // to the legacy server/careers-config.php only if those aren't set.
     function gss_load_ceipal_config() {

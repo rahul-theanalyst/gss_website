@@ -3,40 +3,37 @@
   position: relative;
   isolation: isolate;
   background: var(--bg-sky);
+  margin-top: var(--header-h);
 
   /* ── HERO HEIGHT DIAL ─────────────────────────────────────────────
-     One number sets how tall the hero is, as a share of the screen.
-     .7 = 30% shorter than a full screen, which lifts the top of the
-     "How GSS Works" section into view on load instead of hiding it
-     below the fold. Put it back to 1 for the original full-screen
-     hero — the photo, the padding and the chrome all follow this
-     number on their own, so nothing else needs editing.
+     Sets hero height as a proportion of remaining viewport height after
+     the navbar, ensuring Navbar + Hero + How GSS Works heading all fit
+     within exactly one viewport height without scrolling. */
+  --hero-scale: 0.69;
+  --hero-h: max(calc((100svh - var(--header-h)) * var(--hero-scale)), 340px);
 
-     Worth knowing: the hero is only ever AT LEAST this tall. Slide 1
-     carries the most content (headline + sub + four cards + tagline
-     + button), so on very short screens the box still grows past the
-     dial to hold it rather than clipping any copy. The vertical
-     rhythm below is tuned so that happens as rarely as possible. */
-  --hero-scale: .7;
-  --hero-h: max(calc(100svh * var(--hero-scale)), 340px);
+  /* 1.1 = 10% taller. The extra height is added as padding split evenly
+     above and below the slide content (so the content stays centred and
+     the photo, which fills the slide, grows with it), and min-height grows
+     by the same total. That way the hero gains the same amount whether its
+     height comes from min-height or, on shorter screens, from its content.
+     Also scales the portrait-phone photo band in responsive.css. */
+  --hero-grow: 1.1;
+  --hero-grow-pad: calc(var(--hero-h) * (var(--hero-grow) - 1) / 2);
+  /* How far the background photo sits above the hero's top edge, as a
+     share of the hero's height. The photo box is extended by the same
+     amount so it still reaches the bottom edge — see .hero-media img. */
+  --hero-photo-shift: 20%;
 
-  /* the dots + scroll cue and their offset off the bottom edge. The
-     slide reserves at least this much at its foot so the CTA button
-     can never end up sitting underneath the chrome, however short
-     the screen gets. Keep it in step with .hero-chrome below. */
+  /* the dots + scroll cue and their offset off the bottom edge. */
   --hero-chrome-h: 90px;
 }
 
 .hero-viewport {
   display: grid;
-  /* one explicit column: every slide is stacked in the same cell, so the
-     hero's height is always the tallest slide — switching never shifts layout */
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: minmax(0, auto);
-  /* svh already excludes mobile browser chrome. The floor only exists to
-     stop a genuinely tiny window from collapsing the hero — it never
-     overrides a real, shorter viewport. Both come off --hero-scale. */
-  min-height: var(--hero-h);
+  min-height: calc(var(--hero-h) * var(--hero-grow));
 }
 
 .hero-slide {
@@ -46,15 +43,9 @@
   position: relative;
   display: flex;
   align-items: center;
-  /* the extra top/bottom breathing room scales down on short viewports
-     (svh) instead of staying fixed, so the hero's content fits inside
-     whatever height is actually available rather than overflowing it.
-     Both ends are ~30% of what they were, in step with --hero-scale.
-     The foot never drops below the chrome's own height, so the CTA
-     always clears the dots and scroll cue. */
   padding-block:
-    calc(var(--header-h) + clamp(10px, 2.6svh, 24px))
-    max(calc(var(--hero-chrome-h) + 6px), clamp(48px, 10.5svh, 104px));
+    calc(clamp(10px, 2.4svh, 22px) + var(--hero-grow-pad))
+    calc(max(calc(var(--hero-chrome-h) + 6px), clamp(44px, 9.5svh, 96px)) + var(--hero-grow-pad));
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -86,7 +77,12 @@
 }
 .hero-media img {
   position: absolute; inset: 0;
-  width: 100%; height: 100%;
+  width: 100%;
+  /* Lifted by --hero-photo-shift: the box starts that far above the
+     frame and is that much taller, so its bottom edge still meets the
+     frame's and "cover" can never leave a gap underneath. */
+  top: calc(var(--hero-photo-shift) * -1);
+  height: calc(100% + var(--hero-photo-shift));
   /* anchor to the top so any unavoidable cover-crop is taken from the
      bottom of the photo, never the top */
   object-fit: cover; object-position: top center;
@@ -106,19 +102,25 @@
    Fallback first, for browsers without container queries — this is the
    original window-based rule, so those browsers behave exactly as before. */
 @media (max-aspect-ratio: 4/5) {
-  .hero-media img { object-fit: contain; }
+  .hero-media img { object-fit: contain; top: 0; height: 100%; }
 }
 /* Then the accurate version: measure the photo frame itself. A shorter
    hero makes the frame wider relative to its height, so "cover" now
    crops far less than it used to and stays the better choice down to
    genuinely narrow frames — which is why this can override the
    fallback in both directions. Anchored to the top either way, so any
-   leftover space lands at the bottom and the skyline is never clipped. */
+   leftover space lands at the bottom and the skyline is never clipped.
+   The --hero-photo-shift lift only applies with "cover": "contain" shows
+   the whole photo, so lifting it would clip the skyline's top instead. */
 @container hero-frame (max-aspect-ratio: 4/5) {
-  .hero-media img { object-fit: contain; }
+  .hero-media img { object-fit: contain; top: 0; height: 100%; }
 }
 @container hero-frame (min-aspect-ratio: 4/5) {
-  .hero-media img { object-fit: cover; }
+  .hero-media img {
+    object-fit: cover;
+    top: calc(var(--hero-photo-shift) * -1);
+    height: calc(100% + var(--hero-photo-shift));
+  }
 }
 /* Some slides (skyline, data hall) carry two real photos — day/light and
    night/dark — instead of darkening one image for dark mode like the

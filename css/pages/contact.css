@@ -202,6 +202,9 @@ html[data-theme="dark"] .letsconnect-page .lc-form-section { background: var(--b
   border-radius: 4px; font-size: .88rem; line-height: 1.6;
   transition: all .25s var(--ease);
 }
+/* display:block above would otherwise override [hidden], leaving an empty
+   gold-edged box under the submit button */
+.letsconnect-page .lc-form .form-submission-note[hidden] { display: none; }
 .letsconnect-page .lc-form .form-submission-note.is-success {
   border-left: 3px solid #16a34a;
   background: rgba(22, 163, 74, 0.08);

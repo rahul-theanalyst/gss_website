@@ -1,123 +1,70 @@
 # Email setup — Careers and Let's Connect forms
 
 Both forms (`html/career.html`'s "Stay connected" panel and
-`html/contact.html`'s "Let's Connect" form) submit via JavaScript
-`fetch()` to a PHP endpoint in `server/`, which validates the input,
-screens it for basic spam, and emails it out.
+`html/contact.html`'s "Let's Connect" form) post to a PHP endpoint in
+`server/`, which validates the input, emails it with **PHP's native
+`mail()`**, and redirects back to the form page:
 
 ```text
-html/career.html   ──POST──▶  server/careers-submit.php   ──┐
-html/contact.html  ──POST──▶  server/contact-submit.php   ──┤
-                                                              ▼
-                                              server/lib/mailer.php
-                                    (PHPMailer: a real SMTP mailbox,
-                                     or the hosting server's mail())
+html/career.html   ──POST──▶  server/careers-submit.php  ──┐
+html/contact.html  ──POST──▶  server/contact-submit.php  ──┤  mail()
+                                                             ▼
+                      302 → html/<form page>?status=success | ?status=error
 ```
 
-Shared code lives in `server/lib/`:
+No SMTP, no mailbox password, no mail library. Shared code:
 
-- `env.php` — tiny `.env` file loader (no Composer dependency)
-- `config.php` — merges environment variables → `server/.env` →
-  legacy `server/careers-config.php` → hardcoded defaults. Also
-  loads the Ceipal careers API credentials the same way.
-- `spam-guard.php` — honeypot + submission-timing checks
-- `mailer.php` — builds the message and sends it via PHPMailer
-  (vendored under `server/lib/PHPMailer/`, no Composer): a real SMTP
-  mailbox if one's configured, otherwise the hosting server's own
-  `mail()` — which only works if the host has a local mail agent
-  (`php -S`, this project's local dev server, does not).
+- `server/lib/form-mail.php` — recipients, From address, the `mail()`
+  call (with the résumé as an attachment for Careers), and the redirect
+- `server/lib/spam-guard.php` — honeypot + submission-timing checks
 
-## 1. Configure recipients
+## 1. Recipients and sender
 
-Copy the template once:
+Set in `server/lib/form-mail.php` (not in the frontend):
 
-```bash
-cp server/.env.example server/.env
+```php
+const FORM_MAIL_TO   = 'erah@globalsoftsystems.com, erah@gsspros.com';
+const FORM_MAIL_FROM = 'noreply@globalsoftsystems.com';
 ```
 
-`server/.env` is gitignored — it never gets committed. Open it and
-set:
+`From` and `Reply-To` are both `FORM_MAIL_FROM`, and it's also used as
+the envelope sender (`-f`). It must be an address on the domain hosted
+on the same server (globalsoftsystems.com on HostGator), or Outlook and
+others are likely to reject or spam-file the message. The noreply
+mailbox doesn't need to exist. The visitor's own address is in the
+email body ("Reply to … at: …"), since Reply-To is noreply.
 
-```ini
-CAREERS_RECIPIENTS=you@example.com,teammate@example.com
-CONTACT_RECIPIENTS=you@example.com,teammate@example.com
-```
+## 2. How the result reaches the page
 
-Two comma-separated addresses per form, sent to simultaneously. When
-you're ready to go live, change these two lines to the official
-addresses — nothing else in the codebase needs to change.
+- The page's JavaScript sends the form in the background and follows
+  the redirect; `?status=success` shows the green message under the
+  form (and clears it), anything else shows the red one (fields kept).
+- A plain form post (no background request) lands on the form page
+  with `?status=…` in the address; the page shows the same message and
+  removes the parameter from the URL.
+- `status=success` means `mail()` returned true: the server's mail
+  agent **accepted** the message. Arrival in the inbox happens after
+  that; check the inbox and spam folder. On HostGator, cPanel →
+  **Track Delivery** shows what happened to each message.
+- Every submission is logged in `server/careers-submissions.log` /
+  `server/contact-submissions.log` (blocked by `server/.htaccess`).
 
-**Recipients never need a password.** They're just destination
-addresses; nothing here logs into their inbox.
-
-## 2. Sending mail
-
-Why this needs any setup at all: sending mail always requires
-proving to some outgoing server who's allowed to send — otherwise
-anyone could send mail pretending to be anyone else. A real hosting
-server usually has that built in; this project's local dev server
-(`php -S`) does not, so local testing alone can validate the forms
-but can't deliver a real email (confirmed: `server/careers-submissions.log`
-/ `server/contact-submissions.log` record `NOT_SENT_MTA_OFFLINE` for
-every local attempt with `SMTP_ENABLED=false`).
-
-Two ways to actually deliver mail, in order of preference:
-
-### Preferred: the hosting server's own mail()
-
-Leave `SMTP_ENABLED=false` in `server/.env`. On a real host like
-HostGator, PHP's `mail()` is usually backed by a working local mail
-agent already configured for the domain — no mailbox password, no
-external service, nothing else to set up. This is what
-`server/.env.gss_newsite` (the deployment file — see below) is
-configured to use.
-
-### Alternative: a real SMTP mailbox you control
-
-If `mail()` doesn't deliver reliably (or lands in spam), use the
-credentials of a real mailbox you administer — e.g.
-`contact@globalsoftsystems.com` once it exists on the host. In
-cPanel: **Email Accounts → (the address) → Connect Devices** shows
-its SMTP host/port. Fill in `server/.env`:
-
-```ini
-SMTP_ENABLED=true
-SMTP_HOST=mail.globalsoftsystems.com
-SMTP_PORT=465
-SMTP_ENCRYPTION=ssl
-SMTP_USERNAME=contact@globalsoftsystems.com
-SMTP_PASSWORD=<that mailbox's real password>
-```
-
-Never put a personal Gmail/Outlook account password here — this is
-specifically for a mailbox on the company's own domain that you
-administer for this purpose.
+**Local testing:** `mail()` needs a mail agent on the machine. The
+local `php -S` server on Windows has none, so locally every valid
+submission ends in `?status=error` (logged as `mail(): FAILED`). Real
+sending only happens on the hosting server.
 
 ## 3. Deploying to HostGator
 
-`server/.env` and `server/careers-config.php` are gitignored and
-never travel through git — they have to be created directly on the
-server.
-
-**`server/.env.gss_newsite`** in this repo is the deployment-ready
-version: real Ceipal API credentials, official recipients, and
-`SMTP_ENABLED=false` (the hosting server's own `mail()`, no mailbox
-password). To use it:
-
-1. Upload it to the server, into the `server/` directory.
-2. Rename it to `.env` there (or upload it directly under that name).
-
-Prefer setting these as real environment variables through the
-host's own control panel (e.g. cPanel's "PHP Environment Variables"
-page) over a committed file where possible — `server/lib/config.php`
-already prefers real environment variables over `.env` automatically,
-so nothing else changes either way.
+Upload the site as usual; there is nothing to configure for email.
+`server/.env` (uploaded as `.env.gss_newsite`, renamed) now only holds
+the Ceipal careers API keys — see below.
 
 ## 4. Ceipal careers API credentials
 
 `server/careers-jobs.php` (the live job listings on `html/career.html`)
-reads its Ceipal `api_key`/`cp_id` through the same `server/.env`
-mechanism as mail settings — nothing is hardcoded in any `.php` file:
+reads its Ceipal `api_key`/`cp_id` through `server/.env`
+(see `server/.env.example`) — nothing is hardcoded in any `.php` file:
 
 ```ini
 CEIPAL_API_KEY=...
@@ -143,9 +90,17 @@ CAPTCHA, no external service):
   arrives less than 3 seconds later is treated as scripted, not a
   person reading the form.
 
-Both endpoints respond with the normal success message when a spam
+Both endpoints redirect with `status=success` when a spam
 check trips (so a scripted retry doesn't learn anything from the
 rejection) but send no email; the block is recorded in the
 submissions log for visibility. A visitor with JavaScript disabled
 simply won't send a timestamp, and the timing check is skipped for
 them rather than rejecting a genuine submission.
+
+## 6. Upload limits
+
+The résumé must be a PDF (extension and `%PDF-` file signature
+checked), max 10 MB. It is never saved: it goes from PHP's temporary
+upload file straight into the email. `server/.user.ini` raises
+`upload_max_filesize` to 10M and `post_max_size` to 12M on
+PHP-FPM/CGI hosts such as HostGator.

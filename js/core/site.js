@@ -584,6 +584,23 @@
 
     items.forEach(function (el) { observer.observe(el); });
 
+    // On arrival, show everything already on screen, even partly. The
+    // observer's -12% bottom margin is right for content discovered by
+    // scrolling, but it left the heading just below the home hero (sitting
+    // in that bottom strip) hidden until the visitor scrolled a little.
+    // Re-run on load in case late images/fonts shift the layout.
+    function showInView() {
+      var fold = window.innerHeight;
+      pending = pending.filter(function (el) {
+        if (el.classList.contains('is-in')) return false;
+        var r = el.getBoundingClientRect();
+        if (r.top < fold && r.bottom > 0) { show(el); return false; }
+        return true;
+      });
+    }
+    showInView();
+    window.addEventListener('load', showInView, { once: true });
+
     // Safety net: very fast or programmatic scrolling can outrun the observer's
     // delivery, so sweep on scroll for anything that is already past the fold.
     var sweeping = false;
