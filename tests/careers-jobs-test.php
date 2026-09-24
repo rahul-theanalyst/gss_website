@@ -34,4 +34,22 @@ check(fetchAllJobs([], function ($page) {
 check(fetchAllJobs([], function () { return ['message' => 'Unexpected response']; }) === null, 'Reject malformed results');
 check(fetchAllJobs([], function () { return ['count' => 0, 'results' => []]; }) === [], 'Valid empty feed');
 check(fetchAllJobs([], function () { return ['count' => 2, 'num_pages' => 1, 'results' => [['id' => 1]]]; }) === null, 'Reject truncated feed');
+// Candidate-portal fallbacks (the list feed no longer has pay_rates or
+// campus_portal_job_details_url)
+check(portalPayLine('$ 95000 - 100000 / Yearly / W-2') === '$95,000–$100,000 / yearly', 'Portal pay range');
+check(portalPayLine('$ 50 - 55 / Hourly / C2C') === '$50–$55 / hourly', 'Portal hourly pay');
+check(portalPayLine('N/A') === '' && portalPayLine('') === '', 'No pay published');
+check(payLineFor(['_portal' => ['payRateInfo' => '$ 80000 - 90000 / Yearly']]) === '$80,000–$90,000 / yearly', 'Pay falls back to portal');
+check(portalCompanyId([['apply_job_login' => 'https://candidateportal.ceipal.com/login/COMPANY/JOB']]) === 'COMPANY', 'Company id from apply link');
+check(transformJob(['public_job_title' => 'Dev', '_portal' => ['minExperience' => '6 Years']])['experience'] === '6 Years', 'Experience from portal');
+
+$blocks = demoteLeadingFactHeadings(dropRepeatedTitle(htmlToBlocks(
+    '<p><b>SDET - Playwright</b></p><p><b>Job Title: SDET - Playwright</b></p>'
+    . '<p><b>Charlotte NC</b></p><p><b>Long Term</b></p><p><b>Role Overview</b></p><p>We build things.</p>'
+    . '<div><div><strong>MUST HAVE</strong></div><div><ul><li>Java,</li><li>SQL</li></ul></div></div>'
+), 'SDET - Playwright'));
+check($blocks[0] === ['type' => 'para', 'text' => 'Charlotte NC'], 'Title repeats dropped, leading facts are plain lines');
+check($blocks[2] === ['type' => 'heading', 'text' => 'Role Overview'], 'Real heading kept');
+check($blocks[5]['type'] === 'list' && $blocks[5]['items'][0]['text'] === 'Java', 'List inside a wrapper div stays a list, trailing comma trimmed');
+
 echo "Careers regression checks passed.\n";

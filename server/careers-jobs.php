@@ -241,7 +241,8 @@ function collectListItems($node) {
                 $ownText .= $liChild->textContent;
             }
         }
-        $ownText = normalizeSpace($ownText);
+        // list items typed as a comma-separated run ("Java", "TypeScript,")
+        $ownText = rtrim(normalizeSpace($ownText), ',; ');
         if ($ownText !== '') $items[] = ['text' => $ownText, 'sub' => false];
         foreach ($nested as $n) $items[] = $n;
     }
@@ -268,6 +269,13 @@ function appendBlock(&$blocks, $node) {
         if ($text !== '') $blocks[] = ['type' => 'heading', 'text' => rtrim($text, ':')];
         return;
     }
+    if (in_array($tag, ['p', 'div', 'span'], true) && hasBlockDescendant($node)) {
+        // a wrapper around real block content (e.g. <div><div>Heading</div>
+        // <ul>…</ul></div>): walk into it so the list stays a list instead
+        // of being flattened into one run-on line of text below
+        foreach ($node->childNodes as $child) appendBlock($blocks, $child);
+        return;
+    }
     if (in_array($tag, ['p', 'div', 'span'], true)) {
         // Ceipal often packs several logically separate lines — a title
         // plus "Location: Remote<br>Duration: Contract to Hire" — into one
@@ -279,6 +287,29 @@ function appendBlock(&$blocks, $node) {
     // anything unrecognised (stray inline tags, bare <br> at the root, …)
     // — just walk its children
     foreach ($node->childNodes as $child) appendBlock($blocks, $child);
+}
+
+/** True if $node contains block-level markup (lists, paragraphs, nested
+ *  divs, headings, tables) rather than only inline text/formatting. */
+function hasBlockDescendant($node) {
+    foreach ($node->childNodes as $child) {
+        if ($child->nodeType !== XML_ELEMENT_NODE) continue;
+        if (preg_match('/^(ul|ol|p|div|h[1-6]|table|blockquote)$/', strtolower($child->nodeName))) return true;
+        if (hasBlockDescendant($child)) return true;
+    }
+    return false;
+}
+
+/** Short bold lines stacked at the very top of a posting ("Charlotte NC",
+ *  "Long Term", "3+ months") pass isHeadingText() but aren't section
+ *  headings — nothing follows them except the next such line. Of a leading
+ *  run of headings, all but the last become plain lines. Sub-headings
+ *  further down (e.g. "Technical Skills" > "Backend (.NET)") are untouched. */
+function demoteLeadingFactHeadings($blocks) {
+    $run = 0;
+    while ($run < count($blocks) && $blocks[$run]['type'] === 'heading') $run++;
+    for ($i = 0; $i < $run - 1; $i++) $blocks[$i]['type'] = 'para';
+    return $blocks;
 }
 
 /** Classifies one already-normalized line of text as a bullet (folded into
@@ -378,7 +409,9 @@ function firstNonEmpty(...$values) {
  *  by transformJob() (teaser feed) and applyJobDetail() (recomputed once the
  *  teaser description is replaced by the full one). */
 function payLineFor($raw) {
-    if (empty($raw['pay_rates']) || !is_array($raw['pay_rates'])) return '';
+    if (empty($raw['pay_rates']) || !is_array($raw['pay_rates'])) {
+        return portalPayLine($raw['_portal']['payRateInfo'] ?? '');
+    }
     $pr = $raw['pay_rates'][0];
     $min = $pr['min_pay_rate'] ?? '';
     $max = $pr['max_pay_rate'] ?? '';
@@ -386,6 +419,24 @@ function payLineFor($raw) {
     if ($min === '' || $max === '') return '';
     return '$' . number_format((float) $min) . '–$' . number_format((float) $max)
         . ($freq ? ' / ' . strtolower($freq) : '');
+}
+
+/** The candidate portal's pay text, e.g. "$ 95000 - 100000 / Yearly / W-2",
+ *  in the same "$95,000–$100,000 / yearly" shape payLineFor() produces from
+ *  the feed's own pay_rates. Unrecognised text is passed through as-is. */
+function portalPayLine($info) {
+    $info = normalizeSpace((string) $info);
+    // Ceipal sends "N/A" (or a bare "$ 0 - 0 / …") when no pay is published
+    if ($info === '' || preg_match('#^(n/?a|none|-+)$#i', $info)) return '';
+    if (preg_match('/^\$?\s*([\d.,]+)\s*-\s*\$?\s*([\d.,]+)\s*\/\s*([A-Za-z]+)/', $info, $m)) {
+        $min = (float) str_replace(',', '', $m[1]);
+        $max = (float) str_replace(',', '', $m[2]);
+        if ($min > 0 && $max > 0) {
+            return '$' . number_format($min) . '–$' . number_format($max) . ' / ' . strtolower($m[3]);
+        }
+        return '';
+    }
+    return $info;
 }
 
 /** Ceipal's raw job object -> the exact shape careers.js expects.
@@ -428,7 +479,9 @@ function transformJob($raw) {
         'title'       => $title,
         'location'    => $location ?: 'Location on request',
         'type'        => $type,
-        'experience'  => '', // filled in by applyJobDetail() when available
+        // the portal list's minimum ("6 Years"); applyJobDetail() replaces
+        // it with the detail endpoint's range ("6 - 10 Years") when available
+        'experience'  => normalizeSpace($raw['_portal']['minExperience'] ?? ''),
         // "client" is always "Global Soft Systems, Inc" for GSS's own
         // postings (not third-party client names), and "industry" is
         // empty on every posting in this account — neither maps to a
@@ -469,7 +522,7 @@ function applyJobDetail($job, $raw, $detail) {
             ? trim($fullDescription . "\n\n" . $payLine)
             : $fullDescription;
 
-        $blocks = htmlToBlocks($html);
+        $blocks = demoteLeadingFactHeadings(dropRepeatedTitle(htmlToBlocks($html), $job['title']));
         if ($blocks) {
             if ($payLine !== '') $blocks[] = ['type' => 'label', 'label' => 'Pay Rate', 'value' => $payLine];
             $job['descriptionBlocks'] = $blocks;
@@ -490,19 +543,111 @@ function applyJobDetail($job, $raw, $detail) {
     return $job;
 }
 
+/** Most Ceipal descriptions open by repeating the job title — as a heading
+ *  ("SDET - Playwright", "Full Stack Developer (Java/React) x 4") or a
+ *  "Job Title: …" / "Role: …" line. The role row right above the panel
+ *  already shows the title, so drop those leading repeats. */
+function dropRepeatedTitle($blocks, $title) {
+    $key = function ($s) { return strtolower(preg_replace('/[^a-z0-9]+/i', '', (string) $s)); };
+    $titleKey = $key($title);
+    if ($titleKey === '') return $blocks;
+    while ($blocks) {
+        $b = $blocks[0];
+        $repeat = ($b['type'] === 'heading' && strpos($key($b['text']), $titleKey) === 0)
+            || ($b['type'] === 'label'
+                && in_array($key($b['label']), ['jobtitle', 'title', 'role', 'position', 'positiontitle'], true)
+                && strpos($key($b['value']), $titleKey) === 0);
+        if (!$repeat) break;
+        array_shift($blocks);
+    }
+    return $blocks;
+}
+
 const DETAIL_BATCH_SIZE = 20; // concurrent connections per curl_multi round
+const PORTAL_API        = 'https://candidateportal.ceipal.com/api';
+const PORTAL_PAGE_ROWS  = 100;
+
+/** The encrypted company id from any job's apply link, which has the shape
+ *  https://candidateportal.ceipal.com/login/<companyId>/<jobId>. */
+function portalCompanyId($rawJobs) {
+    foreach ($rawJobs as $raw) {
+        foreach (['apply_job_login', 'apply_job', 'apply_job_without_registration'] as $field) {
+            $path = parse_url((string) ($raw[$field] ?? ''), PHP_URL_PATH);
+            if (is_string($path) && preg_match('#/login/([^/]+)/[^/]+/?$#', $path, $m)) return $m[1];
+        }
+    }
+    return '';
+}
+
+/** Ceipal's list feed stopped including campus_portal_job_details_url (seen
+ *  Sep 2026), which is what the per-job detail tokens used to come from. The
+ *  candidate portal's own public job list — the same call its career-jobs
+ *  page makes — returns, per job, the id its description endpoint accepts,
+ *  plus the full HTML description, pay text and minimum experience.
+ *  Returns [ job_code => portal record ], or [] on any failure (best-effort,
+ *  like the detail fetch: the teaser feed still renders without it). */
+function fetchPortalJobIndex($rawJobs) {
+    if (!extension_loaded('curl')) return [];
+    $companyId = portalCompanyId($rawJobs);
+    if ($companyId === '') return [];
+
+    $index = [];
+    for ($first = 0, $page = 0; $page < MAX_PAGES; $first += PORTAL_PAGE_ROWS, $page++) {
+        $ch = curl_init(PORTAL_API . '/jobs/getJobsList/1');
+        curl_setopt_array($ch, [
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => json_encode([
+                'companyId' => $companyId, 'searchKey' => '',
+                'first' => $first, 'rows' => PORTAL_PAGE_ROWS,
+            ]),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT        => 12,
+            CURLOPT_CONNECTTIMEOUT => 4,
+            CURLOPT_HTTPHEADER     => [
+                'Content-Type: application/json',
+                'Accept: application/json',
+                'Origin: https://candidateportal.ceipal.com',
+                'Referer: https://candidateportal.ceipal.com/career-jobs/' . $companyId,
+                'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+                    . '(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',
+            ],
+        ]);
+        $body = curl_exec($ch);
+        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $error = curl_error($ch);
+        unset($ch);
+
+        $data = is_string($body) ? json_decode($body, true) : null;
+        $records = $data['data']['records'] ?? null;
+        if ($code < 200 || $code >= 300 || ($data['status'] ?? null) !== 1 || !is_array($records)) {
+            logError("Portal job list failed (offset {$first}): HTTP {$code} {$error}");
+            break;
+        }
+        foreach ($records as $record) {
+            $jobCode = trim((string) ($record['jobCode'] ?? ''));
+            if ($jobCode !== '' && is_string($record['id'] ?? null)) $index[$jobCode] = $record;
+        }
+        $total = (int) ($data['data']['totalRecords'] ?? 0);
+        if (count($records) < PORTAL_PAGE_ROWS || $first + PORTAL_PAGE_ROWS >= $total) break;
+    }
+    return $index;
+}
 
 /** Fetches CareerPortalJobPostings-list detail pages concurrently (curl_multi)
- *  for every raw job that has a details URL, in fixed-size batches so a large
- *  feed never opens hundreds of sockets at once. Returns [ $rawJobs index =>
- *  decoded "data.jobInfo" array ], silently omitting any job whose fetch
- *  failed — this enrichment is best-effort and must never block the feed. */
+ *  for every raw job that has a detail token, in fixed-size batches so a large
+ *  feed never opens hundreds of sockets at once. The token comes from the
+ *  feed's campus_portal_job_details_url when present, otherwise from the
+ *  portal job list ($raw['_portal'], see fetchPortalJobIndex()). Returns
+ *  [ $rawJobs index => decoded "data.jobInfo" array ], silently omitting any
+ *  job whose fetch failed — this enrichment is best-effort and must never
+ *  block the feed. */
 function fetchJobDetailsBatch($rawJobs) {
     if (!extension_loaded('curl')) return [];
 
     $tokens = [];
     foreach ($rawJobs as $i => $raw) {
         $token = extractDetailToken($raw['campus_portal_job_details_url'] ?? null);
+        if ($token === '') $token = (string) ($raw['_portal']['id'] ?? '');
         if ($token !== '') $tokens[$i] = $token;
     }
     if (!$tokens) return [];
@@ -604,12 +749,26 @@ if ($rawJobs === null) {
     serveUnavailable();
 }
 
+// Attach each job's candidate-portal record (detail token, full description,
+// pay text, experience) by job code — see fetchPortalJobIndex().
+$portal = fetchPortalJobIndex($rawJobs);
+foreach ($rawJobs as $i => $raw) {
+    $jobCode = trim((string) ($raw['job_code'] ?? ''));
+    if ($jobCode !== '' && isset($portal[$jobCode])) $rawJobs[$i]['_portal'] = $portal[$jobCode];
+}
+
 $details = fetchJobDetailsBatch($rawJobs);
 $jobs = [];
 foreach ($rawJobs as $i => $raw) {
     $job = transformJob($raw);
     if ($job === null) continue;
-    if (isset($details[$i])) $job = applyJobDetail($job, $raw, $details[$i]);
+    $detail = $details[$i] ?? null;
+    if ($detail === null && !empty($raw['_portal']['publicJobDescription'])) {
+        // detail fetch failed: the portal list already carries the full
+        // description, so use it rather than falling back to the teaser
+        $detail = ['descriptionData' => ['jobDescription' => $raw['_portal']['publicJobDescription']]];
+    }
+    if ($detail !== null) $job = applyJobDetail($job, $raw, $detail);
     $jobs[] = $job;
 }
 $payload = json_encode(['jobs' => $jobs], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);

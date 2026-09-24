@@ -360,6 +360,9 @@ html[data-theme="dark"] .careers-page .car-roles__dots { color: var(--hairline);
   color: var(--muted-2); font-size: .89rem;
 }
 .careers-page .car-jd-list li.is-sub::marker { color: var(--line); }
+/* the heading above the skill tags sits right under the description,
+   whose own bottom margin already provides the gap */
+.careers-page .car-skills__h { margin-top: 0; margin-bottom: 8px; }
 .careers-page .car-skills {
   list-style: none; display: flex; flex-wrap: wrap; gap: 8px;
   margin: 0 0 clamp(18px, 2vw, 24px); padding: 0;

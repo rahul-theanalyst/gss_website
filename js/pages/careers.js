@@ -202,6 +202,7 @@
             }).join('') + '</dl>' : '') +
           renderDescription(j) +
           (j.skills.length ?
+            '<p class="car-jd-h car-skills__h">Key Skills</p>' +
             '<ul class="car-skills">' + j.skills.map(function (s) {
               return '<li>' + esc(s) + '</li>';
             }).join('') + '</ul>' : '') +
