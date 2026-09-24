@@ -27,5 +27,6 @@ deployment:
     - /bin/cp server/lib/spam-guard.php "$DEPLOYPATH/server/lib/"
 
     # Deploy security and PHP configuration files
+    - /bin/cp .htaccess "$DEPLOYPATH"
     - /bin/cp server/.htaccess "$DEPLOYPATH/server/"
     - /bin/cp server/.user.ini "$DEPLOYPATH/server/"
