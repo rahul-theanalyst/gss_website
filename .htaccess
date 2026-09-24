@@ -1,0 +1,16 @@
+RewriteEngine On
+
+# Redirect /newsite/html/index.html -> /newsite/html/
+RewriteCond %{THE_REQUEST} \s/+newsite/html/index\.html(?:[?\s]|$) [NC]
+RewriteRule ^html/index\.html$ /newsite/html/ [R=302,L]
+
+# Redirect /newsite/html/about.html -> /newsite/html/about
+# Same for contact, career, etc.
+RewriteCond %{THE_REQUEST} \s/+newsite/html/([^?\s]+)\.html(?:[?\s]|$) [NC]
+RewriteRule ^html/(.+)\.html$ /newsite/html/$1 [R=302,L,NE]
+
+# Internally serve the .html file when the URL has no .html
+# Example: /newsite/html/about -> html/about.html
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^html/(.+?)/?$ html/$1.html [L]
