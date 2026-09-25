@@ -211,6 +211,42 @@ html[data-theme="dark"] .hero-slide[data-slide="3"] { --hero-dim: .48; }
    tallest slide from growing any more than it has to. */
 .hero-slide[data-slide="0"] .eyebrow { margin-bottom: clamp(10px, 1.2vw, 14px); }
 
+/* Metallic gold for the hero's eyebrow, its rules and the active dot.
+   The light hero photos are pale steel blue (~#C4CEDC), where a flat bright
+   gold washes out (--gold is only 1.6:1). So the gold is a gradient: deep
+   bronze at the ends carries the legibility, a bright champagne highlight
+   in the middle gives the shine, and a slow sweep moves that highlight
+   across. A hairline navy drop-shadow keeps the letter edges crisp against
+   the sky (text-shadow can't be used — it would paint over a clipped
+   background). Dark mode keeps --gold, which already reads on the night
+   images; reduced-motion users get the gradient without the sweep. */
+html:not([data-theme="dark"]) .hero .eyebrow {
+  font-weight: 700;
+  background: linear-gradient(100deg,
+    #7A5A1E 0%, #A97C2A 18%, #E2B650 32%, #FFF0B5 42%,
+    #F2CB62 50%, #A97C2A 66%, #7A5A1E 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 .5px 0 rgba(15, 34, 71, .45));
+  animation: heroGoldShine 6s linear infinite;
+}
+html:not([data-theme="dark"]) .hero .eyebrow .rule {
+  opacity: 1;
+  background: linear-gradient(90deg, #9C7426, #F2CB62 50%, #9C7426);
+}
+html:not([data-theme="dark"]) .hero .dot.is-active::before {
+  background: linear-gradient(90deg, #A97C2A, #FFE39A 50%, #A97C2A);
+  box-shadow: 0 0 6px rgba(226, 182, 80, .55);
+}
+@keyframes heroGoldShine {
+  from { background-position: 100% 0; }
+  to   { background-position: -150% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-theme="dark"]) .hero .eyebrow { animation: none; background-position: 60% 0; }
+}
+
 /* credibility card rows
    Everything here is fluid: the row width, the gaps, the card padding, the
    icon and both type sizes all scale continuously with the viewport, so the
