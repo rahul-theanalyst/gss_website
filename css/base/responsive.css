@@ -436,7 +436,7 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   .scroll-cue { display: none; }
 }
 @media (max-width: 767.98px) and (orientation: portrait) and (max-height: 600px) {
-  .hero { --hero-photo-h: min(calc(56.25vw * var(--hero-grow)), 26svh); }
+  .hero { --hero-photo-h: min(calc(56.25vw * var(--hero-grow)), 22svh); }
   .hero-sub { font-size: .82rem; line-height: 1.38; }
   .cred-txt strong { font-size: .62rem; }
   .cred-txt small { font-size: .56rem; }

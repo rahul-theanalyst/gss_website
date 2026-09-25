@@ -550,6 +550,45 @@
   }());
 
 
+  /* ── 05b. HERO CARD HEIGHTS ────────────────────────────── */
+  // All four slides' credential cards share one height: the tallest card
+  // across every slide, published as --cred-card-h (see home.css). Slides
+  // sit in separate grid rows, so CSS alone can't equalise them; hidden
+  // slides still have layout, so they measure fine. Re-run whenever a
+  // card's text box changes size (web fonts landing late on a hidden
+  // slide, re-wrapping on resize) — observing the text, not the card, so
+  // setting the card heights can't retrigger it.
+  (function heroCardHeights() {
+    var hero = $('#hero');
+    var cards = hero ? $$('.cred-card', hero) : [];
+    if (cards.length < 2) return;
+    var timer = 0;
+    function equalise() {
+      timer = 0;
+      hero.style.removeProperty('--cred-card-h');
+      var tallest = 0;
+      cards.forEach(function (card) { tallest = Math.max(tallest, card.getBoundingClientRect().height); });
+      if (tallest) hero.style.setProperty('--cred-card-h', Math.ceil(tallest) + 'px');
+    }
+    // a short timer, not requestAnimationFrame: rAF only fires when the
+    // browser paints a frame, so a text change on a hidden slide could
+    // otherwise wait indefinitely before the heights were recalculated
+    function schedule() { if (!timer) timer = window.setTimeout(equalise, 30); }
+    equalise();
+    if ('ResizeObserver' in window) {
+      var observer = new ResizeObserver(schedule);
+      cards.forEach(function (card) {
+        var text = card.querySelector('.cred-txt');
+        if (text) observer.observe(text);
+      });
+    } else {
+      window.addEventListener('resize', schedule, { passive: true });
+    }
+    window.addEventListener('load', schedule);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
+  }());
+
+
   /* ── 06. SCROLL REVEAL ─────────────────────────────────── */
   (function reveal() {
     var items = $$('.reveal');

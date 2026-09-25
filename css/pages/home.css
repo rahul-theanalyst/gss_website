@@ -230,8 +230,15 @@ html[data-theme="dark"] .hero-slide[data-slide="3"] { --hero-dim: .48; }
 }
 .cred-row.cols-4 {
   grid-template-columns: repeat(4, minmax(0,1fr));
-  max-width: min(100%, clamp(600px, 66vw, 1000px));
+  /* wide enough for the longest labels ("Technology That Fits",
+     "Execute with accountability") to stay on one line on desktop, so
+     every slide's cards keep slide 4's compact size */
+  max-width: min(100%, clamp(640px, 76vw, 1160px));
 }
+/* one shared height for every hero card on every slide — set by
+   heroCardHeights() in site.js from the tallest card, so cards whose
+   text wraps at a given width don't come out taller than the rest */
+.hero .cred-card { min-height: var(--cred-card-h, 0px); }
 .cred-row.cols-5 {
   grid-template-columns: repeat(5, minmax(0,1fr));
   max-width: min(100%, clamp(660px, 74vw, 1100px));
