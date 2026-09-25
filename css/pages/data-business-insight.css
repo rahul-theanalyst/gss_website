@@ -346,7 +346,11 @@ html[data-theme="dark"] .dbi-page .dbi-row__bars { color: var(--hairline); opaci
     max-width: none;
   }
   .dbi-page .dbi-hero__lede { max-width: 46ch; }
-  .dbi-page .dbi-hero__media { min-height: 0; aspect-ratio: 16 / 9; }
+  /* contained, not full-bleed: the same gutter as .dbi-hero__text above,
+     so the photo's left edge lines up with the gold accent line and its
+     right edge with the text block's right boundary; rounded like the
+     site's cards now that it no longer runs to the screen edges */
+  .dbi-page .dbi-hero__media { min-height: 0; aspect-ratio: 16 / 9; margin-inline: var(--gutter); border-radius: var(--radius-sm); }
   .dbi-page .dbi-hero__media::after { background: none; }
   .dbi-page .dbi-row__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(18px, 4vw, 28px); }
   .dbi-page .dbi-row--reverse .dbi-row__aside { order: -1; }

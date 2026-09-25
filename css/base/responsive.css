@@ -110,17 +110,42 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
 /* ≤768px — process goes vertical */
 @media (max-width: 768px) {
   body { font-size: 16px; }
-  .process { grid-template-columns: minmax(0,1fr); gap: 34px; text-align: left; padding-left: 6px; }
-  .process::before {
-    top: 12px; bottom: 12px; left: 32px; right: auto;
-    width: 1px; height: auto;
+  /* Vertical timeline. Every step gets the same height (grid-auto-rows:
+     1fr) with its circle and text block both vertically centred, so each
+     circle lines up with the middle of its text and the steps are evenly
+     spaced. Connectors are drawn per step in the step's own coordinates
+     (the same ones the circle uses): a line from this circle's centre to
+     the next one's — one step height plus the gap — and a gold dot at the
+     middle of the gap. Nothing is drawn below the last step. */
+  .process {
+    --step-gap: 34px;
+    grid-template-columns: minmax(0,1fr);
+    grid-auto-rows: 1fr;
+    gap: var(--step-gap);
+    text-align: left; padding-left: 6px;
   }
-  .step { text-align: left; padding-left: 88px; padding-inline-end: 0; }
+  .process::before { display: none; }
+  .step {
+    display: flex; flex-direction: column; justify-content: center;
+    min-height: 64px;
+    text-align: left; padding-left: 88px; padding-inline-end: 0;
+  }
+  .step:not(:last-child)::before {
+    content: ""; position: absolute; z-index: 1;
+    left: 32px; top: 50%;
+    width: 1px; height: calc(100% + var(--step-gap));
+    background: var(--line);
+    transform: translateX(-50%);
+  }
   .step:not(:last-child)::after {
-    top: auto; bottom: -20px; left: 32px;
-    transform: translate(-50%, 0);
+    top: calc(100% + var(--step-gap) / 2); bottom: auto; left: 32px;
+    transform: translate(-50%, -50%);
   }
-  .step-node { position: absolute; left: 0; top: 0; margin: 0; width: 64px; height: 64px; }
+  .step-node {
+    position: absolute; left: 0; top: 50%; margin: 0;
+    width: 64px; height: 64px;
+    transform: translateY(-50%);
+  }
   .step-copy { margin-inline: 0; max-width: none; }
 
   .hero-slide {
@@ -339,20 +364,29 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
 @media (max-width: 767.98px) and (orientation: portrait) {
   /* the band is the photos' 16:9 (56.25vw) grown by --hero-grow; with the
      --hero-photo-shift lift, "cover" crops a little off the photo's sides */
-  .hero { --hero-photo-h: calc(56.25vw * var(--hero-grow)); }
-  .hero-viewport { min-height: 0; }
+  /* ...capped at 30% of the visible height, so on a short screen the
+     photo gives up room first and the copy, cards and button still fit */
+  .hero { --hero-photo-h: min(calc(56.25vw * var(--hero-grow)), 30svh); }
+  /* the hero is exactly the visible screen below the navbar (svh = with
+     the browser's own address/tool bars showing), so the first view ends
+     where the hero does and the next section starts at the fold */
+  .hero-viewport { min-height: calc(100svh - var(--header-h)); }
   .hero-slide {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    /* rows 1–4 are the photo: the flexible rows either side of the
-       eyebrow and headline rows keep that pair centred on it */
-    grid-template-rows: 1fr auto auto 1fr;
-    /* sized to its own content, not stretched to the tallest slide —
-       stretching would pour the spare height into those flexible rows */
-    align-self: start;
-    align-content: start;
+    /* rows 1–4 are the photo (eyebrow in 2, headline in 3, hugging the
+       boundary between them so the pair stays centred on it); rows 6–9
+       hold the intro, cards, tagline and button, with a flexible row
+       either side (5 and 10) centring that block in the space left
+       below the photo. Slides without cards/tagline leave those rows
+       empty. */
+    grid-template-rows: auto auto auto auto 1fr auto auto auto auto 1fr;
+    align-self: stretch;
+    align-content: stretch;
     align-items: start;
-    padding: var(--header-h) 0 calc(var(--hero-chrome-h) + 6px);
+    /* no top padding: .hero's own margin-top already clears the fixed
+       header, so the photo band sits directly under the navbar */
+    padding: 0 0 calc(var(--hero-chrome-h) + 6px);
     /* opaque, like the full-bleed photo was, so the outgoing slide's
        copy doesn't show through mid-crossfade */
     background: var(--bg-sky);
@@ -373,31 +407,39 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
     position: relative; z-index: 1;
     margin: 0;
   }
-  .hero-content > .eyebrow { grid-row: 2; margin-bottom: 10px; }
+  .hero-content > .eyebrow { grid-row: 2; align-self: end; margin-bottom: 10px; }
   .hero-content > .hero-title { grid-row: 3; }
-  .hero-content > .hero-title + .hero-sub { margin-top: clamp(16px, 4.6vw, 22px); }
-
-  /* slides 2 and 3 carry less copy than the hero's tallest slide, so
-     they fill its height and centre their copy + button in the space
-     below the photo instead of leaving one big gap above the dots.
-     The photo rows here are auto (not fr) so the spare height goes only
-     to the two spacer rows; the eyebrow/headline pair stays centred on
-     the photo by hugging the row boundary between them. */
-  .hero-slide:nth-child(2),
-  .hero-slide:nth-child(3) {
-    align-self: stretch;
-    grid-template-rows: auto auto auto auto 1fr auto auto 1fr;
-  }
-  .hero-slide:nth-child(2) .eyebrow,
-  .hero-slide:nth-child(3) .eyebrow { align-self: end; }
-  .hero-slide:nth-child(2) .hero-sub,
-  .hero-slide:nth-child(3) .hero-sub { grid-row: 6; }
-  .hero-slide:nth-child(2) .hero-cta,
-  .hero-slide:nth-child(3) .hero-cta { grid-row: 7; }
+  .hero-content > .hero-sub { grid-row: 6; }
+  .hero-content > .cred-row { grid-row: 7; }
+  .hero-content > .hero-tagline { grid-row: 8; }
+  .hero-content > .hero-cta { grid-row: 9; }
+  .hero-content > .hero-title + .hero-sub { margin-top: clamp(12px, 2.4svh, 22px); }
 
   /* the scroll cue should lead straight into "How GSS Works" */
   .hero-chrome { bottom: 4px; }
   .section-about { padding-top: 16px; }
+}
+/* Short phone screens (iPhone SE-class, or any phone once the browser's
+   address/tool bars take their share): tighter type and spacing so the
+   intro, cards, tagline and button all fit in the first screen. The
+   scroll arrow gives way to that; the slide dots stay. */
+@media (max-width: 767.98px) and (orientation: portrait) and (max-height: 700px) {
+  .hero-content > .hero-title + .hero-sub { margin-top: 10px; }
+  .hero-sub { font-size: .86rem; line-height: 1.42; }
+  .cred-row { margin-top: 10px; gap: 6px; }
+  .cred-card,
+  .cred-card.is-stacked { padding: 6px 9px; gap: 7px; }
+  .hero-tagline { margin-top: 8px; font-size: .8rem; line-height: 1.4; }
+  .hero-cta { margin-top: 10px; }
+  .hero { --hero-chrome-h: 30px; }
+  .hero-chrome { bottom: 8px; }
+  .scroll-cue { display: none; }
+}
+@media (max-width: 767.98px) and (orientation: portrait) and (max-height: 600px) {
+  .hero { --hero-photo-h: min(calc(56.25vw * var(--hero-grow)), 26svh); }
+  .hero-sub { font-size: .82rem; line-height: 1.38; }
+  .cred-txt strong { font-size: .62rem; }
+  .cred-txt small { font-size: .56rem; }
 }
 /* the smallest phones: the photo is under 215px tall, so the overlay
    drops the eyebrow's side rules and sets the headline small enough

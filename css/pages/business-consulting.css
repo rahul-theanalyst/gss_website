@@ -269,7 +269,11 @@ html[data-theme="dark"] .bizcon-page .bc-row__dots { color: var(--hairline); }
     max-width: none;
   }
   .bizcon-page .bc-hero__lede { max-width: 46ch; }
-  .bizcon-page .bc-hero__media { min-height: 0; aspect-ratio: 16 / 9; }
+  /* contained, not full-bleed: the same gutter as .bc-hero__text above,
+     so the photo's left edge lines up with the gold accent line and its
+     right edge with the text block's right boundary; rounded like the
+     site's cards now that it no longer runs to the screen edges */
+  .bizcon-page .bc-hero__media { min-height: 0; aspect-ratio: 16 / 9; margin-inline: var(--gutter); border-radius: var(--radius-sm); }
   .bizcon-page .bc-hero__media::after { background: none; }
   .bizcon-page .bc-fit__slash { display: none; }
   .bizcon-page .bc-row__grid { grid-template-columns: minmax(0, 1fr); }

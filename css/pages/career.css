@@ -569,7 +569,11 @@ html[data-theme="dark"] .careers-page .car-form .form-submission-note.is-error {
     max-width: none;
   }
   .careers-page .car-hero__lede { max-width: 46ch; }
-  .careers-page .car-hero__media { min-height: 0; aspect-ratio: 16 / 9; }
+  /* contained, not full-bleed: the same gutter as .car-hero__text above,
+     so the photo's left edge lines up with the gold accent line and its
+     right edge with the text block's right boundary; rounded like the
+     site's cards now that it no longer runs to the screen edges */
+  .careers-page .car-hero__media { min-height: 0; aspect-ratio: 16 / 9; margin-inline: var(--gutter); border-radius: var(--radius-sm); }
   .careers-page .car-hero__media::after { background: none; }
   .careers-page .car-expect__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: clamp(26px, 5vw, 36px); }
   .careers-page .car-expect__grid li:nth-child(odd) { border-left: 0; padding-left: 0; }
