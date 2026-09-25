@@ -512,9 +512,17 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
 
   /* one even gap, about a line of body text, between each block on every
      slide: headline → paragraph → cards → tagline → button */
-  .hero { --hero-line: 1.5rem; }
+  /* ~20px on a 768px-tall screen up to 32px on 1080px and taller, so
+     the slides breathe where there's room and still fit where there isn't */
+  .hero { --hero-line: clamp(1.25rem, 3svh, 2rem); }
+  /* eyebrow → headline: the same on every slide (slide 1 used to be
+     tighter here, back when it was the only slide with a tagline) */
+  .hero .hero-slide .eyebrow { margin-bottom: calc(var(--hero-line) * .7); }
   .hero-title { margin-bottom: var(--hero-line); }
-  .hero-sub { margin-top: 0; }
+  /* every slide's paragraph now runs ~90–120 characters: capped just
+     under that, each wraps to two lines, and balance splits them evenly
+     (no one-word last line), so all four slides share one shape */
+  .hero-sub { margin-top: 0; max-width: 58ch; text-wrap: balance; }
   .cred-row,
   .hero-tagline,
   .hero-cta { margin-top: var(--hero-line); }

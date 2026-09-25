@@ -1,5 +1,8 @@
 RewriteEngine On
 
+# The Alliances page was renamed from partner.html — send old links to it
+RewriteRule ^html/partner(?:\.html)?/?$ /newsite/html/alliances [R=302,L]
+
 # Redirect /newsite/html/index.html -> /newsite/html/
 RewriteCond %{THE_REQUEST} \s/+newsite/html/index\.html(?:[?\s]|$) [NC]
 RewriteRule ^html/index\.html$ /newsite/html/ [R=302,L]
