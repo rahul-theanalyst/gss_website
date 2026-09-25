@@ -122,8 +122,9 @@
 .global-talent-page .gt-intro {
   position: relative;
   background: var(--bg);
-  padding-block: clamp(18px, 1.9vw, 27px) clamp(15px, 1.6vw, 23px);
-  border-bottom: 1px solid var(--hairline);
+  /* no bottom padding or border: the first solution band's own top
+     padding is the gap below this label, matching the space above it */
+  padding-block: clamp(18px, 1.9vw, 27px) 0;
 }
 /* a quiet dotted plate out in the left margin — same recipe as the
    Alliances hero dots, deliberately low-contrast so it stays decoration */
@@ -145,7 +146,7 @@
   font-size: clamp(.78rem, .95vw, 1.06rem);
   font-weight: 600;
   letter-spacing: .28em;
-  margin-bottom: clamp(8px, .9vw, 12px);
+  margin-bottom: 0;
 }
 
 
@@ -345,6 +346,11 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
   .global-talent-page .gt-hero__tail { max-width: 46ch; }
   .global-talent-page .gt-hero__media,
   .global-talent-page .gt-cta__media { min-height: 0; aspect-ratio: 16 / 9; }
+  /* contained, not full-bleed: the same gutter as the hero text above,
+     so the photo's left edge lines up with the gold accent line and its
+     right edge with the text block's right boundary; rounded like the
+     other stacked hero photos (Careers, Solutions pages, About) */
+  .global-talent-page .gt-hero__media { margin-inline: var(--gutter); border-radius: var(--radius-sm); }
   /* stacked — the photos now run full-width under the copy, so they fill
      edge to edge instead of fading top/bottom */
   .global-talent-page .gt-hero__media::after,
@@ -374,7 +380,7 @@ html[data-theme="dark"] .global-talent-page .gt-solution--cream { background: va
   .global-talent-page .gt-hero__media,
   .global-talent-page .gt-cta__media { aspect-ratio: 3 / 2; }
   .global-talent-page .gt-solution { padding-block: clamp(32px, 8vw, 42px); }
-  .global-talent-page .gt-intro { padding-block: clamp(32px, 8.4vw, 44px); }
+  .global-talent-page .gt-intro { padding-block: clamp(32px, 8.4vw, 44px) 0; }
   .global-talent-page .gt-cta { padding-block: clamp(34px, 9vw, 46px) clamp(30px, 8vw, 40px); }
   /* .btn goes full-width below 560px site-wide; these two are page CTAs,
      so let them keep that behaviour but stay comfortably tappable */
