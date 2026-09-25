@@ -490,26 +490,35 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   font-size: calc(.795rem * var(--hero-btn-scale));
 }
 
-/* ══ HERO CARDS: CENTERED ═══════════════════════════════════════════
-   Every hero card on every slide centers its icon + label as a group,
-   with the two text lines centered on each other. Last so it overrides
-   the left-aligned row layout the phone and short-screen tiers set. */
+/* ══ HERO CARDS: TEXT ONLY, SIZED TO THEIR LABELS ═══════════════════
+   The cards carry no icons, just the two-line label, centered. The row
+   is a wrapping, centered flex line rather than equal grid columns, so
+   each card is only as wide as its own label plus even side padding —
+   no empty band on the right — and the cards sit one even gap apart
+   however long their labels are. Last so it overrides the grid columns
+   and left-aligned rows the tiers above set at every screen size. */
+.hero .cred-row,
+.hero .cred-row.cols-4,
+.hero .cred-row.cols-5 {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: clamp(8px, .9vw, 14px);
+  width: auto; max-width: 100%;
+}
 .hero .cred-card,
-.hero .cred-card.is-stacked { justify-content: center; text-align: center; }
-/* Tablet and desktop: the icon sits centered above the label, so every
-   card's icon lands in the same spot whatever the label's length (side by
-   side, each icon drifted with its text). The padding is trimmed to pay
-   back most of the extra icon row. Phones and short screens keep the
-   side-by-side row above, where the hero has no height to spare. */
+.hero .cred-card.is-stacked {
+  flex: 0 1 auto;
+  justify-content: center; text-align: center;
+  padding: clamp(8px, .8vw, 12px) clamp(14px, 1.4vw, 22px);
+}
+/* labels stay on their line; they only break if a card would otherwise
+   be wider than the row (a very narrow phone) */
+.hero .cred-txt strong,
+.hero .cred-txt small { white-space: nowrap; }
+@media (max-width: 420px) {
+  .hero .cred-txt strong,
+  .hero .cred-txt small { white-space: normal; }
+}
 @media (min-width: 768px) and (min-height: 600px) {
-  .hero .cred-card,
-  .hero .cred-card.is-stacked {
-    flex-direction: column;
-    gap: clamp(4px, .45vw, 7px);
-    padding: clamp(8px, .75vw, 12px) clamp(10px, 1vw, 16px);
-  }
-  .hero .cred-ico { line-height: 0; }
-
   /* one even gap, about a line of body text, between each block on every
      slide: headline → paragraph → cards → tagline → button */
   /* ~20px on a 768px-tall screen up to 32px on 1080px and taller, so
