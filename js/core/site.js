@@ -588,6 +588,41 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
   }());
 
+  // Every slide's content block gets the tallest one's height (slide 1,
+  // which carries the extra tagline), exposed as --hero-content-h. With the
+  // content starting at the top of that shared box, the eyebrow sits the
+  // same distance below the navbar on all four slides instead of the
+  // taller slide being centered higher. The CSS only uses it where the
+  // slides are centered (tablet/desktop) — see responsive.css.
+  (function heroContentHeights() {
+    var hero = $('#hero');
+    var blocks = hero ? $$('.hero-content', hero) : [];
+    if (blocks.length < 2) return;
+    var timer = 0;
+    function equalise() {
+      timer = 0;
+      hero.style.removeProperty('--hero-content-h');
+      var tallest = 0;
+      blocks.forEach(function (el) { tallest = Math.max(tallest, el.getBoundingClientRect().height); });
+      if (tallest) hero.style.setProperty('--hero-content-h', Math.ceil(tallest) + 'px');
+    }
+    function schedule() { if (!timer) timer = window.setTimeout(equalise, 30); }
+    equalise();
+    // watch the blocks' children, not the blocks: the min-height set here
+    // resizes the blocks themselves, but never what's inside them — so a
+    // font swap or the cards' own height pass re-measures without looping
+    if ('ResizeObserver' in window) {
+      var observer = new ResizeObserver(schedule);
+      blocks.forEach(function (el) {
+        Array.prototype.forEach.call(el.children, function (child) { observer.observe(child); });
+      });
+    } else {
+      window.addEventListener('resize', schedule, { passive: true });
+    }
+    window.addEventListener('load', schedule);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
+  }());
+
 
   /* ── 06. SCROLL REVEAL ─────────────────────────────────── */
   (function reveal() {

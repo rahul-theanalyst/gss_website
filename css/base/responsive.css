@@ -490,6 +490,44 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   font-size: calc(.795rem * var(--hero-btn-scale));
 }
 
+/* ══ HERO CARDS: CENTERED ═══════════════════════════════════════════
+   Every hero card on every slide centers its icon + label as a group,
+   with the two text lines centered on each other. Last so it overrides
+   the left-aligned row layout the phone and short-screen tiers set. */
+.hero .cred-card,
+.hero .cred-card.is-stacked { justify-content: center; text-align: center; }
+/* Tablet and desktop: the icon sits centered above the label, so every
+   card's icon lands in the same spot whatever the label's length (side by
+   side, each icon drifted with its text). The padding is trimmed to pay
+   back most of the extra icon row. Phones and short screens keep the
+   side-by-side row above, where the hero has no height to spare. */
+@media (min-width: 768px) and (min-height: 600px) {
+  .hero .cred-card,
+  .hero .cred-card.is-stacked {
+    flex-direction: column;
+    gap: clamp(4px, .45vw, 7px);
+    padding: clamp(8px, .75vw, 12px) clamp(10px, 1vw, 16px);
+  }
+  .hero .cred-ico { line-height: 0; }
+
+  /* one even gap, about a line of body text, between each block on every
+     slide: headline → paragraph → cards → tagline → button */
+  .hero { --hero-line: 1.5rem; }
+  .hero-title { margin-bottom: var(--hero-line); }
+  .hero-sub { margin-top: 0; }
+  .cred-row,
+  .hero-tagline,
+  .hero-cta { margin-top: var(--hero-line); }
+
+  /* every slide's content box is as tall as the tallest (set by
+     heroContentHeights() in site.js), content from the top — so the
+     eyebrow sits at the same height on all four slides */
+  .hero-content { min-height: var(--hero-content-h, 0px); }
+  /* slide 1's extra room under its button (home.css) would sit outside
+     that shared box and push slide 1 back up — not needed here */
+  .hero-slide[data-slide="0"] .hero-cta { margin-bottom: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
