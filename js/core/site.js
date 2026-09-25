@@ -599,11 +599,49 @@
     var blocks = hero ? $$('.hero-content', hero) : [];
     if (blocks.length < 2) return;
     var timer = 0;
+    // Tablet/desktop only (matches responsive.css): the even gap between
+    // the hero's blocks, --hero-line, is sized here so the "How GSS Works"
+    // eyebrow below the hero still shows on the first screen. It aims for
+    // 36–44px by screen height and gives up only as much as that fold
+    // needs, never going under 18px. There are 9.5 units per slide: double
+    // gaps after the eyebrow, headline, paragraph and cards (8), a single
+    // gap from the tagline to the button (1), and half a gap from the
+    // button down to the dots (.5).
+    var desktop = window.matchMedia('(min-width: 768px) and (min-height: 500px)');
+    var peekEl = $('#about .eyebrow');
+    var GAPS = 9.5, MIN_LINE = 18;
+    function tallestBlock() {
+      var tallest = 0;
+      blocks.forEach(function (el) { tallest = Math.max(tallest, el.getBoundingClientRect().height); });
+      return tallest;
+    }
+    function fitLine() {
+      hero.style.removeProperty('--hero-line');
+      if (!desktop.matches || !peekEl) return;
+      var viewH = window.innerHeight;
+      var want = Math.min(44, Math.max(36, viewH * .045));
+      // measure with no gaps at all: what's left is the text, cards and
+      // the slides' own padding (which holds the dots)
+      hero.style.setProperty('--hero-line', '0px');
+      var base = tallestBlock();
+      var slide = blocks[0].parentElement;
+      var cs = window.getComputedStyle(slide);
+      var pad = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+      // how far into the next section its eyebrow ends, plus a little air
+      var section = peekEl.closest('section');
+      var peek = peekEl.offsetTop + peekEl.offsetHeight + 12;
+      if (section && peekEl.offsetParent !== section) {
+        peek = peekEl.getBoundingClientRect().bottom - section.getBoundingClientRect().top + 12;
+      }
+      var room = viewH - hero.offsetTop - peek - pad - base;
+      var line = Math.max(MIN_LINE, Math.min(want, room / GAPS));
+      hero.style.setProperty('--hero-line', line.toFixed(1) + 'px');
+    }
     function equalise() {
       timer = 0;
       hero.style.removeProperty('--hero-content-h');
-      var tallest = 0;
-      blocks.forEach(function (el) { tallest = Math.max(tallest, el.getBoundingClientRect().height); });
+      fitLine();
+      var tallest = tallestBlock();
       if (tallest) hero.style.setProperty('--hero-content-h', Math.ceil(tallest) + 'px');
     }
     function schedule() { if (!timer) timer = window.setTimeout(equalise, 30); }
@@ -616,9 +654,10 @@
       blocks.forEach(function (el) {
         Array.prototype.forEach.call(el.children, function (child) { observer.observe(child); });
       });
-    } else {
-      window.addEventListener('resize', schedule, { passive: true });
     }
+    // the gap also follows the window's height, which never resizes the
+    // blocks' children on its own
+    window.addEventListener('resize', schedule, { passive: true });
     window.addEventListener('load', schedule);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
   }());

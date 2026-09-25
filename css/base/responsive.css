@@ -518,28 +518,33 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   .hero .cred-txt strong,
   .hero .cred-txt small { white-space: normal; }
 }
-@media (min-width: 768px) and (min-height: 600px) {
+@media (min-width: 768px) and (min-height: 500px) {
   /* one even gap, about a line of body text, between each block on every
      slide: headline → paragraph → cards → tagline → button */
-  /* ~20px on a 768px-tall screen up to 32px on 1080px and taller, so
-     the slides breathe where there's room and still fit where there isn't */
-  .hero { --hero-line: clamp(1.25rem, 3svh, 2rem); }
-  /* eyebrow → headline: the same on every slide (slide 1 used to be
-     tighter here, back when it was the only slide with a tagline) */
-  .hero .hero-slide .eyebrow { margin-bottom: calc(var(--hero-line) * .7); }
-  .hero-title { margin-bottom: var(--hero-line); }
+  /* --hero-line is the gap unit, the same on every slide: a double gap
+     after the eyebrow, headline, paragraph and cards, a single gap from
+     the tagline to the button. heroContentHeights() in site.js sizes it
+     so the "How GSS Works" eyebrow stays on the first screen; this value
+     is the fallback when scripts don't run. */
+  .hero { --hero-line: clamp(1rem, 2.2svh, 1.375rem); }
+  .hero .hero-slide .eyebrow { margin-bottom: calc(var(--hero-line) * 2); }
+  .hero-title { margin-bottom: calc(var(--hero-line) * 2); }
   /* every slide's paragraph now runs ~90–120 characters: capped just
      under that, each wraps to two lines, and balance splits them evenly
      (no one-word last line), so all four slides share one shape */
   .hero-sub { margin-top: 0; max-width: 58ch; text-wrap: balance; }
   .cred-row,
-  .hero-tagline,
+  .hero-tagline { margin-top: calc(var(--hero-line) * 2); }
   .hero-cta { margin-top: var(--hero-line); }
 
   /* every slide's content box is as tall as the tallest (set by
      heroContentHeights() in site.js), content from the top — so the
      eyebrow sits at the same height on all four slides */
   .hero-content { min-height: var(--hero-content-h, 0px); }
+  /* the button sits half a gap above the dots: the slide's bottom
+     padding is just the dots' own height (--hero-chrome-h) plus that, so
+     the room it used to reserve goes to the gaps above instead */
+  .hero-slide { padding-bottom: calc(var(--hero-chrome-h) + var(--hero-line) * .5); }
   /* slide 1's extra room under its button (home.css) would sit outside
      that shared box and push slide 1 back up — not needed here */
   .hero-slide[data-slide="0"] .hero-cta { margin-bottom: 0; }
