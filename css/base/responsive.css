@@ -478,8 +478,10 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
    arrow icon (sized in em) all scale together. Last so it applies on
    every screen size, overriding the full-width phone button and the
    short-screen tier above. Buttons elsewhere on the site are unchanged. */
-.hero { --hero-btn-scale: .55; }
-.hero-cta .btn {
+.hero,
+.final-cta--compact { --hero-btn-scale: .55; } /* home's closing "Let's Talk" matches the hero */
+.hero-cta .btn,
+.final-cta--compact .btn {
   width: auto;
   max-width: none;
   min-height: calc(52px * var(--hero-btn-scale));
