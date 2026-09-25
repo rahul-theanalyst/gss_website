@@ -173,12 +173,15 @@ html[data-theme="dark"] .hero-slide[data-slide="3"] { --hero-dim: .48; }
 .hero-slide.is-active .hero-content > *:nth-child(5) { transition-delay: .44s; }
 .hero-slide.is-active .hero-content > *:nth-child(6) { transition-delay: .52s; }
 
+/* every hero headline size below (and in responsive.css) is multiplied by
+   this, so all four slides shrink or grow together at every screen size */
+.hero { --hero-title-scale: .8; }
 .hero-title {
   font-family: var(--serif);
   font-weight: 500;
   /* eased down from a 4.25rem cap so two lines of headline cost ~25px
      less height; still comfortably the dominant element on the page */
-  font-size: clamp(1.9rem, 4.1vw, 3.6rem);
+  font-size: calc(clamp(1.9rem, 4.1vw, 3.6rem) * var(--hero-title-scale, 1));
   line-height: 1.1;
   letter-spacing: -.018em;
   color: var(--navy);
