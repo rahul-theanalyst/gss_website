@@ -22,9 +22,21 @@ html[data-theme="dark"] .pnr-hero-dots { color: var(--hairline); }
   padding-top: calc(var(--header-h) + clamp(6px, 1vw, 14px));
   padding-bottom: clamp(14px, 1.6vw, 22px);
 }
-.alliances-page .page-hero .eyebrow { margin-bottom: clamp(8px, 1vw, 12px); }
 .alliances-page .page-hero .page-lede { margin-top: clamp(10px, 1.2vw, 16px); }
 .alliances-page .page-hero .center-cta { margin-top: clamp(16px, 1.8vw, 24px); }
+
+/* Desktop: the hero and the Our Position band below it together fit in one
+   screen, so the headline is a touch smaller, the lede runs wider (fewer
+   lines) and the vertical gaps are trimmed further. */
+@media (min-width: 901px) {
+  .alliances-page .page-hero {
+    padding-top: calc(var(--header-h) + clamp(10px, 1.2vw, 18px));
+    padding-bottom: clamp(14px, 1.4vw, 20px);
+  }
+  .alliances-page .page-hero .page-title { font-size: clamp(2rem, 3vw, 2.6rem); max-width: 26ch; }
+  .alliances-page .page-hero .page-lede { max-width: 80ch; margin-top: 10px; font-size: .98rem; line-height: 1.55; }
+  .alliances-page .page-hero .center-cta { margin-top: 14px; }
+}
 
 /* ── OUR POSITION (image + text split) ───────────────────── */
 .pnr-position { background: var(--bg); padding-block: clamp(14px, 2vw, 30px); }

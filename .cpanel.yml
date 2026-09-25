@@ -14,6 +14,7 @@ deployment:
     - /bin/cp -R html "$DEPLOYPATH"
     - /bin/cp -R images "$DEPLOYPATH"
     - /bin/cp -R js "$DEPLOYPATH"
+    - /bin/cp -R downloads "$DEPLOYPATH"
 
     # Deploy public PHP endpoints
     - /bin/cp server/careers-jobs.php "$DEPLOYPATH/server/"
