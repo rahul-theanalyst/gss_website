@@ -396,13 +396,17 @@ html[data-theme="dark"] .abx-cred img.abx-cred-logo--dark { display: block; }
 @media (max-width: 860px) {
   .abx-intro__grid,
   .abx-work__grid { grid-template-columns: minmax(0, 1fr); }
+  /* the gold line sits in the page gutter (not flush with the screen
+     edge), same as the Careers/Solutions heroes */
   .abx-intro__text {
-    margin-left: 0; grid-row: 1;
-    padding-inline: var(--gutter);
-    border-left: 0;
-    box-shadow: inset 3px 0 0 var(--gold);
+    margin-inline: var(--gutter); grid-row: 1;
+    padding-inline: clamp(16px, 4vw, 24px) 0;
+    max-width: none;
   }
-  .abx-intro__media { grid-row: 2; }
+  /* contained, not full-bleed: same gutter as the text above, so the
+     photo's left edge lines up with the gold line and its right edge
+     with the text blocks' right boundary; rounded like the site's cards */
+  .abx-intro__media { grid-row: 2; margin-inline: var(--gutter); border-radius: var(--radius-sm); }
   .abx-intro__media,
   .abx-work__media { min-height: 0; aspect-ratio: 16 / 9; }
   .abx-work__media { grid-row: 1; }
