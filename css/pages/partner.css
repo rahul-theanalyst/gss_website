@@ -89,6 +89,31 @@ html[data-theme="dark"] .pnr-hero-dots { color: var(--hairline); }
   line-height: 1.6;
 }
 
+/* Desktop: the section matches the Careers hero's visible height (below
+   the navbar) — 290px at 1440, ~335px at 1920. That height follows the
+   Careers copy's line wrapping, so it's tracked with a vw formula fitted
+   to it, as a min-height: if the text ever needs more room the section
+   grows rather than clipping. The copy is tightened (wider text column,
+   smaller type and spacing) so it fits within that height at common
+   desktop widths; the grid fills the section so the photo spans it. */
+@media (min-width: 901px) {
+  .pnr-position {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr);
+    min-height: calc(9.33vw + 155.7px);
+  }
+  .pnr-position__grid {
+    grid-template-columns: minmax(0, 1fr) clamp(300px, 34vw, 560px);
+    grid-template-rows: minmax(0, 1fr); /* one full-height row, so the photo spans the section */
+  }
+  .pnr-position__text { max-width: none; }
+  .pnr-position__text .abx-eyebrow { margin-bottom: 6px; }
+  .pnr-position__text .abx-h2 { font-size: clamp(1.4rem, 2vw, 1.85rem); margin-bottom: 8px; }
+  .pnr-position__text p { font-size: clamp(.88rem, .92vw, .95rem); line-height: 1.55; }
+  .pnr-position__text p + p { margin-top: 8px; }
+  .pnr-position__line { margin-top: 8px; }
+}
+
 /* ── STRATEGIC PARTNERSHIPS (model cards) ─────────────────── */
 .pnr-models { background: var(--bg-cream); padding-block: clamp(20px, 2.2vw, 32px); }
 html[data-theme="dark"] .pnr-models { background: var(--bg-soft); }
@@ -221,6 +246,15 @@ html[data-theme="dark"] .pnr-models { background: var(--bg-soft); }
   transition: background-color .45s var(--ease), border-color .45s var(--ease),
               color .45s var(--ease), box-shadow .45s var(--ease),
               transform .45s var(--ease);
+}
+/* "Explore partner models" at 80% of the standard button: height,
+   padding, gap and text (the arrow icon is sized in em) */
+.alliances-page .center-cta .btn {
+  min-height: calc(52px * .8);
+  padding: calc(14px * .8) calc(30px * .8);
+  gap: calc(12px * .8);
+  font-size: calc(.795rem * .8);
+  max-width: calc(340px * .8); /* phones: the full-width button, 20% narrower */
 }
 .alliances-page .btn .ico { transition: transform .45s var(--ease), color .45s var(--ease); }
 .alliances-page .btn:hover {

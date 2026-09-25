@@ -252,7 +252,8 @@ html[data-theme="dark"] .focusarea-page .fa-row--cream { background: var(--bg-so
 .focusarea-page .fa-final {
   position: relative; overflow: hidden;
   background: linear-gradient(180deg, #0C1D3A 0%, #0A1830 100%);
-  padding-block: clamp(28px, 3.2vw, 46px);
+  /* band ~10% shorter: tighter padding (was clamp(28px, 3.2vw, 46px)) */
+  padding-block: clamp(14px, 2.1vw, 32px);
 }
 .focusarea-page .fa-final__grid {
   position: relative;
@@ -285,6 +286,12 @@ html[data-theme="dark"] .focusarea-page .fa-row--cream { background: var(--bg-so
 .focusarea-page .fa-final__btn {
   border-color: rgba(255,255,255,.4); color: #fff;
   white-space: nowrap;
+  /* 90% of the standard button: height, padding, gap and text */
+  min-height: calc(52px * .9);
+  padding: calc(14px * .9) calc(30px * .9);
+  gap: calc(12px * .9);
+  font-size: calc(.795rem * .9);
+  max-width: calc(340px * .9);
 }
 
 /* ── RESPONSIVE ───────────────────────────────────────────── */

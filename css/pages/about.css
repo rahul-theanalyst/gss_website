@@ -66,6 +66,23 @@
   max-width: 46rem;
 }
 .abx-intro__text .abx-display { margin-bottom: clamp(20px, 2.6vw, 32px); }
+/* The intro uses the Careers hero's exact type sizes and spacing (see
+   .car-hero__title / __lede / __text in career.css), so the About and
+   Careers heroes come out the same height at every screen size. */
+.abx-intro__text {
+  padding-block: 0;
+  padding-inline: clamp(20px, 2.2vw, 34px) 0;
+  max-width: 34rem;
+}
+.abx-intro__text .abx-display {
+  font-size: clamp(1.95rem, 3.6vw, 3.3rem);
+  line-height: 1.14; letter-spacing: -.012em;
+  margin: 0 0 clamp(18px, 2.4vw, 30px);
+}
+.abx-intro .abx-lede {
+  font-size: clamp(.95rem, 1.05vw, 1.08rem);
+  line-height: 1.7; max-width: 32rem; text-wrap: pretty;
+}
 .abx-lede {
   color: var(--muted);
   font-size: clamp(1.08rem, 1.4vw, 1.3rem);
@@ -361,6 +378,15 @@ html[data-theme="dark"] .abx-cred img.abx-cred-logo--dark { display: block; }
 }
 /* .btn-lg is shared site-wide, so the shorter button is scoped to this band */
 .abx-cta .btn-lg { min-height: 46px; padding: 13px 30px; }
+/* "Let's Talk" at 90% of that: height, padding, gap and text (the arrow
+   icon is sized in em, so it follows the text) */
+.abx-cta .btn-lg {
+  min-height: calc(46px * .9);
+  padding: calc(13px * .9) calc(30px * .9);
+  gap: calc(12px * .9);
+  font-size: calc(.795rem * .9);
+  max-width: calc(340px * .9); /* phones: the full-width button, 10% narrower */
+}
 .abx-cta .btn-primary { background: var(--gold); color: #0B1424; box-shadow: 0 12px 40px rgba(0,0,0,.32); }
 .abx-cta .btn-primary .ico { color: #0B1424; }
 .abx-cta .btn-primary:hover { background: #E9C275; }
