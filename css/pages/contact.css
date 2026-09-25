@@ -357,7 +357,11 @@ html[data-theme="dark"] .letsconnect-page .lc-form .form-submission-note.is-erro
     max-width: none;
   }
   .letsconnect-page .lc-hero__lede { max-width: 46ch; }
-  .letsconnect-page .lc-hero__media { min-height: 0; aspect-ratio: 16 / 9; }
+  /* contained, not full-bleed: the same gutter as the hero text above,
+     so the photo's left edge lines up with the gold accent line and its
+     right edge with the text block's right boundary; rounded like the
+     other stacked hero photos (Careers, Solutions pages, About) */
+  .letsconnect-page .lc-hero__media { min-height: 0; aspect-ratio: 16 / 9; margin-inline: var(--gutter); border-radius: var(--radius-sm); }
   .letsconnect-page .lc-hero__media::after { background: none; }
   .letsconnect-page .lc-form-section__grid { grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 6vw, 40px); }
   .letsconnect-page .lc-form-section__title,

@@ -362,11 +362,11 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
    its children can share the photo's grid rows. Last in the file so
    the height tiers above can't reinstate the desktop padding. */
 @media (max-width: 767.98px) and (orientation: portrait) {
-  /* the band is the photos' 16:9 (56.25vw) grown by --hero-grow; with the
-     --hero-photo-shift lift, "cover" crops a little off the photo's sides */
+  /* the band is exactly the photos' 16:9 at full width (56.25vw), so the
+     full-width photo below fills it with no leftover strip */
   /* ...capped at 30% of the visible height, so on a short screen the
      photo gives up room first and the copy, cards and button still fit */
-  .hero { --hero-photo-h: min(calc(56.25vw * var(--hero-grow)), 30svh); }
+  .hero { --hero-photo-h: min(56.25vw, 30svh); }
   /* the hero is exactly the visible screen below the navbar (svh = with
      the browser's own address/tool bars showing), so the first view ends
      where the hero does and the next section starts at the fold */
@@ -396,6 +396,18 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
     grid-area: 1 / 1 / 5 / 2;
     height: var(--hero-photo-h);
   }
+  /* The photo inside the band: its own proportions at the full screen width,
+     so nothing is trimmed off the left or right (the band is taller than
+     16:9, so "cover" had been zooming in and cropping the sides), starting
+     right under the navbar. The band's few extra pixels fall at its bottom
+     edge, which shares the background of the area below. The band itself —
+     and the text on it — keep their size and place. Overrides home.css's
+     cover/lift rules. */
+  .hero .hero-media img {
+    top: 0; bottom: auto; left: 0;
+    width: 100%; height: auto; /* the image's own proportions: no crop */
+    object-fit: contain;
+  }
 
   .hero-content { display: contents; }
   .hero-content > * {
@@ -413,6 +425,12 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   .hero-content > .cred-row { grid-row: 7; }
   .hero-content > .hero-tagline { grid-row: 8; }
   .hero-content > .hero-cta { grid-row: 9; }
+  /* breathing room above the cards and above the button, scaled to the
+     screen height (~28px on a typical phone). The hero stays exactly the
+     screen height — these gaps only take from the space already centred
+     around the content. */
+  .hero-content > .cred-row { margin-top: clamp(14px, 3.1svh, 30px); }
+  .hero-content > .hero-cta { margin-top: clamp(16px, 3.1svh, 30px); }
   .hero-content > .hero-title + .hero-sub { margin-top: clamp(12px, 2.4svh, 22px); }
 
   /* the scroll cue should lead straight into "How GSS Works" */
@@ -431,12 +449,16 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   .cred-card.is-stacked { padding: 6px 9px; gap: 7px; }
   .hero-tagline { margin-top: 8px; font-size: .8rem; line-height: 1.4; }
   .hero-cta { margin-top: 10px; }
+  .hero-content > .cred-row { margin-top: clamp(12px, 2.2svh, 20px); }
+  .hero-content > .hero-cta { margin-top: clamp(12px, 2.2svh, 20px); }
   .hero { --hero-chrome-h: 30px; }
   .hero-chrome { bottom: 8px; }
   .scroll-cue { display: none; }
 }
 @media (max-width: 767.98px) and (orientation: portrait) and (max-height: 600px) {
-  .hero { --hero-photo-h: min(calc(56.25vw * var(--hero-grow)), 22svh); }
+  .hero { --hero-photo-h: min(56.25vw, 22svh); }
+  .hero-content > .cred-row,
+  .hero-content > .hero-cta { margin-top: 10px; }
   .hero-sub { font-size: .82rem; line-height: 1.38; }
   .cred-txt strong { font-size: .62rem; }
   .cred-txt small { font-size: .56rem; }
