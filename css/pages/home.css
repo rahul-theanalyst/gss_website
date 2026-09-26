@@ -256,7 +256,7 @@ html:not([data-theme="dark"]) .hero .dot.is-active::before {
    cards track the rest of the hero instead of freezing between breakpoints. */
 .cred-row {
   display: grid;
-  gap: clamp(8px, .8vw, 14px);
+  gap: calc(clamp(8px, .8vw, 14px) * var(--cred-k, 1));
   margin: clamp(18px, 2.6vw, 32px) auto 0;
   width: 100%;
   /* Promote the row to its own compositor layer *before* the entrance
@@ -272,15 +272,18 @@ html:not([data-theme="dark"]) .hero .dot.is-active::before {
   /* wide enough for the longest labels ("Technology That Fits",
      "Execute with accountability") to stay on one line on desktop, so
      every slide's cards keep slide 4's compact size */
-  max-width: min(100%, clamp(640px, 76vw, 1160px));
+  max-width: calc(min(100%, clamp(640px, 76vw, 1160px)) * var(--cred-k, 1));
 }
 /* one shared height for every hero card on every slide — set by
    heroCardHeights() in site.js from the tallest card, so cards whose
    text wraps at a given width don't come out taller than the rest */
 .hero .cred-card { min-height: var(--cred-card-h, 0px); }
+/* the hero's overlay cards at 90% of their original size: row width, text,
+   icon, padding, spacing and corner radius all multiply by --cred-k */
+.hero { --cred-k: .9; }
 .cred-row.cols-5 {
   grid-template-columns: repeat(5, minmax(0,1fr));
-  max-width: min(100%, clamp(660px, 74vw, 1100px));
+  max-width: calc(min(100%, clamp(660px, 74vw, 1100px)) * var(--cred-k, 1));
 }
 
 /* "Liquid glass" material, tuned against Apple's own Control Center
@@ -307,9 +310,9 @@ html:not([data-theme="dark"]) .hero .dot.is-active::before {
   --cred-ink-soft: #0F2247;
   position: relative;
   display: flex; align-items: center;
-  gap: clamp(8px, .8vw, 12px);
-  padding: clamp(10px, .95vw, 15px) clamp(10px, 1vw, 16px);
-  border-radius: clamp(15px, 1.7vw, 23px);
+  gap: calc(clamp(8px, .8vw, 12px) * var(--cred-k, 1));
+  padding: calc(clamp(10px, .95vw, 15px) * var(--cred-k, 1)) calc(clamp(10px, 1vw, 16px) * var(--cred-k, 1));
+  border-radius: calc(clamp(15px, 1.7vw, 23px) * var(--cred-k, 1));
   background: linear-gradient(165deg, rgba(255,255,255,.56), rgba(255,255,255,.32));
   border: 1px solid var(--glass-rim-dim);
   border-top-color: var(--glass-rim);
@@ -351,9 +354,9 @@ html[data-theme="dark"] .cred-card {
 }
 .cred-card.is-stacked {
   flex-direction: column; text-align: center;
-  gap: clamp(4px, .5vw, 7px);
-  padding: clamp(11px, 1.1vw, 17px) clamp(8px, .8vw, 13px);
-  border-radius: clamp(16px, 1.8vw, 24px);
+  gap: calc(clamp(4px, .5vw, 7px) * var(--cred-k, 1));
+  padding: calc(clamp(11px, 1.1vw, 17px) * var(--cred-k, 1)) calc(clamp(8px, .8vw, 13px) * var(--cred-k, 1));
+  border-radius: calc(clamp(16px, 1.8vw, 24px) * var(--cred-k, 1));
 }
 .cred-card:hover {
   transform: translateY(-3px) translateZ(0);
@@ -363,11 +366,11 @@ html[data-theme="dark"] .cred-card {
     0 12px 30px rgba(15,34,71,.2);
 }
 .cred-ico { position: relative; color: var(--cred-ink); display: grid; place-items: center; }
-.cred-ico .ico { width: clamp(16px, 1.55vw, 22px); height: clamp(16px, 1.55vw, 22px); }
+.cred-ico .ico { width: calc(clamp(16px, 1.55vw, 22px) * var(--cred-k, 1)); height: calc(clamp(16px, 1.55vw, 22px) * var(--cred-k, 1)); }
 .cred-txt { position: relative; display: block; min-width: 0; }
 .cred-txt strong {
   display: block;
-  font-size: clamp(.61rem, .34vw + .5rem, .755rem);
+  font-size: calc(clamp(.61rem, .34vw + .5rem, .755rem) * var(--cred-k, 1));
   font-weight: 700;
   letter-spacing: .07em; text-transform: uppercase;
   color: var(--cred-ink); line-height: 1.3;
@@ -375,7 +378,7 @@ html[data-theme="dark"] .cred-card {
 }
 .cred-txt small {
   display: block; margin-top: 3px;
-  font-size: clamp(.575rem, .28vw + .48rem, .69rem);
+  font-size: calc(clamp(.575rem, .28vw + .48rem, .69rem) * var(--cred-k, 1));
   font-weight: 600;
   letter-spacing: .04em; line-height: 1.35;
   color: var(--cred-ink-soft); text-transform: uppercase;

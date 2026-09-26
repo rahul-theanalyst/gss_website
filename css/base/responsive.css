@@ -71,7 +71,7 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   .staff-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
   .cred-row.cols-5 {
     grid-template-columns: repeat(3, minmax(0,1fr));
-    max-width: min(100%, clamp(420px, 82vw, 820px));
+    max-width: calc(min(100%, clamp(420px, 82vw, 820px)) * var(--cred-k, 1));
   }
   /* Four across, not three. Three columns left the fourth card orphaned
      on a second row — lopsided to look at, and it cost a whole extra
@@ -81,15 +81,15 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
      avoid wrapping awkwardly. Side by side starts at 680px instead. */
   .cred-row.cols-4 {
     grid-template-columns: repeat(4, minmax(0,1fr));
-    max-width: min(100%, clamp(460px, 94vw, 900px));
+    max-width: calc(min(100%, clamp(460px, 94vw, 900px)) * var(--cred-k, 1));
   }
   .cred-card.is-stacked {
-    padding: clamp(9px, 1.3vw, 13px) clamp(8px, 1.1vw, 12px);
-    gap: clamp(5px, .7vw, 8px);
+    padding: calc(clamp(9px, 1.3vw, 13px) * var(--cred-k, 1)) calc(clamp(8px, 1.1vw, 12px) * var(--cred-k, 1));
+    gap: calc(clamp(5px, .7vw, 8px) * var(--cred-k, 1));
   }
-  .cred-txt strong { font-size: clamp(.66rem, .9vw, .77rem); }
-  .cred-txt small  { font-size: clamp(.6rem, .8vw, .69rem); }
-  .cred-ico .ico   { width: clamp(17px, 2.2vw, 22px); height: clamp(17px, 2.2vw, 22px); }
+  .cred-txt strong { font-size: calc(clamp(.66rem, .9vw, .77rem) * var(--cred-k, 1)); }
+  .cred-txt small  { font-size: calc(clamp(.6rem, .8vw, .69rem) * var(--cred-k, 1)); }
+  .cred-ico .ico   { width: calc(clamp(17px, 2.2vw, 22px) * var(--cred-k, 1)); height: calc(clamp(17px, 2.2vw, 22px) * var(--cred-k, 1)); }
   /* floor follows the hero dial in home.css rather than restating 100svh */
   .hero { --hero-h: max(calc((100svh - var(--header-h)) * var(--hero-scale)), 330px); }
 }
@@ -171,22 +171,22 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   .cred-row.cols-4,
   .cred-row.cols-5 {
     grid-template-columns: repeat(2, minmax(0,1fr));
-    max-width: 100%;
+    max-width: calc(100% * var(--cred-k, 1));
   }
   /* Two rows of cards is the single tallest block in the hero on a phone,
      so every pixel trimmed here is paid back twice. Compact enough to
      keep the hero clear of the fold, still comfortably legible. */
-  .cred-row { gap: 8px; margin-top: 12px; }
+  .cred-row { gap: calc(8px * var(--cred-k, 1)); margin-top: 12px; }
   .cred-card,
   .cred-card.is-stacked {
     /* side by side from here down: two columns means each card is wide
        but short, so the icon belongs beside the label, not above it */
     flex-direction: row; text-align: left;
-    padding: clamp(8px, 2vw, 11px) clamp(9px, 2.4vw, 13px);
-    gap: 9px;
-    border-radius: 14px;
+    padding: calc(clamp(8px, 2vw, 11px) * var(--cred-k, 1)) calc(clamp(9px, 2.4vw, 13px) * var(--cred-k, 1));
+    gap: calc(9px * var(--cred-k, 1));
+    border-radius: calc(14px * var(--cred-k, 1));
   }
-  .cred-ico .ico { width: 18px; height: 18px; }
+  .cred-ico .ico { width: calc(18px * var(--cred-k, 1)); height: calc(18px * var(--cred-k, 1)); }
 }
 
 /* ≤560px */
@@ -234,8 +234,8 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
      the exact thing pushing the next section off the screen. */
   .cred-row.cols-5 { grid-template-columns: minmax(0,1fr); }
   .cred-row.cols-4 { grid-template-columns: repeat(2, minmax(0,1fr)); }
-  .cred-txt strong { font-size: .62rem; letter-spacing: .05em; }
-  .cred-txt small  { font-size: .57rem; }
+  .cred-txt strong { font-size: calc(.62rem * var(--cred-k, 1)); letter-spacing: .05em; }
+  .cred-txt small  { font-size: calc(.57rem * var(--cred-k, 1)); }
   .btn { white-space: normal; padding-inline: 20px; font-size: .715rem; letter-spacing: .09em; }
   .panel { padding: 26px 20px; }
   .mobile-nav { padding-inline: 16px; }
@@ -255,7 +255,7 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
      down to 640px now so mid-size phones held sideways are covered too. */
   .cred-row.cols-4 {
     grid-template-columns: repeat(4, minmax(0,1fr));
-    max-width: 100%;
+    max-width: calc(100% * var(--cred-k, 1));
   }
 }
 
@@ -299,7 +299,7 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   .hero-cta { margin-top: clamp(12px, 1.6vw, 16px); }
   .hero-slide[data-slide="0"] .hero-cta { margin-bottom: 0; }
   .cred-row { margin-top: clamp(10px, 1.5vw, 16px); }
-  .cred-card.is-stacked { padding: clamp(7px, .8vw, 11px) clamp(6px, .7vw, 10px); }
+  .cred-card.is-stacked { padding: calc(clamp(7px, .8vw, 11px) * var(--cred-k, 1)) calc(clamp(6px, .7vw, 10px) * var(--cred-k, 1)); }
 }
 @media (max-height: 700px) {
   .hero-title { font-size: calc(clamp(1.65rem, 3.1vw, 2.5rem) * var(--hero-title-scale, 1)); margin-bottom: 10px; }
@@ -308,8 +308,8 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   .hero-cta { margin-top: 14px; }
   .hero-slide[data-slide="0"] .hero-cta { margin-bottom: 0; }
   .cred-row { margin-top: clamp(10px, 1.4vw, 16px); }
-  .cred-card.is-stacked { padding: clamp(7px, .7vw, 10px) clamp(6px, .6vw, 9px); }
-  .cred-ico .ico { width: 18px; height: 18px; }
+  .cred-card.is-stacked { padding: calc(clamp(7px, .7vw, 10px) * var(--cred-k, 1)) calc(clamp(6px, .6vw, 9px) * var(--cred-k, 1)); }
+  .cred-ico .ico { width: calc(18px * var(--cred-k, 1)); height: calc(18px * var(--cred-k, 1)); }
 
   /* the chrome slims down too, so the foot of the slide can give the
      content back some of the room it was reserving */
@@ -336,13 +336,13 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   .hero-tagline { margin-top: 6px; font-size: .82rem; }
   .hero-cta { margin-top: 10px; }
   .hero-slide[data-slide="0"] .eyebrow { margin-bottom: 6px; }
-  .cred-row { margin-top: 8px; gap: 7px; }
+  .cred-row { margin-top: 8px; gap: calc(7px * var(--cred-k, 1)); }
   .cred-card,
   .cred-card.is-stacked {
     flex-direction: row; text-align: left;
-    padding: 6px 9px; gap: 7px; border-radius: 12px;
+    padding: calc(6px * var(--cred-k, 1)) calc(9px * var(--cred-k, 1)); gap: calc(7px * var(--cred-k, 1)); border-radius: calc(12px * var(--cred-k, 1));
   }
-  .cred-ico .ico { width: 15px; height: 15px; }
+  .cred-ico .ico { width: calc(15px * var(--cred-k, 1)); height: calc(15px * var(--cred-k, 1)); }
   /* scoped to the hero so buttons everywhere else keep their 52px */
   .hero-cta .btn { min-height: 42px; padding: 10px 22px; }
 
@@ -444,9 +444,9 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
 @media (max-width: 767.98px) and (orientation: portrait) and (max-height: 700px) {
   .hero-content > .hero-title + .hero-sub { margin-top: 10px; }
   .hero-sub { font-size: .86rem; line-height: 1.42; }
-  .cred-row { margin-top: 10px; gap: 6px; }
+  .cred-row { margin-top: 10px; gap: calc(6px * var(--cred-k, 1)); }
   .cred-card,
-  .cred-card.is-stacked { padding: 6px 9px; gap: 7px; }
+  .cred-card.is-stacked { padding: calc(6px * var(--cred-k, 1)) calc(9px * var(--cred-k, 1)); gap: calc(7px * var(--cred-k, 1)); }
   .hero-tagline { margin-top: 8px; font-size: .8rem; line-height: 1.4; }
   .hero-cta { margin-top: 10px; }
   .hero-content > .cred-row { margin-top: clamp(12px, 2.2svh, 20px); }
@@ -460,8 +460,8 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   .hero-content > .cred-row,
   .hero-content > .hero-cta { margin-top: 10px; }
   .hero-sub { font-size: .82rem; line-height: 1.38; }
-  .cred-txt strong { font-size: .62rem; }
-  .cred-txt small { font-size: .56rem; }
+  .cred-txt strong { font-size: calc(.62rem * var(--cred-k, 1)); }
+  .cred-txt small { font-size: calc(.56rem * var(--cred-k, 1)); }
 }
 /* the smallest phones: the photo is under 215px tall, so the overlay
    drops the eyebrow's side rules and sets the headline small enough
@@ -527,15 +527,18 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
      so the "How GSS Works" eyebrow stays on the first screen; this value
      is the fallback when scripts don't run. */
   .hero { --hero-line: clamp(1rem, 2.2svh, 1.375rem); }
-  .hero .hero-slide .eyebrow { margin-bottom: calc(var(--hero-line) * 2); }
-  .hero-title { margin-bottom: calc(var(--hero-line) * 2); }
+  /* every gap below gets a fixed 10px extra on tablet/desktop
+     (--hero-gap-add); the hero grows taller to hold it */
+  .hero { --hero-gap-add: 10px; }
+  .hero .hero-slide .eyebrow { margin-bottom: calc(var(--hero-line) * 2 + var(--hero-gap-add, 0px)); }
+  .hero-title { margin-bottom: calc(var(--hero-line) * 2 + var(--hero-gap-add, 0px)); }
   /* every slide's paragraph now runs ~90–120 characters: capped just
      under that, each wraps to two lines, and balance splits them evenly
      (no one-word last line), so all four slides share one shape */
   .hero-sub { margin-top: 0; max-width: 58ch; text-wrap: balance; }
   .cred-row,
-  .hero-tagline { margin-top: calc(var(--hero-line) * 2); }
-  .hero-cta { margin-top: var(--hero-line); }
+  .hero-tagline { margin-top: calc(var(--hero-line) * 2 + var(--hero-gap-add, 0px)); }
+  .hero-cta { margin-top: calc(var(--hero-line) + var(--hero-gap-add, 0px)); }
 
   /* every slide's content box is as tall as the tallest (set by
      heroContentHeights() in site.js), content from the top — so the
@@ -544,10 +547,23 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   /* the button sits half a gap above the dots: the slide's bottom
      padding is just the dots' own height (--hero-chrome-h) plus that, so
      the room it used to reserve goes to the gaps above instead */
-  .hero-slide { padding-bottom: calc(var(--hero-chrome-h) + var(--hero-line) * .5); }
+  .hero-slide { padding-bottom: calc(var(--hero-chrome-h) + var(--hero-line) * .5 + var(--hero-gap-add, 0px)); }
   /* slide 1's extra room under its button (home.css) would sit outside
      that shared box and push slide 1 back up — not needed here */
   .hero-slide[data-slide="0"] .hero-cta { margin-bottom: 0; }
+}
+/* tablet/desktop: each carousel photo starts flush with the top of its
+   frame (no --hero-photo-shift lift) and fills the frame's height; only
+   the image moves — the hero and its frames keep their size and place */
+@media (min-width: 768px) and (min-height: 500px) {
+  .hero .hero-media img { top: 0; height: 100%; }
+}
+/* tablet/desktop on screens up to 850px tall: the dots + scroll arrow
+   actually take 84px (12 + 22 dots + 6 + 44 arrow), not the 68px the
+   shared short-screen tier reserves (that value stays for phones), so
+   the button-to-dots gap above keeps its full size here */
+@media (min-width: 768px) and (min-height: 500px) and (max-height: 850px) {
+  .hero { --hero-chrome-h: 84px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

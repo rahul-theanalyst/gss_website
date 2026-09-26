@@ -621,12 +621,16 @@
       var viewH = window.innerHeight;
       var want = Math.min(44, Math.max(36, viewH * .045));
       // measure with no gaps at all: what's left is the text, cards and
-      // the slides' own padding (which holds the dots)
+      // the slides' own padding (which holds the dots). The fixed extra
+      // gap (--hero-gap-add in responsive.css) is zeroed too, so it's
+      // added on top of the fitted gaps rather than squeezed out of them.
       hero.style.setProperty('--hero-line', '0px');
+      hero.style.setProperty('--hero-gap-add', '0px');
       var base = tallestBlock();
       var slide = blocks[0].parentElement;
       var cs = window.getComputedStyle(slide);
       var pad = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+      hero.style.removeProperty('--hero-gap-add');
       // how far into the next section its eyebrow ends, plus a little air
       var section = peekEl.closest('section');
       var peek = peekEl.offsetTop + peekEl.offsetHeight + 12;
