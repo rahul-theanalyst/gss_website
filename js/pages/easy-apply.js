@@ -146,6 +146,26 @@
         '</div>';
     }
 
+    // CAPTCHA: image (or question) and token come from careers-apply.php,
+    // which checks the answer on submit. The answer input comes first so the
+    // generic required-field check (validate) picks it up.
+    html += '' +
+      '<fieldset class="ea-section"><legend class="ea-section__title">Verification</legend>' +
+        '<div class="ea-field ea-field--wide ea-captcha" data-field="captcha" data-kind="captcha" data-required' +
+            ' data-label="the characters shown">' +
+          '<label class="ea-label" for="ea-captcha" data-captcha-label>Type the characters shown ' +
+            '<span class="ea-req" aria-hidden="true">*</span></label>' +
+          '<div class="ea-captcha__row">' +
+            '<span class="ea-captcha__box" data-captcha-box aria-live="polite">Loading…</span>' +
+            '<button class="ea-captcha__new" type="button" data-captcha-new>New code</button>' +
+          '</div>' +
+          '<input type="text" id="ea-captcha" name="captcha_answer" required aria-required="true"' +
+            ' aria-describedby="ea-captcha-err" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="10">' +
+          '<input type="hidden" name="captcha_token" data-captcha-token>' +
+          '<p class="ea-error" id="ea-captcha-err" data-error-for="captcha"></p>' +
+        '</div>' +
+      '</fieldset>';
+
     html += '' +
         '<p class="form-legal-note">By applying, you agree to our <button type="button" data-legal-open="privacy" ' +
           'aria-haspopup="dialog">Privacy Policy</button>. Your application is sent to our recruiting system (Ceipal).</p>' +
@@ -162,6 +182,38 @@
     statusEl  = bodyEl.querySelector('[data-ea-status]');
     submitBtn = bodyEl.querySelector('.ea-submit');
     bind(form);
+    loadCaptcha();
+  }
+
+  /* A fresh CAPTCHA from careers-apply.php. Each one is good for a single
+     submit, so this also runs after every failed attempt. */
+  function loadCaptcha() {
+    if (!formEl) return;
+    var box = formEl.querySelector('[data-captcha-box]');
+    var token = formEl.querySelector('[data-captcha-token]');
+    var answer = formEl.querySelector('input[name="captcha_answer"]');
+    var label = formEl.querySelector('[data-captcha-label]');
+    if (!box || !token) return;
+    token.value = '';
+    if (answer) answer.value = '';
+    box.textContent = 'Loading…';
+    fetch(API + '?action=captcha', { cache: 'no-store' })
+      .then(function (r) { return r.json(); })
+      .then(function (res) {
+        if (!res || !res.ok || !res.token) throw new Error('captcha');
+        token.value = res.token;
+        if (res.image) {
+          box.innerHTML = '<img class="ea-captcha__img" src="' + esc(res.image) + '" width="190" height="62"' +
+                          ' alt="Verification code: type the characters shown in this image">';
+          label.firstChild.nodeValue = 'Type the characters shown ';
+        } else {
+          box.textContent = res.question || '';
+          label.firstChild.nodeValue = 'Answer the question ';
+        }
+      })
+      .catch(function () {
+        box.textContent = 'Couldn’t load the verification code.';
+      });
   }
 
   function fieldHtml(f, alias) {
@@ -389,6 +441,15 @@
     statusEl.hidden = !message;
   }
 
+  document.addEventListener('click', function (e) {
+    if (e.target.closest && e.target.closest('[data-captcha-new]')) {
+      e.preventDefault();
+      var field = e.target.closest('.ea-field');
+      if (field) clearError(field);
+      loadCaptcha();
+    }
+  });
+
   function submit() {
     setStatus('', '');
     if (!validate()) return;
@@ -429,6 +490,7 @@
         setStatus(err && err.message ? err.message : 'We couldn’t submit your application just now. Please try again.', 'error');
         submitBtn.disabled = false;
         submitBtn.removeAttribute('aria-busy');
+        loadCaptcha(); // each code works once; the one just sent is used up
       });
   }
 

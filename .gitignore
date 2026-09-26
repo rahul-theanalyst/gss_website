@@ -10,3 +10,5 @@ server/contact-submissions.log
 
 # Credentials live only in server/.env.gss_newsite — never commit.
 server/.env*
+# Easy Apply CAPTCHA signing key — generated on first use, never commit
+server/.captcha-secret

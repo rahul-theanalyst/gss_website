@@ -14,10 +14,13 @@
  *        Ceipal's apply-without-registration endpoint — the one Ceipal's own
  *        career widget uses — so it lands in Ceipal as a normal application.
  *
- * Ceipal's widget shows a CAPTCHA, but it is drawn and checked only in the
- * browser and never reaches Ceipal. Here it is replaced by server-side
- * checks: the shared honeypot/timing guard, a per-IP rate limit, and full
- * validation. See docs/CEIPAL-INTEGRATION.md ("Easy Apply").
+ *   GET  ?action=captcha                    a fresh CAPTCHA (image + token).
+ *
+ * Ceipal's own widget draws its CAPTCHA in the browser and never sends it
+ * to Ceipal, and Ceipal's API offers no CAPTCHA to reuse, so this form has
+ * its own, checked here on submit (see "CAPTCHA" below), alongside the
+ * shared honeypot/timing guard, a per-IP rate limit, and full validation.
+ * See docs/CEIPAL-INTEGRATION.md ("Easy Apply").
  */
 
 require_once __DIR__ . '/lib/config.php';
@@ -36,6 +39,11 @@ const APPLY_STATES_TTL = 24 * 60 * 60;  // state lists practically never change
 const APPLY_MAX_FILE   = 10 * 1024 * 1024;
 const APPLY_RATE_MAX   = 5;             // submissions per IP ...
 const APPLY_RATE_SPAN  = 10 * 60;       // ... per 10 minutes
+const CAPTCHA_TTL      = 10 * 60;       // a CAPTCHA must be solved within 10 minutes
+const CAPTCHA_LENGTH   = 5;
+// no 0/O, 1/I/L: characters that are easy to confuse in a distorted image
+const CAPTCHA_ALPHABET = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+const CAPTCHA_SECRET_FILE = __DIR__ . '/.captcha-secret'; // gitignored; server/.htaccess blocks it
 
 // Field types this form knows how to render and validate. Anything else
 // Ceipal adds later is still shown and sent, as a plain text field.
@@ -285,6 +293,108 @@ function applyRateLimited() {
     return false;
 }
 
+/* ── CAPTCHA ──────────────────────────────────────────────── */
+/* Stateless: the answer is never stored. The browser gets an image plus a
+   token "nonce.expiry.signature", where the signature is an HMAC of the
+   nonce, expiry and answer under a server-only secret. On submit the typed
+   answer must reproduce that signature before the expiry, and each nonce
+   is accepted once. Without GD (no image support) it falls back to a small
+   arithmetic question, checked the same way. */
+
+function captchaSecret() {
+    $secret = is_readable(CAPTCHA_SECRET_FILE) ? trim((string) @file_get_contents(CAPTCHA_SECRET_FILE)) : '';
+    if (strlen($secret) < 32) {
+        $secret = bin2hex(random_bytes(32));
+        if (@file_put_contents(CAPTCHA_SECRET_FILE, $secret, LOCK_EX) === false) {
+            applyLog('could not write ' . basename(CAPTCHA_SECRET_FILE) . '; CAPTCHAs will not survive between requests');
+        }
+        @chmod(CAPTCHA_SECRET_FILE, 0600);
+    }
+    return $secret;
+}
+
+function captchaSign($nonce, $expiry, $answer) {
+    return hash_hmac('sha256', $nonce . '|' . $expiry . '|' . strtoupper($answer), captchaSecret());
+}
+
+/** PNG of the code: each character drawn with GD's built-in font, enlarged,
+ *  rotated and offset on its own, over a faint pattern of lines and dots. */
+function captchaImage($code) {
+    $w = 190; $h = 62;
+    $img = imagecreatetruecolor($w, $h);
+    imagefill($img, 0, 0, imagecolorallocate($img, 244, 246, 250));
+    for ($i = 0; $i < 7; $i++) {
+        $c = imagecolorallocate($img, random_int(150, 205), random_int(160, 210), random_int(185, 225));
+        imagesetthickness($img, random_int(1, 2));
+        imageline($img, random_int(0, $w), random_int(0, $h), random_int(0, $w), random_int(0, $h), $c);
+    }
+    imagesetthickness($img, 1);
+    for ($i = 0; $i < 260; $i++) {
+        imagesetpixel($img, random_int(0, $w - 1), random_int(0, $h - 1),
+                      imagecolorallocate($img, random_int(120, 200), random_int(130, 205), random_int(160, 220)));
+    }
+    $font = 5; $fw = imagefontwidth($font); $fh = imagefontheight($font);
+    $scale = 2.6;
+    $step = ($w - 20) / strlen($code);
+    for ($i = 0; $i < strlen($code); $i++) {
+        $glyph = imagecreatetruecolor($fw, $fh);
+        $bg = imagecolorallocate($glyph, 255, 255, 255);
+        imagefill($glyph, 0, 0, $bg);
+        imagecolortransparent($glyph, $bg);
+        imagestring($glyph, $font, 0, 0, $code[$i],
+                    imagecolorallocate($glyph, random_int(10, 45), random_int(25, 55), random_int(70, 110)));
+        $gw = (int) round($fw * $scale); $gh = (int) round($fh * $scale);
+        $big = imagecreatetruecolor($gw, $gh);
+        $bigBg = imagecolorallocate($big, 255, 255, 255);
+        imagefill($big, 0, 0, $bigBg);
+        imagecolortransparent($big, $bigBg);
+        imagecopyresized($big, $glyph, 0, 0, 0, 0, $gw, $gh, $fw, $fh);
+        $rot = imagerotate($big, random_int(-22, 22), $bigBg);
+        imagecolortransparent($rot, imagecolorat($rot, 0, 0));
+        $x = (int) (10 + $i * $step + random_int(-3, 3));
+        $y = (int) (($h - imagesy($rot)) / 2 + random_int(-5, 5));
+        imagecopymerge($img, $rot, $x, $y, 0, 0, imagesx($rot), imagesy($rot), 100);
+    }
+    // two lines across the text, drawn last so they cross the characters
+    for ($i = 0; $i < 2; $i++) {
+        $c = imagecolorallocate($img, random_int(60, 110), random_int(80, 120), random_int(130, 170));
+        imagesetthickness($img, 2);
+        imageline($img, 0, random_int(12, $h - 12), $w, random_int(12, $h - 12), $c);
+    }
+    ob_start();
+    imagepng($img);
+    return 'data:image/png;base64,' . base64_encode((string) ob_get_clean());
+}
+
+/** A new challenge for the browser: the image (or question) and its token. */
+function newCaptcha() {
+    $nonce = bin2hex(random_bytes(12));
+    $expiry = time() + CAPTCHA_TTL;
+    if (function_exists('imagecreatetruecolor') && function_exists('imagepng')) {
+        $code = '';
+        for ($i = 0; $i < CAPTCHA_LENGTH; $i++) {
+            $code .= CAPTCHA_ALPHABET[random_int(0, strlen(CAPTCHA_ALPHABET) - 1)];
+        }
+        return ['ok' => true, 'token' => $nonce . '.' . $expiry . '.' . captchaSign($nonce, $expiry, $code),
+                'image' => captchaImage($code)];
+    }
+    $a = random_int(2, 9); $b = random_int(2, 9);
+    return ['ok' => true, 'token' => $nonce . '.' . $expiry . '.' . captchaSign($nonce, $expiry, (string) ($a + $b)),
+            'question' => "What is $a + $b?"];
+}
+
+/** True if the typed answer matches an unexpired, unused token. The nonce
+ *  is used up either way, so every attempt needs a fresh CAPTCHA. */
+function captchaValid($token, $answer) {
+    if (!is_string($token) || !preg_match('/^([a-f0-9]{24})\.(\d{10})\.([a-f0-9]{64})$/', $token, $m)) return false;
+    [, $nonce, $expiry, $sig] = $m;
+    if ((int) $expiry < time()) return false;
+    if (applyCacheGet('captcha-used|' . $nonce, CAPTCHA_TTL + 60) !== null) return false;
+    applyCachePut('captcha-used|' . $nonce, ['t' => time()]);
+    $answer = strtoupper(preg_replace('/\s+/', '', (string) $answer));
+    return $answer !== '' && hash_equals(captchaSign($nonce, (int) $expiry, $answer), $sig);
+}
+
 /** Checks one uploaded document: size, extension and real file signature. */
 function validDocument($file) {
     if (!is_array($file) || is_array($file['error'] ?? null) || ($file['error'] ?? 1) !== UPLOAD_ERR_OK) return false;
@@ -320,6 +430,11 @@ function handleSubmit($config) {
     if (gss_is_spam_submission($_POST) !== false) {
         // Pretend success so bots learn nothing; nothing is sent to Ceipal.
         applyRespond(200, ['ok' => true, 'message' => 'Thank you — your application has been submitted.']);
+    }
+    // before the rate limit, so a mistyped CAPTCHA doesn't use up an attempt
+    if (!captchaValid($_POST['captcha_token'] ?? '', $_POST['captcha_answer'] ?? '')) {
+        applyRespond(422, ['ok' => false, 'message' => 'Please check the verification code.',
+                           'errors' => ['captcha' => 'That didn’t match. Please type the characters in the new image.']]);
     }
     if (applyRateLimited()) {
         applyFail(429, 'Too many applications from this connection. Please try again in a few minutes.');
@@ -497,6 +612,10 @@ if ($action === 'form') {
     if (!$form['easyApply']) applyFail(409, 'This role is no longer accepting Easy Apply applications.');
     unset($form['applyLink']);
     applyRespond(200, ['ok' => true, 'form' => $form]);
+}
+
+if ($action === 'captcha') {
+    applyRespond(200, newCaptcha());
 }
 
 if ($action === 'states') {

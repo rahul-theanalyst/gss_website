@@ -76,10 +76,26 @@ in their `View Role` panel:
   Ceipal's own career widget uses, so it arrives in Ceipal as a normal
   application.
 
-Ceipal's widget shows a CAPTCHA, but it is drawn and checked only in the
-browser and is never sent to Ceipal. Here it is replaced by server-side
-checks: the shared honeypot/timing guard (`lib/spam-guard.php`) and a limit of
-5 applications per IP address per 10 minutes. Applicant details are never
+Ceipal's own widget draws its CAPTCHA in the browser and never sends it to
+Ceipal, and Ceipal's API has nothing to reuse: the form definition carries no
+CAPTCHA, and the widget's own endpoint (`careerPortalWidget/`) refuses requests
+from outside Ceipal's hosted career portal. So Easy Apply has its own CAPTCHA,
+checked on the server:
+
+- `?action=captcha` returns a distorted 5-character image (drawn with PHP's GD
+  extension) and a signed token. The token is an HMAC of the answer and an
+  expiry under a secret kept in `server/.captcha-secret` (generated on first
+  use, gitignored, blocked by `server/.htaccess`). The answer itself is never
+  stored.
+- On submit, the typed answer must match the token within 10 minutes, and each
+  token is accepted once. A wrong answer returns a field error and the form
+  loads a new image. It is checked before the rate limit, so a typo doesn't
+  use up an attempt.
+- If a server lacks GD, the CAPTCHA falls back to a short arithmetic question,
+  checked the same way.
+
+Alongside it are the shared honeypot/timing guard (`lib/spam-guard.php`) and a
+limit of 5 applications per IP address per 10 minutes. Applicant details are never
 written to the logs. Only the job code and Ceipal's response are logged, in
 `server/careers-errors.log`.
 
