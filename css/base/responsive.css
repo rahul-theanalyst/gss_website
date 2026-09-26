@@ -566,6 +566,102 @@ html.js #main > section:nth-of-type(6) { animation-delay: .45s; }
   .hero { --hero-chrome-h: 84px; }
 }
 
+/* ══ HERO: ONE PROPORTIONAL LAYOUT FOR TABLET + DESKTOP ═════════════
+   The approved design is the hero as it renders on a 1536 x 701 laptop
+   viewport. Every tablet and desktop screen now shows that same layout,
+   scaled: each size below is its value at that reference x --hu, where
+   1 --hu = 1px of the reference. --hu follows whichever runs out first,
+   width (vw / 1536) or height (screen below the navbar / 609), so the hero
+   always fills the first screen with the same arrangement, gaps and
+   proportions. It never drops below 0.8 (on narrower tablets an exact
+   scale would shrink the card text past readable) — there, the content
+   stays centred in the screen-high hero. Phones and landscape phones
+   (under 500px tall) keep their own layout. Last among the hero rules so
+   these win over the per-breakpoint values above. */
+@media (min-width: 768px) and (min-height: 500px) {
+  .hero {
+    --hu: max(0.8px, min(calc(100vw / 1536), calc((100svh - var(--header-h)) / 609)));
+    /* vertical gaps follow the screen's height alone, so on a screen
+       shaped differently from the reference the blocks keep the same
+       arrangement top to bottom instead of bunching up */
+    --hv: max(0.8px, calc((100svh - var(--header-h)) / 609));
+    /* dots + arrow: 72 of size (22 dots, 6 gap, 44 arrow) + 12 offset */
+    --hero-chrome-h: calc(72 * var(--hu) + 12 * var(--hv));
+  }
+  /* the hero is exactly the first screen below the navbar */
+  .hero-viewport { min-height: calc(100svh - var(--header-h)); }
+  /* the photo always fills the whole hero, as in the reference, even when
+     a portrait tablet makes the hero taller than it is wide (the older
+     "contain" fallback for tall frames left a blank band under it) */
+  .hero .hero-media img { object-fit: cover; object-position: center top; }
+  .hero-slide {
+    align-items: center;
+    padding-top: calc(32.2 * var(--hv));
+    /* the dots/arrow block plus the 19.1 gap above it */
+    padding-bottom: calc(var(--hero-chrome-h) + 19.1 * var(--hv));
+  }
+  /* the content fills the slide top to bottom: eyebrow at the top, the
+     button just above the dots, and any height left over when text scales
+     smaller than the gaps is shared out between the blocks — so every
+     screen shape keeps the reference arrangement */
+  .hero-content {
+    max-width: calc(1400 * var(--hu));
+    padding-inline: calc(79.9 * var(--hu));
+    align-self: stretch;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+
+  .hero .hero-slide .eyebrow {
+    font-size: calc(11.28 * var(--hu)); letter-spacing: calc(2.2 * var(--hu));
+    line-height: calc(18.6 * var(--hu)); gap: calc(16 * var(--hu));
+    margin-bottom: calc(46.4 * var(--hv));
+  }
+  .hero .hero-slide .eyebrow .rule { width: calc(62 * var(--hu)); }
+  .hero .hero-title {
+    font-size: calc(35.2 * var(--hu)); line-height: calc(38.72 * var(--hu));
+    letter-spacing: calc(-0.63 * var(--hu));
+    margin-bottom: calc(46.4 * var(--hv));
+  }
+  .hero .hero-sub {
+    font-size: calc(16.8 * var(--hu)); line-height: calc(24.36 * var(--hu));
+    margin-top: 0; margin-bottom: 0;
+  }
+
+  .hero .cred-row { gap: calc(13.8 * var(--hu)); margin-top: calc(46.4 * var(--hv)); }
+  .hero .cred-card,
+  .hero .cred-card.is-stacked {
+    padding: calc(12 * var(--hu)) calc(21.5 * var(--hu));
+    border-radius: calc(20.7 * var(--hu));
+  }
+  .hero .cred-txt strong {
+    font-size: calc(10.87 * var(--hu)); letter-spacing: calc(0.76 * var(--hu));
+    line-height: calc(14.13 * var(--hu));
+  }
+  .hero .cred-txt small {
+    font-size: calc(9.94 * var(--hu)); letter-spacing: calc(0.4 * var(--hu));
+    line-height: calc(13.41 * var(--hu)); margin-top: calc(3 * var(--hu));
+  }
+
+  .hero .hero-tagline {
+    font-size: calc(14.4 * var(--hu)); line-height: calc(23.76 * var(--hu));
+    margin-top: calc(46.4 * var(--hv));
+  }
+  .hero .hero-cta { margin-top: calc(28.2 * var(--hv)); margin-bottom: 0; }
+  .hero-cta .btn {
+    min-height: calc(28.6 * var(--hu));
+    padding: calc(7.7 * var(--hu)) calc(16.5 * var(--hu));
+    font-size: calc(7 * var(--hu)); letter-spacing: calc(0.84 * var(--hu));
+    gap: calc(6.6 * var(--hu));
+  }
+
+  .hero-chrome { bottom: calc(12 * var(--hv)); gap: calc(6 * var(--hu)); }
+  .hero-dots { gap: calc(10 * var(--hu)); }
+  .hero-dots .dot { width: calc(30 * var(--hu)); height: calc(22 * var(--hu)); padding-top: calc(9 * var(--hu)); }
+  .hero-dots .dot::before { height: max(2px, calc(3 * var(--hu))); }
+  .hero .scroll-cue { width: calc(44 * var(--hu)); height: calc(44 * var(--hu)); }
+  .hero .scroll-cue .ico { width: calc(22 * var(--hu)); height: calc(22 * var(--hu)); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
