@@ -14,6 +14,7 @@
 
 require_once __DIR__ . '/lib/form-mail.php';
 require_once __DIR__ . '/lib/spam-guard.php';
+require_once __DIR__ . '/lib/form-captcha.php';
 
 const FORM_PAGE       = '/career';          // clean URL (see the root .htaccess)
 const SUBMISSIONS_LOG = __DIR__ . '/careers-submissions.log';
@@ -30,6 +31,15 @@ if ($spamReason !== false) {
     form_log(SUBMISSIONS_LOG, 'Blocked suspected spam: ' . $spamReason);
     form_redirect(FORM_PAGE, 'success');
 }
+
+
+// CAPTCHA (js/core/form-captcha.js): checked before anything is emailed, so
+// posting straight to this endpoint without solving one gets nowhere.
+if (!gss_form_captcha_valid($_POST['captcha_token'] ?? '', $_POST['captcha_answer'] ?? '')) {
+    form_log(SUBMISSIONS_LOG, 'Rejected: missing or incorrect CAPTCHA');
+    form_redirect(FORM_PAGE, 'captcha');
+}
+
 
 // Fields — names match html/career.html
 $first    = form_clean($_POST['first'] ?? '');

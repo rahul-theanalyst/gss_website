@@ -32,6 +32,8 @@
 
   var SUCCESS_MESSAGE = 'Thank you! Your profile and résumé have been received successfully.';
   var ERROR_MESSAGE = 'Something went wrong while submitting the form. Please try again.';
+  var CAPTCHA_MESSAGE = 'The verification code didn’t match. Please type the characters in the new image.';
+
 
   // A plain (non-background) form post lands back here with ?status=...
   // in the URL: show the matching message, then drop the parameter so a
@@ -39,8 +41,9 @@
   (function showStatusFromUrl() {
     var params = new URLSearchParams(window.location.search);
     var status = params.get('status');
-    if (status !== 'success' && status !== 'error') return;
-    showStatus(status, status === 'success' ? SUCCESS_MESSAGE : ERROR_MESSAGE);
+    if (status !== 'success' && status !== 'error' && status !== 'captcha') return;
+    showStatus(status === 'success' ? 'success' : 'error',
+    status === 'success' ? SUCCESS_MESSAGE : status === 'captcha' ? CAPTCHA_MESSAGE : ERROR_MESSAGE);
     params.delete('status');
     var query = params.toString();
     try {
@@ -173,7 +176,7 @@
         showStatus('success', SUCCESS_MESSAGE);
       } else {
         // Failure: keep everything the visitor entered so they can retry.
-        showStatus('error', ERROR_MESSAGE);
+        showStatus('error', status === 'captcha' ? CAPTCHA_MESSAGE : ERROR_MESSAGE);
       }
     })
     .catch(function (err) {
@@ -184,6 +187,8 @@
     })
     .finally(function () {
       if (timer) clearTimeout(timer);
+      // Each verification code works once, so every attempt needs a new one.
+      if (window.GSSFormCaptcha) window.GSSFormCaptcha.reload(form);
       if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.classList.remove('is-submitting');
