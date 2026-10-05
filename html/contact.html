@@ -278,6 +278,18 @@
         <label for="lc-message">Message</label>
         <textarea id="lc-message" name="message" placeholder="Message" rows="4" required></textarea>
       </div>
+            <!-- Verification code (js/core/form-captcha.js); the server checks it
+           before anything is sent. -->
+      <div class="lc-field form-captcha" data-form-captcha>
+        <label for="lc-captcha">Verification code</label>
+        <div class="form-captcha__row">
+          <span class="form-captcha__box" data-form-captcha-box aria-live="polite">Loading…</span>
+          <button class="form-captcha__new" type="button" data-form-captcha-new>New code</button>
+        </div>
+        <input type="text" id="lc-captcha" name="captcha_answer" placeholder="Type the characters shown" required
+          autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="10">
+        <input type="hidden" name="captcha_token" data-form-captcha-token>
+      </div>
       <p class="form-legal-note">Before submitting, please review our <button type="button" data-legal-open="privacy" aria-haspopup="dialog" aria-controls="legalDialog">Privacy Policy</button> and <button type="button" data-legal-open="disclaimer" aria-haspopup="dialog" aria-controls="legalDialog">Disclaimer</button>.</p>
       <p class="lc-form__act">
         <button class="btn btn-primary" type="submit">Send Message <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
