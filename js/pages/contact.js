@@ -28,7 +28,7 @@
 
   var SUCCESS_MESSAGE = 'Thank you! Your message has been received successfully — we’ll be in touch soon.';
   var ERROR_MESSAGE = 'Something went wrong while submitting the form. Please try again.';
-  var ERROR_MESSAGE = 'Something went wrong while submitting the form. Please try again.';
+  var CAPTCHA_MESSAGE = 'The verification code didn’t match. Please type the characters in the new image.';
 
   // A plain (non-background) form post lands back here with ?status=...
   // in the URL: show the matching message, then drop the parameter so a

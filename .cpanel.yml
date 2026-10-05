@@ -22,12 +22,14 @@ deployment:
     - /bin/cp server/careers-submit.php "$DEPLOYPATH/server/"
     - /bin/cp server/contact-submit.php "$DEPLOYPATH/server/"
     - /bin/cp server/careers-apply.php "$DEPLOYPATH/server/"
+    - /bin/cp server/form-captcha.php "$DEPLOYPATH/server/"
 
     # Deploy PHP library files
     - /bin/cp server/lib/config.php "$DEPLOYPATH/server/lib/"
     - /bin/cp server/lib/env.php "$DEPLOYPATH/server/lib/"
     - /bin/cp server/lib/form-mail.php "$DEPLOYPATH/server/lib/"
     - /bin/cp server/lib/spam-guard.php "$DEPLOYPATH/server/lib/"
+    - /bin/cp server/lib/form-captcha.php "$DEPLOYPATH/server/lib/"
 
     # Deploy security and PHP configuration files
     - /bin/cp .htaccess "$DEPLOYPATH"

@@ -12,3 +12,5 @@ server/contact-submissions.log
 server/.env*
 # Easy Apply CAPTCHA signing key — generated on first use, never commit
 server/.captcha-secret
+# Let's Connect / Stay connected CAPTCHA signing key (server/lib/form-captcha.php)
+server/.form-captcha-secret
