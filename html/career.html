@@ -400,6 +400,18 @@
               <input type="file" id="f-resume" name="resume" accept="application/pdf,.pdf" required>
             </div>
           </div>
+                    <!-- Verification code (js/core/form-captcha.js); the server checks it
+               before anything is sent. -->
+          <div class="car-field form-captcha" data-form-captcha>
+            <label for="f-captcha">Verification code</label>
+            <div class="form-captcha__row">
+              <span class="form-captcha__box" data-form-captcha-box aria-live="polite">Loading…</span>
+              <button class="form-captcha__new" type="button" data-form-captcha-new>New code</button>
+            </div>
+            <input type="text" id="f-captcha" name="captcha_answer" placeholder="Type the characters shown" required
+              autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="10">
+            <input type="hidden" name="captcha_token" data-form-captcha-token>
+          </div>
           <p class="form-legal-note">Before submitting your profile, please review our <button type="button"
               data-legal-open="privacy" aria-haspopup="dialog" aria-controls="legalDialog">Privacy Policy</button> and
             <button type="button" data-legal-open="disclaimer" aria-haspopup="dialog"
@@ -482,6 +494,7 @@
     </div>
   </footer>
 
+  <script src="../js/core/form-captcha.js"></script>
   <script src="../js/pages/career-form.js"></script>
   <script src="../js/core/site.js"></script>
   <script src="../js/pages/careers.js"></script>
